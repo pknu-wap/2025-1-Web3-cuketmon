@@ -70,3 +70,58 @@ button:hover{
   background-color:#fad585
 }
 
+/*모바일 반응형*/
+@media screen and (min-width: 375px) and (max-width: 1024px) {
+  body{
+    overflow: hidden;
+    background-image: url('/public/background2.png');
+    padding-top: 0;
+    text-align: center;
+    padding-left: 0;
+  }
+  
+  .logo{
+    font-size:25px;
+    padding-left: 20%;
+    padding-top: 20%;
+  }
+  
+
+  img{
+    width: 40px;
+    height: 40px;
+    margin-left: 3%;
+  }
+
+  .logo{
+    margin: 0;
+  }
+
+  #slogan{
+    font-size: 20px;
+  }
+
+  .login{
+    display: initial;
+  }
+
+  #instruction{
+    font-size: 10px;
+    padding-top: 100%;
+  }
+
+  button{
+    position: relative;
+    width: 60%;
+    margin-left: 0%;
+    margin-bottom: 90px;
+    top:-100px;
+    font-size: 14px;
+  }
+
+  .login #pocketmon_logo{
+    width: 30px;
+    height: 14px;
+    padding-right: 4px;
+  }
+}
