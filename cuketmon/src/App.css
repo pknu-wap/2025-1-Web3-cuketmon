@@ -1,0 +1,72 @@
+/*로그인화면 CSS*/
+body{
+  background-image: url('/public/background1.png');
+  background-color: #FFFFF0;
+  background-size: cover; 
+  background-position: center;
+  background-repeat: no-repeat;
+  padding-top: 25%;
+  padding-left: 5%;
+  overflow: hidden;
+}
+
+/*메인 로고*/
+.logo{
+   display: flex;
+   font-size: 40px;
+   color:#856C4E;
+   margin:20px;
+  }
+
+h1{
+  margin: 0;
+}
+
+img{
+  width: 80px;
+  height: 80px;
+  padding-top: 15px;
+  padding-right: 10px;
+}
+
+/*슬로건*/
+#slogan{
+  color:#AE785F;
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: 28px;
+}
+
+
+/*로그인 버튼 및 게임 설명*/
+.login{
+  padding: 0;
+  margin-bottom: 20px;
+  display: flex;
+}
+
+#instruction{
+  font-size: 20px;
+  color:#B9B7B6;
+  margin: 0;
+}
+
+.login #pocketmon_logo{
+  width: 50px;
+  height: 24px;
+}
+
+button{
+  background-color: #EFC15C;
+  border: none;
+  border-radius: 30px;
+  font-size: 20px;
+  height: 50px;
+  margin-left: 30%;
+  padding:0px 20px 0px 20px;
+}
+
+button:hover{
+  background-color:#fad585
+}
+
