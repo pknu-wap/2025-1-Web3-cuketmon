@@ -30,9 +30,9 @@
 
 ## 👥 팀 구성
 
-| **PM,FE,DESIGNER**              | **FE**                          | **BE**                          | **BE**                          | **AI**                          |
-| ------------------------------- | ------------------------------- | ------------------------------- | ------------------------------- | ------------------------------- |
-| ![image1](/public/chanxami.png) | ![image2](/public/chanxami.png) | ![image3](/public/chanxami.png) | ![image4](/public/chanxami.png) | ![image5](/public/chanxami.png) |
-| 이찬이                          | 정승오                          | 박현                            | 조강래                          | 박연수                          |
+| **PM,FE,DESIGNER**                      | **FE**                                  | **BE**                                  | **BE**                                  | **AI**                                  |
+| --------------------------------------- | --------------------------------------- | --------------------------------------- | --------------------------------------- | --------------------------------------- |
+| ![image1](cuketmon/public/profile1.png) | ![image2](cuketmon/public/profile2.png) | ![image3](cuketmon/public/profile3.png) | ![image4](cuketmon/public/profile4.png) | ![image5](cuketmon/public/profile5.png) |
+| 이찬이                                  | 정승오                                  | 박현                                    | 조강래                                  | 박연수                                  |
 
 ---
