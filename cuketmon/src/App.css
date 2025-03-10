@@ -1,10 +1,12 @@
 /*로그인화면 CSS*/
-.App{
+html{
   background-image: url('/public/background1.png');
-  background-color: #FFFFF0;
   background-size: cover; 
   background-position: center;
   background-repeat: no-repeat;
+}
+
+.App{
   padding-top: 25%;
   padding-left: 5%;
   overflow: hidden;
@@ -62,6 +64,7 @@ button{
   border-radius: 30px;
   font-size: 20px;
   height: 50px;
+  width: 300px;
   margin-left: 30%;
   padding:0px 20px 0px 20px;
 }
