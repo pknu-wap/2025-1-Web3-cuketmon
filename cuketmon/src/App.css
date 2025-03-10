@@ -75,12 +75,14 @@ button:hover{
 
 /*모바일 반응형*/
 @media screen and (min-width: 375px) and (max-width: 1024px) {
-  body{
+  html {
     overflow: hidden;
-    background-image: url('/public/background2.png');
+    background-image: url('/public/background2.png') !important;
     padding-top: 0;
     text-align: center;
     padding-left: 0;
+    z-index: 0;
+    background-color:  #FFFFF0;;
   }
   
   .logo{
