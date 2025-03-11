@@ -1,15 +1,15 @@
 /*로그인화면 CSS*/
 html{
-  background-image: url('/public/background1.png');
-  background-size: cover; 
-  background-position: center;
-  background-repeat: no-repeat;
+      background-color: #FFFFF0;
 }
 
 .App{
-  padding-top: 25%;
+  padding-top: 33%;
   padding-left: 5%;
   overflow: hidden;
+  background-image: url('/public/background1.png');
+  background-size: cover; 
+  background-repeat: no-repeat;
 }
 
 /*메인 로고*/
@@ -18,9 +18,11 @@ html{
    font-size: 40px;
    color:#856C4E;
    margin:20px;
+   margin-bottom: 0;
+   margin-left: 0;
   }
 
-h1{
+.App h1{
   margin: 0;
 }
 
@@ -51,6 +53,7 @@ img{
   font-size: 20px;
   color:#B9B7B6;
   margin: 0;
+  padding-bottom: 5%;
 }
 
 .login #pocketmon_logo{
@@ -75,35 +78,49 @@ button:hover{
 
 /*모바일 반응형*/
 @media screen and (min-width: 375px) and (max-width: 1024px) {
-  html {
+  html{
+    background-color: #FFFFF0;
+  }
+  .App{
     overflow: hidden;
     background-image: url('/public/background2.png') !important;
     padding-top: 0;
     text-align: center;
     padding-left: 0;
-    z-index: 0;
-    background-color:  #FFFFF0;;
+    background-color:  #FFFFF0;
+    background-size: cover; 
+    background-position: center center;
+
   }
+
   
   .logo{
-    font-size:25px;
-    padding-left: 20%;
-    padding-top: 20%;
+    padding-top: 5px;
+    font-size:20px;
+    padding-left: 30%;
   }
   
+
 
   img{
     width: 40px;
     height: 40px;
-    margin-left: 3%;
+
+    padding-bottom: 10px;
+  }
+
+  .App h1{
+    padding-top: 2%;
   }
 
   .logo{
     margin: 0;
+
   }
 
   #slogan{
     font-size: 20px;
+    padding-bottom: 50%;
   }
 
   .login{
@@ -112,7 +129,7 @@ button:hover{
 
   #instruction{
     font-size: 10px;
-    padding-top: 100%;
+    padding-top: 70%;
   }
 
   button{
