@@ -145,5 +145,6 @@ button:hover{
     width: 30px;
     height: 14px;
     padding-right: 4px;
+    padding-bottom: 0;
   }
 }
