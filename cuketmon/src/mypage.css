@@ -1,0 +1,55 @@
+
+.myPage{
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    background-image: url('/public/background3.jpg');
+    background-size: cover; 
+    background-repeat: no-repeat;
+}
+
+.item img{
+    width: 25px;
+    height:25px;
+    padding-right: 0;
+}
+
+.item span{
+    padding-right: 10px;
+}
+
+.item{
+    color:#A47864;
+    margin-bottom: 8%;
+    padding-left: 1%;
+    font-size: 20px;
+}
+
+#cuketmonImage{
+  position: relative;
+  border: 2px solid black;
+  margin-left: 44%;
+  width: 180px;
+  height: 180px;
+  top:130px
+}
+
+.cucketmon_profile{
+    border: 2px solid #BAB8B8;
+    width:20%;
+    text-align: center;
+    margin-left: 70%;
+    background-color: #D9D9D9;
+    margin-bottom: 10%;
+    padding-bottom: 0.35%;
+}
+
+.cucketmon_profile img{
+    width: 25px;
+    height: 25px;
+}
+
+.mypage button{
+    width: 10px;
+    padding-bottom: 5px;
+}
