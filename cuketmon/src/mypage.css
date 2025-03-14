@@ -1,9 +1,7 @@
 
 .myPage{
-    width: 100vw;
-    height: 100vh;
     overflow: hidden;
-    background-image: url('/public/background3.jpg');
+    background-image: url('/public/background3.png');
     background-size: cover; 
     background-repeat: no-repeat;
 }
@@ -12,6 +10,7 @@
     width: 25px;
     height:25px;
     padding-right: 0;
+    padding-top: 6%;
 }
 
 .item span{
@@ -19,7 +18,7 @@
 }
 
 .item{
-    color:#A47864;
+    color:#EFC15C;
     margin-bottom: 8%;
     padding-left: 1%;
     font-size: 20px;
@@ -53,3 +52,4 @@
     width: 10px;
     padding-bottom: 5px;
 }
+
