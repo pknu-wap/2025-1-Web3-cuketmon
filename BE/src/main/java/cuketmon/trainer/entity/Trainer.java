@@ -28,4 +28,12 @@ public class Trainer {
     @Column(nullable = false)
     private Integer win;
 
+    public void decreaseToy(int minus) {
+        toy = toy - minus;
+    }
+
+    public void decreaseFeed(int minus) {
+        feed = feed - minus;
+    }
+
 }
