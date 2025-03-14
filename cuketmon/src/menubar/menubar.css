@@ -26,13 +26,15 @@ html, body {
     align-items: center;
     border: none;
     border-left: 2px solid #908F8F;
+
   }
   
   .menubar-items  button img {
     width: 40px;
     height: 40px;
     margin-bottom: 10px;
-    padding-left:2%;
+    padding-left:0%;
+    margin-top: 2%;
   }
 
   .menubar-items  button  a{
