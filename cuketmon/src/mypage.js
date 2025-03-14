@@ -27,8 +27,8 @@ function MyPage() {
   return (
     <div className='myPage'>
       <div className='item'>
-        <img src='./feed.png' id='feed' alt="밥 아이콘"/> <span>{feedCount} 개</span>
-        <img src='./toy.png' alt="장난감 아이콘"/> <span>{toyCount} 개</span>
+        <img src='./feed.png' id='feed' alt="밥 아이콘"/> <span>{feedCount}</span>
+        <img src='./toy.png' alt="장난감 아이콘"/> <span>{toyCount}</span>
       </div>
       
      <img src='/egg.png' id='cuketmonImage'/>
