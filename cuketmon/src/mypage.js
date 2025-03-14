@@ -7,7 +7,9 @@ function MyPage() {
   const [feedCount, setFeedCount] = useState(0);
   const [cuketmonName, setCuketmonName] = useState("");
   const [relevanceCount, setRelevanceCount] = useState(0);
-  const [cuketmonImage, setCuketmonImage] = useState(""); 
+  const [cuketmonImage, setCuketmonImage] = useState("");
+  const [isFed, setIsFed] = useState(false);
+  const [isPlayed, setIsPlayed] = useState(false); // "놀아주기" 상태 추가
 
   useEffect(() => {
     fetch("http://localhost:5000/mypage-data") // 백엔드 API 주소
@@ -22,7 +24,19 @@ function MyPage() {
       .catch(error => console.error("데이터 가져오기 실패:", error));
   }, []);
 
-//      {cuketmonImage && <img src={cuketmonImage}  id='cuketmonImage' alt="쿠켓몬 이미지" />}
+  const handleFeedClick = () => {
+    setIsFed(true);
+    setTimeout(() => {
+      setIsFed(false);
+    }, 1000); 
+  };
+
+  const handlePlayClick = () => {
+    setIsPlayed(true);
+    setTimeout(() => {
+      setIsPlayed(false);
+    }, 1000); 
+  };
 
   return (
     <div className='myPage'>
@@ -31,18 +45,26 @@ function MyPage() {
         <img src='./toy.png' alt="장난감 아이콘"/> <span>{toyCount}</span>
       </div>
       
-     <img src='/egg.png' id='cuketmonImage'/>
+      <img 
+        src={cuketmonImage || '/egg.png'} 
+        id='cuketmonImage' 
+        className={`${isFed ? 'moveImage' : ''} ${isPlayed ? 'shakeImage' : ''}`} // 애니메이션 클래스 두 개 적용
+        alt="쿠켓몬 이미지"
+      />
       <div className='cucketmon_profile'>
-        <p>{cuketmonName}커켓몬 이름</p>
+        <hr/>
+        <p>{cuketmonName} 커켓몬 이름</p>
         <div id='relevanceCount'>
-        <img src='/relevance.png'/>
-        <span>{relevanceCount}</span>
+          <img src='/relevance.png' />
+          <span>{relevanceCount}</span>
         </div>
       </div>
       
       <div className='buttons'>
-        <button id='FeedButton'>먹이주기</button>
-        <button id='PlayButton'>놀아주기</button>
+        <img src='/button.png' id="feedButton" onClick={handleFeedClick}/>
+        <span id="button-text1">먹이주기</span>
+        <img src='/button.png' id="playButton" onClick={handlePlayClick}/>
+        <span id="button-text2">놀아주기</span>
       </div>
       <MenuBar />
     </div>
