@@ -24,7 +24,7 @@ public class MonsterController {
     @PostMapping("/generate")
     public ResponseEntity<String> generateMonster(@RequestParam String monsterName) {
         monsterService.tempGenerate(monsterName);
-        return ResponseEntity.ok("Login successful for " + monsterName);
+        return ResponseEntity.ok("커켓몬 생성 성공, 몬스터 이름:  " + monsterName);
     }
 
     // 먹이 주기

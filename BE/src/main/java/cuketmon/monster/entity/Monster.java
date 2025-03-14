@@ -67,4 +67,7 @@ public class Monster {
     private List<Ability> abilities = new ArrayList<>();
     */
 
+    public void increaseAffinity(int plus) {
+        affinity = affinity + plus;
+    }
 }

@@ -23,7 +23,7 @@ public class TrainerController {
     @PostMapping("tempLogin")
     public ResponseEntity<String> login(@RequestParam String name) {
         trainerService.tempLogin(name);
-        return ResponseEntity.ok("Login successful for " + name);
+        return ResponseEntity.ok("로그인 성공, 사용자 이름: " + name);
     }
 
     // 남은 장난감의 개수를 확인

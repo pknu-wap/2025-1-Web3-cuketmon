@@ -4,6 +4,7 @@ import cuketmon.monster.entity.Monster;
 import cuketmon.monster.repository.MonsterRepository;
 import cuketmon.trainer.entity.Trainer;
 import cuketmon.trainer.repository.TrainerRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,6 +35,7 @@ public class MonsterService {
     }
 
     // 임시 포켓몬 생성 함수
+    @Transactional
     public void tempGenerate(String monsterName) {
         if (!monsterRepository.existsById(monsterName)) {
             Monster monster
@@ -43,6 +45,7 @@ public class MonsterService {
         }
     }
 
+    @Transactional
     public void feedMonster(String monsterName) {
         // TODO: 현재 로그인 한 사용자를 기반으로 find 하도록 수정해야함
         //  security context 라는게 있다는데.. ( 이 방법은 별로인듯 because 누를 때 마다 주인을 찾음)
@@ -53,10 +56,9 @@ public class MonsterService {
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당 커켓몬을 찾을 수 없습니다."));
 
         // TODO: validation 로직 분리 (먹이 수량 확인)
-        // TODO: setter 사용 지양
         if (trainer.getFeed() > 0) {
-            trainer.setFeed(trainer.getFeed() - FEED_MINUS);
-            monster.setAffinity(monster.getAffinity() + AFFINITY_PLUS);
+            trainer.decreaseFeed(FEED_MINUS);
+            monster.increaseAffinity(AFFINITY_PLUS);
 
             trainerRepository.save(trainer);
             monsterRepository.save(monster);
@@ -65,6 +67,7 @@ public class MonsterService {
         }
     }
 
+    @Transactional
     public void playWithMonster(String monsterName) {
         Trainer trainer = trainerRepository.findById(TEST_TRAINER_NAME)
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당 트레이너를 찾을 수 없습니다."));
@@ -72,10 +75,9 @@ public class MonsterService {
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당 커켓몬을 찾을 수 없습니다."));
 
         // TODO: validation 로직 분리 (장난감 수량 확인)
-        // TODO: setter 사용 지양
         if (trainer.getToy() > 0) {
-            trainer.setToy(trainer.getToy() - TOY_MINUS);
-            monster.setAffinity(monster.getAffinity() + AFFINITY_PLUS);
+            trainer.decreaseToy(TOY_MINUS);
+            monster.increaseAffinity(AFFINITY_PLUS);
 
             trainerRepository.save(trainer);
             monsterRepository.save(monster);
