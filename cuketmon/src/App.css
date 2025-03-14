@@ -1,89 +1,68 @@
 /*로그인화면 CSS*/
 html{
-      background-color: #FFFFF0;
+    background-color: black;
 }
 
 .App{
-  padding-top: 33%;
-  padding-left: 5%;
+  width: 100vw;
+  height: 100vh;
+  padding-bottom: 10%;
   overflow: hidden;
   background-image: url('/public/background1.png');
   background-size: cover; 
   background-repeat: no-repeat;
 }
 
-/*메인 로고*/
-.logo{
-   display: flex;
-   font-size: 40px;
-   color:#856C4E;
-   margin:20px;
-   margin-bottom: 0;
-   margin-left: 0;
-  }
 
-.App h1{
-  margin: 0;
+#weblogo{
+  padding-left: 23%;
+  width:50%;
+  margin-top: 10%;
 }
 
-img{
-  width: 80px;
-  height: 80px;
-  padding-top: 15px;
-  padding-right: 10px;
+.button-container {
+  position: relative;
+  display: inline-block;
+  margin-left: 39%;
 }
 
-/*슬로건*/
-#slogan{
-  color:#AE785F;
-  margin-top: 0;
-  margin-bottom: 0;
-  font-size: 28px;
+.button-wrapper {
+  position: relative;
+  display: inline-block;
 }
 
-
-/*로그인 버튼 및 게임 설명*/
-.login{
-  padding: 0;
-  margin-bottom: 20px;
-  display: flex;
+.button-image {
+  width: 40%;
+  margin-top: 35%;
+  display: block;
 }
 
-#instruction{
-  font-size: 20px;
-  color:#B9B7B6;
-  margin: 0;
-  padding-bottom: 5%;
+.button-wrapper:hover img{
+  content: url('/public/button-hover.png'); 
+  padding-top: 34%;
+  width: 80%;
+  z-index: 0; 
 }
 
-.login #pocketmon_logo{
-  width: 50px;
-  height: 24px;
+.button-text {
+  position: fixed;
+  top: 75%;
+  padding-left: 7%;
+  font-size: 12px;
+  font-weight: bold;
+  color: white;
+  z-index: 1; 
 }
 
-.login button{
-  background-color: #EFC15C; 
-  border: none;
-  border-radius: 30px;
-  font-size: 20px;
-  height: 50px;
-  width: 300px;
-  margin-left: 30%;
-  padding:0px 20px 0px 20px;
-}
-
-button:hover{
-  background-color:#fad585
-}
 
 /*모바일 반응형*/
 @media screen and (min-width: 375px) and (max-width: 1024px) {
   html{
-    background-color: #FFFFF0;
+    background-color: black;
   }
   .App{
     overflow: hidden;
-    background-image: url('/public/background2.png') !important;
+    background-image: url('/public/background1.png') !important;
     padding-top: 0;
     text-align: center;
     padding-left: 0;
@@ -94,10 +73,10 @@ button:hover{
   }
 
   
-  .logo{
+  img #weblogo{
+    width: 100px;
     padding-top: 5px;
-    font-size:20px;
-    padding-left: 30%;
+    padding-left: 50%;
   }
   
 
