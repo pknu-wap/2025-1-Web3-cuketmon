@@ -20,6 +20,7 @@ public class MonsterService {
     public static final int INIT_SPECIAL_ATTACK = 100;
     public static final int INIT_SPECIAL_DEFENCE = 100;
 
+    private static final int FEED_MINUS = 1;
     private static final int TOY_MINUS = 1;
     private static final int AFFINITY_PLUS = 1;
 
@@ -44,23 +45,42 @@ public class MonsterService {
 
     public void feedMonster(String monsterName) {
         // TODO: 현재 로그인 한 사용자를 기반으로 find 하도록 수정해야함
-        //  security context 라는게 있다는데..
+        //  security context 라는게 있다는데.. ( 이 방법은 별로인듯 because 누를 때 마다 주인을 찾음)
         //  아니면 프론트에서 기억하고 있는 이름 좀 넘겨달라고 해도 될 듯
         Trainer trainer = trainerRepository.findById(TEST_TRAINER_NAME)
-                .orElseThrow(() -> new IllegalArgumentException("[ERROR]: 해당 트레이너를 찾을 수 없습니다."));
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당 트레이너를 찾을 수 없습니다."));
         Monster monster = monsterRepository.findById(monsterName)
-                .orElseThrow(() -> new IllegalArgumentException("[ERROR]: 해당 커켓몬을 찾을 수 없습니다."));
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당 커켓몬을 찾을 수 없습니다."));
 
         // TODO: validation 로직 분리 (먹이 수량 확인)
         // TODO: setter 사용 지양
         if (trainer.getFeed() > 0) {
-            trainer.setFeed(trainer.getFeed() - TOY_MINUS);
+            trainer.setFeed(trainer.getFeed() - FEED_MINUS);
             monster.setAffinity(monster.getAffinity() + AFFINITY_PLUS);
 
             trainerRepository.save(trainer);
             monsterRepository.save(monster);
         } else {
             throw new IllegalArgumentException("[ERROR] 먹이가 부족합니다.");
+        }
+    }
+
+    public void playWithMonster(String monsterName) {
+        Trainer trainer = trainerRepository.findById(TEST_TRAINER_NAME)
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당 트레이너를 찾을 수 없습니다."));
+        Monster monster = monsterRepository.findById(monsterName)
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당 커켓몬을 찾을 수 없습니다."));
+
+        // TODO: validation 로직 분리 (장난감 수량 확인)
+        // TODO: setter 사용 지양
+        if (trainer.getToy() > 0) {
+            trainer.setToy(trainer.getToy() - TOY_MINUS);
+            monster.setAffinity(monster.getAffinity() + AFFINITY_PLUS);
+
+            trainerRepository.save(trainer);
+            monsterRepository.save(monster);
+        } else {
+            throw new IllegalArgumentException("[ERROR] 장난감이 부족합니다.");
         }
     }
 

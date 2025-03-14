@@ -38,4 +38,15 @@ public class MonsterController {
         }
     }
 
+    // 놀아 주기
+    @PostMapping("/{monsterName}/play")
+    public ResponseEntity<String> playWithMonster(@PathVariable String monsterName) {
+        try {
+            monsterService.playWithMonster(monsterName);
+            return ResponseEntity.ok("커켓몬과 놀아주었습니다.");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage() + " 놀아 줄 수 없습니다.");
+        }
+    }
+
 }
