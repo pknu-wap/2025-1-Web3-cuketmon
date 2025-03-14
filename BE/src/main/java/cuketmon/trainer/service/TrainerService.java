@@ -36,5 +36,12 @@ public class TrainerService {
         return trainer.getToy();
     }
 
+    @Transactional
+    public Integer getRemainingFeeds(String name) {
+        Trainer trainer = trainerRepository.findById(name)
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR]: 해당 트레이너를 찾을 수 없습니다."));
+        return trainer.getFeed();
+    }
+
 
 }

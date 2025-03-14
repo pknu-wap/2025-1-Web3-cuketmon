@@ -32,4 +32,10 @@ public class TrainerController {
         return trainerService.getRemainingToys(trainerName);
     }
 
+    // 남은 먹이의 개수를 확인
+    @GetMapping("/{trainerName}/feeds")
+    public Integer getRemainingFeeds(@PathVariable String trainerName) {
+        return trainerService.getRemainingFeeds(trainerName);
+    }
+
 }
