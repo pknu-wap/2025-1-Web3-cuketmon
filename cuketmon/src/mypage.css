@@ -61,6 +61,10 @@
     padding-bottom: 5px;
 }
 
+#feedButton:hover,#playButton:hover{
+  content: url('/public/button-hover.png'); 
+}
+
 #cuketmonImage {
     transition: transform 1s ease-in-out;
   }
