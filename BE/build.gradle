@@ -31,6 +31,12 @@ dependencies {
 
     implementation 'org.springframework.boot:spring-boot-starter-web'
 
+    // web client
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+
+    // for mac os dns
+    implementation 'io.netty:netty-resolver-dns-native-macos:4.1.68.Final:osx-aarch_64'
+
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
 
