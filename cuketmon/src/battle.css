@@ -1,0 +1,40 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden; /* 스크롤바 제거 */
+  }
+
+.Battle {
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+
+
+.background {
+    background-size: 100% 100%;
+    background-attachment: fixed;
+    background-position: center;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-repeat: no-repeat;
+  }
+
+
+  .myCuketmon {
+    position: absolute;
+    top: 150px;
+    left: 150px;
+
+  }
+  
+  .enemyCuketmon {
+    position: absolute;
+    top: 100px;
+    left: 150px;
+  }

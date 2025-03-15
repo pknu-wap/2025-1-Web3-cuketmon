@@ -37,7 +37,7 @@ function Make() {
           placeholder="특징을 입력하세요 (예: 빨간 꼬리, 빠른 속도)"
           rows="4"
         />
-        <button onClick={handleCreate}>제출하기</button>
+        <button onClick={handleCreate}>생성</button>
       </div>
       <MenuBar />
     </div>
