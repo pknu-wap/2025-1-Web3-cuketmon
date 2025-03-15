@@ -3,7 +3,8 @@
     text-align: center;
     background-size: cover; 
     background-repeat: no-repeat;
-    padding-bottom: 10%;
+    width: 100%;
+    padding-bottom: 14%;
 }
 
 .RankingBoard img{
@@ -11,7 +12,7 @@
     width: 10%;
     height: 8%;
     border: 2px solid black;
-    margin-top: 23%;
+    margin-top: 29%;
 }
 
 .RankingBoard .Myrank{
