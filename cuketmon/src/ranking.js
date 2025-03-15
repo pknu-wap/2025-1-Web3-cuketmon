@@ -21,34 +21,34 @@ function Ranking() {
   }, []);
 
   return (
+    <div>
     <div className='RankingBoard'>
       {/* 백엔드에서 받은 이미지 표시 */}
       <img src={imageUrl} alt='커켓몬 이미지' className="pokemon-image" />
-
-      <div className='Myrank'>
-        <h2>Standing<span id='MyRank'>No.{Myrank}</span></h2>
-      </div>
-      
-      <table className="historyBoard">
-        <thead>
-          <tr>
-            <th>Category</th>
-            <th>Count</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Wins</td>
-            <td>{WinCount}</td>
-          </tr>
-          <tr>
-            <td>Losses</td>
-            <td>{BattleCount - WinCount}</td>
-          </tr>
-        </tbody>
-      </table>
-
-      <MenuBar />
+  <table className="historyBoard">
+    <thead>
+      <tr>
+        <th>Standing</th>
+        <th>No. {Myrank}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>No. of Battles</td>
+        <td>{BattleCount}</td>
+      </tr>
+      <tr>
+        <td>Wins</td>
+        <td>{WinCount}</td>
+      </tr>
+      <tr>
+        <td>Losses</td>
+        <td>{BattleCount - WinCount}</td>
+      </tr>
+    </tbody>
+  </table>
+    </div>      
+    <MenuBar />
     </div>
   );
 }
