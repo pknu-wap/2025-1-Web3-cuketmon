@@ -33,19 +33,19 @@ function Ranking() {
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td>No. of Battles</td>
-        <td>{BattleCount}</td>
-      </tr>
-      <tr>
-        <td>Wins</td>
-        <td>{WinCount}</td>
-      </tr>
-      <tr>
-        <td>Losses</td>
-        <td>{BattleCount - WinCount}</td>
-      </tr>
-    </tbody>
+  <tr>
+    <td className='mark1'>No. of Battles</td>
+    <td>{BattleCount}</td>
+  </tr>
+  <tr>
+    <td className='mark2'>Wins</td>
+    <td>{WinCount}</td>
+  </tr>
+  <tr>
+    <td className='mark3'>Losses</td>
+    <td>{BattleCount - WinCount}</td>
+  </tr>
+</tbody>
   </table>
     </div>      
     <MenuBar />
