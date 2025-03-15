@@ -21,19 +21,12 @@ function Battle() {
   
   return (
     <div className= 'Battle'>
-        <img src="/battlebg.png" alt="배경" className="background"/>
+        <img src="/BattlePage/battlebg.png" alt="배경" className="background"/>
         <div className='myCuketmon'>
-         <img src='cuketmonex.png' alt='myCuketmon'/></div>
+         <img src='/BattlePage/cuketmonex.png' alt='myCuketmon'/></div>
          <div className='enemyCuketmon'>
-         <img src='cuketmonex.png' alt='enemyCuketmon'/></div>
+         <img src='/BattlePage/cuketmonex.png' alt='enemyCuketmon'/></div>
         
-
-
-       <div className='hpbar'>
-         <div className='myHpBar'></div>
-         <div className='enemyHpBar'></div>
-       </div>
-
       <div className='selectSkill'>
 
       </div>
