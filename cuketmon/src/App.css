@@ -1,29 +1,28 @@
 /*로그인화면 CSS*/
-html{
-    background-color: black;
+html {
+  background-color: black;
 }
 
-.App{
+.App {
   width: 100vw;
   height: 100vh;
   padding-bottom: 10%;
   overflow: hidden;
-  background-image: url('/public/background1.png');
-  background-size: cover; 
+  background-image: url("/public/background1.png");
+  background-size: cover;
   background-repeat: no-repeat;
 }
 
-
-#weblogo{
+#weblogo {
   padding-left: 23%;
-  width:50%;
+  width: 50%;
   margin-top: 10%;
 }
 
 .button-container {
   position: relative;
   display: inline-block;
-  margin-left: 39%;
+  margin-left: 41%;
 }
 
 .button-wrapper {
@@ -37,11 +36,11 @@ html{
   display: block;
 }
 
-.button-wrapper:hover img{
-  content: url('/public/button-hover.png'); 
+.button-wrapper:hover img {
+  content: url("/public/button-hover.png");
   padding-top: 34%;
   width: 80%;
-  z-index: 0; 
+  z-index: 0;
 }
 
 .button-text {
@@ -51,27 +50,26 @@ html{
   font-size: 12px;
   font-weight: bold;
   color: white;
-  z-index: 1; 
+  z-index: 1;
 }
-
 
 /*모바일 반응형*/
 @media screen and (min-width: 375px) and (max-width: 1024px) {
-  html{
+  html {
     background-color: black;
   }
-  .App{
+  .App {
     overflow: hidden;
-    background-image: url('/public/background1.png') !important;
+    background-image: url("/public/background1.png") !important;
     padding-top: 0;
     text-align: center;
     padding-left: 0;
-    background-color:  #FFFFF0;
-    background-size: cover; 
+    background-color: #fffff0;
+    background-size: cover;
     background-position: center center;
   }
 
-  #weblogo{
+  #weblogo {
     width: 90%;
     padding-top: 40%;
     padding-left: 0;
@@ -82,32 +80,31 @@ html{
     margin-left: 35%;
     padding-top: 50%;
   }
-  
+
   .button-wrapper {
     position: relative;
     display: inline-block;
   }
-  
+
   .button-image {
     width: 60%;
     display: block;
   }
-  
-  .button-wrapper:hover img{
-    content: url('/public/button-hover.png'); 
+
+  .button-wrapper:hover img {
+    content: url("/public/button-hover.png");
     width: 60%;
     padding-top: 0%;
-    z-index: 0; 
+    z-index: 0;
   }
-  
+
   .button-text {
     position: fixed;
     top: 69%;
-    left:43%;
+    left: 43%;
     font-size: 7px;
     font-weight: bold;
     color: white;
-    z-index: 1; 
+    z-index: 1;
   }
-
 }
