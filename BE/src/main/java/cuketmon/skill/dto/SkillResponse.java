@@ -7,10 +7,15 @@ import lombok.Getter;
 public class SkillResponse {
 
     private Integer id;
+
     private Integer accuracy;
+
     private String name;
+    
     private Integer power;
+
     private Integer pp;
+
     @JsonProperty("type")
     private TypeInfo type;
 

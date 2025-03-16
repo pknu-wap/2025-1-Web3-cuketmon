@@ -46,7 +46,6 @@ public class SkillService {
     }
 
     // TODO: 920이상 부터는 404 에러 발생하는데 이것 때문에 try catch 사용
-    //  구조 개선 필요할지도..?
     // 스킬 하나를 받아서 저장
     public boolean fetchAndSaveSkill(int skillId) {
         try {
@@ -75,10 +74,9 @@ public class SkillService {
                 skillResponse.getPower(),
                 skillResponse.getPp()
         );
+        skillRepository.save(skill);
 
         System.out.println("Skill 저장완료. Id: " + skillResponse.getId());
-
-        skillRepository.save(skill);
     }
 
 }

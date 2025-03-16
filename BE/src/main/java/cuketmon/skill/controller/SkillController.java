@@ -16,5 +16,4 @@ public class SkillController {
         this.skillService = skillService;
     }
 
-
 }
