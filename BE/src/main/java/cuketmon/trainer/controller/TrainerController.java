@@ -20,6 +20,9 @@ public class TrainerController {
     }
 
     // 임시 로그인 기능
+    //Kakao Api
+
+
     @PostMapping("tempLogin")
     public ResponseEntity<String> login(@RequestParam String name) {
         trainerService.tempLogin(name);

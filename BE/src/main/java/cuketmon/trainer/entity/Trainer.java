@@ -17,7 +17,13 @@ public class Trainer {
 
     @Id
     private String name;
+    private Long id;
 
+    @Column(nullable = false)
+    private String kakaoId;
+
+    @Column(nullable = false)
+    private String email;
     // TODO: toy, feed 클래스로 생성후 validation 고려 ex) 0~100
     @Column(nullable = false)
     private Integer toy;
@@ -26,7 +32,7 @@ public class Trainer {
     private Integer feed;
 
     @Column(nullable = false)
-    private Integer win;
+    private Integer win = 0;
 
     public void decreaseToy(int minus) {
         toy = toy - minus;
