@@ -43,5 +43,4 @@ public class TrainerService {
         return trainer.getFeed();
     }
 
-
 }
