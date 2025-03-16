@@ -1,40 +1,224 @@
 html, body {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-    overflow: hidden; /* 스크롤바 제거 */
-  }
-
-.Battle {
-  height: 100vh;
-  width: 100vw;
+  height: 100%;
+  margin: 0;
+  padding: 0;
   overflow: hidden;
 }
 
+.Battle {
+  background-image: url('/public/BattlePage/battlebg.png');
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vh;
+  width: 100vw;
+  position: relative;
+}
 
-.background {
-    background-size: 100% 100%;
-    background-attachment: fixed;
-    background-position: center;
-    width: 100vw;
-    height: 100vh;
-    z-index: -1;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    background-repeat: no-repeat;
-  }
+.content {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.battle-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  padding: 10px;
+}
+
+.myStage{
+  position: absolute;
+  top: 330px;
+  left: 280px;
+  width: 300px;
+  height: 250px;
+  z-index: -0;
+}
+
+.enemyStage{
+  position: absolute;
+  top: 330px;
+  right: 340px;
+  width: 300px;
+  height: 250px;
+  z-index: -0;
+}
+
+.cuketmon {
+  width: 200px;
+  text-align: center;
+}
+
+.myCuketmon-img{
+  position: absolute;
+  top: 290px;
+  left: 320px;
+  width: 200px;
+  height: 200px;
+  z-index: 1;
+}
 
 
-  .myCuketmon {
-    position: absolute;
-    top: 150px;
-    left: 150px;
+.enemyCuketmon-img {
+  position: absolute; 
+  top: 290px;
+  right: 390px;
+  width: 200px;
+  height: 200px;
+  z-index: 1;
+}
 
-  }
-  
-  .enemyCuketmon {
-    position: absolute;
-    top: 100px;
-    left: 150px;
-  }
+.myhp-bar {
+  width: 200px;
+  height: auto;
+  background-color: #ccc;
+  border: 10px solid green;
+  margin: 10px 0;
+}
+
+.enemyhp-bar {
+  width: 200px;
+  height: auto;
+  background-color: #ccc;
+  border: 10px solid green;
+  margin: 10px 0;
+}
+
+.hp-fill {
+  height: 100%;
+  background-color: green;
+  transition: width 0.3s;
+}
+
+.myHpBackground {
+  position: absolute;
+  top: 150px;
+  left: 310px;
+  width: 350px;
+  height: auto;
+}
+
+.enemyHpBackground {
+  position: absolute;
+  top: 150px;
+  right: 330px;
+  width: 350px;
+  height: auto;
+}
+
+.tech-section {
+  margin-top: 20px;
+  text-align: center;
+  position: relative;
+}
+
+.tech-window-img {
+  width: 1000px;
+  max-width: 1200px;
+  height: auto;
+  z-index: 0;
+}
+
+.tech-buttons {
+  position: absolute;
+  top: 50%; /* 기술 창 중간에서 시작 */
+  left: 35%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.tech-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 5px;
+}
+
+.tech-button {
+  background-color: transparent;
+  flex: 1; /* 2x2 격자에 맞게 조정 */
+  padding: 8px;
+  color: red;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  box-sizing: border-box;
+}
+
+.tech-button.selected {
+  background-color: transparent;
+  color: gold;
+}
+
+.tech-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.tech-info {
+  position: absolute;
+  bottom: 10px; /* 기술 창 하단에 배치 */
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.pp-info {
+  position: absolute;
+  bottom: 105px;
+  left: 350px;
+  background-color: transparent;
+  color: black;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 30px;
+}
+
+.fight-button {
+  position: absolute;
+  bottom:40px;
+  left: 340px;
+  padding: 8px 15px;
+  background-color: #ff0000;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 3px;
+  font-size: 24px;
+}
+
+.fight-button:disabled {
+  background-color: #ff0000;
+  cursor: not-allowed;
+  color: white;
+}
+
+.battle-animation {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.battle-message {
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 20px;
+  border-radius: 10px;
+  border: 2px solid #fff;
+  text-align: center;
+}
