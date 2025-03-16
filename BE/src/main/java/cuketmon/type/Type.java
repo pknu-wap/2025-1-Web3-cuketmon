@@ -5,29 +5,31 @@ import lombok.Getter;
 @Getter
 public enum Type {
 
-    NORMAL("노말"),
-    FIRE("불꽃"),
-    WATER("물"),
-    ELECTRIC("전기"),
-    GRASS("풀"),
-    ICE("얼음"),
-    FIGHTING("격투"),
-    POISON("독"),
-    GROUND("땅"),
-    FLYING("비행"),
-    PSYCHIC("에스퍼"),
-    BUG("벌레"),
-    ROCK("바위"),
-    GHOST("고스트"),
-    DRAGON("드래곤"),
-    DARK("악"),
-    STEEL("강철"),
-    FAIRY("페어리");
+    NORMAL("노말", "normal"),
+    FIRE("불꽃", "fire"),
+    WATER("물", "water"),
+    ELECTRIC("전기", "electric"),
+    GRASS("풀", "grass"),
+    ICE("얼음", "ice"),
+    FIGHTING("격투", "fighting"),
+    POISON("독", "poison"),
+    GROUND("땅", "ground"),
+    FLYING("비행", "flying"),
+    PSYCHIC("에스퍼", "psychic"),
+    BUG("벌레", "bug"),
+    ROCK("바위", "rock"),
+    GHOST("고스트", "ghost"),
+    DRAGON("드래곤", "dragon"),
+    DARK("악", "dark"),
+    STEEL("강철", "steel"),
+    FAIRY("페어리", "fairy");
 
-    private final String koreanTypeName;
+    private final String koreanName;
+    private final String englishName;
 
-    Type(String koreanTypeName) {
-        this.koreanTypeName = koreanTypeName;
+    Type(String koreanName, String englishName) {
+        this.koreanName = koreanName;
+        this.englishName = englishName;
     }
 
 }
