@@ -1,5 +1,4 @@
 package cuketmon.trainer.dto;
 
-public class TrainerDTO {
-
+public @interface Getter {
 }

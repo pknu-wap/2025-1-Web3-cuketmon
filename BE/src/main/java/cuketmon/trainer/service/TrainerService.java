@@ -6,8 +6,11 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class TrainerService {
+
 
     public static final int INIT_TOY = 100;
     public static final int INIT_FEED = 100;
@@ -17,28 +20,38 @@ public class TrainerService {
 
     @Autowired
     public TrainerService(TrainerRepository trainerRepository) {
+
         this.trainerRepository = trainerRepository;
     }
 
-    // 임시 로그인 기능임
+    //카카오톡 로그인 기능
     @Transactional
-    public void tempLogin(String name) {
-        if (!trainerRepository.existsById(name)) {
+    public void kakaoLogin(String name){
+        if (!trainerRepository.existsBykakaoId(name)){
             Trainer trainer = new Trainer(name, INIT_TOY, INIT_FEED, INIT_WIN);
             trainerRepository.save(trainer);
         }
+
     }
+    // 임시 로그인 기능임
+    //@Transactional
+    //public void tempLogin(String name) {
+    //    if (!trainerRepository.existsById(name)) {
+    //        Trainer trainer = new Trainer(name, INIT_TOY, INIT_FEED, INIT_WIN);
+    //        trainerRepository.save(trainer);
+    //    }
+    //}
 
     @Transactional
     public Integer getRemainingToys(String name) {
-        Trainer trainer = trainerRepository.findById(name)
+        Trainer trainer = trainerRepository.findByKakaoId(name)
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR]: 해당 트레이너를 찾을 수 없습니다."));
         return trainer.getToy();
     }
 
     @Transactional
     public Integer getRemainingFeeds(String name) {
-        Trainer trainer = trainerRepository.findById(name)
+        Trainer trainer = trainerRepository.findByKakaoId(name)
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR]: 해당 트레이너를 찾을 수 없습니다."));
         return trainer.getFeed();
     }

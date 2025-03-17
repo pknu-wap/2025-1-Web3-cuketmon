@@ -1,5 +1,10 @@
 package cuketmon.trainer.controller;
 
+import lombok.Value;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import cuketmon.trainer.service.TrainerService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,8 +14,41 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+//Kakao Login
 @RestController
-@RequestMapping("/trainer")
+@RequestMapping("/kakaoLogin")
+public class KakaoLoginPageController {
+
+    @Value("${kakao.client_id}")
+    private String client_id;
+
+    @Value("${kakao.redirect_uri}")
+    private String redirect_uri;
+
+    @RestController
+    @RequestMapping("/kakaoLogin")
+    public class KakaoLoginPageController {
+
+        @Value("${kakao.client_id}")
+        private String clientId;
+
+        @Value("${kakao.redirect_uri}")
+        private String redirectUri;
+
+        @GetMapping("/page")
+        public Map<String, String> loginPage() {
+            String location = "https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=" + clientId + "&redirect_uri=" + redirectUri;
+            Map<String, String> response = new HashMap<>();
+            response.put("location", location);
+            return response;
+        }
+    }
+}
+
+
+
+@RestController
+@RequestMapping("/kakaoLogin")
 public class TrainerController {
 
     private final TrainerService trainerService;
@@ -20,14 +58,11 @@ public class TrainerController {
     }
 
     // 임시 로그인 기능
-    //Kakao Api
-
-
-    @PostMapping("tempLogin")
-    public ResponseEntity<String> login(@RequestParam String name) {
-        trainerService.tempLogin(name);
-        return ResponseEntity.ok("로그인 성공, 사용자 이름: " + name);
-    }
+    //@PostMapping("tempLogin")
+    //public ResponseEntity<String> login(@RequestParam String name) {
+    //    trainerService.tempLogin(name);
+    //    return ResponseEntity.ok("로그인 성공, 사용자 이름: " + name);
+    //}
 
     // 남은 장난감의 개수를 확인
     @GetMapping("/{trainerName}/toys")
