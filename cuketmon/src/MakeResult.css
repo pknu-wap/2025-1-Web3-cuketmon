@@ -6,6 +6,7 @@
   width: 100%;
   height: 100%;
   text-align: center;
+  animation: blinkEffect 1s ease-in-out 2;
 }
 
 .ResultPage #egg {
@@ -34,4 +35,20 @@
   top: 10%;
   left: 0%;
   width: 100%;
+}
+
+/*깜빡임 에니메이션*/
+@keyframes blinkEffect {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+.blinkEffect {
+  animation: blinkEffect 1s ease-in-out 2;
 }
