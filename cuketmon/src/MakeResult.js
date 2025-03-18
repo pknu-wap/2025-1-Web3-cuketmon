@@ -1,9 +1,12 @@
 import React, { useEffect, useState, useRef } from "react";
+import { useNavigate } from "react-router-dom"; 
 import "./MakeResult.css";
 
 function MakeResult() {
   const [pokemonImage, setPokemonImage] = useState("./MakeResultPage/MovingEgg.gif");
+  const [mentText, setMentText] = useState("어라...?");
   const eggRef = useRef(null);
+  const navigate = useNavigate(); 
 
   useEffect(() => {
     const eggElement = eggRef.current;
@@ -12,11 +15,13 @@ function MakeResult() {
       fetch("/api/getPokemonImage")
         .then((response) => response.json())
         .then((data) => {
-          setPokemonImage(data.imageUrl || "./MakeResultPage/toy.png"); // 백엔드에서 이미지가 없으면 toy.png로 설정
+          setPokemonImage(data.imageUrl);
+          setMentText("처음보는 포켓몬이 나타났다!");
         })
         .catch((error) => {
           console.error("이미지 로드 실패:", error);
-          setPokemonImage("./MakeResultPage/toy.png"); // 오류 발생 시 기본 이미지 설정
+          setPokemonImage(""); 
+          setMentText("커켓몬이 도망쳤다.(다시 시도하려면 클릭)");
         });
     };
 
@@ -26,6 +31,10 @@ function MakeResult() {
       eggElement.removeEventListener("animationend", handleAnimationEnd);
     };
   }, []);
+
+  const handleTextClick = () => {
+    navigate("/make");
+  };
 
   return (
     <div className="ResultPage">
@@ -37,7 +46,13 @@ function MakeResult() {
         className="blinkEffect"
       />
       <div className="chatbox">
-        <p id="ment">어라...?</p>
+        <p 
+          id="ment" 
+          onClick={mentText.includes("도망") ? handleTextClick : null} 
+          style={{ cursor: mentText.includes("도망") ? "pointer" : "default" }} 
+        >
+          {mentText}
+        </p> 
       </div>
     </div>
   );
