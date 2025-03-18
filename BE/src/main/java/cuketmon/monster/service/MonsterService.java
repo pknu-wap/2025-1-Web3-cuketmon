@@ -40,7 +40,7 @@ public class MonsterService {
     @Transactional
     public void tempGenerate(GenerateApiRequestBody requestBody) {
         Type type1 = Type.toType(requestBody.getType1());
-        Type type2 = Type.toType(requestBody.getType2());
+        Type type2 = Type.toType(requestBody.getType2()); // nullable 값
 
         Monster monster
                 = new Monster("괴력몬", null, INIT_AFFINITY,

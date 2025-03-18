@@ -36,6 +36,10 @@ public enum Type {
     }
 
     public static Type toType(String name) {
+        if (name == null || name.isBlank()) {
+            return null;
+        }
+
         return Arrays.stream(values())
                 .filter(type -> type.name().equalsIgnoreCase(name) ||
                         type.koreanName.equalsIgnoreCase(name) ||

@@ -7,8 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
-@NoArgsConstructor // 기본 생성자 필수
-@AllArgsConstructor // 모든 필드를 포함한 생성자 추가 (필요하면 사용)
+@NoArgsConstructor
+@AllArgsConstructor
 public class GenerateApiRequestBody {
 
     @NotBlank(message = "type1은 필수 입력값입니다.")
