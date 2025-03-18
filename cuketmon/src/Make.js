@@ -40,11 +40,13 @@ function Make() {
   };
 
   return (
+    <div>
     <div className="Make">
       <div className="Q1">
         <img src="./mypageicon.png" alt="포켓몬 아이콘" />
         <h2>원하시는 포켓몬의 타입을 선택해 주세요.</h2>
-        <img src='./MakePage/type.png' id="typeicon" alt="포켓몬 타입 이미지"/>
+      </div>
+       
         <select id="S1" value={type1} onChange={(e) => setType1(e.target.value)}>
           <option value=""></option>
           <option value="fire">불꽃</option>
@@ -66,6 +68,7 @@ function Make() {
           <option value="bug">벌레</option>
           <option value="normal">노말</option>
         </select>
+        <br/>
 
         <select id="S2" value={type2} onChange={(e) => setType2(e.target.value)}>
           <option value=""></option>
@@ -88,12 +91,14 @@ function Make() {
           <option value="bug">벌레</option>
           <option value="normal">노말</option>
         </select>
-      </div>
+        <img src='./MakePage/type.png' id="typeicon" alt="포켓몬 타입 이미지"/>
 
       <div className="Q2">
         <img src="./mypageicon.png" alt="포켓몬 아이콘" />
-        <h2>원하시는 포켓몬의 특징을 적어주세요. (최대 1000자)</h2>
-
+        <h2>원하시는 포켓몬의 특징을 적어주세요.</h2>
+      </div>
+      <div className="cukemonFeature">
+        <div className="textBack">
         <textarea 
           value={description} 
           onChange={(e) => setDescription(e.target.value)}
@@ -102,16 +107,17 @@ function Make() {
           cols={50} 
           placeholder="원하시는 포켓몬의 특징을 기입하세요."
         />
-
-        <p>{description.length} / 1000 자</p>
-
-        <div className="button-wrapper" onClick={handleSubmit}>
-          <span className="button-text">제출하기</span>
-          <img src='/button.png' id="submit" alt="제출 버튼"/>
         </div>
-      </div>        
-      <MenuBar />
-    </div>
+        <p>{description.length} / 1000 자</p>
+        </div>  
+         
+      <div className="SubmitButton">
+          <p>제출하기</p>
+          <img src='/button.png' id="SubmitButton" alt="제출 버튼"  onClick={handleSubmit}/>
+      </div>
+    </div>      
+    <MenuBar />
+    </div>  
   );
 }
 
