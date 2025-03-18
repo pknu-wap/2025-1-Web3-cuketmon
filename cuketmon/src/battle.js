@@ -79,16 +79,15 @@ function Battle() {
           <div className="battle-container">
             <div className="cuketmon">
               <img src={cuketmonImages.myCuketmon} className="myCuketmon-img" alt="내 커켓몬" />
-              <div className="myhp-bar">
-                <div className="hp-fill" style={{ width: `${myCuketmonHP}%` }}></div>
+              <div className="myHpBar">
+                <div className="my-hp-fill" style={{ width: `${myCuketmonHP}%` }}></div>
               </div>
             </div>
             <div className="cuketmon">
               <img src={cuketmonImages.enemyCuketmon} className="enemyCuketmon-img" alt="적 커켓몬" />
-              <div className="enemyhp-bar">
-                <div className="hp-fill" style={{ width: `${enemyCuketmonHP}%` }}></div>
+              <div className="enemyHpBar">
+                <div className="enemy-hp-fill" style={{ width: `${enemyCuketmonHP}%` }}></div>
               </div>
-              
             </div>
             <div className="battle-stage">
               <img src= "/BattlePage/stand.png" className="myStage" alt="전투무대"/>
@@ -98,6 +97,8 @@ function Battle() {
             <div className="HP-background">
               <img src= "/BattlePage/HPbg.png" className="myHpBackground" alt="체력바배경"/>
               <img src= "/BattlePage/HPbg.png" className="enemyHpBackground" alt="체력바배경"/>
+              <img src= "/BattlePage/HPbar.png" className="myHpImg" alt="체력바"/>
+              <img src= "/BattlePage/HPbar.png" className="enemyHpImg" alt="체력바"/>
             </div>
           </div>
 
