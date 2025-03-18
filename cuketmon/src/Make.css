@@ -1,15 +1,7 @@
-.background-image{
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden;
-  background-image: url('/public/mk1background.png');
-  opacity: 0.4;;
-}
-
-.handleCreate{
-  width: 41px;
-  height: 12px;
-  Top: 2755px;
-  left: 598px;
-  color: #EFC15C;
+.Make {
+  background-image: url("/public/MakePage/background4.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 100%;
 }
