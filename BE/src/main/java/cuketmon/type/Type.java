@@ -1,5 +1,6 @@
 package cuketmon.type;
 
+import java.util.Arrays;
 import lombok.Getter;
 
 @Getter
@@ -32,6 +33,19 @@ public enum Type {
         this.id = id;
         this.koreanName = koreanName;
         this.englishName = englishName;
+    }
+
+    public static Type toType(String name) {
+        if (name == null || name.isBlank()) {
+            return null;
+        }
+
+        return Arrays.stream(values())
+                .filter(type -> type.name().equalsIgnoreCase(name) ||
+                        type.koreanName.equalsIgnoreCase(name) ||
+                        type.englishName.equalsIgnoreCase(name))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 잘못된 타입입니다."));
     }
 
 }

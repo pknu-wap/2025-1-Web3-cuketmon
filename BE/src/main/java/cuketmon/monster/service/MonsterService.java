@@ -1,9 +1,11 @@
 package cuketmon.monster.service;
 
+import cuketmon.monster.dto.GenerateApiRequestBody;
 import cuketmon.monster.entity.Monster;
 import cuketmon.monster.repository.MonsterRepository;
 import cuketmon.trainer.entity.Trainer;
 import cuketmon.trainer.repository.TrainerRepository;
+import cuketmon.type.Type;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,13 +38,16 @@ public class MonsterService {
 
     // 임시 포켓몬 생성 함수
     @Transactional
-    public void tempGenerate(String monsterName) {
-        if (!monsterRepository.existsById(monsterName)) {
-            Monster monster
-                    = new Monster(monsterName, null, INIT_AFFINITY, INIT_HP, INIT_SPEED,
-                    INIT_ATTACK, INIT_DEFENCE, INIT_SPECIAL_ATTACK, INIT_SPECIAL_DEFENCE);
-            monsterRepository.save(monster);
-        }
+    public void tempGenerate(GenerateApiRequestBody requestBody) {
+        Type type1 = Type.toType(requestBody.getType1());
+        Type type2 = Type.toType(requestBody.getType2()); // nullable 값
+
+        Monster monster
+                = new Monster("괴력몬", null, INIT_AFFINITY,
+                INIT_HP, INIT_SPEED, INIT_ATTACK, INIT_DEFENCE, INIT_SPECIAL_ATTACK, INIT_SPECIAL_DEFENCE,
+                type1, type2);
+        monsterRepository.save(monster);
+
     }
 
     @Transactional

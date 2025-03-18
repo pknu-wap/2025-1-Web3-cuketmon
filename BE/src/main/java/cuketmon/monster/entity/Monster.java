@@ -1,5 +1,6 @@
 package cuketmon.monster.entity;
 
+import cuketmon.type.Type;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -45,13 +46,12 @@ public class Monster {
     @Column(nullable = false)
     private Integer specialDefence;
 
-    /*
     // 타입 (1~2개)
-    @ElementCollection(fetch = FetchType.LAZY)
-    @CollectionTable(name = "monster_types", joinColumns = @JoinColumn(name = "pokemon_id"))
-    @Enumerated(EnumType.STRING)
-    private List<Type> types = new ArrayList<>();
+    private Type type1;
 
+    private Type type2;
+
+    /*
     // 스킬 (4개)
     @ElementCollection(fetch = FetchType.LAZY)
     @CollectionTable(name = "monster_skills", joinColumns = @JoinColumn(name = "pokemon_id"))
