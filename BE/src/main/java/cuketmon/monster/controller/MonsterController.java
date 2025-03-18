@@ -1,12 +1,14 @@
 package cuketmon.monster.controller;
 
+import cuketmon.monster.dto.GenerateApiRequestBody;
 import cuketmon.monster.service.MonsterService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -22,9 +24,9 @@ public class MonsterController {
 
     // 임시 몬스터 생성 기능
     @PostMapping("/generate")
-    public ResponseEntity<String> generateMonster(@RequestParam String monsterName) {
-        monsterService.tempGenerate(monsterName);
-        return ResponseEntity.ok("커켓몬 생성 성공, 몬스터 이름:  " + monsterName);
+    public ResponseEntity<String> generateMonster(@Valid @RequestBody GenerateApiRequestBody requestBody) {
+        monsterService.tempGenerate(requestBody);
+        return ResponseEntity.ok("커켓몬 생성 성공!");
     }
 
     // 먹이 주기
