@@ -112,3 +112,9 @@
 .SubmitButton #SubmitButton {
   width: 13%;
 }
+
+.SubmitButton #SubmitButton:hover {
+  content: url("/public/button-hover.png");
+  width: 13%;
+  padding-top: 0.15%;
+}
