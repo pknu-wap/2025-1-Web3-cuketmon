@@ -4,4 +4,111 @@
   background-position: center;
   background-repeat: no-repeat;
   width: 100%;
+  height: 100%;
+}
+
+.Q1 {
+  display: flex;
+  padding-top: 18%;
+}
+
+.Q1 img {
+  width: 3%;
+  height: 3%;
+  padding-top: 0.5%;
+  padding-right: 0.5%;
+}
+
+.Q1 h2 {
+  font-size: 20px;
+}
+
+#typeicon {
+  position: absolute;
+  width: 15%;
+  margin-left: 50%;
+  top: 8%;
+}
+
+#S1,
+#S2 {
+  margin-left: 3%;
+  background-image: url("/public/MakePage/selectbackground.png");
+  width: 17%;
+  height: 50px;
+  margin-bottom: 1%;
+  font-size: 17px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  overflow: hidden;
+}
+
+#S1 option,
+#S2 option {
+  text-align: center;
+  padding: 40%;
+}
+
+/*Q2*/
+.Q2 {
+  display: flex;
+  padding-top: 5%;
+}
+
+.Q2 img {
+  width: 3%;
+  height: 3%;
+  padding-right: 0.5%;
+}
+
+.Q2 h2 {
+  font-size: 20px;
+}
+
+.Make .cukemonFeature {
+  display: flex;
+  margin-left: 3%;
+}
+
+.Make .cukemonFeature .textBack {
+  width: 50%;
+  height: 130px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  overflow: hidden;
+  background-image: url("/public/MakePage/textareabackground.png");
+  margin-bottom: 2%;
+}
+.Make .cukemonFeature textarea {
+  margin-left: 5%;
+  margin-top: 3%;
+  width: 85%;
+  height: 70%;
+  border: none;
+  outline: none;
+  resize: none;
+}
+
+.Make .cukemonFeature p {
+  padding-top: 5%;
+  width: 20%;
+}
+
+/* 제출 버튼 */
+.SubmitButton {
+  position: relative;
+  text-align: center;
+  padding-bottom: 2%;
+}
+
+.SubmitButton p {
+  position: absolute;
+  top: 16%;
+  left: 49.5%;
+  color: white;
+  pointer-events: none;
+}
+
+.SubmitButton #SubmitButton {
+  width: 13%;
 }
