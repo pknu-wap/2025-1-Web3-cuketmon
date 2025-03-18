@@ -25,9 +25,9 @@ public class SkillService {
     // TODO: 너무 느림 flux? 써서 고쳐야함
     // 전체 스킬 저장 (919개)
     public void fetchAndSaveAllSkills() {
-        for (int i = 0; i <= TOTAL_SKILL; i++) {
+        for (int i = 1; i <= TOTAL_SKILL; i++) {
             if (!fetchAndSaveSkill(i)) {
-                break;
+                System.out.println("[Error] " + i + "번 스킬 받아오기 에러!");
             }
         }
     }
@@ -55,6 +55,7 @@ public class SkillService {
         Skill skill = new Skill(
                 skillResponse.getId(),
                 skillResponse.getType().getName(),
+                skillResponse.getDamageClass().getName(),
                 skillResponse.getAccuracy(),
                 skillResponse.getName(),
                 skillResponse.getPower(),
