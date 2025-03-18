@@ -1,11 +1,13 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom"; 
 import "./Make.css";
 import MenuBar from "./menubar/Menubar.js";
 
 function Make() {
-  const [type1, setType1] = useState(""); 
-  const [type2, setType2] = useState(""); 
-  const [description, setDescription] = useState(""); 
+  const [type1, setType1] = useState("");
+  const [type2, setType2] = useState("");
+  const [description, setDescription] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = async () => {
     if (!type1 || !type2 || !description.trim()) {
@@ -30,23 +32,26 @@ function Make() {
 
       if (response.ok) {
         alert("데이터가 성공적으로 전송되었습니다!");
+        navigate("/MakeResult"); 
       } else {
         alert("데이터 전송에 실패했습니다.");
+ 
       }
     } catch (error) {
       console.error("전송 오류:", error);
-      alert("데이터 전송에 실패했습니다.");
+      alert("데이터 전송에 실패했습니다.임시코드로 navigate(/MakeResult) 넣어둠!! 꼭 나중에 빼야함.");
+      navigate("/MakeResult"); //지금 넣어둔 임시코드 Makersult.js만든 후에는  꼭 빼야함 !!!!!!!!
     }
   };
 
   return (
     <div>
-    <div className="Make">
-      <div className="Q1">
-        <img src="./mypageicon.png" alt="포켓몬 아이콘" />
-        <h2>원하시는 포켓몬의 타입을 선택해 주세요.</h2>
-      </div>
-       
+      <div className="Make">
+        <div className="Q1">
+          <img src="./mypageicon.png" alt="포켓몬 아이콘" />
+          <h2>원하시는 포켓몬의 타입을 선택해 주세요.</h2>
+        </div>
+
         <select id="S1" value={type1} onChange={(e) => setType1(e.target.value)}>
           <option value=""></option>
           <option value="fire">불꽃</option>
@@ -68,7 +73,7 @@ function Make() {
           <option value="bug">벌레</option>
           <option value="normal">노말</option>
         </select>
-        <br/>
+        <br />
 
         <select id="S2" value={type2} onChange={(e) => setType2(e.target.value)}>
           <option value=""></option>
@@ -91,33 +96,38 @@ function Make() {
           <option value="bug">벌레</option>
           <option value="normal">노말</option>
         </select>
-        <img src='./MakePage/type.png' id="typeicon" alt="포켓몬 타입 이미지"/>
+        <img src='./MakePage/type.png' id="typeicon" alt="포켓몬 타입 이미지" />
 
-      <div className="Q2">
-        <img src="./mypageicon.png" alt="포켓몬 아이콘" />
-        <h2>원하시는 포켓몬의 특징을 적어주세요.</h2>
-      </div>
-      <div className="cukemonFeature">
-        <div className="textBack">
-        <textarea 
-          value={description} 
-          onChange={(e) => setDescription(e.target.value)}
-          maxLength={1000} 
-          rows={5} 
-          cols={50} 
-          placeholder="원하시는 포켓몬의 특징을 기입하세요."
-        />
+        <div className="Q2">
+          <img src="./mypageicon.png" alt="포켓몬 아이콘" />
+          <h2>원하시는 포켓몬의 특징을 적어주세요.</h2>
         </div>
-        <p>{description.length} / 1000 자</p>
-        </div>  
-         
-      <div className="SubmitButton">
+        <div className="cukemonFeature">
+          <div className="textBack">
+            <textarea
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              maxLength={1000}
+              rows={5}
+              cols={50}
+              placeholder="원하시는 포켓몬의 특징을 기입하세요."
+            />
+          </div>
+          <p>{description.length} / 1000 자</p>
+        </div>
+
+        <div className="SubmitButton">
           <p>제출하기</p>
-          <img src='/button.png' id="SubmitButton" alt="제출 버튼"  onClick={handleSubmit}/>
+          <img
+            src='/button.png'
+            id="SubmitButton"
+            alt="제출 버튼"
+            onClick={handleSubmit}
+          />
+        </div>
       </div>
-    </div>      
-    <MenuBar />
-    </div>  
+      <MenuBar />
+    </div>
   );
 }
 
