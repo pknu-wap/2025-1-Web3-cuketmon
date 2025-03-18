@@ -11,7 +11,7 @@ public class SkillResponse {
     private Integer accuracy;
 
     private String name;
-    
+
     private Integer power;
 
     private Integer pp;
@@ -19,8 +19,16 @@ public class SkillResponse {
     @JsonProperty("type")
     private TypeInfo type;
 
+    @JsonProperty("damage_class")
+    private DamageClassInfo damageClass;
+
     @Getter
     public static class TypeInfo {
+        private String name;
+    }
+
+    @Getter
+    public static class DamageClassInfo {
         private String name;
     }
 

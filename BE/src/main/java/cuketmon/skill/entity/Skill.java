@@ -22,6 +22,9 @@ public class Skill {
     @Column(nullable = false)
     private String type;
 
+    @Column
+    private String damageClass;
+
     @Column(nullable = true)
     private Integer accuracy;
 
