@@ -51,23 +51,22 @@ public class Monster {
 
     private Type type2;
 
-    /*
     // 스킬 (4개)
-    @ElementCollection(fetch = FetchType.LAZY)
-    @CollectionTable(name = "monster_skills", joinColumns = @JoinColumn(name = "pokemon_id"))
-    @Enumerated(EnumType.STRING)
-    private List<Skill> skills = new ArrayList<>();
-    */
+    private Integer skillId1;
+
+    private Integer skillId2;
+
+    private Integer skillId3;
+
+    private Integer skillId4;
 
     /*
-    특성은.. 나중에...
-    @ElementCollection(fetch = FetchType.LAZY)
-    @CollectionTable(name = "monster_abilities", joinColumns = @JoinColumn(name = "pokemon_id"))
-    @Enumerated(EnumType.STRING)
-    private List<Ability> abilities = new ArrayList<>();
+    특성은... 나중에...
+    private Long abilities;
     */
 
     public void increaseAffinity(int plus) {
         affinity = affinity + plus;
     }
+
 }

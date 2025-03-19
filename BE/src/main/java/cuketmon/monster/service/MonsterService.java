@@ -3,6 +3,7 @@ package cuketmon.monster.service;
 import cuketmon.monster.dto.GenerateApiRequestBody;
 import cuketmon.monster.entity.Monster;
 import cuketmon.monster.repository.MonsterRepository;
+import cuketmon.skill.service.SkillService;
 import cuketmon.trainer.entity.Trainer;
 import cuketmon.trainer.repository.TrainerRepository;
 import cuketmon.type.Type;
@@ -29,11 +30,14 @@ public class MonsterService {
 
     private final TrainerRepository trainerRepository;
     private final MonsterRepository monsterRepository;
+    private final SkillService skillService;
 
     @Autowired
-    public MonsterService(TrainerRepository trainerRepository, MonsterRepository monsterRepository) {
+    public MonsterService(TrainerRepository trainerRepository, MonsterRepository monsterRepository,
+                          SkillService skillService) {
         this.trainerRepository = trainerRepository;
         this.monsterRepository = monsterRepository;
+        this.skillService = skillService;
     }
 
     // 임시 포켓몬 생성 함수
@@ -42,18 +46,25 @@ public class MonsterService {
         Type type1 = Type.toType(requestBody.getType1());
         Type type2 = Type.toType(requestBody.getType2()); // nullable 값
 
+        // TODO: damageClass 설정 함수 만들어야함
+        //  특공 물공 중에 높은 걸로...
+        Integer skillId1 = skillService.getSkillId(type1, "physical", 10, 80);  // 평타
+        Integer skillId2 = skillService.getSkillId(type1, "physical", 80, 500); // 필살기
+        Integer skillId3 = skillService.getSkillId(type2, "physical", 10, 80);
+        Integer skillId4 = skillService.getSkillId(type2, "special", 10, 80);
+
         Monster monster
                 = new Monster("괴력몬", null, INIT_AFFINITY,
                 INIT_HP, INIT_SPEED, INIT_ATTACK, INIT_DEFENCE, INIT_SPECIAL_ATTACK, INIT_SPECIAL_DEFENCE,
-                type1, type2);
-        monsterRepository.save(monster);
+                type1, type2, skillId1, skillId2, skillId3, skillId4);
 
+        monsterRepository.save(monster);
     }
 
     @Transactional
     public void feedMonster(String monsterName) {
         // TODO: 현재 로그인 한 사용자를 기반으로 find 하도록 수정해야함
-        //  security context 라는게 있다는데.. ( 이 방법은 별로인듯 because 누를 때 마다 주인을 찾음)
+        //  security context 라는게 있다는데.. (이 방법은 별로인듯 because 누를 때 마다 주인을 찾음)
         //  아니면 프론트에서 기억하고 있는 이름 좀 넘겨달라고 해도 될 듯
         Trainer trainer = trainerRepository.findById(TEST_TRAINER_NAME)
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당 트레이너를 찾을 수 없습니다."));

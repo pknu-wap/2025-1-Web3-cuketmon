@@ -1,7 +1,10 @@
 package cuketmon.skill.entity;
 
+import cuketmon.type.Type;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,9 +21,9 @@ public class Skill {
     @Id
     private Integer id;
 
-    // TODO: 타입은 개발 전 이니까 일단 String으로 받아놓기
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private String type;
+    private Type type;
 
     @Column
     private String damageClass;

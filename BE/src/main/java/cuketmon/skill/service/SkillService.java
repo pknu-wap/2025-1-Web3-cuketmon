@@ -3,6 +3,10 @@ package cuketmon.skill.service;
 import cuketmon.skill.dto.SkillResponse;
 import cuketmon.skill.entity.Skill;
 import cuketmon.skill.repository.SkillRepository;
+import cuketmon.type.Type;
+import jakarta.transaction.Transactional;
+import java.util.List;
+import java.util.Random;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -22,31 +26,42 @@ public class SkillService {
         this.skillWebClient = skillWebClient;
     }
 
+    // 스킬 분배 로직
+    @Transactional
+    public Integer getSkillId(Type type, String damageClass, int startDamage, int endDamage) {
+        List<Skill> skills = skillRepository.findAllByTypeAndDamageClassAndPowerBetween(
+                        type, damageClass, startDamage, endDamage)
+                .orElseThrow(() -> new IllegalArgumentException("[Error] 조건을 만족하는 스킬이 없습니다."));
+
+        if (skills.isEmpty()) {
+            throw new IllegalArgumentException("[Error] 조건을 만족하는 스킬이 없습니다.");
+        }
+
+        // 찾은 스킬들 중 랜덤으로 하나 선택
+        return skills.get(new Random().nextInt(skills.size())).getId();
+    }
+
     // TODO: 너무 느림 flux? 써서 고쳐야함
     // 전체 스킬 저장 (919개)
     public void fetchAndSaveAllSkills() {
         for (int i = 1; i <= TOTAL_SKILL; i++) {
-            if (!fetchAndSaveSkill(i)) {
-                System.out.println("[Error] " + i + "번 스킬 받아오기 에러!");
-            }
+            fetchAndSaveSkill(i);
         }
     }
 
     // 스킬 하나를 받아서 저장
-    public boolean fetchAndSaveSkill(int skillId) {
+    private void fetchAndSaveSkill(int skillId) {
         try {
             SkillResponse skillResponse = skillWebClient.get()
                     .uri(SKILL_API_URL + "/" + skillId)
                     .retrieve()
                     .bodyToMono(SkillResponse.class)
                     .block();
-
             if (skillResponse != null) {
                 saveSkill(skillResponse);
             }
-            return true;
         } catch (Exception e) {
-            return false;
+            System.out.println("[ERROR] " + skillId + "번 스킬 저장 중 오류 발생: " + e.getMessage());
         }
     }
 
@@ -54,7 +69,7 @@ public class SkillService {
     private void saveSkill(SkillResponse skillResponse) {
         Skill skill = new Skill(
                 skillResponse.getId(),
-                skillResponse.getType().getName(),
+                Type.toType(skillResponse.getType().getName()),
                 skillResponse.getDamageClass().getName(),
                 skillResponse.getAccuracy(),
                 skillResponse.getName(),
