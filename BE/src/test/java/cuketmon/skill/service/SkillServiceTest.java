@@ -5,14 +5,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import cuketmon.skill.entity.Skill;
 import cuketmon.skill.repository.SkillRepository;
 import cuketmon.type.Type;
-import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-@Transactional
 class SkillServiceTest {
 
     @Autowired
