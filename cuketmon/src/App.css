@@ -35,7 +35,7 @@ html {
 .button-text {
   position: absolute;
   top: 75.9%;
-  left: 50%;
+  left: 49.5%;
   font-size: 12px;
   font-weight: bold;
   color: white;
@@ -53,9 +53,10 @@ html {
     padding-top: 0;
     text-align: center;
     padding-left: 0;
-    background-color: #fffff0;
+
     background-size: cover;
     background-position: center center;
+    padding-bottom: 0%;
   }
 
   #weblogo {
@@ -63,34 +64,24 @@ html {
     padding-top: 40%;
     padding-left: 0;
   }
-  .button-container {
-    position: relative;
-    display: inline-block;
-    margin-left: 35%;
-    padding-top: 50%;
+
+  .button-container .button-image {
+    position: absolute;
+    width: 40%;
+    left: 30%;
   }
 
-  .button-wrapper {
-    position: relative;
-    display: inline-block;
-  }
-
-  .button-image {
-    width: 60%;
-    display: block;
-  }
-
-  .button-wrapper:hover img {
+  .button-container .button-image:hover {
     content: url("/public/button-hover.png");
-    width: 60%;
     padding-top: 0%;
     z-index: 0;
+    width: 40%;
   }
 
   .button-text {
     position: fixed;
-    top: 69%;
-    left: 43%;
+    top: 70.5%;
+    left: 44.9%;
     font-size: 7px;
     font-weight: bold;
     color: white;
