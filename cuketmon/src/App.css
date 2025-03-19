@@ -19,34 +19,23 @@ html {
   margin-top: 10%;
 }
 
-.button-container {
-  position: relative;
-  display: inline-block;
-  margin-left: 41%;
+.button-container .button-image {
+  position: absolute;
+  top: 67%;
+  left: 41%;
+  width: 22%;
 }
 
-.button-wrapper {
-  position: relative;
-  display: inline-block;
-}
-
-.button-image {
-  width: 40%;
-  margin-top: 35%;
-  display: block;
-}
-
-.button-wrapper:hover img {
+.button-container .button-image:hover {
   content: url("/public/button-hover.png");
-  padding-top: 34%;
-  width: 80%;
+  width: 22%;
   z-index: 0;
 }
 
 .button-text {
-  position: fixed;
-  top: 75%;
-  padding-left: 7%;
+  position: absolute;
+  top: 75.9%;
+  left: 50%;
   font-size: 12px;
   font-weight: bold;
   color: white;
