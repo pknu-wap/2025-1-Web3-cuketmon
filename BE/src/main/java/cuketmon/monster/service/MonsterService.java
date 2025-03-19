@@ -45,9 +45,8 @@ public class MonsterService {
         Monster monster
                 = new Monster("괴력몬", null, INIT_AFFINITY,
                 INIT_HP, INIT_SPEED, INIT_ATTACK, INIT_DEFENCE, INIT_SPECIAL_ATTACK, INIT_SPECIAL_DEFENCE,
-                type1, type2);
+                type1, type2, null, null, null, null);
         monsterRepository.save(monster);
-
     }
 
     @Transactional
