@@ -4,6 +4,8 @@ import cuketmon.skill.dto.SkillResponse;
 import cuketmon.skill.entity.Skill;
 import cuketmon.skill.repository.SkillRepository;
 import cuketmon.type.Type;
+import java.util.List;
+import java.util.Random;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -21,6 +23,16 @@ public class SkillService {
     public SkillService(SkillRepository skillRepository, WebClient skillWebClient) {
         this.skillRepository = skillRepository;
         this.skillWebClient = skillWebClient;
+    }
+
+    // 스킬 분배 로직
+    public Integer getSkillId(Type type, String damageClass, int startDamage, int endDamage) {
+        List<Skill> skills = skillRepository.findAllByTypeAndDamageClassAndPowerBetween(
+                        type, damageClass, startDamage, endDamage)
+                .orElseThrow(() -> new IllegalArgumentException("[Error] 조건을 만족하는 스킬이 없습니다."));
+
+        // 찾은 스킬들 중 랜덤으로 하나 선택
+        return skills.get(new Random().nextInt(skills.size())).getId();
     }
 
     // TODO: 너무 느림 flux? 써서 고쳐야함

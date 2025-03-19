@@ -52,13 +52,13 @@ public class Monster {
     private Type type2;
 
     // 스킬 (4개)
-    private Long skillId1;
+    private Integer skillId1;
 
-    private Long skillId2;
+    private Integer skillId2;
 
-    private Long skillId3;
+    private Integer skillId3;
 
-    private Long skillId4;
+    private Integer skillId4;
 
     /*
     특성은... 나중에...
