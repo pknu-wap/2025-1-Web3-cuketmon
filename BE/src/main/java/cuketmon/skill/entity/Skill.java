@@ -1,5 +1,6 @@
 package cuketmon.skill.entity;
 
+import cuketmon.type.Type;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -18,9 +19,8 @@ public class Skill {
     @Id
     private Integer id;
 
-    // TODO: 타입은 개발 전 이니까 일단 String으로 받아놓기
     @Column(nullable = false)
-    private String type;
+    private Type type;
 
     @Column
     private String damageClass;

@@ -3,6 +3,7 @@ package cuketmon.skill.service;
 import cuketmon.skill.dto.SkillResponse;
 import cuketmon.skill.entity.Skill;
 import cuketmon.skill.repository.SkillRepository;
+import cuketmon.type.Type;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -27,13 +28,13 @@ public class SkillService {
     public void fetchAndSaveAllSkills() {
         for (int i = 1; i <= TOTAL_SKILL; i++) {
             if (!fetchAndSaveSkill(i)) {
-                System.out.println("[Error] " + i + "번 스킬 받아오기 에러!");
+                System.out.println("[Error] " + i + "번 스킬 받아오기 실패");
             }
         }
     }
 
     // 스킬 하나를 받아서 저장
-    public boolean fetchAndSaveSkill(int skillId) {
+    private boolean fetchAndSaveSkill(int skillId) {
         try {
             SkillResponse skillResponse = skillWebClient.get()
                     .uri(SKILL_API_URL + "/" + skillId)
@@ -54,7 +55,7 @@ public class SkillService {
     private void saveSkill(SkillResponse skillResponse) {
         Skill skill = new Skill(
                 skillResponse.getId(),
-                skillResponse.getType().getName(),
+                Type.toType(skillResponse.getType().getName()),
                 skillResponse.getDamageClass().getName(),
                 skillResponse.getAccuracy(),
                 skillResponse.getName(),
