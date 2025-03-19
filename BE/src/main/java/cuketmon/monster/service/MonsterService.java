@@ -46,10 +46,12 @@ public class MonsterService {
         Type type1 = Type.toType(requestBody.getType1());
         Type type2 = Type.toType(requestBody.getType2()); // nullable 값
 
-        Integer skillId1 = skillService.getSkillId(type1, "attack", 10, 80);  // 평타
-        Integer skillId2 = skillService.getSkillId(type1, "attack", 80, 500); // 필살기
-        Integer skillId3 = skillService.getSkillId(type2, "attack", 10, 80);
-        Integer skillId4 = skillService.getSkillId(type2, "specialAttack", 10, 80);
+        // TODO: damageClass 설정 함수 만들어야함
+        //  특공 물공 중에 높은 걸로...
+        Integer skillId1 = skillService.getSkillId(type1, "physical", 10, 80);  // 평타
+        Integer skillId2 = skillService.getSkillId(type1, "physical", 80, 500); // 필살기
+        Integer skillId3 = skillService.getSkillId(type2, "physical", 10, 80);
+        Integer skillId4 = skillService.getSkillId(type2, "special", 10, 80);
 
         Monster monster
                 = new Monster("괴력몬", null, INIT_AFFINITY,

@@ -3,6 +3,8 @@ package cuketmon.skill.entity;
 import cuketmon.type.Type;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,6 +21,7 @@ public class Skill {
     @Id
     private Integer id;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Type type;
 

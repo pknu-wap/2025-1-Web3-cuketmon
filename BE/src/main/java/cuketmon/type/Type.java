@@ -37,7 +37,7 @@ public enum Type {
 
     public static Type toType(String name) {
         if (name == null || name.isBlank()) {
-            return null;
+            throw new IllegalArgumentException("[ERROR] 입력값이 비어있습니다.");
         }
 
         return Arrays.stream(values())
