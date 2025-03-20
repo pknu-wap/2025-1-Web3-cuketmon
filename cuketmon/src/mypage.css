@@ -1,128 +1,125 @@
-
-.myPage{
-    overflow: hidden;
-    background-image: url('/public/background3.png');
-    background-size: cover; 
-    background-repeat: no-repeat;
+.myPage {
+  overflow: hidden;
+  background-image: url("/public/MyPage/background3.png");
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
-.item img{
-    width: 25px;
-    height:25px;
-    padding-right: 0;
-
+.item img {
+  width: 25px;
+  height: 25px;
+  padding-right: 0;
 }
 
-.item span{
-    padding-right: 10px;
+.item span {
+  padding-right: 10px;
 }
 
-.item{
-    color:#EFC15C;
-    margin-bottom: 18%;
-    padding-left: 1%;
-    font-size: 20px;
-    padding-top: 12%;
-}
-
-#cuketmonImage{
- position: absolute;
-  margin-left: 44%;
-  width: 180px;
-  height: 180px;
-  top:40%;
-}
-
-.cucketmon_profile{
-    background-image: url('/public/cukemon_profile.png');
-    background-size: 100% 110%; 
-    border: 2px solid #BAB8B8;
-    width:22%;
-    text-align: center;
-    margin-left: 71%;
-    background-color: #D9D9D9;
-    margin-bottom: 14%;
-    padding-bottom: 0.35%;
-}
-
-.cucketmon_profile img{
-    width: 25px;
-    height: 25px;
-}
-
-.buttons{
-    position: absolute;
-    top:58%;
-    left:70%;
-}
-
-#feedButton,#playButton{
-    width: 40%;
-    padding-bottom: 5px;
-}
-
-#feedButton:hover,#playButton:hover{
-  content: url('/public/button-hover.png'); 
+.item {
+  color: #efc15c;
+  margin-bottom: 18%;
+  padding-left: 1%;
+  font-size: 20px;
+  padding-top: 12%;
 }
 
 #cuketmonImage {
-    transition: transform 1s ease-in-out;
-  }
+  position: absolute;
+  margin-left: 44%;
+  width: 180px;
+  height: 180px;
+  top: 40%;
+}
 
-  .buttons #button-text1{
-    position: fixed;
-    color:white;
-    top:62.5%;
-    left: 75%;
-    pointer-events: none;
-  }
-  .buttons #button-text2{
-    position: fixed;
-    color:white;
-    top:62.5%;
-    left:87%;
-    pointer-events: none;
-  }
+.cucketmon_profile {
+  background-image: url("/public/MyPage/cukemon_profile.png");
+  background-size: 100% 110%;
+  border: 2px solid #bab8b8;
+  width: 22%;
+  text-align: center;
+  margin-left: 71%;
+  background-color: #d9d9d9;
+  margin-bottom: 14%;
+  padding-bottom: 0.35%;
+}
 
+.cucketmon_profile img {
+  width: 25px;
+  height: 25px;
+}
 
+.buttons {
+  position: absolute;
+  top: 58%;
+  left: 70%;
+}
 
+#feedButton,
+#playButton {
+  width: 40%;
+  padding-bottom: 5px;
+}
 
-/*밥주기 움직임*/ 
-  .moveImage {
-    animation: moveUpDown 1s ease-in-out; 
+#feedButton:hover,
+#playButton:hover {
+  content: url("/public/button-hover.png");
+}
+
+#cuketmonImage {
+  transition: transform 1s ease-in-out;
+}
+
+.buttons #button-text1 {
+  position: fixed;
+  color: white;
+  top: 62.5%;
+  left: 75%;
+  pointer-events: none;
+}
+.buttons #button-text2 {
+  position: fixed;
+  color: white;
+  top: 62.5%;
+  left: 87%;
+  pointer-events: none;
+}
+
+/*밥주기 움직임*/
+.moveImage {
+  animation: moveUpDown 1s ease-in-out;
+}
+
+@keyframes moveUpDown {
+  0% {
+    transform: translateY(0);
   }
-  
-  @keyframes moveUpDown {
-    0% {
-      transform: translateY(0);
-    }
-    50% {
-      transform: translateY(-20px); 
-    }
-    100% {
-      transform: translateY(0); 
-    }
+  50% {
+    transform: translateY(-20px);
   }
-  
-  /*놀아주기 움직임*/
-  .shakeImage {
-    animation: shakeLeftRight 1s ease-in-out; 
+  100% {
+    transform: translateY(0);
   }
-  
-  @keyframes shakeLeftRight {
-    0% {
-      transform: translateX(0) rotate(0deg); 
-    }
-    25% {
-      transform: translateX(-10px) rotate(-10deg); 
-    }
-    50% {
-      transform: translateX(10px) rotate(10deg);
-    }
-    75% {
-      transform: translateX(-10px) rotate(-10deg); 
-    }
-    100% {
-      transform: translateX(0) rotate(0deg); 
-    }
+}
+
+/*놀아주기 움직임*/
+.shakeImage {
+  animation: shakeLeftRight 1s ease-in-out;
+}
+
+@keyframes shakeLeftRight {
+  0% {
+    transform: translateX(0) rotate(0deg);
   }
+  25% {
+    transform: translateX(-10px) rotate(-10deg);
+  }
+  50% {
+    transform: translateX(10px) rotate(10deg);
+  }
+  75% {
+    transform: translateX(-10px) rotate(-10deg);
+  }
+  100% {
+    transform: translateX(0) rotate(0deg);
+  }
+}
