@@ -46,10 +46,10 @@ function MyPage() {
       </div>
       
       <img 
-        src={cuketmonImage || '/egg.png'} 
+        src={cuketmonImage } 
         id='cuketmonImage' 
-        className={`${isFed ? 'moveImage' : ''} ${isPlayed ? 'shakeImage' : ''}`} // 애니메이션 클래스 두 개 적용
-        alt="쿠켓몬 이미지"
+        className={`${isFed ? 'moveImage' : ''} ${isPlayed ? 'shakeImage' : ''}`} 
+        alt="커켓몬 이미지"
       />
       <div className='cucketmonProfile'>
         <hr/>
