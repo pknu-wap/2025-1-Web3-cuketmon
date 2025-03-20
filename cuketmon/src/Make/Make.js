@@ -95,11 +95,11 @@ function Make() {
           <p>{description.length} / 77 자</p>
         </div>
 
-        <div className="SubmitButton">
+        <div className="submitButton">
           <p>제출하기</p>
           <img
             src="/button.png"
-            id="SubmitButton"
+            id="submitButton"
             alt="제출 버튼"
             onClick={handleSubmit}
           />
