@@ -95,13 +95,13 @@
 }
 
 /* 제출 버튼 */
-.SubmitButton {
+.submitButton {
   position: relative;
   text-align: center;
   padding-bottom: 2%;
 }
 
-.SubmitButton p {
+.submitButton p {
   position: absolute;
   top: 16%;
   left: 49.5%;
@@ -109,11 +109,11 @@
   pointer-events: none;
 }
 
-.SubmitButton #SubmitButton {
+.submitButton #submitButton {
   width: 13%;
 }
 
-.SubmitButton #SubmitButton:hover {
+.submitButton #submitButton:hover {
   content: url("/public/button-hover.png");
   width: 13%;
   padding-top: 0.15%;
