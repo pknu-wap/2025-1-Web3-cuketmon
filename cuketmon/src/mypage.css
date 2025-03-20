@@ -123,3 +123,46 @@
     transform: translateX(0) rotate(0deg);
   }
 }
+
+/*모바일 반응형*/
+@media screen and (min-width: 375px) and (max-width: 1024px) {
+  .myPage {
+    background-image: url("/public/MyPage/background3mobile.png");
+    background-size: 110% 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .item {
+    padding-top: 2.5%;
+  }
+
+  #cuketmonImage {
+    margin-left: 30%;
+  }
+
+  .cucketmon_profile {
+    position: absolute;
+    top: 62%;
+    left: 27%;
+    margin-left: 0;
+    width: 50%;
+  }
+  .buttons {
+    top: 75%;
+    left: 20%;
+  }
+
+  .buttons #button-text1 {
+    top: 77%;
+    left: 32%;
+  }
+  .buttons #button-text2 {
+    top: 77%;
+    left: 65%;
+  }
+}
