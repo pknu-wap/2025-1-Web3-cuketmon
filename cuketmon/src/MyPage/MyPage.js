@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import MenuBar from "./menubar/Menubar.js";
-import './mypage.css';
+import MenuBar from "../Menubar/Menubar.js";
+import './MyPage.css';
 
 function MyPage() {
   const [toyCount, setToyCount] = useState(0);
@@ -9,7 +9,7 @@ function MyPage() {
   const [relevanceCount, setRelevanceCount] = useState(0);
   const [cuketmonImage, setCuketmonImage] = useState("");
   const [isFed, setIsFed] = useState(false);
-  const [isPlayed, setIsPlayed] = useState(false); // "놀아주기" 상태 추가
+  const [isPlayed, setIsPlayed] = useState(false); 
 
   useEffect(() => {
     fetch("http://localhost:5000/mypage-data") // 백엔드 API 주소
@@ -51,7 +51,7 @@ function MyPage() {
         className={`${isFed ? 'moveImage' : ''} ${isPlayed ? 'shakeImage' : ''}`} // 애니메이션 클래스 두 개 적용
         alt="쿠켓몬 이미지"
       />
-      <div className='cucketmon_profile'>
+      <div className='cucketmonProfile'>
         <hr/>
         <p>{cuketmonName} 커켓몬 이름</p>
         <div id='relevanceCount'>
@@ -62,9 +62,9 @@ function MyPage() {
       
       <div className='buttons'>
         <img src='/button.png' id="feedButton" onClick={handleFeedClick}/>
-        <span id="button-text1">먹이주기</span>
+        <span id="buttonText1">먹이주기</span>
         <img src='/button.png' id="playButton" onClick={handlePlayClick}/>
-        <span id="button-text2">놀아주기</span>
+        <span id="buttonText2">놀아주기</span>
       </div>
       <MenuBar />
     </div>

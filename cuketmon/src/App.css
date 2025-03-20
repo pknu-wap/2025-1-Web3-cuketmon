@@ -13,26 +13,26 @@ html {
   background-repeat: no-repeat;
 }
 
-#weblogo {
+#webLogo {
   padding-left: 23%;
   width: 50%;
   margin-top: 10%;
 }
 
-.button-container .button-image {
+.buttonContainer .buttonImage {
   position: absolute;
   top: 67%;
   left: 41%;
   width: 22%;
 }
 
-.button-container .button-image:hover {
+.buttonContainer .buttonImage:hover {
   content: url("/public/button-hover.png");
   width: 22%;
   z-index: 0;
 }
 
-.button-text {
+.buttonText {
   position: absolute;
   top: 75.9%;
   left: 49.5%;
@@ -59,26 +59,26 @@ html {
     padding-bottom: 0%;
   }
 
-  #weblogo {
+  #webLogo {
     width: 90%;
     padding-top: 40%;
     padding-left: 0;
   }
 
-  .button-container .button-image {
+  .buttonContainer .buttonImage {
     position: absolute;
     width: 40%;
     left: 30%;
   }
 
-  .button-container .button-image:hover {
+  .buttonContainer .buttonImage:hover {
     content: url("/public/button-hover.png");
     padding-top: 0%;
     z-index: 0;
     width: 40%;
   }
 
-  .button-text {
+  .buttonText {
     position: fixed;
     top: 70.5%;
     left: 44.9%;

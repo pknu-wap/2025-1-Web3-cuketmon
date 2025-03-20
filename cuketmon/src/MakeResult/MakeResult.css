@@ -1,4 +1,4 @@
-.ResultPage {
+.resultPage {
   background-image: url("/public/MakePage/background4.png");
   background-size: cover;
   background-position: center;
@@ -9,12 +9,12 @@
   animation: blinkEffect 1s ease-in-out 2;
 }
 
-.ResultPage #egg {
+.resultPage #egg {
   width: 20%;
   padding-top: 25%;
 }
 
-.chatbox {
+.chatBox {
   background-image: url("/public/MakeResultPage/chatbox.png");
   width: 60%;
   height: 25%;
@@ -26,7 +26,7 @@
   position: relative;
 }
 
-.chatbox #ment {
+.chatBox #ment {
   color: white;
   font-size: 20px;
   font-weight: bold;

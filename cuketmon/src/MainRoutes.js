@@ -1,11 +1,12 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import App from './App';
-import Make from './Make';
+import Make from './Make/Make';
 import Battle from './battle';
-import Ranking from './ranking';
-import MyPage from './mypage';
-import MakeResult from "./MakeResult";
+import Ranking from './Ranking/Ranking';
+import MyPage from './MyPage/MyPage';
+import MakeResult from "./MakeResult/MakeResult";
+
 function MainRoutes() {
   return (
     <Routes>
