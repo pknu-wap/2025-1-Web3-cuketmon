@@ -37,15 +37,15 @@ function MakeResult() {
   };
 
   return (
-    <div className="ResultPage">
+    <div className="resultPage">
       <img
         id="egg"
         ref={eggRef}
         src={pokemonImage}
-        alt="CukemonImage"
+        alt="cukemonImage"
         className="blinkEffect"
       />
-      <div className="chatbox">
+      <div className="chatBox">
         <p 
           id="ment" 
           onClick={mentText.includes("도망") ? handleTextClick : null} 
