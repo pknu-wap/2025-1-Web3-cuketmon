@@ -1,23 +1,23 @@
 import { Link } from 'react-router-dom';
-import './menubar.css';
+import './Menubar.css';
 
 const MenuBar = () => {
   return (
-    <div className="menubar-items">
-      <button className="makePage">
-        <img src='/egg.png' alt="egg" />
+    <div className="menubarItems">
+      <button className="makePageLink">
+        <img src='/Menubar/egg.png' alt="egg" />
         <Link to="/Make">커켓몬 만들기</Link>
       </button>
-      <button className="battle">
-        <img src='/battleicon.png' alt="battle" />
+      <button className="battleLink">
+        <img src='/Menubar/battleicon.png' alt="battle" />
         <Link to="/battle">전투</Link>
       </button>
-      <button className="ranking">
-        <img src='/rankingicon.png' alt="ranking" />
+      <button className="rankingLink">
+        <img src='/Menubar/rankingicon.png' alt="ranking" />
         <Link to="/ranking">랭킹</Link>
       </button>
-      <button className="mypage">
-        <img src='/mypageicon.png' alt="mypage" />
+      <button className="myPageLink">
+        <img src='/Menubar/mypageicon.png' alt="myPage" />
         <Link to="/mypage">mypage</Link>
       </button>
     </div>

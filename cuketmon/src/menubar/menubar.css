@@ -1,57 +1,59 @@
-html, body {
-    height: 100%;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .menubar-items {
-    display: flex;
-    width: 100%;
-    justify-content: space-between;
-    align-items: flex-end;
-    padding-bottom: 0px;
-    flex-shrink: 0;
-    border: none;
-  }
-  
- .menubar-items button {
-    margin: 0;
-    background-color: #EFEFEF;
-    border-radius: 0;
-    width: 100%;
-    height: 100px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    border: none;
-    border-left: 2px solid #908F8F;
+html,
+body {
+  height: 100%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
 
-  }
-  
-  .menubar-items  button img {
-    width: 40px;
-    height: 40px;
-    margin-bottom: 10px;
-    padding-left:0%;
-    margin-top: 2%;
-  }
+.menubarItems {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding-bottom: 0px;
+  flex-shrink: 0;
+  border: none;
+}
 
-  .menubar-items  button  a{
-    text-decoration: none;
-    color:#777676;
-  }
-  
-  .menubar-items .makePage, .battle, .ranking, .mypage {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    border-left: 2px solid #908F8F;
-  }
-  
-  body {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-  }
-  
+.menubarItems button {
+  margin: 0;
+  background-color: #efefef;
+  border-radius: 0;
+  width: 100%;
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: none;
+  border-left: 2px solid #908f8f;
+}
+
+.menubarItems button img {
+  width: 40px;
+  height: 40px;
+  margin-bottom: 10px;
+  padding-left: 0%;
+  margin-top: 2%;
+}
+
+.menubarItems button a {
+  text-decoration: none;
+  color: #777676;
+}
+
+.menubarItems .makePageLink,
+.menubarItems .battleLink,
+.menubarItems .rankingLink,
+.menubarItems .myPageLink {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-left: 2px solid #908f8f;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
