@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import MenuBar from "./menubar/Menubar.js";
-import './ranking.css';
+import MenuBar from "../Menubar/Menubar.js";
+import './Ranking.css';
 
 function Ranking() {
   const [Myrank, setMyrank] = useState(0);
-  const [BattleCount, setBattleCount] = useState(0);
-  const [WinCount, setWinCount] = useState(0);
+  const [battleCount, setBattleCount] = useState(0);
+  const [winCount, setWinCount] = useState(0);
   const [imageUrl, setImageUrl] = useState(''); 
 
   useEffect(() => {
@@ -15,16 +15,16 @@ function Ranking() {
         setMyrank(data.rank);
         setBattleCount(data.battleCount);
         setWinCount(data.winCount);
-        setImageUrl(data.imageUrl); // 이미지 URL 설정
+        setImageUrl(data.imageUrl); 
       })
       .catch(error => console.error('Error fetching ranking data:', error));
   }, []);
 
   return (
     <div>
-    <div className='RankingBoard'>
+    <div className='rankingBoard'>
       {/* 백엔드에서 받은 이미지 표시 */}
-      <img src={imageUrl} alt='커켓몬 이미지' className="pokemon-image" />
+      <img src={imageUrl} alt='커켓몬 이미지' className="pokemonImage" />
   <table className="historyBoard">
     <thead>
       <tr>
@@ -35,15 +35,15 @@ function Ranking() {
     <tbody>
   <tr>
     <td className='mark1'>No. of Battles</td>
-    <td>{BattleCount}</td>
+    <td>{battleCount}</td>
   </tr>
   <tr>
     <td className='mark2'>Wins</td>
-    <td>{WinCount}</td>
+    <td>{winCount}</td>
   </tr>
   <tr>
     <td className='mark3'>Losses</td>
-    <td>{BattleCount - WinCount}</td>
+    <td>{battleCount - winCount}</td>
   </tr>
 </tbody>
   </table>

@@ -31,7 +31,7 @@
   top: 40%;
 }
 
-.cucketmon_profile {
+.cucketmonProfile {
   background-image: url("/public/MyPage/cukemon_profile.png");
   background-size: 100% 110%;
   border: 2px solid #bab8b8;
@@ -43,7 +43,7 @@
   padding-bottom: 0.35%;
 }
 
-.cucketmon_profile img {
+.cucketmonProfile img {
   width: 25px;
   height: 25px;
 }
@@ -69,14 +69,14 @@
   transition: transform 1s ease-in-out;
 }
 
-.buttons #button-text1 {
+.buttons #buttonText1 {
   position: fixed;
   color: white;
   top: 62.5%;
   left: 75%;
   pointer-events: none;
 }
-.buttons #button-text2 {
+.buttons #buttonText2 {
   position: fixed;
   color: white;
   top: 62.5%;
@@ -145,7 +145,7 @@
     margin-left: 30%;
   }
 
-  .cucketmon_profile {
+  .cucketmonProfile {
     position: absolute;
     top: 62%;
     left: 27%;
@@ -157,11 +157,11 @@
     left: 20%;
   }
 
-  .buttons #button-text1 {
+  .buttons #buttonText1 {
     top: 77%;
     left: 32%;
   }
-  .buttons #button-text2 {
+  .buttons #buttonText2 {
     top: 77%;
     left: 65%;
   }

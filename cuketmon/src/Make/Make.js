@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Make.css";
-import MenuBar from "./menubar/Menubar.js";
+import MenuBar from "../Menubar/Menubar.js";
 
 function Make() {
   const [type1, setType1] = useState("");
