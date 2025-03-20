@@ -45,38 +45,23 @@ function Make() {
     }
   };
 
+  const types = [
+ "불꽃", "물", "풀", "전기", "에스퍼", "얼음", "드래곤", "악", "페어리", "격투", "비행", "고스트", "땅", "독", "바위", "강철", "벌레", "노말"
+  ];
+
   return (
     <div>
       <div className="Make">
         <div className="Q1">
-          <img src="./mypageicon.png" alt="포켓몬 아이콘" />
+          <img src="./Menubar/mypageicon.png" alt="포켓몬 아이콘" />
           <h2>원하시는 포켓몬의 타입을 선택해 주세요.</h2>
         </div>
 
-        <select
-          id="S1"
-          value={type1}
-          onChange={(e) => setType1(e.target.value)}
-        >
+        <select id="S1" value={type1} onChange={(e) => setType1(e.target.value)}>
           <option value=""></option>
-          <option value="fire">불꽃</option>
-          <option value="water">물</option>
-          <option value="grass">풀</option>
-          <option value="electric">전기</option>
-          <option value="psychic">에스퍼</option>
-          <option value="ice">얼음</option>
-          <option value="dragon">드래곤</option>
-          <option value="dark">악</option>
-          <option value="fairy">페어리</option>
-          <option value="fighting">격투</option>
-          <option value="flying">비행</option>
-          <option value="ghost">고스트</option>
-          <option value="ground">땅</option>
-          <option value="poison">독</option>
-          <option value="rock">바위</option>
-          <option value="steel">강철</option>
-          <option value="bug">벌레</option>
-          <option value="normal">노말</option>
+          {types.map((type) => (
+            <option key={type} value={type}>{type}</option>
+          ))}
         </select>
         <br />
 
@@ -85,30 +70,15 @@ function Make() {
           value={type2}
           onChange={(e) => setType2(e.target.value)}
         >
-          <option value=""></option>
-          <option value="fire">불꽃</option>
-          <option value="water">물</option>
-          <option value="grass">풀</option>
-          <option value="electric">전기</option>
-          <option value="psychic">에스퍼</option>
-          <option value="ice">얼음</option>
-          <option value="dragon">드래곤</option>
-          <option value="dark">악</option>
-          <option value="fairy">페어리</option>
-          <option value="fighting">격투</option>
-          <option value="flying">비행</option>
-          <option value="ghost">고스트</option>
-          <option value="ground">땅</option>
-          <option value="poison">독</option>
-          <option value="rock">바위</option>
-          <option value="steel">강철</option>
-          <option value="bug">벌레</option>
-          <option value="normal">노말</option>
+           <option value=""></option>
+          {types.map((type) => (
+            <option key={type} value={type}>{type}</option>
+          ))}
         </select>
         <img src="./MakePage/type.png" id="typeicon" alt="포켓몬 타입 이미지" />
 
         <div className="Q2">
-          <img src="./mypageicon.png" alt="포켓몬 아이콘" />
+          <img src="./Menubar/mypageicon.png" alt="포켓몬 아이콘" />
           <h2>원하시는 포켓몬의 특징을 적어주세요.</h2>
         </div>
         <div className="cukemonFeature">
