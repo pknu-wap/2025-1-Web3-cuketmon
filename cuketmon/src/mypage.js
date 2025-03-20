@@ -41,8 +41,8 @@ function MyPage() {
   return (
     <div className='myPage'>
       <div className='item'>
-        <img src='./feed.png' id='feed' alt="밥 아이콘"/> <span>{feedCount}</span>
-        <img src='./toy.png' alt="장난감 아이콘"/> <span>{toyCount}</span>
+        <img src='/MyPage/feed.png' id='feed' alt="밥 아이콘"/> <span>{feedCount}</span>
+        <img src='/MyPage/toy.png' alt="장난감 아이콘"/> <span>{toyCount}</span>
       </div>
       
       <img 
@@ -55,7 +55,7 @@ function MyPage() {
         <hr/>
         <p>{cuketmonName} 커켓몬 이름</p>
         <div id='relevanceCount'>
-          <img src='/relevance.png' />
+          <img src='/MyPage/relevance.png' />
           <span>{relevanceCount}</span>
         </div>
       </div>
