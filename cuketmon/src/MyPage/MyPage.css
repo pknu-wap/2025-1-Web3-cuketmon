@@ -1,3 +1,7 @@
+body {
+  overflow-x: hidden;
+}
+
 .myPage {
   overflow: hidden;
   background-image: url("/public/MyPage/background3.png");
@@ -26,8 +30,8 @@
 #cuketmonImage {
   position: absolute;
   margin-left: 44%;
-  width: 180px;
-  height: 180px;
+  width: 140px;
+  height: 140px;
   top: 40%;
 }
 
@@ -128,29 +132,43 @@
 @media screen and (min-width: 375px) and (max-width: 1024px) {
   .myPage {
     background-image: url("/public/MyPage/background3mobile.png");
-    background-size: 110% 100%;
+    background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
-    min-height: 100vh;
+
     display: flex;
     flex-direction: column;
     justify-content: space-between;
   }
 
   .item {
-    padding-top: 2.5%;
+    padding-top: 3%;
+    margin-bottom: 145.5%;
   }
 
   #cuketmonImage {
-    margin-left: 30%;
+    margin-top: 5%;
+    margin-left: 0;
+    left: 33%;
+    padding: 0;
+    margin: 0;
   }
 
   .cucketmonProfile {
     position: absolute;
-    top: 62%;
-    left: 27%;
+    top: 59%;
+    left: 34%;
     margin-left: 0;
-    width: 50%;
+    width: 35%;
+    margin-top: 5%;
+  }
+  .cucketmonProfile p {
+    font-size: 10px;
+  }
+  .cucketmonProfile img,
+  .cucketmonProfile span {
+    width: 10px;
+    height: 10px;
   }
   .buttons {
     top: 75%;
@@ -158,11 +176,13 @@
   }
 
   .buttons #buttonText1 {
-    top: 77%;
-    left: 32%;
+    top: 78%;
+    left: 33%;
+    font-size: 12px;
   }
   .buttons #buttonText2 {
-    top: 77%;
-    left: 65%;
+    top: 78%;
+    left: 66%;
+    font-size: 12px;
   }
 }
