@@ -57,18 +57,22 @@ body {
   flex-direction: column;
   justify-content: flex-end;
 }
-@media screen and (min-width: 375px) and (max-width: 1024px) {
+@media (max-width: 767px) {
   html,
   body {
     height: 80%;
   }
-  .menubarItems .makePageLink,
+  /* .menubarItems .makePageLink,
   .menubarItems .battleLink,
   .menubarItems .rankingLink,
   .menubarItems .myPageLink {
     height: 80px;
-    width: 100px;
+    width: 14%;
     padding: 0;
+  } */
+
+  .menubarItems button {
+    width: 100%;
   }
   .menubarItems {
     justify-content: flex-start;

@@ -129,13 +129,19 @@ body {
 }
 
 /*모바일 반응형*/
-@media screen and (min-width: 375px) and (max-width: 1024px) {
+@media (max-width: 767px) {
+  #root {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
   .myPage {
     background-image: url("/public/MyPage/background3mobile.png");
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
-
+    height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
