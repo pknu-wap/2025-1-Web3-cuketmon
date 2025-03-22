@@ -42,7 +42,7 @@ public class MonsterService {
 
     // 임시 포켓몬 생성 함수
     @Transactional
-    public void tempGenerate(GenerateApiRequestBody requestBody) {
+    public Integer tempGenerate(GenerateApiRequestBody requestBody) {
         Type type1 = Type.toType(requestBody.getType1());
         Type type2 = Type.toType(requestBody.getType2()); // nullable 값
 
@@ -56,8 +56,9 @@ public class MonsterService {
         Monster monster = new Monster("", null, INIT_AFFINITY,
                 INIT_HP, INIT_SPEED, INIT_ATTACK, INIT_DEFENCE, INIT_SPECIAL_ATTACK, INIT_SPECIAL_DEFENCE,
                 type1, type2, skillId1, skillId2, skillId3, skillId4);
-
         monsterRepository.save(monster);
+
+        return monster.getId();
     }
 
     @Transactional
