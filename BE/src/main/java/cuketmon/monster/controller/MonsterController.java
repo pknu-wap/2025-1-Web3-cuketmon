@@ -6,6 +6,7 @@ import cuketmon.monster.service.MonsterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -38,6 +39,12 @@ public class MonsterController {
                                                 @Validated @RequestBody NamingDTO monsterName) {
         monsterService.namingMonster(monsterId, monsterName.getName());
         return ResponseEntity.ok("커켓몬 이름 변경 성공!");
+    }
+
+    @DeleteMapping("/{monsterId}/release")
+    public ResponseEntity<String> releaseMonster(@PathVariable Integer monsterId) {
+        monsterService.releaseMonster(monsterId);
+        return ResponseEntity.ok("커켓몬 놓아주기 성공!");
     }
 
     // 먹이 주기

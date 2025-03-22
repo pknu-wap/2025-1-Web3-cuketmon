@@ -77,6 +77,14 @@ public class MonsterService {
     }
 
     @Transactional
+    public void releaseMonster(Integer monsterId) {
+        Monster monster = monsterRepository.findById(monsterId)
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당 커켓몬을 찾을 수 없습니다."));
+
+        monsterRepository.delete(monster);
+    }
+
+    @Transactional
     public void feedMonster(Integer monsterId) {
         // TODO: 현재 로그인 한 사용자를 기반으로 find 하도록 수정해야함
         //  security context 라는게 있다는데.. (이 방법은 별로인듯 because 누를 때 마다 주인을 찾음)
