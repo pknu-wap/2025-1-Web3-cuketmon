@@ -77,4 +77,8 @@ body {
   .menubarItems {
     justify-content: flex-start;
   }
+
+  .menubarItems button a {
+    font-size: 12px;
+  }
 }
