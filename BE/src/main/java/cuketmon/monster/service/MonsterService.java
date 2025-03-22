@@ -1,5 +1,8 @@
 package cuketmon.monster.service;
 
+import static cuketmon.utill.Random.getRandomInRange;
+
+import cuketmon.damageclass.DamageClass;
 import cuketmon.monster.dto.GenerateApiRequestBody;
 import cuketmon.monster.entity.Monster;
 import cuketmon.monster.repository.MonsterRepository;
@@ -16,13 +19,10 @@ public class MonsterService {
 
     private static final String TEST_TRAINER_NAME = "kng";
 
+    public static final int MIN_BASE = 60;
+    public static final int MAX_BASE = 100;
+
     public static final int INIT_AFFINITY = 30;
-    public static final int INIT_HP = 100;
-    public static final int INIT_SPEED = 100;
-    public static final int INIT_ATTACK = 100;
-    public static final int INIT_DEFENCE = 100;
-    public static final int INIT_SPECIAL_ATTACK = 100;
-    public static final int INIT_SPECIAL_DEFENCE = 100;
 
     private static final int FEED_MINUS = 1;
     private static final int TOY_MINUS = 1;
@@ -46,16 +46,18 @@ public class MonsterService {
         Type type1 = Type.toType(requestBody.getType1());
         Type type2 = Type.toType(requestBody.getType2()); // nullable 값
 
-        // TODO: damageClass 설정 함수 만들어야함
-        //  특공 물공 중에 높은 걸로...
-        Integer skillId1 = skillService.getSkillId(type1, "physical", 10, 80);  // 평타
-        Integer skillId2 = skillService.getSkillId(type1, "physical", 80, 500); // 필살기
-        Integer skillId3 = skillService.getSkillId(type2, "physical", 10, 80);
-        Integer skillId4 = skillService.getSkillId(type2, "special", 10, 80);
-
         Monster monster = new Monster("", null, INIT_AFFINITY,
-                INIT_HP, INIT_SPEED, INIT_ATTACK, INIT_DEFENCE, INIT_SPECIAL_ATTACK, INIT_SPECIAL_DEFENCE,
-                type1, type2, skillId1, skillId2, skillId3, skillId4);
+                getRandomInRange(MIN_BASE, MAX_BASE), getRandomInRange(MIN_BASE, MAX_BASE),
+                getRandomInRange(MIN_BASE, MAX_BASE), getRandomInRange(MIN_BASE, MAX_BASE),
+                getRandomInRange(MIN_BASE, MAX_BASE), getRandomInRange(MIN_BASE, MAX_BASE),
+                type1, type2, null, null, null, null);
+
+        DamageClass damageClass = DamageClass.fromString(monster.getDamageClass());
+        DamageClass altClass = damageClass.getOppositeClass();
+        monster.setSkillId1(skillService.getSkillId(type1, damageClass.getName(), 10, 80));  // 평타
+        monster.setSkillId2(skillService.getSkillId(type1, damageClass.getName(), 80, 500)); // 필살기
+        monster.setSkillId3(skillService.getSkillId(type2, damageClass.getName(), 10, 80));
+        monster.setSkillId4(skillService.getSkillId(type2, altClass.getName(), 10, 80));
         monsterRepository.save(monster);
 
         return monster.getId();
