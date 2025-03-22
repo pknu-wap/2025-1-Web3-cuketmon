@@ -26,12 +26,10 @@ public class MonsterController {
     }
 
     // 임시 몬스터 생성 기능
-    // TODO: 커켓몬 아이디 반환하기
-    //  이후의 api는 id 를 사용하도록
     @PostMapping("/generate")
-    public ResponseEntity<String> generateMonster(@Validated @RequestBody GenerateApiRequestBody requestBody) {
-        monsterService.tempGenerate(requestBody);
-        return ResponseEntity.ok("커켓몬 생성 성공!");
+    public ResponseEntity<Integer> generateMonster(@Validated @RequestBody GenerateApiRequestBody requestBody) {
+        Integer monsterId = monsterService.tempGenerate(requestBody);
+        return ResponseEntity.ok(monsterId);
     }
 
     // 커켓몬 이름 지정
