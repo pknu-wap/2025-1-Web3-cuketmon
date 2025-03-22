@@ -22,6 +22,10 @@ public class MonsterService {
     public static final int MIN_BASE = 60;
     public static final int MAX_BASE = 100;
 
+    public static final int MIN_DAMAGE = 10;
+    public static final int MID_DAMAGE = 80;
+    public static final int MAX_DAMAGE = 500;
+
     public static final int INIT_AFFINITY = 30;
 
     private static final int FEED_MINUS = 1;
@@ -43,8 +47,8 @@ public class MonsterService {
     // 임시 포켓몬 생성 함수
     @Transactional
     public Integer tempGenerate(GenerateApiRequestBody requestBody) {
-        Type type1 = Type.toType(requestBody.getType1());
-        Type type2 = Type.toType(requestBody.getType2()); // nullable 값
+        Type type1 = Type.fromString(requestBody.getType1());
+        Type type2 = Type.fromString(requestBody.getType2()); // nullable 값
 
         Monster monster = new Monster("", null, INIT_AFFINITY,
                 getRandomInRange(MIN_BASE, MAX_BASE), getRandomInRange(MIN_BASE, MAX_BASE),
@@ -54,10 +58,10 @@ public class MonsterService {
 
         DamageClass damageClass = DamageClass.fromString(monster.getDamageClass());
         DamageClass altClass = damageClass.getOppositeClass();
-        monster.setSkillId1(skillService.getSkillId(type1, damageClass.getName(), 10, 80));  // 평타
-        monster.setSkillId2(skillService.getSkillId(type1, damageClass.getName(), 80, 500)); // 필살기
-        monster.setSkillId3(skillService.getSkillId(type2, damageClass.getName(), 10, 80));
-        monster.setSkillId4(skillService.getSkillId(type2, altClass.getName(), 10, 80));
+        monster.setSkillId1(skillService.getSkillId(type1, damageClass.getName(), MIN_DAMAGE, MID_DAMAGE));  // 평타
+        monster.setSkillId2(skillService.getSkillId(type1, damageClass.getName(), MID_DAMAGE, MAX_DAMAGE)); // 필살기
+        monster.setSkillId3(skillService.getSkillId(type2, damageClass.getName(), MIN_DAMAGE, MID_DAMAGE));
+        monster.setSkillId4(skillService.getSkillId(type2, altClass.getName(), MIN_DAMAGE, MID_DAMAGE));
         monsterRepository.save(monster);
 
         return monster.getId();
