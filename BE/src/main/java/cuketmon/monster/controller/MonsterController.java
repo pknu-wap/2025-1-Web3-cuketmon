@@ -3,7 +3,6 @@ package cuketmon.monster.controller;
 import cuketmon.monster.dto.GenerateApiRequestBody;
 import cuketmon.monster.dto.NamingDTO;
 import cuketmon.monster.service.MonsterService;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -30,7 +29,7 @@ public class MonsterController {
     // TODO: 커켓몬 아이디 반환하기
     //  이후의 api는 id 를 사용하도록
     @PostMapping("/generate")
-    public ResponseEntity<String> generateMonster(@Valid @RequestBody GenerateApiRequestBody requestBody) {
+    public ResponseEntity<String> generateMonster(@Validated @RequestBody GenerateApiRequestBody requestBody) {
         monsterService.tempGenerate(requestBody);
         return ResponseEntity.ok("커켓몬 생성 성공!");
     }
