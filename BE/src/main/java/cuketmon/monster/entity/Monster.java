@@ -3,6 +3,8 @@ package cuketmon.monster.entity;
 import cuketmon.type.Type;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,6 +19,10 @@ import lombok.Setter;
 public class Monster {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
+    @Column
     private String name;
 
     // AI와의 연결은 여기 예상
@@ -65,8 +71,31 @@ public class Monster {
     private Long abilities;
     */
 
+    public void changeNameTo(String name) {
+        this.name = name;
+    }
+
     public void increaseAffinity(int plus) {
         affinity = affinity + plus;
     }
 
+    public Monster(String name, String image, Integer affinity, Integer hp, Integer speed,
+                   Integer attack, Integer defence, Integer specialAttack, Integer specialDefence,
+                   Type type1, Type type2, Integer skillId1, Integer skillId2, Integer skillId3, Integer skillId4) {
+        this.name = name;
+        this.image = image;
+        this.affinity = affinity;
+        this.hp = hp;
+        this.speed = speed;
+        this.attack = attack;
+        this.defence = defence;
+        this.specialAttack = specialAttack;
+        this.specialDefence = specialDefence;
+        this.type1 = type1;
+        this.type2 = type2;
+        this.skillId1 = skillId1;
+        this.skillId2 = skillId2;
+        this.skillId3 = skillId3;
+        this.skillId4 = skillId4;
+    }
 }
