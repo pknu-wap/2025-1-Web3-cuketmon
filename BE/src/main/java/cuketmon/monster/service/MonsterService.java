@@ -53,8 +53,7 @@ public class MonsterService {
         Integer skillId3 = skillService.getSkillId(type2, "physical", 10, 80);
         Integer skillId4 = skillService.getSkillId(type2, "special", 10, 80);
 
-        Monster monster
-                = new Monster("괴력몬", null, INIT_AFFINITY,
+        Monster monster = new Monster("", null, INIT_AFFINITY,
                 INIT_HP, INIT_SPEED, INIT_ATTACK, INIT_DEFENCE, INIT_SPECIAL_ATTACK, INIT_SPECIAL_DEFENCE,
                 type1, type2, skillId1, skillId2, skillId3, skillId4);
 
@@ -62,13 +61,22 @@ public class MonsterService {
     }
 
     @Transactional
-    public void feedMonster(String monsterName) {
+    public void namingMonster(Integer monsterId, String monsterName) {
+        Monster monster = monsterRepository.findById(monsterId)
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당 커켓몬을 찾을 수 없습니다."));
+
+        monster.changeNameTo(monsterName);
+        monsterRepository.save(monster);
+    }
+
+    @Transactional
+    public void feedMonster(Integer monsterId) {
         // TODO: 현재 로그인 한 사용자를 기반으로 find 하도록 수정해야함
         //  security context 라는게 있다는데.. (이 방법은 별로인듯 because 누를 때 마다 주인을 찾음)
         //  아니면 프론트에서 기억하고 있는 이름 좀 넘겨달라고 해도 될 듯
         Trainer trainer = trainerRepository.findById(TEST_TRAINER_NAME)
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당 트레이너를 찾을 수 없습니다."));
-        Monster monster = monsterRepository.findById(monsterName)
+        Monster monster = monsterRepository.findById(monsterId)
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당 커켓몬을 찾을 수 없습니다."));
 
         // TODO: validation 로직 분리 (먹이 수량 확인)
@@ -84,10 +92,10 @@ public class MonsterService {
     }
 
     @Transactional
-    public void playWithMonster(String monsterName) {
+    public void playWithMonster(Integer monsterId) {
         Trainer trainer = trainerRepository.findById(TEST_TRAINER_NAME)
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당 트레이너를 찾을 수 없습니다."));
-        Monster monster = monsterRepository.findById(monsterName)
+        Monster monster = monsterRepository.findById(monsterId)
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당 커켓몬을 찾을 수 없습니다."));
 
         // TODO: validation 로직 분리 (장난감 수량 확인)
