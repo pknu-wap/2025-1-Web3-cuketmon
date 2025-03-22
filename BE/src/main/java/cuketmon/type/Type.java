@@ -35,7 +35,7 @@ public enum Type {
         this.englishName = englishName;
     }
 
-    public static Type toType(String name) {
+    public static Type fromString(String name) {
         if (name == null || name.isBlank()) {
             throw new IllegalArgumentException("[ERROR] 입력값이 비어있습니다.");
         }

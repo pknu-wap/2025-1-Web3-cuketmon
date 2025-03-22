@@ -74,6 +74,10 @@ public class Monster {
         affinity = affinity + plus;
     }
 
+    public String getDamageClass() {
+        return (attack >= specialAttack) ? "physical" : "special";
+    }
+
     public Monster(String name, String image, Integer affinity, Integer hp, Integer speed,
                    Integer attack, Integer defence, Integer specialAttack, Integer specialDefence,
                    Type type1, Type type2, Integer skillId1, Integer skillId2, Integer skillId3, Integer skillId4) {

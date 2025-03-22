@@ -28,9 +28,9 @@ public class SkillService {
 
     // 스킬 분배 로직
     @Transactional
-    public Integer getSkillId(Type type, String damageClass, int startDamage, int endDamage) {
-        List<Skill> skills = skillRepository.findAllByTypeAndDamageClassAndPowerBetween(
-                        type, damageClass, startDamage, endDamage)
+    public Integer getSkillId(Type type, String damageClass, int minDamage, int maxDamage) {
+        List<Skill> skills
+                = skillRepository.findAllByTypeAndDamageClassAndPowerBetween(type, damageClass, minDamage, maxDamage)
                 .orElseThrow(() -> new IllegalArgumentException("[Error] 조건을 만족하는 스킬이 없습니다."));
 
         if (skills.isEmpty()) {
@@ -69,7 +69,7 @@ public class SkillService {
     private void saveSkill(SkillResponse skillResponse) {
         Skill skill = new Skill(
                 skillResponse.getId(),
-                Type.toType(skillResponse.getType().getName()),
+                Type.fromString(skillResponse.getType().getName()),
                 skillResponse.getDamageClass().getName(),
                 skillResponse.getAccuracy(),
                 skillResponse.getName(),
