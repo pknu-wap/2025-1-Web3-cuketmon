@@ -66,11 +66,6 @@ public class Monster {
 
     private Integer skillId4;
 
-    /*
-    특성은... 나중에...
-    private Long abilities;
-    */
-
     public void changeNameTo(String name) {
         this.name = name;
     }
@@ -98,4 +93,5 @@ public class Monster {
         this.skillId3 = skillId3;
         this.skillId4 = skillId4;
     }
+
 }
