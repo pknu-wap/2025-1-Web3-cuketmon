@@ -1,6 +1,7 @@
 package cuketmon.monster.controller;
 
 import cuketmon.monster.dto.GenerateApiRequestBody;
+import cuketmon.monster.dto.NamingDTO;
 import cuketmon.monster.service.MonsterService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,8 +35,8 @@ public class MonsterController {
 
     // 커켓몬 이름 지정
     @PatchMapping("/{monsterId}/name")
-    public ResponseEntity<String> namingMonster(@PathVariable Integer monsterId, @RequestBody String monsterName) {
-        monsterService.namingMonster(monsterId, monsterName);
+    public ResponseEntity<String> namingMonster(@PathVariable Integer monsterId, @RequestBody NamingDTO monsterName) {
+        monsterService.namingMonster(monsterId, monsterName.getName());
         return ResponseEntity.ok("커켓몬 이름 변경 성공!");
     }
 
