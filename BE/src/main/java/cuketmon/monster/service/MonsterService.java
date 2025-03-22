@@ -58,7 +58,7 @@ public class MonsterService {
 
         DamageClass damageClass = DamageClass.fromString(monster.getDamageClass());
         DamageClass altClass = damageClass.getOppositeClass();
-        monster.setSkillId1(skillService.getSkillId(type1, damageClass.getName(), MIN_DAMAGE, MID_DAMAGE));  // 평타
+        monster.setSkillId1(skillService.getSkillId(type1, damageClass.getName(), MIN_DAMAGE, MID_DAMAGE)); // 평타
         monster.setSkillId2(skillService.getSkillId(type1, damageClass.getName(), MID_DAMAGE, MAX_DAMAGE)); // 필살기
         monster.setSkillId3(skillService.getSkillId(type2, damageClass.getName(), MIN_DAMAGE, MID_DAMAGE));
         monster.setSkillId4(skillService.getSkillId(type2, altClass.getName(), MIN_DAMAGE, MID_DAMAGE));
@@ -68,7 +68,7 @@ public class MonsterService {
     }
 
     @Transactional
-    public void namingMonster(Integer monsterId, String monsterName) {
+    public void naming(Integer monsterId, String monsterName) {
         Monster monster = monsterRepository.findById(monsterId)
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당 커켓몬을 찾을 수 없습니다."));
 
@@ -77,7 +77,7 @@ public class MonsterService {
     }
 
     @Transactional
-    public void releaseMonster(Integer monsterId) {
+    public void release(Integer monsterId) {
         Monster monster = monsterRepository.findById(monsterId)
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당 커켓몬을 찾을 수 없습니다."));
 
@@ -85,7 +85,7 @@ public class MonsterService {
     }
 
     @Transactional
-    public void feedMonster(Integer monsterId) {
+    public void feed(Integer monsterId) {
         // TODO: 현재 로그인 한 사용자를 기반으로 find 하도록 수정해야함
         //  security context 라는게 있다는데.. (이 방법은 별로인듯 because 누를 때 마다 주인을 찾음)
         //  아니면 프론트에서 기억하고 있는 이름 좀 넘겨달라고 해도 될 듯
@@ -107,7 +107,7 @@ public class MonsterService {
     }
 
     @Transactional
-    public void playWithMonster(Integer monsterId) {
+    public void play(Integer monsterId) {
         Trainer trainer = trainerRepository.findById(TEST_TRAINER_NAME)
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당 트레이너를 찾을 수 없습니다."));
         Monster monster = monsterRepository.findById(monsterId)
