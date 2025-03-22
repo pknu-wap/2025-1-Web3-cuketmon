@@ -6,6 +6,7 @@ import cuketmon.monster.service.MonsterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -36,18 +37,32 @@ public class MonsterController {
     @PatchMapping("/{monsterId}/name")
     public ResponseEntity<String> namingMonster(@PathVariable Integer monsterId,
                                                 @Validated @RequestBody NamingDTO monsterName) {
-        monsterService.namingMonster(monsterId, monsterName.getName());
-        return ResponseEntity.ok("커켓몬 이름 변경 성공!");
+        try {
+            monsterService.naming(monsterId, monsterName.getName());
+            return ResponseEntity.ok("커켓몬 이름 변경 성공!");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @DeleteMapping("/{monsterId}/release")
+    public ResponseEntity<String> releaseMonster(@PathVariable Integer monsterId) {
+        try {
+            monsterService.release(monsterId);
+            return ResponseEntity.ok("커켓몬 놓아주기 성공!");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     // 먹이 주기
     @PostMapping("/{monsterId}/feed")
     public ResponseEntity<String> feedMonster(@PathVariable Integer monsterId) {
         try {
-            monsterService.feedMonster(monsterId);
+            monsterService.feed(monsterId);
             return ResponseEntity.ok("먹이를 주었습니다.");
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage() + " 먹이를 줄 수 없습니다.");
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
@@ -55,10 +70,10 @@ public class MonsterController {
     @PostMapping("/{monsterId}/play")
     public ResponseEntity<String> playWithMonster(@PathVariable Integer monsterId) {
         try {
-            monsterService.playWithMonster(monsterId);
+            monsterService.play(monsterId);
             return ResponseEntity.ok("놀아주었습니다.");
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage() + " 놀아 줄 수 없습니다.");
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
