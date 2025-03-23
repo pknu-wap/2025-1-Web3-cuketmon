@@ -1,32 +1,124 @@
 import React, { useEffect, useState } from 'react';
 import './battle.css';
 
+
 function Battle() {
   const [myCuketmonHP, setMyCuketmonHP] = useState(100);
   const [enemyCuketmonHP, setEnemyCuketmonHP] = useState(100);
   const [myPP, setMyPP] = useState(15);
-
   const [cuketmonImages, setCuketmonImages] = useState({
     myCuketmon: '/BattlePage/cuketmonex.png',
     enemyCuketmon: '/BattlePage/cuketmonex.png',
-  });
+  }); //이것도 이미지대로 받아오는걸로 바꿔야함.
 
-  const [techs] = useState([
-    { id: 1, name: '기술 1', description: '기술1', damage: 10, pp: 15 },
-    { id: 2, name: '기술 2', description: '기술2', damage: 10, pp: 15 },
-    { id: 3, name: '기술 3', description: '기술3', damage: 10, pp: 15 },
-    { id: 4, name: '기술 4', description: '기술4', damage: 10, pp: 15 },
-  ]);
+  const [techs, setTechs] = useState([
+    { id: 1, name: '노동착취', description: '노동착취', damage: 10, pp: 15 },
+    { id: 2, name: '초과근무', description: '초과근무', damage: 10, pp: 15 },
+    { id: 3, name: '열정페이', description: '열정페이', damage: 10, pp: 15 },
+    { id: 4, name: '임금동결', description: '임금동결', damage: 10, pp: 15 },
+  ]); //이 파트는 백앤드와 연동하면 없애고, useState([])으로 받아온 기술정보대로 입력되게 해야함. .json 형식 조율필요? 아직 임의로 표시만 되게 놔둔 것.
 
   const [selectedTech, setSelectedTech] = useState(null);
   const [description, setDescription] = useState('');
   const [loading, setLoading] = useState(true);
   const [isFighting, setIsFighting] = useState(false);
   const [battleMessage, setBattleMessage] = useState('');
+  const [currentAnimation, setCurrentAnimation] = useState(null);
+
+  const animationMap = {
+    fire:{
+      high: [],
+      normal: []
+    },
+    water:{
+      high: [],
+      normal: []
+    },
+    normal:{
+      high: [],
+      normal: []
+    },
+    grass:{
+      high: [],
+      normal: []
+    },
+    electric:{
+      high: [],
+      normal: []
+    },
+    psychc:{
+      high: [],
+      normal: []
+    },
+    rock:{
+      high: [],
+      normal: []
+    },
+    iron:{
+      high: [],
+      normal: []
+    },
+    ice:{
+      high: [],
+      normal: []
+    },
+    dragon:{
+      high: [],
+      normal: []
+    },
+    evil:{
+      high: [],
+      normal: []
+    },
+    fairy:{
+      high: [],
+      normal: []
+    },
+    poison:{
+      high: [],
+      normal: []
+    },
+    bug:{
+      high: [],
+      normal: []
+    },
+    ground:{
+      high: [],
+      normal: []
+    },
+    fly:{
+      high: [],
+      normal: []
+    },
+    fighter:{
+      high: [],
+      normal: []
+    },
+    ghost:{
+      high: [],
+      normal: []
+    }
+  };
 
   useEffect(() => {
+    fetch('api/DontKnowWhereIshouldBringMyDataFrom')
+    .then(response => response.json())
+    .then(data => {
+      const updatedTechs = data.map(tech => {
+        const damageLevel = tech.damage >= 70 ? 'high' : 'normal';
+        const animations = animationMap[tech.type][damageLevel];
+        const randomIndex = Math.floor(Math.random() * animations.length);
+        return {
+          ...tech, animationUrl: animations[randomIndex],
+        };
+    });
+    setTechs(updatedTechs);
     setLoading(false);
-    //BE 와 연동은 잘 모르겠음.
+  })
+    .catch(error => {
+      console.error('API 미응답, 나중에 빼기', error);
+      setLoading(false);
+    });
   }, []);
 
   const handleSelect = (tech) => {
@@ -42,15 +134,17 @@ function Battle() {
       const damage = tech.damage;
       setEnemyCuketmonHP((prev) => Math.max(prev - damage, 0));
       setMyPP((prev) => Math.max(prev - 1, 0));
-      setBattleMessage(`커켓몬1이 ${tech.name}을 사용했다!`);
+      setBattleMessage(`커켓몬1이 ${tech.description}을 사용했다!`);
+      setCurrentAnimation(tech.animationUrl);
       setIsFighting(true);
 
       setTimeout(() => {
         setIsFighting(false);
-        setBattleMessage('');
+        setBattleMessage('으아아아아아아아ㅏ악!!!');
         setSelectedTech(null);
         setDescription('');
-      }, 1000);
+        setCurrentAnimation(null);
+      }, 2000);
     }
   };
 
@@ -60,97 +154,67 @@ function Battle() {
 
   return (
     <div className="Battle">
-      {isFighting ? (
-        <div className="battle-animation">
-          <div className="battle-container">
-            <div className="cuketmon">
-              <img src={cuketmonImages.myCuketmon} className="myCuketmon-img" alt="내 커켓몬" />
-            </div>
-            
-            <div className="cuketmon">
-              <img src={cuketmonImages.enemyCuketmon} className="enemyCuketmon-img" alt="적 커켓몬" />
+      <div className="content">
+        <div className="battleContainer">
+          <div className="cuketmon">
+            <img src={cuketmonImages.myCuketmon} className="myCuketmonImg" alt="내 커켓몬" />
+            <div className="myHpBar">
+              <div className="myHpFill" style={{ width: `${myCuketmonHP}%` }}></div>
             </div>
           </div>
-          <div className="battle-message">{battleMessage}</div>
-          
+          <div className="cuketmon">
+            <img src={cuketmonImages.enemyCuketmon} className="enemyCuketmonImg" alt="적 커켓몬" />
+            <div className="enemyHpBar">
+              <div className="enemyHpFill" style={{ width: `${enemyCuketmonHP}%` }}></div>
+            </div>
+          </div>
+          {/* 전투 애니메이션과 메시지 */}
+          {isFighting && (
+            <div className="battleAnimationOverlay">
+              <img
+                src={techs.find(t => t.id === selectedTech)?.animationUrl}
+                className="techAnimation"
+                alt="기술 애니메이션"
+              />
+              <div className="battleMessage">{battleMessage}</div>
+            </div>
+          )}
+          <div className="battleStage">
+            <img src="/BattlePage/stand.png" className="myStage" alt="전투무대" />
+            <img src="/BattlePage/stand.png" className="enemyStage" alt="전투무대" />
+          </div>
+          <div className="hpBackground">
+            <img src="/BattlePage/HPbg.png" className="myHpBackground" alt="체력바배경" />
+            <img src="/BattlePage/HPbg.png" className="enemyHpBackground" alt="체력바배경" />
+            <img src="/BattlePage/HPbar.png" className="myHpImg" alt="체력바" />
+            <img src="/BattlePage/HPbar.png" className="enemyHpImg" alt="체력바" />
+          </div>
         </div>
-      ) : (
-        <div className="content">
-          <div className="battle-container">
-            <div className="cuketmon">
-              <img src={cuketmonImages.myCuketmon} className="myCuketmon-img" alt="내 커켓몬" />
-              <div className="myHpBar">
-                <div className="my-hp-fill" style={{ width: `${myCuketmonHP}%` }}></div>
-              </div>
-            </div>
-            <div className="cuketmon">
-              <img src={cuketmonImages.enemyCuketmon} className="enemyCuketmon-img" alt="적 커켓몬" />
-              <div className="enemyHpBar">
-                <div className="enemy-hp-fill" style={{ width: `${enemyCuketmonHP}%` }}></div>
-              </div>
-            </div>
-            <div className="battle-stage">
-              <img src= "/BattlePage/stand.png" className="myStage" alt="전투무대"/>
-              <img src= "/BattlePage/stand.png" className="enemyStage" alt="전투무대"/>
-            </div>
-
-            <div className="HP-background">
-              <img src= "/BattlePage/HPbg.png" className="myHpBackground" alt="체력바배경"/>
-              <img src= "/BattlePage/HPbg.png" className="enemyHpBackground" alt="체력바배경"/>
-              <img src= "/BattlePage/HPbar.png" className="myHpImg" alt="체력바"/>
-              <img src= "/BattlePage/HPbar.png" className="enemyHpImg" alt="체력바"/>
-            </div>
-          </div>
-
-          <div className="tech-section">
-            <img src="/BattlePage/techselect.png" className="tech-window-img" alt="기술 창" />
-            <div className="tech-buttons">
-              <div className="tech-row">
+        {/* 기술 선택 UI는 전투 중 숨김 */}
+        {!isFighting && (
+          <div className="techSection">
+            <img src="/BattlePage/techselect.png" className="techWindowImg" alt="기술 창" />
+            <div className="techButtons">
+              {techs.map(tech => (
                 <button
-                  key={techs[0].id}
-                  className={`tech-button ${selectedTech === techs[0].id ? 'selected' : ''}`}
-                  onClick={() => handleSelect(techs[0])}
+                  key={tech.id}
+                  className={`techButton ${selectedTech === tech.id ? 'selected' : ''}`}
+                  onClick={() => handleSelect(tech)}
                   disabled={myPP <= 0}
                 >
-                  {techs[0].name}
+                  {tech.name}
                 </button>
-                <button
-                  key={techs[1].id}
-                  className={`tech-button ${selectedTech === techs[1].id ? 'selected' : ''}`}
-                  onClick={() => handleSelect(techs[1])}
-                  disabled={myPP <= 0}
-                >
-                  {techs[1].name}
-                </button>
-              </div>
-              <div className="tech-row">
-                <button
-                  key={techs[2].id}
-                  className={`tech-button ${selectedTech === techs[2].id ? 'selected' : ''}`}
-                  onClick={() => handleSelect(techs[2])}
-                  disabled={myPP <= 0}
-                >
-                  {techs[2].name}
-                </button>
-                <button
-                  key={techs[3].id}
-                  className={`tech-button ${selectedTech === techs[3].id ? 'selected' : ''}`}
-                  onClick={() => handleSelect(techs[3])}
-                  disabled={myPP <= 0}
-                >
-                  {techs[3].name}
-                </button>
-              </div>
+              ))}
             </div>
-            <div className="tech-info">
-              <span className="pp-info">{myPP}/15</span>
-              <button className="fight-button" onClick={handleFight} disabled={!selectedTech || myPP <= 0}>
+            <div className="techInfo">
+              <span className="ppInfo">{myPP}/15</span>
+              <button className="fightButton" onClick={handleFight} disabled={!selectedTech || myPP <= 0}>
                 FIGHT
               </button>
             </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 }
