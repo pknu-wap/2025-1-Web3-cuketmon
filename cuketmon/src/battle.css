@@ -26,7 +26,7 @@ html, body {
   box-sizing: border-box;
 }
 
-.battle-container {
+.battleContainer {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -61,7 +61,7 @@ html, body {
   text-align: center;
 }
 
-.myCuketmon-img{
+.myCuketmonImg{
   position: relative;
   top: 290px;
   left: 30px;
@@ -71,7 +71,7 @@ html, body {
 }
 
 
-.enemyCuketmon-img {
+.enemyCuketmonImg {
   position: relative; 
   top: 290px;
   right: 20px;
@@ -86,7 +86,7 @@ html, body {
   height: 18px;
 }
 
-.my-hp-fill {
+.myHpFill {
   position: relative;
   top: -68.5px;
   left: 414px;
@@ -100,7 +100,7 @@ html, body {
 }
 
 
-.enemy-hp-fill {
+.enemyHpFill {
   position: relative;
   top: -68.5px;
   left:308px;
@@ -146,39 +146,66 @@ html, body {
   height: auto;
 }
 
-.tech-section {
+.battleAnimation {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.techAnimation {
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 64px; /* 한 프레임의 너비 */
+  height: 64px; /* 한 프레임의 높이 */
+  background-repeat: no-repeat;
+  animation: spriteAnimation 1s steps(4) infinite; /* 예: 4프레임, 1초 */
+}
+
+@keyframes spriteAnimation {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: -256px 0; /* 64px * 4 = 256px */
+  }
+}
+
+.techSection {
   margin-top: 20px;
   text-align: center;
   position: relative;
 }
 
-.tech-window-img {
+.techWindowImg {
   width: 1000px;
   max-width: 1200px;
   height: auto;
   z-index: 0;
 }
 
-.tech-buttons {
+.techButtons {
   position: absolute;
-  top: 50%; /* 기술 창 중간에서 시작 */
+  top: 105px;
   left: 35%;
   transform: translate(-50%, -50%);
   width: 80%;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 25px;
+  margin: 0px;
 }
 
-.tech-row {
+.techRow {
   display: flex;
   justify-content: space-between;
   gap: 5px;
 }
 
-.tech-button {
+.techButton {
   background-color: transparent;
-  flex: 1; /* 2x2 격자에 맞게 조정 */
+  flex: 1;
   padding: 8px;
   color: red;
   border: none;
@@ -187,30 +214,30 @@ html, body {
   box-sizing: border-box;
 }
 
-.tech-button.selected {
+.techButton.selected {
   background-color: transparent;
   color: gold;
 }
 
-.tech-button:disabled {
+.techButton:disabled {
   background-color: #ccc;
   cursor: not-allowed;
 }
 
-.tech-info {
-  position: absolute;
-  bottom: 10px; /* 기술 창 하단에 배치 */
+.techInfo {
+  position: relative;
+  bottom: 50px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
-  align-items: center;
+  align-items: right;
   gap: 10px;
 }
 
-.pp-info {
-  position: absolute;
-  bottom: 105px;
-  left: 350px;
+.ppInfo {
+  position: relative;
+  bottom: 115px;
+  left: 850px;
   background-color: transparent;
   color: black;
   padding: 5px 10px;
@@ -218,10 +245,10 @@ html, body {
   font-size: 30px;
 }
 
-.fight-button {
-  position: absolute;
+.fightButton {
+  position: relative;
   bottom:40px;
-  left: 340px;
+  left: 700px;
   padding: 8px 15px;
   background-color: #ff0000;
   color: white;
@@ -231,13 +258,13 @@ html, body {
   font-size: 24px;
 }
 
-.fight-button:disabled {
+.fightButton:disabled {
   background-color: #ff0000;
   cursor: not-allowed;
   color: white;
 }
 
-.battle-animation {
+.battleAnimation {
   height: 100vh;
   width: 100vw;
   display: flex;
@@ -246,7 +273,16 @@ html, body {
   align-items: center;
 }
 
-.battle-message {
+.battleAnimationOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.battleMessage {
   background-color: rgba(0, 0, 0, 0.7);
   color: white;
   padding: 20px;
