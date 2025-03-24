@@ -8,8 +8,9 @@ function Ranking() {
   const [winCount, setWinCount] = useState(0);
   const [imageUrl, setImageUrl] = useState(''); 
 
+  const trainerName = "xami"; //임시로 xami로 둠. 나중에 카카오 로그인 연동 후 각 사용자 이름을 받아오게 만들것!!
   useEffect(() => {
-    fetch('https://your-backend-api.com/ranking') // 백엔드 API URL 변경
+    fetch(`/${trainerName}/rank`) 
       .then(response => response.json())
       .then(data => {
         setMyrank(data.rank);
@@ -23,8 +24,7 @@ function Ranking() {
   return (
     <div>
     <div className='rankingBoard'>
-      {/* 백엔드에서 받은 이미지 표시 */}
-      <img src={imageUrl} alt='커켓몬 이미지' className="pokemonImage" />
+      <img src={imageUrl} alt='최근 사용 커켓몬' className="pokemonImage" />
   <table className="historyBoard">
     <thead>
       <tr>
