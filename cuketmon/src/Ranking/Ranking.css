@@ -1,5 +1,5 @@
 .rankingBoard {
-  background-image: url("/public/RankingPage/background4.png");
+  background-image: url("/public/RankingPage/background.png");
   text-align: center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -10,7 +10,7 @@
 .rankingBoard img {
   position: relative;
   width: 10%;
-  height: 8%;
+  height: 10%;
   border: 2px solid black;
   margin-top: 29%;
 }
@@ -52,4 +52,24 @@
 .historyBoard td.mark3 {
   background-color: #00aeb5;
   color: white;
+}
+/*모바일 반응형*/
+@media (max-width: 767px) {
+  #root {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+  .rankingBoard {
+    padding-top: 30%;
+    font-size: 10px;
+    background-image: url("/public/RankingPage/backgroundMobile.png");
+  }
+
+  .historyBoard {
+    width: 70%;
+    margin-left: 15%;
+    margin-bottom: 38.9%;
+  }
 }
