@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import './battle.css';
+import './Battle.css';
 
 
 function Battle() {
@@ -11,12 +11,7 @@ function Battle() {
     enemyCuketmon: '/BattlePage/cuketmonex.png',
   }); //이것도 이미지대로 받아오는걸로 바꿔야함.
 
-  const [techs, setTechs] = useState([
-    { id: 1, name: '노동착취', description: '노동착취', damage: 10, pp: 15 },
-    { id: 2, name: '초과근무', description: '초과근무', damage: 10, pp: 15 },
-    { id: 3, name: '열정페이', description: '열정페이', damage: 10, pp: 15 },
-    { id: 4, name: '임금동결', description: '임금동결', damage: 10, pp: 15 },
-  ]); //이 파트는 백앤드와 연동하면 없애고, useState([])으로 받아온 기술정보대로 입력되게 해야함. .json 형식 조율필요? 아직 임의로 표시만 되게 놔둔 것.
+  const [techs, setTechs] = useState([]); //이 파트는 백앤드와 연동하면 없애고, useState([])으로 받아온 기술정보대로 입력되게 해야함. .json 형식 조율필요? 아직 임의로 표시만 되게 놔둔 것.
 
   const [selectedTech, setSelectedTech] = useState(null);
   const [description, setDescription] = useState('');
@@ -40,7 +35,7 @@ function Battle() {
     },
     grass:{
       high: [],
-      normal: []
+      normal: ['/BattlePage/animation/grass/normal_damage1.png']
     },
     electric:{
       high: [],
@@ -101,7 +96,18 @@ function Battle() {
   };
 
   useEffect(() => {
-    fetch('api/DontKnowWhereIshouldBringMyDataFrom')
+    const mockData = [
+      { id: 1, name: '잎날가르기', type: 'grass', damage: 10, description: '잎날가르기' },
+    ];
+    const updatedTechs = mockData.map(tech => {
+      const damageLevel = tech.damage >= 70 ? 'high' : 'normal';
+      const animations = animationMap[tech.type][damageLevel];
+      const randomIndex = Math.floor(Math.random() * animations.length);
+      return { ...tech, animationUrl: animations[randomIndex] };
+    });
+    setTechs(updatedTechs);
+    setLoading(false);
+    /*fetch('api/DontKnowWhereIshouldBringMyDataFrom')
     .then(response => response.json())
     .then(data => {
       const updatedTechs = data.map(tech => {
@@ -118,7 +124,7 @@ function Battle() {
     .catch(error => {
       console.error('API 미응답, 나중에 빼기', error);
       setLoading(false);
-    });
+    }); */
   }, []);
 
   const handleSelect = (tech) => {
@@ -144,7 +150,7 @@ function Battle() {
         setSelectedTech(null);
         setDescription('');
         setCurrentAnimation(null);
-      }, 2000);
+      }, 1000);
     }
   };
 
@@ -157,13 +163,13 @@ function Battle() {
       <div className="content">
         <div className="battleContainer">
           <div className="cuketmon">
-            <img src={cuketmonImages.myCuketmon} className="myCuketmonImg" alt="내 커켓몬" />
+            <img src={cuketmonImages.myCuketmon} className="myCuketmonImage" alt="내 커켓몬" />
             <div className="myHpBar">
               <div className="myHpFill" style={{ width: `${myCuketmonHP}%` }}></div>
             </div>
           </div>
           <div className="cuketmon">
-            <img src={cuketmonImages.enemyCuketmon} className="enemyCuketmonImg" alt="적 커켓몬" />
+            <img src={cuketmonImages.enemyCuketmon} className="enemyCuketmonImage" alt="적 커켓몬" />
             <div className="enemyHpBar">
               <div className="enemyHpFill" style={{ width: `${enemyCuketmonHP}%` }}></div>
             </div>
@@ -171,11 +177,9 @@ function Battle() {
           {/* 전투 애니메이션과 메시지 */}
           {isFighting && (
             <div className="battleAnimationOverlay">
-              <img
-                src={techs.find(t => t.id === selectedTech)?.animationUrl}
+              <img src={techs.find(t => t.id === selectedTech)?.animationUrl}
                 className="techAnimation"
-                alt="기술 애니메이션"
-              />
+                alt="기술 애니메이션"/>
               <div className="battleMessage">{battleMessage}</div>
             </div>
           )}
@@ -186,8 +190,8 @@ function Battle() {
           <div className="hpBackground">
             <img src="/BattlePage/HPbg.png" className="myHpBackground" alt="체력바배경" />
             <img src="/BattlePage/HPbg.png" className="enemyHpBackground" alt="체력바배경" />
-            <img src="/BattlePage/HPbar.png" className="myHpImg" alt="체력바" />
-            <img src="/BattlePage/HPbar.png" className="enemyHpImg" alt="체력바" />
+            <img src="/BattlePage/HPbar.png" className="myHpImage" alt="체력바" />
+            <img src="/BattlePage/HPbar.png" className="enemyHpImage" alt="체력바" />
           </div>
         </div>
         {/* 기술 선택 UI는 전투 중 숨김 */}
