@@ -1,12 +1,10 @@
-body {
-  overflow-x: hidden;
-}
-
 .myPage {
   overflow: hidden;
-  background-image: url("/public/MyPage/background3.png");
+  background-image: url("/public/MyPage/background.png");
   background-size: cover;
   background-repeat: no-repeat;
+  background-position: center;
+  padding-top: 28%;
 }
 
 .item img {
@@ -20,11 +18,11 @@ body {
 }
 
 .item {
+  position: absolute;
   color: #efc15c;
-  margin-bottom: 18%;
-  padding-left: 1%;
+  left: 1%;
+  top: 0%;
   font-size: 20px;
-  padding-top: 12%;
 }
 
 #cuketmonImage {
@@ -36,14 +34,14 @@ body {
 }
 
 .cucketmonProfile {
-  background-image: url("/public/MyPage/cukemon_profile.png");
+  background-image: url("/public/MyPage/cukemonProfile.png");
   background-size: 100% 110%;
   border: 2px solid #bab8b8;
   width: 22%;
   text-align: center;
   margin-left: 71%;
   background-color: #d9d9d9;
-  margin-bottom: 14%;
+  margin-bottom: 9%;
   padding-bottom: 0.35%;
 }
 
@@ -86,6 +84,16 @@ body {
   top: 62.5%;
   left: 87%;
   pointer-events: none;
+}
+
+#releaseButton {
+  width: 4%;
+  margin-bottom: 1%;
+  margin-left: 1%;
+}
+
+#releaseButton:hover {
+  filter: brightness(0.7);
 }
 
 /*밥주기 움직임*/
@@ -137,7 +145,7 @@ body {
   }
 
   .myPage {
-    background-image: url("/public/MyPage/background3mobile.png");
+    background-image: url("/public/MyPage/backgroundMobile.png");
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -145,6 +153,7 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    padding-top: 6%;
   }
 
   .item {
@@ -190,5 +199,11 @@ body {
     top: 78%;
     left: 66%;
     font-size: 12px;
+  }
+  #releaseButton {
+    width: 4%;
+    margin-top: 135%;
+    margin-left: 1%;
+    width: 10%;
   }
 }

@@ -23,9 +23,11 @@ function MyPage() {
       const feedData = await feedResponse.json();
       setFeedCount(feedData.length); 
 
-      const cuketmonResponse = await fetch(`/trainer/${trainerName}/cuketmons`);
+      const cuketmonResponse = await fetch(`/trainer/${trainerName}/cuketmons`); //'커켓몬 받아오기' 아직 엔드포인트 미정!!
       const cuketmonData = await cuketmonResponse.json();
       setCuketmonData(cuketmonData);
+
+      
     } catch (error) {
       console.error('데이터 로드 실패', error);
       setToyCount(0);
@@ -54,20 +56,46 @@ function MyPage() {
     fetchData(); 
   }, []);
 
-  const handleFeedClick = () => {
+
+  /*먹이주기 */
+  const feedCukemon=async()=>{
+    const response=await fetch('/monster/{monsterName}/feed',{method:"POST"});
+    if (response.ok){
+      const updateFood=await (await fetch('/trainer/{trainerName}/feeds')).json();
+      setFeedCount(updateFood)
+    }
+  }
+
+  /*먹이주기 업데이트*/
+  const handleFeedClick = async() => {
     setIsFed(true);
     setTimeout(() => {
       setIsFed(false);
     }, 1000);
+    await feedCukemon();
   };
 
-  const handlePlayClick = () => {
+  /*놀아주기*/
+    const playCukemon = async() =>{
+      const response = await fetch('/monster/{monsterName}/play',{method:"POST"});
+      if (response.ok){
+        const updateToy=await (await fetch('/trainer/{trainerName}/toys')).json();
+        setToyCount(updateToy)
+      }
+    }
+
+ /*놀기 업데이트*/
+  const handlePlayClick = async() => {
     setIsPlayed(true);
     setTimeout(() => {
       setIsPlayed(false);
     }, 1000);
+    await playCukemon();
   };
 
+
+
+  /*키보드 방향키로 포켓몬 조회 구현*/
   const handleKeyPress = (e) => {
     if (e.key === "ArrowRight") {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % cuketmonData.length);
@@ -81,8 +109,26 @@ function MyPage() {
       pageRef.current.focus(); 
     }
   }, []);
-
   const { cuketmonName, relevanceCount, cuketmonImage } = cuketmonData[currentIndex] || {};
+
+  /*커켓몬 삭제*/
+  const releaseCukemon = async (monsterId) => {
+    if (!monsterId) {
+      alert("몬스터 ID가 없습니다.");
+      return;
+    }
+    try {
+      const response = await fetch(`/monster/${monsterId}/release`, { method: "DELETE" });
+      if (!response.ok) {
+        throw new Error(`삭제 실패: ${response.status}`);
+      }
+      setCuketmonData((prevData) => prevData.filter(monster => monster.id !== monsterId));
+    } catch (error) {
+      alert("에러 발생:", error);
+    }
+  };
+  
+
 
   return (
     <div 
@@ -117,6 +163,9 @@ function MyPage() {
         <img src='/button.png' id="playButton" onClick={handlePlayClick} />
         <span id="buttonText2">놀아주기</span>
       </div>
+
+      <img src='/MyPage/releaseButton.png' id="releaseButton" onClick={() => releaseCukemon(cuketmonData[currentIndex]?.id)} />
+
 
       <MenuBar />
     </div>
