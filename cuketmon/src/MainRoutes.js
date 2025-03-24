@@ -2,7 +2,7 @@ import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import App from './App';
 import Make from './Make/Make';
-import Battle from './battle';
+import Battle from './Battle/Battle';
 import Ranking from './Ranking/Ranking';
 import MyPage from './MyPage/MyPage';
 import MakeResult from "./MakeResult/MakeResult";
