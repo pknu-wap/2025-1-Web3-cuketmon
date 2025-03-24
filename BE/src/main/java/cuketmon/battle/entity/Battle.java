@@ -38,4 +38,9 @@ public class Battle {
     @Enumerated(EnumType.STRING)
     private BattleResult result;
 
+    public Battle(Trainer trainer1, Trainer trainer2, BattleStatus status) {
+        this.trainer1 = trainer1;
+        this.trainer2 = trainer2;
+        this.status = status;
+    }
 }
