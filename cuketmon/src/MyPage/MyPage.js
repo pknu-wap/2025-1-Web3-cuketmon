@@ -9,9 +9,8 @@ function MyPage() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isFed, setIsFed] = useState(false);
   const [isPlayed, setIsPlayed] = useState(false);
-
-  const trainerName = "xami"; // 카카오 로그인으로 받아오기
-  const API_URL=process.ingInstruction.env.React_APP_API_URL;
+  const trainerName = "kng"; // 카카오 로그인으로 받아오기
+  const API_URL=process.env.React_APP_API_URL;
   const pageRef = useRef(null);
 
   const fetchData = async () => {
@@ -57,18 +56,41 @@ function MyPage() {
     fetchData();
   }, []);
 
+
   /*먹이주기 */
   const feedCukemon = async (monsterId) => {
-    const response = await fetch(`${API_URL}/monster/${monsterId}/feed`, { method: "POST" });
-    if (response.ok) {
-      const updateFood = await (await fetch(`${API_URL}/trainer/${trainerName}/feeds`)).json();
-      setFeedCount(updateFood);
+    monsterId=2;
+    console.log("현재 monsterId:", monsterId);
+    if (!monsterId) {
+      alert("몬스터 ID가 없습니다.");
+      return;
+    }
+    
+    try {
+      const response = await fetch(`${API_URL}/monster/${monsterId}/feed`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+  
+      const result = await response.text();
+  
+      if (response.ok) {
+        alert(result); 
+        const updatedFeedData = await (await fetch(`${API_URL}/trainer/${trainerName}/feeds`)).json();
+        setFeedCount(updatedFeedData.length);
+      } else {
+        throw new Error(result);
+      }
+    } catch (error) {
+      alert(`먹이 주기 실패: ${error.message}`);
     }
   };
 
   /*먹이주기 업데이트*/
   const handleFeedClick = async () => {
-    const monsterId = cuketmonData[currentIndex]?.cuketmonName; 
+    const monsterId = cuketmonData[currentIndex]?.id; 
     setIsFed(true);
     setTimeout(() => {
       setIsFed(false);
@@ -78,16 +100,38 @@ function MyPage() {
 
   /*놀아주기*/
   const playCukemon = async (monsterId) => {
-    const response = await fetch(`${API_URL}/monster/${monsterId}/play`, { method: "POST" });
-    if (response.ok) {
-      const updateToy = await (await fetch(`${API_URL}/trainer/${trainerName}/toys`)).json();
-      setToyCount(updateToy);
+    monsterId=2;
+    if (!monsterId) {
+      alert("몬스터 ID가 없습니다.");
+      return;
+    }
+  
+    try {
+      const response = await fetch(`${API_URL}/monster/${monsterId}/play`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+  
+      const result = await response.text(); 
+  
+      if (response.ok) {
+        alert(result); 
+        const updatedToyData = await (await fetch(`${API_URL}/trainer/${trainerName}/toys`)).json();
+        setToyCount(updatedToyData.length);
+      } else {
+        throw new Error(result);
+      }
+    } catch (error) {
+      alert(`놀아주기 실패: ${error.message}`);
     }
   };
+  
 
   /*놀기 업데이트*/
   const handlePlayClick = async () => {
-    const monsterId = cuketmonData[currentIndex]?.cuketmonName; 
+    const monsterId = cuketmonData[currentIndex]?.id;
     setIsPlayed(true);
     setTimeout(() => {
       setIsPlayed(false);
