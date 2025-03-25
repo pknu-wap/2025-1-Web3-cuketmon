@@ -168,8 +168,7 @@ html, body {
   transform: translate(-50%, -50%);
   background-size: 360px 37px;
   background-repeat: no-repeat;
-  animation: spriteAnimation 1s steps(6) infinite; /* 예: 6프레임, 1초 */
-  z-index: 10;
+  animation: spriteAnimation 1s steps(6) forwards; /* 예: 6프레임, 1초 */
 }
 
 @keyframes spriteAnimation {
@@ -177,8 +176,19 @@ html, body {
     transform: translate3d(-100%,0,0)
   }
   to {
-    transform: translate3d(50%,0,0)
+    transform: translate3d(20%,0,0)
   }
+}
+
+.hitEffect {
+  animation: hitAnimation 0.5 ease forwards;
+}
+
+@keyframes hitAnimation {
+   100% {
+    transform: translateY(-50px);
+    filter: brightness(0.5) sepia(1) hue-rotate(-60deg) saturate(5);
+}
 }
 
 .techSection {
