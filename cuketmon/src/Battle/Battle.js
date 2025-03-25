@@ -19,6 +19,8 @@ function Battle() {
   const [isFighting, setIsFighting] = useState(false);
   const [battleMessage, setBattleMessage] = useState('');
   const [currentAnimation, setCurrentAnimation] = useState(null);
+  const [isPlayerHit, setIsPlayerHit] = useState(false); // 커켓몬1이 맞았는지
+  const [isEnemyHit, setIsEnemyHit] = useState(false);   // 커켓몬2가 맞았는지
 
   const animationMap = {
     fire:{
@@ -146,10 +148,15 @@ function Battle() {
 
       setTimeout(() => {
         setIsFighting(false);
+        setIsEnemyHit(true);
         setBattleMessage('으아아아아아아아ㅏ악!!!');
         setSelectedTech(null);
         setDescription('');
         setCurrentAnimation(null);
+
+        setTimeout(() => {
+          setIsEnemyHit(false);
+        }, 500);
       }, 1000);
     }
   };
@@ -163,13 +170,17 @@ function Battle() {
       <div className="content">
         <div className="battleContainer">
           <div className="cuketmon">
-            <img src={cuketmonImages.myCuketmon} className="myCuketmonImage" alt="내 커켓몬" />
+            <img src={cuketmonImages.myCuketmon} 
+            className={`myCuketmonImage ${isPlayerHit ? 'hitEffect' : ''}`}
+            alt="내 커켓몬" />
             <div className="myHpBar">
               <div className="myHpFill" style={{ width: `${myCuketmonHP}%` }}></div>
             </div>
           </div>
           <div className="cuketmon">
-            <img src={cuketmonImages.enemyCuketmon} className="enemyCuketmonImage" alt="적 커켓몬" />
+            <img src={cuketmonImages.enemyCuketmon} 
+            className={`enemyCuketmonImage ${isEnemyHit ? 'hitEffect': ''}`}
+              alt="적 커켓몬" />
             <div className="enemyHpBar">
               <div className="enemyHpFill" style={{ width: `${enemyCuketmonHP}%` }}></div>
             </div>
