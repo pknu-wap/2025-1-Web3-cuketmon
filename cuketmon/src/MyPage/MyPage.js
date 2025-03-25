@@ -10,47 +10,42 @@ function MyPage() {
   const [isFed, setIsFed] = useState(false);
   const [isPlayed, setIsPlayed] = useState(false);
   const trainerName = "kng"; // 카카오 로그인으로 받아오기
-  const API_URL=process.env.React_APP_API_URL;
+  const API_URL=process.env.REACT_APP_API_URL; 
   const pageRef = useRef(null);
 
   const fetchData = async () => {
-
-    
     try {
       const toyResponse = await fetch(`${API_URL}/trainer/${trainerName}/toys`);
+      if (!toyResponse.ok) {
+        const errorText = await toyResponse.text();
+        console.error('Error response:', errorText);
+        return;
+      }
       const toyData = await toyResponse.json();
       setToyCount(toyData.length);
-
+  
       const feedResponse = await fetch(`${API_URL}/trainer/${trainerName}/feeds`);
+      if (!feedResponse.ok) {
+        const errorText = await feedResponse.text();
+        console.error('Error response:', errorText);
+        return;
+      }
       const feedData = await feedResponse.json();
       setFeedCount(feedData.length);
-
-      const cuketmonResponse = await fetch(`${API_URL}/trainer/${trainerName}/cuketmons`); // '커켓몬 받아오기' 엔드포인트 미정
+  
+      const cuketmonResponse = await fetch(`${API_URL}/trainer/${trainerName}/cuketmons`);
+      if (!cuketmonResponse.ok) {
+        const errorText = await cuketmonResponse.text();
+        console.error('Error response:', errorText);
+        return;
+      }
       const cuketmonData = await cuketmonResponse.json();
       setCuketmonData(cuketmonData);
     } catch (error) {
       console.error('데이터 로드 실패', error);
-      setToyCount(0);
-      setFeedCount(0);
-      setCuketmonData([
-        {
-          cuketmonName: "커켓몬1",
-          relevanceCount: 25,
-          cuketmonImage: "/images/cuketmon1.png",
-        },
-        {
-          cuketmonName: "커켓몬2",
-          relevanceCount: 15,
-          cuketmonImage: "/images/cuketmon2.png",
-        },
-        {
-          cuketmonName: "커켓몬3",
-          relevanceCount: 30,
-          cuketmonImage: "/images/cuketmon3.png",
-        },
-      ]);
     }
   };
+  
 
   useEffect(() => {
     fetchData();
@@ -59,7 +54,8 @@ function MyPage() {
 
   /*먹이주기 */
   const feedCukemon = async (monsterId) => {
-    monsterId=2;
+    monsterId=2; 
+    const trainerName = "kng"; // 카카오 로그인으로 받아오기
     console.log("현재 monsterId:", monsterId);
     if (!monsterId) {
       alert("몬스터 ID가 없습니다.");
