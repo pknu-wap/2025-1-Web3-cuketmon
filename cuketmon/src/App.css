@@ -8,7 +8,7 @@ html {
   height: 100vh;
   padding-bottom: 10%;
   overflow: hidden;
-  background-image: url("/public/LoginPage/background1.png");
+  background-image: url("/public/LoginPage/background.png");
   background-size: cover;
   background-repeat: no-repeat;
 }
@@ -49,7 +49,7 @@ html {
   }
   .App {
     overflow: hidden;
-    background-image: url("/public/LoginPage/background1.png") !important;
+    background-image: url("/public/LoginPage/background.png") !important;
     padding-top: 0;
     text-align: center;
     padding-left: 0;
