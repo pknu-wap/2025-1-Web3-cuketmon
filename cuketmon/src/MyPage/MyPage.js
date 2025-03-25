@@ -11,20 +11,22 @@ function MyPage() {
   const [isPlayed, setIsPlayed] = useState(false);
 
   const trainerName = "xami"; // 카카오 로그인으로 받아오기
-
+  const API_URL=process.ingInstruction.env.React_APP_API_URL;
   const pageRef = useRef(null);
 
   const fetchData = async () => {
+
+    
     try {
-      const toyResponse = await fetch(`/trainer/${trainerName}/toys`);
+      const toyResponse = await fetch(`${API_URL}/trainer/${trainerName}/toys`);
       const toyData = await toyResponse.json();
       setToyCount(toyData.length);
 
-      const feedResponse = await fetch(`/trainer/${trainerName}/feeds`);
+      const feedResponse = await fetch(`${API_URL}/trainer/${trainerName}/feeds`);
       const feedData = await feedResponse.json();
       setFeedCount(feedData.length);
 
-      const cuketmonResponse = await fetch(`/trainer/${trainerName}/cuketmons`); // '커켓몬 받아오기' 엔드포인트 미정
+      const cuketmonResponse = await fetch(`${API_URL}/trainer/${trainerName}/cuketmons`); // '커켓몬 받아오기' 엔드포인트 미정
       const cuketmonData = await cuketmonResponse.json();
       setCuketmonData(cuketmonData);
     } catch (error) {
@@ -56,41 +58,41 @@ function MyPage() {
   }, []);
 
   /*먹이주기 */
-  const feedCukemon = async (monsterName) => {
-    const response = await fetch(`/monster/${monsterName}/feed`, { method: "POST" });
+  const feedCukemon = async (monsterId) => {
+    const response = await fetch(`${API_URL}/monster/${monsterId}/feed`, { method: "POST" });
     if (response.ok) {
-      const updateFood = await (await fetch(`/trainer/${trainerName}/feeds`)).json();
+      const updateFood = await (await fetch(`${API_URL}/trainer/${trainerName}/feeds`)).json();
       setFeedCount(updateFood);
     }
   };
 
   /*먹이주기 업데이트*/
   const handleFeedClick = async () => {
-    const monsterName = cuketmonData[currentIndex]?.cuketmonName; 
+    const monsterId = cuketmonData[currentIndex]?.cuketmonName; 
     setIsFed(true);
     setTimeout(() => {
       setIsFed(false);
     }, 1000);
-    await feedCukemon(monsterName);
+    await feedCukemon(monsterId);
   };
 
   /*놀아주기*/
-  const playCukemon = async (monsterName) => {
-    const response = await fetch(`/monster/${monsterName}/play`, { method: "POST" });
+  const playCukemon = async (monsterId) => {
+    const response = await fetch(`${API_URL}/monster/${monsterId}/play`, { method: "POST" });
     if (response.ok) {
-      const updateToy = await (await fetch(`/trainer/${trainerName}/toys`)).json();
+      const updateToy = await (await fetch(`${API_URL}/trainer/${trainerName}/toys`)).json();
       setToyCount(updateToy);
     }
   };
 
   /*놀기 업데이트*/
   const handlePlayClick = async () => {
-    const monsterName = cuketmonData[currentIndex]?.cuketmonName; 
+    const monsterId = cuketmonData[currentIndex]?.cuketmonName; 
     setIsPlayed(true);
     setTimeout(() => {
       setIsPlayed(false);
     }, 1000);
-    await playCukemon(monsterName);
+    await playCukemon(monsterId);
   };
 
   /*키보드 방향키로 포켓몬 조회 구현*/
@@ -117,7 +119,7 @@ function MyPage() {
       return;
     }
     try {
-      const response = await fetch(`/monster/${monsterId}/release`, { method: "DELETE" });
+      const response = await fetch(`${API_URL}/monster/${monsterId}/release`, { method: "DELETE" });
       if (!response.ok) {
         throw new Error(`삭제 실패: ${response.status}`);
       }
