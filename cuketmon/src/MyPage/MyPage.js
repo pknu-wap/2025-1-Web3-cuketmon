@@ -10,24 +10,23 @@ function MyPage() {
   const [isFed, setIsFed] = useState(false);
   const [isPlayed, setIsPlayed] = useState(false);
 
-  const trainerName = "xami"; ///이거 카카오 로그인으로 받아오게 해야함 
+  const trainerName = "xami"; // 카카오 로그인으로 받아오기
 
   const pageRef = useRef(null);
+
   const fetchData = async () => {
     try {
       const toyResponse = await fetch(`/trainer/${trainerName}/toys`);
       const toyData = await toyResponse.json();
-      setToyCount(toyData.length); 
+      setToyCount(toyData.length);
 
       const feedResponse = await fetch(`/trainer/${trainerName}/feeds`);
       const feedData = await feedResponse.json();
-      setFeedCount(feedData.length); 
+      setFeedCount(feedData.length);
 
-      const cuketmonResponse = await fetch(`/trainer/${trainerName}/cuketmons`); //'커켓몬 받아오기' 아직 엔드포인트 미정!!
+      const cuketmonResponse = await fetch(`/trainer/${trainerName}/cuketmons`); // '커켓몬 받아오기' 엔드포인트 미정
       const cuketmonData = await cuketmonResponse.json();
       setCuketmonData(cuketmonData);
-
-      
     } catch (error) {
       console.error('데이터 로드 실패', error);
       setToyCount(0);
@@ -53,47 +52,46 @@ function MyPage() {
   };
 
   useEffect(() => {
-    fetchData(); 
+    fetchData();
   }, []);
 
-
   /*먹이주기 */
-  const feedCukemon=async()=>{
-    const response=await fetch('/monster/{monsterName}/feed',{method:"POST"});
-    if (response.ok){
-      const updateFood=await (await fetch('/trainer/{trainerName}/feeds')).json();
-      setFeedCount(updateFood)
+  const feedCukemon = async (monsterName) => {
+    const response = await fetch(`/monster/${monsterName}/feed`, { method: "POST" });
+    if (response.ok) {
+      const updateFood = await (await fetch(`/trainer/${trainerName}/feeds`)).json();
+      setFeedCount(updateFood);
     }
-  }
+  };
 
   /*먹이주기 업데이트*/
-  const handleFeedClick = async() => {
+  const handleFeedClick = async () => {
+    const monsterName = cuketmonData[currentIndex]?.cuketmonName; 
     setIsFed(true);
     setTimeout(() => {
       setIsFed(false);
     }, 1000);
-    await feedCukemon();
+    await feedCukemon(monsterName);
   };
 
   /*놀아주기*/
-    const playCukemon = async() =>{
-      const response = await fetch('/monster/{monsterName}/play',{method:"POST"});
-      if (response.ok){
-        const updateToy=await (await fetch('/trainer/{trainerName}/toys')).json();
-        setToyCount(updateToy)
-      }
+  const playCukemon = async (monsterName) => {
+    const response = await fetch(`/monster/${monsterName}/play`, { method: "POST" });
+    if (response.ok) {
+      const updateToy = await (await fetch(`/trainer/${trainerName}/toys`)).json();
+      setToyCount(updateToy);
     }
+  };
 
- /*놀기 업데이트*/
-  const handlePlayClick = async() => {
+  /*놀기 업데이트*/
+  const handlePlayClick = async () => {
+    const monsterName = cuketmonData[currentIndex]?.cuketmonName; 
     setIsPlayed(true);
     setTimeout(() => {
       setIsPlayed(false);
     }, 1000);
-    await playCukemon();
+    await playCukemon(monsterName);
   };
-
-
 
   /*키보드 방향키로 포켓몬 조회 구현*/
   const handleKeyPress = (e) => {
@@ -106,9 +104,10 @@ function MyPage() {
 
   useEffect(() => {
     if (pageRef.current) {
-      pageRef.current.focus(); 
+      pageRef.current.focus();
     }
   }, []);
+
   const { cuketmonName, relevanceCount, cuketmonImage } = cuketmonData[currentIndex] || {};
 
   /*커켓몬 삭제*/
@@ -122,30 +121,23 @@ function MyPage() {
       if (!response.ok) {
         throw new Error(`삭제 실패: ${response.status}`);
       }
-      setCuketmonData((prevData) => prevData.filter(monster => monster.id !== monsterId));
+      setCuketmonData((prevData) => prevData.filter((monster) => monster.id !== monsterId));
     } catch (error) {
       alert("에러 발생:", error);
     }
   };
-  
-
 
   return (
-    <div 
-      className='myPage' 
-      ref={pageRef}
-      onKeyDown={handleKeyPress} 
-      tabIndex={0} 
-    >
+    <div className='myPage' ref={pageRef} onKeyDown={handleKeyPress} tabIndex={0}>
       <div className='item'>
         <img src='/MyPage/feed.png' id='feed' alt="밥 아이콘" /> <span>{feedCount}</span>
         <img src='/MyPage/toy.png' alt="장난감 아이콘" /> <span>{toyCount}</span>
       </div>
 
-      <img 
-        src={cuketmonImage} 
-        id='cuketmonImage' 
-        className={`${isFed ? 'moveImage' : ''} ${isPlayed ? 'shakeImage' : ''}`} 
+      <img
+        src={cuketmonImage}
+        id='cuketmonImage'
+        className={`${isFed ? 'moveImage' : ''} ${isPlayed ? 'shakeImage' : ''}`}
         alt="커켓몬 이미지"
       />
 
@@ -165,7 +157,6 @@ function MyPage() {
       </div>
 
       <img src='/MyPage/releaseButton.png' id="releaseButton" onClick={() => releaseCukemon(cuketmonData[currentIndex]?.id)} />
-
 
       <MenuBar />
     </div>
