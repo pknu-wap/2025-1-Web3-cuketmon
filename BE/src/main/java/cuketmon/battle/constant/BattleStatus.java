@@ -1,4 +1,4 @@
-package cuketmon.battle;
+package cuketmon.battle.constant;
 
 public enum BattleStatus {
 

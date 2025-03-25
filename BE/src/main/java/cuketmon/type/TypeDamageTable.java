@@ -17,7 +17,6 @@ public class TypeDamageTable {
         setAllTypeDamage();
     }
 
-
     public double getDamageMultiplier(Type attacker, Type defender) {
         return typeDamageTable.get(attacker.getId()).get(defender.getId());
     }

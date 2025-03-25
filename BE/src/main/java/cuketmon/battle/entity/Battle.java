@@ -1,7 +1,7 @@
 package cuketmon.battle.entity;
 
-import cuketmon.battle.BattleResult;
-import cuketmon.battle.BattleStatus;
+import cuketmon.battle.constant.BattleResult;
+import cuketmon.battle.constant.BattleStatus;
 import cuketmon.trainer.entity.Trainer;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;

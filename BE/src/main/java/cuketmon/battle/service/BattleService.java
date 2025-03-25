@@ -1,6 +1,6 @@
 package cuketmon.battle.service;
 
-import cuketmon.battle.BattleStatus;
+import cuketmon.battle.constant.BattleStatus;
 import cuketmon.battle.entity.Battle;
 import cuketmon.battle.repository.BattleRepository;
 import cuketmon.trainer.entity.Trainer;
