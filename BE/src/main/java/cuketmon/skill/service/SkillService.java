@@ -26,6 +26,13 @@ public class SkillService {
         this.skillWebClient = skillWebClient;
     }
 
+    // skillId로 Skill 객체 조회
+    @Transactional
+    public Skill getSkillById(Integer skillId) {
+        return skillRepository.findById(skillId)
+                .orElseThrow(() -> new IllegalArgumentException("[Error] 해당 ID의 스킬이 없습니다."));
+    }
+
     // 스킬 분배 로직
     @Transactional
     public Integer getSkillId(Type type, String damageClass, int minDamage, int maxDamage) {
