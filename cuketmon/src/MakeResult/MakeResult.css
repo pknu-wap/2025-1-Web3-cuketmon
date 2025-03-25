@@ -1,5 +1,5 @@
 .resultPage {
-  background-image: url("/public/MakePage/background4.png");
+  background-image: url("/public/MakePage/background.png");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -15,7 +15,7 @@
 }
 
 .chatBox {
-  background-image: url("/public/MakeResultPage/chatbox.png");
+  background-image: url("/public/MakeResultPage/chatBox.png");
   width: 60%;
   height: 25%;
   margin-bottom: 15%;

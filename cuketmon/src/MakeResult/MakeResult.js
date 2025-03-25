@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "./MakeResult.css";
 
 function MakeResult() {
-  const [pokemonImage, setPokemonImage] = useState("./MakeResultPage/MovingEgg.gif");
+  const [pokemonImage, setPokemonImage] = useState("./MakeResultPage/movingEgg.gif");
   const [mentText, setMentText] = useState("어라...?");
   const eggRef = useRef(null);
   const navigate = useNavigate(); 
