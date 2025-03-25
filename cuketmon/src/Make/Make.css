@@ -1,5 +1,5 @@
 .Make {
-  background-image: url("/public/MakePage/background4.png");
+  background-image: url("/public/MakePage/background.png");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -33,7 +33,7 @@
 #S1,
 #S2 {
   margin-left: 3%;
-  background-image: url("/public/MakePage/selectbackground.png");
+  background-image: url("/public/MakePage/selectBackground.png");
   width: 17%;
   height: 50px;
   margin-bottom: 1%;
@@ -76,7 +76,7 @@
   background-repeat: no-repeat;
   background-size: cover;
   overflow: hidden;
-  background-image: url("/public/MakePage/textareabackground.png");
+  background-image: url("/public/MakePage/textareaBackground.png");
   margin-bottom: 2%;
 }
 .Make .cukemonFeature textarea {
