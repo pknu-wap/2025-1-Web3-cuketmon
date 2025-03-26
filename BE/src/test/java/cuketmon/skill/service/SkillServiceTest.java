@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import cuketmon.skill.entity.Skill;
-import cuketmon.skill.repository.SkillRepository;
 import cuketmon.type.Type;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +14,6 @@ class SkillServiceTest {
 
     @Autowired
     private SkillService skillService;
-
-    @Autowired
-    private SkillRepository skillRepository;
 
     @Test
     void 랜덤_스킬을_올바르게_부여하는가_데미지_클래스_테스트() {
