@@ -17,7 +17,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/ws")
                 .setAllowedOriginPatterns("chrome-extension://*", "http://localhost:3000",
-                        "https://cukemon.netlify.app");
+                        "https://frolicking-gnome-f1b1ad.netlify.app/make");
     }
 
     @Override
