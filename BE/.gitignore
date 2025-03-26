@@ -7,7 +7,7 @@ build/
 !**/src/test/**/build/
 
 ### 중요 파일 ###
-#/src/main/resources/application.properties
+/src/main/resources/application.properties
 .env*
 
 ### STS ###
