@@ -3,6 +3,22 @@ html, body {
   margin: 0;
   padding: 0;
   overflow: hidden;
+  font-family: 'PokemonGSK2Mono'
+}
+
+@font-face {
+  font-family: 'PokemonGSK2Mono'; /* 사용할 폰트 이름 */
+  src: url('/public/Font/PokemonGSK2Mono.ttf') format('truetype'); /* 파일 경로와 형식 */
+  font-weight: normal; /* 폰트 굵기 */
+  font-style: normal; /* 폰트 스타일 */
+}
+
+.techButton, .battleMessage {
+  font-family: 'PokemonGSK2Mono', sans-serif !important;
+}
+
+.Battle * {
+  font-family: 'PokemonGSK2Mono', sans-serif !important;
 }
 
 .Battle {
@@ -226,10 +242,10 @@ html, body {
   background-color: transparent;
   flex: 1;
   padding: 8px;
-  color: red;
+  color: black;
   border: none;
   cursor: pointer;
-  font-size: 18px;
+  font-size: 30px;
   box-sizing: border-box;
 }
 
@@ -264,25 +280,6 @@ html, body {
   font-size: 30px;
 }
 
-.fightButton {
-  position: relative;
-  bottom:40px;
-  left: 700px;
-  padding: 8px 15px;
-  background-color: #ff0000;
-  color: white;
-  border: none;
-  cursor: pointer;
-  border-radius: 3px;
-  font-size: 24px;
-}
-
-.fightButton:disabled {
-  background-color: #ff0000;
-  cursor: not-allowed;
-  color: white;
-}
-
 
 .battleMessage {
   background-color: rgba(0, 0, 0, 0.7);
@@ -291,4 +288,12 @@ html, body {
   border-radius: 10px;
   border: 2px solid #fff;
   text-align: center;
+}
+
+
+.cuketmonType {
+  position: relative;
+  bottom: 55px;
+  left: 70%;
+  font-size: 55px;
 }
