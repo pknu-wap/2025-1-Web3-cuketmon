@@ -1,5 +1,6 @@
 package cuketmon.battle.controller;
 
+import cuketmon.battle.constant.BattleStatus;
 import cuketmon.battle.dto.EndBattleResponse;
 import cuketmon.battle.dto.TrainerRequest;
 import cuketmon.battle.service.BattleMatchService;
@@ -30,7 +31,8 @@ public class BattleWebSocketController {
     // 배틀 종료
     @MessageMapping("/endBattle/{battleId}")
     public void endBattle(@DestinationVariable String battleId) {
-        messagingTemplate.convertAndSend("/topic/battleEnd/" + battleId, new EndBattleResponse(battleId, "배틀 종료"));
+        messagingTemplate.convertAndSend("/topic/battleEnd/" + battleId,
+                new EndBattleResponse(battleId, BattleStatus.FINISHED.getName()));
     }
 
     // 배틀 중 동작
