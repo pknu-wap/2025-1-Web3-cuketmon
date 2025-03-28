@@ -87,4 +87,13 @@ public class MonsterController {
         }
     }
 
+    @GetMapping("/{monsterId}/battleInfo")
+    public ResponseEntity<?> getMonsterBattleInfo(@PathVariable Integer monsterId) {
+        try {
+            return ResponseEntity.ok(monsterService.getMonsterBattleInfo(monsterId));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
 }
