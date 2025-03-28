@@ -8,6 +8,8 @@ function MyPage() {
   const [isFed, setIsFed] = useState(false);
   const [isPlayed, setIsPlayed] = useState(false);
   const [loading, setLoading] = useState(true); 
+  const [cukemonData, setCukemonData] = useState(null);
+  
   const trainerName = "kng"; // 카카오 로그인으로 받아오기
   const API_URL = process.env.REACT_APP_API_URL;
   const pageRef = useRef(null);
@@ -25,6 +27,10 @@ function MyPage() {
       const feedData = await feedResponse.json();
       console.log("Feed Data:", feedData); 
       setFeedCount(Number(feedData)); 
+
+      const cukemonResponse=await fetch(`${API_URL}/monster/${monsterId}/info`);
+      const cukemonData = await cukemonResponse.json();
+      setCukemonData(cukemonData);
 
     } catch (error) {
       console.error('데이터 로드 실패', error);
@@ -152,12 +158,13 @@ function MyPage() {
         )}
       </div>
 
-      <div className='cucketmonProfile'>
-        <p>커켓몬 이름</p>
-        <div id='relevanceCount'>
-          <img src='/MyPage/relevance.png' alt="친밀도 아이콘" />
-        </div>
-      </div>
+     <div className='cucketmonProfile'>
+     {loading ? <p>로딩 중...</p> : <p>{cukemonData?.name || "이름 없음"}</p>}
+     <div id='relevanceCount'>
+     <img src='/MyPage/relevance.png' alt="친밀도 아이콘" />
+     <span>{cukemonData?.affinity ?? 0}</span>
+     </div>
+     </div>
 
       <div className='buttons'>
         <img src='/button.png' id="feedButton" onClick={handleFeedClick} />
