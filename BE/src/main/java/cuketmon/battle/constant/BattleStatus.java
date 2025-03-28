@@ -4,6 +4,10 @@ public enum BattleStatus {
 
     WAITING,
     ONGOING,
-    FINISHED
+    FINISHED;
+
+    public String getName() {
+        return this.name().toLowerCase();
+    }
 
 }
