@@ -4,6 +4,8 @@ import static cuketmon.utill.Random.getRandomInRange;
 
 import cuketmon.damageclass.DamageClass;
 import cuketmon.monster.dto.GenerateApiRequestBody;
+import cuketmon.monster.dto.MonsterDTO;
+import cuketmon.monster.dto.MonsterDTO.MonsterInfo;
 import cuketmon.monster.entity.Monster;
 import cuketmon.monster.repository.MonsterRepository;
 import cuketmon.skill.service.SkillService;
@@ -123,6 +125,14 @@ public class MonsterService {
         } else {
             throw new IllegalArgumentException("[ERROR] 장난감이 부족합니다.");
         }
+    }
+
+    @Transactional
+    public MonsterDTO.MonsterInfo getMonsterInfo(Integer monsterId) {
+        Monster monster = monsterRepository.findById(monsterId)
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당 커켓몬을 찾을 수 없습니다."));
+
+        return new MonsterInfo(monster.getId(), monster.getName(), monster.getImage(), monster.getAffinity());
     }
 
 }

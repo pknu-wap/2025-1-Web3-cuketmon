@@ -1,11 +1,13 @@
 package cuketmon.monster.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
 public class MonsterDTO {
 
     @Getter
+    @AllArgsConstructor
     public static class MonsterInfo {
         private Integer id;
         private String name;
@@ -14,6 +16,7 @@ public class MonsterDTO {
     }
 
     @Getter
+    @AllArgsConstructor
     public static class MonsterBattleInfo {
         private Integer id;
         private String name;
