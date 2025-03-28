@@ -7,8 +7,8 @@ function Battle() {
   const [enemyCuketmonHP, setEnemyCuketmonHP] = useState(100);
   const [myPP, setMyPP] = useState(15);
   const [cuketmonImages, setCuketmonImages] = useState({
-    myCuketmon: '/BattlePage/cuketmonex.png',
-    enemyCuketmon: '/BattlePage/cuketmonex.png'}); //이것도 이미지대로 받아오는걸로 바꿔야함.
+    myCuketmon: '/BattlePage/cuketmonEx.png',
+    enemyCuketmon: '/BattlePage/cuketmonEx.png'}); //이것도 이미지대로 받아오는걸로 바꿔야함.
   const [techs, setTechs] = useState([]); //이 파트는 백앤드와 연동하면 없애고, useState([])으로 받아온 기술정보대로 입력되게 해야함. .json 형식 조율필요? 아직 임의로 표시만 되게 놔둔 것.
   const [selectedTech, setSelectedTech] = useState(null);
   const [description, setDescription] = useState('');
@@ -22,8 +22,8 @@ function Battle() {
 
   const animationMap = {
     fire:{
-      high: ['/BattlePage/animation/fire/high_damage1.png'],
-      normal: ['/BattlePage/animation/fire/normal_damage1.png']
+      high: ['/BattlePage/animation/fire/highDamage1.png'],
+      normal: ['/BattlePage/animation/fire/normalDamage1.png']
     },
     water:{
       high: [],
@@ -34,8 +34,8 @@ function Battle() {
       normal: []
     },
     grass:{
-      high: ['/BattlePage/animation/grass/high_damage1.png'],
-      normal: ['/BattlePage/animation/grass/normal_damage1.png']
+      high: ['/BattlePage/animation/grass/highDamage1.png'],
+      normal: ['/BattlePage/animation/grass/normalDamage1.png']
     },
     electric:{
       high: [],
@@ -173,10 +173,6 @@ function Battle() {
     }
   };
 
-  if (loading) {
-    return <div className="Battle">불러오는중...</div>;
-  }
-
   return (
     <div className="Battle">
       <div className="content">
@@ -216,15 +212,15 @@ function Battle() {
             <img src="/BattlePage/stand.png" className="enemyStage" alt="전투무대" />
           </div>
           <div className="hpBackground">
-            <img src="/BattlePage/HPbg.png" className="myHpBackground" alt="체력바배경" />
-            <img src="/BattlePage/HPbg.png" className="enemyHpBackground" alt="체력바배경" />
-            <img src="/BattlePage/HPbar.png" className="myHpImage" alt="체력바" />
-            <img src="/BattlePage/HPbar.png" className="enemyHpImage" alt="체력바" />
+            <img src="/BattlePage/hpBg.png" className="myHpBackground" alt="체력바배경" />
+            <img src="/BattlePage/hpBg.png" className="enemyHpBackground" alt="체력바배경" />
+            <img src="/BattlePage/hpBar.png" className="myHpImage" alt="체력바" />
+            <img src="/BattlePage/hpBar.png" className="enemyHpImage" alt="체력바" />
           </div>
         </div>
         {!isFighting && (
           <div className="techSection">
-            <img src="/BattlePage/techselect.png" className="techWindowImg" alt="기술 창" />
+            <img src="/BattlePage/techSelect.png" className="techWindowImg" alt="기술 창" />
             <div className="techButtons">
               {techs.map(tech => (
                 <button
