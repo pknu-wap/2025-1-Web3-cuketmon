@@ -7,40 +7,60 @@ function MyPage() {
   const [feedCount, setFeedCount] = useState();
   const [isFed, setIsFed] = useState(false);
   const [isPlayed, setIsPlayed] = useState(false);
-  const [loading, setLoading] = useState(true); 
+  const [loading, setLoading] = useState(true);
   const [cukemonData, setCukemonData] = useState(null);
-  
+
   const trainerName = "kng"; // 카카오 로그인으로 받아오기
   const API_URL = process.env.REACT_APP_API_URL;
   const pageRef = useRef(null);
-  const monsterId = 2;
+  const [monsterId, setMonsterId] = useState(2); // monsterId 상태를 추가
 
+  // 데이터를 가져오는 함수
   const fetchData = async () => {
     try {
       setLoading(true);
+
+      // 장난감 데이터
       const toyResponse = await fetch(`${API_URL}/trainer/${trainerName}/toys`);
       const toyData = await toyResponse.json();
-      console.log("Toy Data:", toyData); 
       setToyCount(Number(toyData));
 
+      // 먹이 데이터
       const feedResponse = await fetch(`${API_URL}/trainer/${trainerName}/feeds`);
       const feedData = await feedResponse.json();
-      console.log("Feed Data:", feedData); 
-      setFeedCount(Number(feedData)); 
+      setFeedCount(Number(feedData));
 
-      const cukemonResponse=await fetch(`${API_URL}/monster/${monsterId}/info`);
+      // 커켓몬 데이터
+      const cukemonResponse = await fetch(`${API_URL}/monster/${monsterId}/info`);
       const cukemonData = await cukemonResponse.json();
       setCukemonData(cukemonData);
 
     } catch (error) {
       console.error('데이터 로드 실패', error);
     } finally {
-      setLoading(false); 
+      setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchData(); 
+    fetchData();
+  }, [monsterId]); 
+
+  // 키보드 이벤트
+  useEffect(() => {
+    const handleKeyPress = (event) => {
+      if (event.key === 'ArrowLeft') {
+        setMonsterId((prevId) => Math.max(1, prevId - 1)); 
+      } else if (event.key === 'ArrowRight') {
+        setMonsterId((prevId) => prevId + 1); 
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyPress);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyPress);
+    };
   }, []);
 
   // 먹이주기
@@ -158,13 +178,13 @@ function MyPage() {
         )}
       </div>
 
-     <div className='cucketmonProfile'>
-     {loading ? <p>로딩 중...</p> : <p>{cukemonData?.name || "이름 없음"}</p>}
-     <div id='relevanceCount'>
-     <img src='/MyPage/relevance.png' alt="친밀도 아이콘" />
-     <span>{cukemonData?.affinity ?? 0}</span>
-     </div>
-     </div>
+      <div className='cucketmonProfile'>
+        {loading ? <p>로딩 중...</p> : <p>{cukemonData?.name || "이름 없음"}</p>}
+        <div id='relevanceCount'>
+          <img src='/MyPage/relevance.png' alt="친밀도 아이콘" />
+          <span>{cukemonData?.affinity ?? 0}</span>
+        </div>
+      </div>
 
       <div className='buttons'>
         <img src='/button.png' id="feedButton" onClick={handleFeedClick} />
@@ -173,7 +193,7 @@ function MyPage() {
         <span id="buttonText2">놀아주기</span>
       </div>
 
-      <img src='/MyPage/releaseButton.png' id="releaseButton" onClick={releaseCukemon} /> 
+      <img src='/MyPage/releaseButton.png' id="releaseButton" onClick={releaseCukemon} />
 
       <MenuBar />
     </div>
