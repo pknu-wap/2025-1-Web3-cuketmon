@@ -10,16 +10,16 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
+//@Entity
 public class Trainer {
 
-    @Id
     private String name;
-    private Long kakaoId;
-    //private Long id;
+    private long kakaoId;
 
-    //@Column(nullable = false)
-    //private String email;
+    public Trainer(String name, String kakaoId) {
+        this.name = name;
+        this.kakaoId = Long.parseLong(kakaoId);
+    }
 
     // TODO: toy, feed 클래스로 생성후 validation 고려 ex) 0~100
     @Column(nullable = false)
