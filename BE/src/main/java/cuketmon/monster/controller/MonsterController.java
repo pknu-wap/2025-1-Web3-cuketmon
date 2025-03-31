@@ -78,6 +78,7 @@ public class MonsterController {
         }
     }
 
+    // 마이페이지 커켓몬 정보 조회
     @GetMapping("/{monsterId}/info")
     public ResponseEntity<?> getMonsterInfo(@PathVariable Integer monsterId) {
         try {
@@ -87,6 +88,7 @@ public class MonsterController {
         }
     }
 
+    // 배틀페이지 커켓몬 정보 조회
     @GetMapping("/{monsterId}/battleInfo")
     public ResponseEntity<?> getMonsterBattleInfo(@PathVariable Integer monsterId) {
         try {

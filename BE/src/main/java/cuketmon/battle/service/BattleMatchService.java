@@ -32,6 +32,8 @@ public class BattleMatchService {
         activeBattles.put(trainerName, battleId);
         activeBattles.put(opponent, battleId);
 
+        System.out.println("매칭된 배틀 생성: battleId=" + battleId + ", trainer1=" + trainerName + ", trainer2=" + opponent);
+
         // 매칭된 트레이너들에게 배틀 시작 알림
         messagingTemplate.convertAndSend("/topic/match/" + battleId,
                 new MatchResponse(battleId, trainerName, opponent));

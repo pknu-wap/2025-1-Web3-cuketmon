@@ -12,18 +12,18 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 @EnableWebSocket
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
-    // TODO:  .withSockJS(); 로 앱과 잘 실행되는 지 봐야함
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/ws")
                 .setAllowedOriginPatterns("chrome-extension://*", "http://localhost:3000",
-                        "https://frolicking-gnome-f1b1ad.netlify.app/make");
+                        "https://frolicking-gnome-f1b1ad.netlify.app/make")
+                .withSockJS();
     }
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry registry) {
-        registry.enableSimpleBroker("/topic"); // 메시지를 받을 경로
-        registry.setApplicationDestinationPrefixes("/app");       // 클라이언트가 메시지를 보낼 경로
+        registry.enableSimpleBroker("/topic", "/queue"); // 메시지를 받을 경로
+        registry.setApplicationDestinationPrefixes("/app");                 // 클라이언트가 메시지를 보낼 경로
     }
 
 }
