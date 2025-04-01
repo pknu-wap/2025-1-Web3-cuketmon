@@ -37,10 +37,10 @@ public class BattleWebSocketController {
         System.out.println("배틀 종료 메시지 전송 완료: battleId = " + battleId);
     }
 
-    // 배틀 중 동작
-    //@MessageMapping("/move/{battleId}")
-    //public void makeMove(@DestinationVariable String battleId, MoveRequest move) {
-    //    messagingTemplate.convertAndSend("/topic/move/" + battleId, move);
-    //}
+    // 기술 사용
+    @MessageMapping("/skill/{battleId}")
+    public void makeMove(@DestinationVariable String battleId, MoveRequest move) {
+        messagingTemplate.convertAndSend("/topic/move/" + battleId, move);
+    }
 
 }

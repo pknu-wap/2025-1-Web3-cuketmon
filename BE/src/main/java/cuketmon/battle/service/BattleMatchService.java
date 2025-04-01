@@ -8,6 +8,7 @@ import java.util.Queue;
 import java.util.UUID;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class BattleMatchService {
@@ -20,6 +21,7 @@ public class BattleMatchService {
         this.messagingTemplate = messagingTemplate;
     }
 
+    @Transactional
     public void findBattle(String trainerName) {
         if (waitingQueue.isEmpty()) {
             waitingQueue.add(trainerName);
