@@ -1,7 +1,5 @@
 package cuketmon.battle.controller;
 
-import cuketmon.battle.constant.BattleStatus;
-import cuketmon.battle.dto.EndBattleResponse;
 import cuketmon.battle.dto.TrainerRequest;
 import cuketmon.battle.service.BattleMatchService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,16 +29,13 @@ public class BattleWebSocketController {
     // 배틀 종료
     @MessageMapping("/endBattle/{battleId}")
     public void endBattle(@DestinationVariable String battleId) {
-        System.out.println("배틀 종료 요청 수신: battleId = " + battleId);
-        messagingTemplate.convertAndSend("/topic/battleEnd/" + battleId,
-                new EndBattleResponse(battleId, BattleStatus.FINISHED.getName()));
-        System.out.println("배틀 종료 메시지 전송 완료: battleId = " + battleId);
+        battleMatchService.endBattle(battleId);
     }
 
-    // 기술 사용
-    @MessageMapping("/skill/{battleId}")
-    public void makeMove(@DestinationVariable String battleId, MoveRequest move) {
-        messagingTemplate.convertAndSend("/topic/move/" + battleId, move);
-    }
+//    // 기술 사용
+//    @MessageMapping("/skill/{battleId}")
+//    public void makeMove(@DestinationVariable String battleId, MoveRequest move) {
+//        messagingTemplate.convertAndSend("/topic/move/" + battleId, move);
+//    }
 
 }

@@ -1,5 +1,7 @@
 package cuketmon.battle.service;
 
+import cuketmon.battle.constant.BattleStatus;
+import cuketmon.battle.dto.EndBattleResponse;
 import cuketmon.battle.dto.MatchResponse;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -39,6 +41,14 @@ public class BattleMatchService {
         // 매칭된 트레이너들에게 배틀 시작 알림
         messagingTemplate.convertAndSend("/topic/match/" + battleId,
                 new MatchResponse(battleId, trainerName, opponent));
+    }
+
+    @Transactional
+    public void endBattle(String battleId) {
+        System.out.println("배틀 종료 요청 수신: battleId = " + battleId);
+        messagingTemplate.convertAndSend("/topic/battleEnd/" + battleId,
+                new EndBattleResponse(battleId, BattleStatus.FINISHED.getName()));
+        System.out.println("배틀 종료 메시지 전송 완료: battleId = " + battleId);
     }
 
     private Integer generateBattleId() {
