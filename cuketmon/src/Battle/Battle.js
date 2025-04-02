@@ -26,72 +26,72 @@ function Battle() {
       normal: ['/BattlePage/animation/fire/normalDamage1.png']
     },
     water:{
-      high: [],
-      normal: []
+      high: ['/BattlePage/animation/water/highDamage1.png'],
+      normal: ['/BattlePage/animation/water/normalDamage1.png']
     },
     normal:{
-      high: [],
-      normal: []
+      high: ['/BattlePage/animation/normal/highDamage1.png'],
+      normal: ['/BattlePage/animation/normal/normalDamage1.png']
     },
     grass:{
       high: ['/BattlePage/animation/grass/highDamage1.png'],
       normal: ['/BattlePage/animation/grass/normalDamage1.png']
     },
     electric:{
-      high: [],
-      normal: []
+      high: ['/BattlePage/animation/electric/highDamage1.png'],
+      normal: ['/BattlePage/animation/electric/normalDamage1.png']
     },
     psychic:{
-      high: [],
-      normal: []
+      high: ['/BattlePage/animation/psychic/highDamage1.png'],
+      normal: ['/BattlePage/animation/psychic/normalDamage1.png']
     },
     rock:{
-      high: [],
-      normal: []
+      high: ['/BattlePage/animation/rock/highDamage1.png'],
+      normal: ['/BattlePage/animation/rock/normalDamage1.png']
     },
     iron:{
-      high: [],
-      normal: []
+      high: ['/BattlePage/animation/iron/highDamage1.png'],
+      normal: ['/BattlePage/animation/iron/normalDamage1.png']
     },
     ice:{
-      high: [],
-      normal: []
+      high: ['/BattlePage/animation/ice/highDamage1.png'],
+      normal: ['/BattlePage/animation/ice/normalDamage1.png']
     },
     dragon:{
-      high: [],
-      normal: []
+      high: ['/BattlePage/animation/dragon/highDamage1.png'],
+      normal: ['/BattlePage/animation/dragon/normalDamage1.png']
     },
     evil:{
-      high: [],
-      normal: []
+      high: ['/BattlePage/animation/evil/highDamage1.png'],
+      normal: ['/BattlePage/animation/evil/normalDamage1.png']
     },
     fairy:{
-      high: [],
-      normal: []
+      high: ['/BattlePage/animation/fairy/highDamage1.png'],
+      normal: ['/BattlePage/animation/fairy/normalDamage1.png']
     },
     poison:{
-      high: [],
-      normal: []
+      high: ['/BattlePage/animation/poison/highDamage1.png'],
+      normal: ['/BattlePage/animation/poison/normalDamage1.png']
     },
     bug:{
-      high: [],
-      normal: []
+      high: ['/BattlePage/animation/bug/highDamage1.png'],
+      normal: ['/BattlePage/animation/bug/normalDamage1.png']
     },
     ground:{
-      high: [],
-      normal: []
+      high: ['/BattlePage/animation/ground/highDamage1.png'],
+      normal: ['/BattlePage/animation/ground/normalDamage1.png']
     },
     fly:{
-      high: [],
-      normal: []
+      high: ['/BattlePage/animation/fly/highDamage1.png'],
+      normal: ['/BattlePage/animation/fly/normalDamage1.png']
     },
     fighter:{
-      high: [],
-      normal: []
+      high: ['/BattlePage/animation/fighter/highDamage1.png'],
+      normal: ['/BattlePage/animation/fighter/normalDamage1.png']
     },
     ghost:{
-      high: [],
-      normal: []
+      high: ['/BattlePage/animation/ghost/highDamage1.png'],
+      normal: ['/BattlePage/animation/ghost/normalDamage1.png']
     }
   };
 
