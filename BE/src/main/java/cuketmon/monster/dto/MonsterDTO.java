@@ -1,9 +1,11 @@
 package cuketmon.monster.dto;
 
+import cuketmon.type.Type;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
+@AllArgsConstructor
 public class MonsterDTO {
 
     @Getter
@@ -18,9 +20,9 @@ public class MonsterDTO {
     @Getter
     @AllArgsConstructor
     public static class MonsterBattleInfo {
-        private Integer id;
         private String name;
         private String image;
+        private Integer affinity;
 
         private Integer hp;
         private Integer speed;
@@ -32,10 +34,21 @@ public class MonsterDTO {
         private String type1;
         private String type2;
 
-        private Integer skillId1;
-        private Integer skillId2;
-        private Integer skillId3;
-        private Integer skillId4;
+        private Skill skill1;
+        private Skill skill2;
+        private Skill skill3;
+        private Skill skill4;
+
+        @Getter
+        @AllArgsConstructor
+        public static class Skill {
+            private Type type;
+            private String damageClass;
+            private Integer accuracy;
+            private String name;
+            private Integer power;
+            private Integer pp;
+        }
     }
 
 }
