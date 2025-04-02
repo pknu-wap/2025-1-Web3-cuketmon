@@ -1,23 +1,21 @@
 package cuketmon.battle.controller;
 
+import cuketmon.battle.dto.SkillRequest;
 import cuketmon.battle.dto.TrainerRequest;
 import cuketmon.battle.service.BattleMatchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 
 @Controller
 public class BattleWebSocketController {
 
     private final BattleMatchService battleMatchService;
-    private final SimpMessagingTemplate messagingTemplate;
 
     @Autowired
-    public BattleWebSocketController(BattleMatchService battleMatchService, SimpMessagingTemplate messagingTemplate) {
+    public BattleWebSocketController(BattleMatchService battleMatchService) {
         this.battleMatchService = battleMatchService;
-        this.messagingTemplate = messagingTemplate;
     }
 
     // 배틀 찾기 (대기열 등록)
@@ -32,10 +30,10 @@ public class BattleWebSocketController {
         battleMatchService.endBattle(battleId);
     }
 
-//    // 기술 사용
-//    @MessageMapping("/skill/{battleId}")
-//    public void makeMove(@DestinationVariable String battleId, MoveRequest move) {
-//        messagingTemplate.convertAndSend("/topic/move/" + battleId, move);
-//    }
+    // 기술 사용
+    @MessageMapping("/skill/{battleId}")
+    public void useSkill(@DestinationVariable String battleId, SkillRequest skill) {
+        battleMatchService.useSkill();
+    }
 
 }
