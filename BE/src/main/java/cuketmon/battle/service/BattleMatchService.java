@@ -1,5 +1,7 @@
 package cuketmon.battle.service;
 
+import static cuketmon.utill.Damage.makeDamage;
+
 import cuketmon.battle.constant.BattleStatus;
 import cuketmon.battle.dto.BattleDTO;
 import cuketmon.battle.dto.EndBattleResponse;
@@ -104,9 +106,11 @@ public class BattleMatchService {
             return;
         }
 
-        // 4. 공격 스킬 선택
         MonsterDTO.MonsterBattleInfo attackerMonster = attacker.getMonster();
-        List<MonsterBattleInfo.Skill> skills = attackerMonster.getSkills();
+        MonsterDTO.MonsterBattleInfo defenderMonster = defender.getMonster();
+
+        // 4. 공격 스킬 선택
+        List<MonsterBattleInfo.Skill> skills = attacker.getMonster().getSkills();
 
         int skillNumber = skillRequest.getSkillId();
         if (skillNumber < 1 || skillNumber > skills.size()) {
@@ -125,10 +129,9 @@ public class BattleMatchService {
         // TODO: damage계산 로직 생성하기
         //  일단 기본 power로 설정
         // 7. 데미지 계산 
-        int damage = usedSkill.getPower();
+        int damage = (int) makeDamage(attackerMonster, defenderMonster, usedSkill);
 
         // 8. 방어자 몬스터 HP 갱신
-        MonsterDTO.MonsterBattleInfo defenderMonster = defender.getMonster();
         defenderMonster.applyDamage(damage);
 
         // 9. 턴 전환
