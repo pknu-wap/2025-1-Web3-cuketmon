@@ -21,19 +21,20 @@ public class BattleWebSocketController {
     // 배틀 찾기 (대기열 등록)
     @MessageMapping("/findBattle")
     public void findBattle(TrainerRequest request) {
-        battleMatchService.findBattle(request.getTrainerName());
+        battleMatchService.findBattle(request);
     }
 
     // 배틀 종료
     @MessageMapping("/endBattle/{battleId}")
-    public void endBattle(@DestinationVariable String battleId) {
+    public void endBattle(@DestinationVariable Integer battleId) {
         battleMatchService.endBattle(battleId);
     }
 
+    // TODO: response 변경하기
     // 기술 사용
     @MessageMapping("/skill/{battleId}")
-    public void useSkill(@DestinationVariable String battleId, SkillRequest skill) {
-        battleMatchService.useSkill();
+    public void useSkill(@DestinationVariable Integer battleId, SkillRequest skill) {
+        battleMatchService.useSkill(battleId, skill);
     }
 
 }
