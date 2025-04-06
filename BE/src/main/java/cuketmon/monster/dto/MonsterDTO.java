@@ -1,6 +1,7 @@
 package cuketmon.monster.dto;
 
 import cuketmon.type.Type;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -34,10 +35,12 @@ public class MonsterDTO {
         private String type1;
         private String type2;
 
-        private Skill skill1;
-        private Skill skill2;
-        private Skill skill3;
-        private Skill skill4;
+        private List<Skill> skills;
+
+        public Integer applyDamage(int amount) {
+            int newHp = this.hp - amount;
+            return Math.max(newHp, 0);
+        }
 
         @Getter
         @AllArgsConstructor
@@ -48,6 +51,10 @@ public class MonsterDTO {
             private String name;
             private Integer power;
             private Integer pp;
+
+            public void usePp(int amount) {
+                this.pp -= amount;
+            }
         }
     }
 
