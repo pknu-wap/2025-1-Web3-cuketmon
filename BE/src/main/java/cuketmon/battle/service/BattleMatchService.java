@@ -40,14 +40,24 @@ public class BattleMatchService {
 
     @Transactional
     public void findBattle(TrainerRequest request) {
+        // 1. 큐 대기
         if (waitingQueue.isEmpty()) {
             waitingQueue.add(makeTeam(request));
             return;
         }
 
+        // 2. 팀 생성
         BattleDTO.Team red = waitingQueue.poll();
         BattleDTO.Team blue = makeTeam(request);
 
+        // 3. 선공 파악
+        if (red.getMonster().getSpeed() > blue.getMonster().getSpeed()) {
+            red.changeTurn();
+        } else {
+            blue.changeTurn();
+        }
+
+        // 4. 배틀 생성
         Integer battleId = generateBattleId();
         activeBattles.put(battleId, new BattleDTO(red, blue));
 
