@@ -38,8 +38,11 @@ public class MonsterDTO {
         private List<Skill> skills;
 
         public Integer applyDamage(int amount) {
-            int newHp = this.hp - amount;
-            return Math.max(newHp, 0);
+            this.hp -= amount;
+            if (this.hp < 0) {
+                this.hp = 0;
+            }
+            return this.hp;
         }
 
         @Getter
