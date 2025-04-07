@@ -13,6 +13,7 @@ import cuketmon.battle.dto.TurnResponse;
 import cuketmon.monster.dto.MonsterDTO;
 import cuketmon.monster.dto.MonsterDTO.MonsterBattleInfo;
 import cuketmon.monster.service.MonsterService;
+import cuketmon.trainer.service.TrainerService;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -32,12 +33,14 @@ public class BattleMatchService {
     private final Queue<BattleDTO.Team> waitingQueue = new LinkedList<>();
     private final Map<Integer, BattleDTO> activeBattles = new HashMap<>();
     private final MonsterService monsterService;
-
+    private final TrainerService trainerService;
 
     @Autowired
-    public BattleMatchService(SimpMessagingTemplate messagingTemplate, MonsterService monsterService) {
+    public BattleMatchService(SimpMessagingTemplate messagingTemplate,
+                              MonsterService monsterService, TrainerService trainerService) {
         this.messagingTemplate = messagingTemplate;
         this.monsterService = monsterService;
+        this.trainerService = trainerService;
     }
 
     @Transactional
@@ -52,7 +55,7 @@ public class BattleMatchService {
         BattleDTO.Team red = waitingQueue.poll();
         BattleDTO.Team blue = makeTeam(request);
 
-        // 3. 선공 파악
+        // 3. 선공 설정
         if (red.getMonster().getSpeed() > blue.getMonster().getSpeed()) {
             red.changeTurn();
         } else {
@@ -75,14 +78,16 @@ public class BattleMatchService {
     }
 
     // TODO: 클래스 기능 분리하기
+    //  matchService에는 match만 관리하도록!
+    // TODO: 테스트!!!!!
     @Transactional
     public void useSkill(Integer battleId, SkillRequest skillRequest) {
-        String destination = "/topic/turn/" + battleId;
+        String turnDestination = "/topic/turn/" + battleId;
 
         // 1. 배틀 확인
         BattleDTO battle = activeBattles.get(battleId);
         if (battle == null) {
-            messagingTemplate.convertAndSend(destination, new ErrorResponse("해당 배틀을 찾을 수 없습니다."));
+            messagingTemplate.convertAndSend(turnDestination, new ErrorResponse("해당 배틀을 찾을 수 없습니다."));
             return;
         }
 
@@ -96,13 +101,13 @@ public class BattleMatchService {
             attacker = battle.getBlue();
             defender = battle.getRed();
         } else {
-            messagingTemplate.convertAndSend(destination, new ErrorResponse("트레이너를 찾을 수 없습니다."));
+            messagingTemplate.convertAndSend(turnDestination, new ErrorResponse("트레이너를 찾을 수 없습니다."));
             return;
         }
 
         // 3. 공격자 턴 검증
         if (!attacker.getTurn()) {
-            messagingTemplate.convertAndSend(destination, new ErrorResponse("상대의 턴 입니다."));
+            messagingTemplate.convertAndSend(turnDestination, new ErrorResponse("상대의 턴 입니다."));
             return;
         }
 
@@ -114,31 +119,36 @@ public class BattleMatchService {
 
         int skillNumber = skillRequest.getSkillId();
         if (skillNumber < 1 || skillNumber > skills.size()) {
-            messagingTemplate.convertAndSend(destination, new ErrorResponse("잘못된 스킬 번호입니다."));
+            messagingTemplate.convertAndSend(turnDestination, new ErrorResponse("잘못된 스킬 번호입니다."));
             return;
         }
         MonsterDTO.MonsterBattleInfo.Skill usedSkill = skills.get(skillNumber - 1);
 
         // 6. PP 확인 및 차감
         if (usedSkill.getPp() <= 0) {
-            messagingTemplate.convertAndSend(destination, new ErrorResponse("PP가 부족합니다."));
+            messagingTemplate.convertAndSend(turnDestination, new ErrorResponse("PP가 부족합니다."));
             return;
         }
         usedSkill.usePp(1);
 
-        // TODO: damage계산 로직 생성하기
-        //  일단 기본 power로 설정
         // 7. 데미지 계산 
         int damage = (int) makeDamage(attackerMonster, defenderMonster, usedSkill);
 
         // 8. 방어자 몬스터 HP 갱신
         defenderMonster.applyDamage(damage);
+        if (defenderMonster.getHp() <= 0) {
+            messagingTemplate.convertAndSend("/topic/battleEnd/" + battleId,
+                    new EndBattleResponse(battleId, BattleStatus.FINISHED.getName()));
+            trainerService.addWin(attacker.getTrainerName());
+            activeBattles.remove(battleId);
+            return;
+        }
 
         // 9. 턴 전환
         attacker.changeTurn();
         defender.changeTurn();
 
-        messagingTemplate.convertAndSend(destination, new TurnResponse(battleId, damage));
+        messagingTemplate.convertAndSend(turnDestination, new TurnResponse(battleId, damage));
     }
 
     private BattleDTO.Team makeTeam(TrainerRequest request) {

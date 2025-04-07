@@ -6,6 +6,7 @@ import static cuketmon.utill.Random.getRandomInRange;
 import cuketmon.monster.dto.MonsterDTO;
 import cuketmon.type.Type;
 
+// TODO: 테스트 작성!!!!!!!!!!!!
 public class Damage {
 
     // TODO: 매직넘버 분리
