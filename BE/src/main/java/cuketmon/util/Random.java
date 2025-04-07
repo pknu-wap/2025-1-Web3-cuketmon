@@ -1,4 +1,4 @@
-package cuketmon.utill;
+package cuketmon.util;
 
 import java.util.concurrent.ThreadLocalRandom;
 

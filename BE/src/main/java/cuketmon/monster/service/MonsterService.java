@@ -1,6 +1,6 @@
 package cuketmon.monster.service;
 
-import static cuketmon.utill.Random.getRandomInRange;
+import static cuketmon.util.Random.getRandomInRange;
 
 import cuketmon.damageclass.DamageClass;
 import cuketmon.monster.dto.GenerateApiRequestBody;

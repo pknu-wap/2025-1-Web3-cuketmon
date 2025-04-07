@@ -1,7 +1,7 @@
-package cuketmon.utill;
+package cuketmon.util;
 
 import static cuketmon.type.TypeDamageTable.getDamageMultiplier;
-import static cuketmon.utill.Random.getRandomInRange;
+import static cuketmon.util.Random.getRandomInRange;
 
 import cuketmon.monster.dto.MonsterDTO;
 import cuketmon.type.Type;

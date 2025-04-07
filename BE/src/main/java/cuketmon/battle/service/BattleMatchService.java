@@ -1,6 +1,6 @@
 package cuketmon.battle.service;
 
-import static cuketmon.utill.Damage.makeDamage;
+import static cuketmon.util.Damage.makeDamage;
 
 import cuketmon.battle.constant.BattleStatus;
 import cuketmon.battle.dto.BattleDTO;
