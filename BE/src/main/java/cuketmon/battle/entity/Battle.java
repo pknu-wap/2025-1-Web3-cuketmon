@@ -43,4 +43,5 @@ public class Battle {
         this.trainer2 = trainer2;
         this.status = status;
     }
+
 }

@@ -6,5 +6,6 @@ import lombok.Getter;
 public class TrainerRequest {
 
     private String trainerName;
+    private Integer monsterId;
 
 }

@@ -36,4 +36,8 @@ public class Trainer {
         feed = feed - minus;
     }
 
+    public void addWin() {
+        win = win + 1;
+    }
+
 }

@@ -1,13 +1,11 @@
 package cuketmon.battle.dto;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
 
-@Getter
 @AllArgsConstructor
-public class EndBattleResponse {
+public class TurnResponse {
 
     private Integer battleId;
-    private String result;
+    private Integer damage;
 
 }

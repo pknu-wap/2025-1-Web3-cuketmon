@@ -1,14 +1,15 @@
 package cuketmon.skill.service;
 
+import cuketmon.monster.dto.MonsterDTO;
 import cuketmon.skill.dto.SkillResponse;
 import cuketmon.skill.entity.Skill;
 import cuketmon.skill.repository.SkillRepository;
 import cuketmon.type.Type;
-import jakarta.transaction.Transactional;
 import java.util.List;
 import java.util.Random;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.reactive.function.client.WebClient;
 
 @Service
@@ -47,6 +48,22 @@ public class SkillService {
         // 찾은 스킬들 중 랜덤으로 하나 선택
         return skills.get(new Random().nextInt(skills.size())).getId();
     }
+
+    // TODO: util로 옮기는 것 고려
+    public MonsterDTO.MonsterBattleInfo.Skill convertSkill(Integer skillId) {
+        Skill skill = skillRepository.findById(skillId)
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당 ID의 스킬이 없습니다."));
+
+        return new MonsterDTO.MonsterBattleInfo.Skill(
+                skill.getType(),
+                skill.getDamageClass(),
+                skill.getAccuracy(),
+                skill.getName(),
+                skill.getPower(),
+                skill.getPp()
+        );
+    }
+
 
     // TODO: 너무 느림 flux? 써서 고쳐야함
     // 전체 스킬 저장 (919개)

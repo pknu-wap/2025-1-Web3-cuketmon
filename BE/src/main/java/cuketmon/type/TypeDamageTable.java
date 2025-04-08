@@ -10,18 +10,23 @@ public class TypeDamageTable {
     public static final double LOW = 0.5;
     public static final double NONE = 0.0;
 
-    private final List<List<Double>> typeDamageTable;
+    private static final List<List<Double>> typeDamageTable;
 
-    public TypeDamageTable() {
-        this.typeDamageTable = initializeDamageTable();
+    // static 초기화 (클래스 로딩 시 단 한 번 실행)
+    static {
+        typeDamageTable = initializeDamageTable();
         setAllTypeDamage();
     }
 
-    public double getDamageMultiplier(Type attacker, Type defender) {
+    private TypeDamageTable() {
+    }
+
+    public static double getDamageMultiplier(Type attacker, Type defender) {
         return typeDamageTable.get(attacker.getId()).get(defender.getId());
     }
 
-    private List<List<Double>> initializeDamageTable() {
+    // 데미지 지정 함수
+    private static List<List<Double>> initializeDamageTable() {
         List<List<Double>> table = new ArrayList<>();
         for (int i = 0; i < Type.values().length; i++) {
             List<Double> row = new ArrayList<>();
@@ -33,8 +38,7 @@ public class TypeDamageTable {
         return table;
     }
 
-    // 여기서부터 데미지 지정 함수
-    private void setAllTypeDamage() {
+    private static void setAllTypeDamage() {
         setNormalDamage(Type.NORMAL);
         setFireDamage(Type.FIRE);
         setWaterDamage(Type.WATER);
@@ -55,7 +59,7 @@ public class TypeDamageTable {
         setFairyDamage(Type.FAIRY);
     }
 
-    private void setNormalDamage(Type type) {
+    private static void setNormalDamage(Type type) {
         setDamage(type, Type.NORMAL, MID);
         setDamage(type, Type.FIRE, MID);
         setDamage(type, Type.WATER, MID);
@@ -76,7 +80,7 @@ public class TypeDamageTable {
         setDamage(type, Type.FAIRY, MID);
     }
 
-    private void setFireDamage(Type type) {
+    private static void setFireDamage(Type type) {
         setDamage(type, Type.NORMAL, MID);
         setDamage(type, Type.FIRE, LOW);
         setDamage(type, Type.WATER, LOW);
@@ -97,7 +101,7 @@ public class TypeDamageTable {
         setDamage(type, Type.FAIRY, MID);
     }
 
-    private void setWaterDamage(Type type) {
+    private static void setWaterDamage(Type type) {
         setDamage(type, Type.NORMAL, MID);
         setDamage(type, Type.FIRE, HIGH);
         setDamage(type, Type.WATER, LOW);
@@ -118,7 +122,7 @@ public class TypeDamageTable {
         setDamage(type, Type.FAIRY, MID);
     }
 
-    private void setElectricDamage(Type type) {
+    private static void setElectricDamage(Type type) {
         setDamage(type, Type.NORMAL, MID);
         setDamage(type, Type.FIRE, MID);
         setDamage(type, Type.WATER, HIGH);
@@ -139,7 +143,7 @@ public class TypeDamageTable {
         setDamage(type, Type.FAIRY, MID);
     }
 
-    private void setGrassDamage(Type type) {
+    private static void setGrassDamage(Type type) {
         setDamage(type, Type.NORMAL, MID);
         setDamage(type, Type.FIRE, LOW);
         setDamage(type, Type.WATER, HIGH);
@@ -160,7 +164,7 @@ public class TypeDamageTable {
         setDamage(type, Type.FAIRY, MID);
     }
 
-    private void setIceDamage(Type type) {
+    private static void setIceDamage(Type type) {
         setDamage(type, Type.NORMAL, MID);
         setDamage(type, Type.FIRE, LOW);
         setDamage(type, Type.WATER, LOW);
@@ -181,7 +185,7 @@ public class TypeDamageTable {
         setDamage(type, Type.FAIRY, LOW);
     }
 
-    private void setFightingDamage(Type type) {
+    private static void setFightingDamage(Type type) {
         setDamage(type, Type.NORMAL, HIGH);
         setDamage(type, Type.FIRE, MID);
         setDamage(type, Type.WATER, MID);
@@ -202,7 +206,7 @@ public class TypeDamageTable {
         setDamage(type, Type.FAIRY, LOW);
     }
 
-    private void setPoisonDamage(Type type) {
+    private static void setPoisonDamage(Type type) {
         setDamage(type, Type.NORMAL, MID);
         setDamage(type, Type.FIRE, MID);
         setDamage(type, Type.WATER, MID);
@@ -223,7 +227,7 @@ public class TypeDamageTable {
         setDamage(type, Type.FAIRY, HIGH);
     }
 
-    private void setGroundDamage(Type type) {
+    private static void setGroundDamage(Type type) {
         setDamage(type, Type.NORMAL, MID);
         setDamage(type, Type.FIRE, HIGH);
         setDamage(type, Type.WATER, MID);
@@ -244,7 +248,7 @@ public class TypeDamageTable {
         setDamage(type, Type.FAIRY, MID);
     }
 
-    private void setFlyingDamage(Type type) {
+    private static void setFlyingDamage(Type type) {
         setDamage(type, Type.NORMAL, MID);
         setDamage(type, Type.FIRE, MID);
         setDamage(type, Type.WATER, MID);
@@ -265,7 +269,7 @@ public class TypeDamageTable {
         setDamage(type, Type.FAIRY, MID);
     }
 
-    private void setPsychicDamage(Type type) {
+    private static void setPsychicDamage(Type type) {
         setDamage(type, Type.NORMAL, MID);
         setDamage(type, Type.FIRE, MID);
         setDamage(type, Type.WATER, MID);
@@ -286,7 +290,7 @@ public class TypeDamageTable {
         setDamage(type, Type.FAIRY, NONE);
     }
 
-    private void setBugDamage(Type type) {
+    private static void setBugDamage(Type type) {
         setDamage(type, Type.NORMAL, MID);
         setDamage(type, Type.FIRE, LOW);
         setDamage(type, Type.WATER, MID);
@@ -307,7 +311,7 @@ public class TypeDamageTable {
         setDamage(type, Type.FAIRY, LOW);
     }
 
-    private void setRockDamage(Type type) {
+    private static void setRockDamage(Type type) {
         setDamage(type, Type.NORMAL, MID);
         setDamage(type, Type.FIRE, HIGH);
         setDamage(type, Type.WATER, MID);
@@ -328,7 +332,7 @@ public class TypeDamageTable {
         setDamage(type, Type.FAIRY, MID);
     }
 
-    private void setGhostDamage(Type type) {
+    private static void setGhostDamage(Type type) {
         setDamage(type, Type.NORMAL, NONE);
         setDamage(type, Type.FIRE, MID);
         setDamage(type, Type.WATER, MID);
@@ -349,7 +353,7 @@ public class TypeDamageTable {
         setDamage(type, Type.FAIRY, MID);
     }
 
-    private void setDragonDamage(Type type) {
+    private static void setDragonDamage(Type type) {
         setDamage(type, Type.NORMAL, MID);
         setDamage(type, Type.FIRE, MID);
         setDamage(type, Type.WATER, MID);
@@ -370,7 +374,7 @@ public class TypeDamageTable {
         setDamage(type, Type.FAIRY, NONE);
     }
 
-    private void setDarkDamage(Type type) {
+    private static void setDarkDamage(Type type) {
         setDamage(type, Type.NORMAL, MID);
         setDamage(type, Type.FIRE, MID);
         setDamage(type, Type.WATER, MID);
@@ -391,7 +395,7 @@ public class TypeDamageTable {
         setDamage(type, Type.FAIRY, LOW);
     }
 
-    private void setSteelDamage(Type type) {
+    private static void setSteelDamage(Type type) {
         setDamage(type, Type.NORMAL, MID);
         setDamage(type, Type.FIRE, LOW);
         setDamage(type, Type.WATER, LOW);
@@ -412,7 +416,7 @@ public class TypeDamageTable {
         setDamage(type, Type.FAIRY, HIGH);
     }
 
-    private void setFairyDamage(Type type) {
+    private static void setFairyDamage(Type type) {
         setDamage(type, Type.NORMAL, MID);
         setDamage(type, Type.FIRE, LOW);
         setDamage(type, Type.WATER, MID);
@@ -433,7 +437,7 @@ public class TypeDamageTable {
         setDamage(type, Type.FAIRY, MID);
     }
 
-    private void setDamage(Type attacker, Type defender, double multiplier) {
+    private static void setDamage(Type attacker, Type defender, double multiplier) {
         typeDamageTable.get(attacker.getId()).set(defender.getId(), multiplier);
     }
 

@@ -43,4 +43,12 @@ public class TrainerService {
         return trainer.getFeed();
     }
 
+    @Transactional
+    public void addWin(String name) {
+        Trainer trainer = trainerRepository.findById(name)
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR]: 해당 트레이너를 찾을 수 없습니다."));
+        
+        trainer.addWin();
+    }
+
 }

@@ -42,4 +42,5 @@ public class BattleService {
         battle.setStatus(BattleStatus.FINISHED);
         battleRepository.save(battle);
     }
+
 }

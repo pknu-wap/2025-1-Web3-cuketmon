@@ -1,6 +1,6 @@
 package cuketmon.monster.service;
 
-import static cuketmon.utill.Random.getRandomInRange;
+import static cuketmon.util.Random.getRandomInRange;
 
 import cuketmon.damageclass.DamageClass;
 import cuketmon.monster.dto.GenerateApiRequestBody;
@@ -13,9 +13,10 @@ import cuketmon.skill.service.SkillService;
 import cuketmon.trainer.entity.Trainer;
 import cuketmon.trainer.repository.TrainerRepository;
 import cuketmon.type.Type;
-import jakarta.transaction.Transactional;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class MonsterService {
@@ -142,12 +143,15 @@ public class MonsterService {
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당 커켓몬을 찾을 수 없습니다."));
 
         return new MonsterBattleInfo(
-                monster.getId(), monster.getName(), monster.getImage(),
+                monster.getName(), monster.getImage(), monster.getAffinity(),
                 monster.getHp(), monster.getSpeed(),
                 monster.getAttack(), monster.getDefence(),
                 monster.getSpecialAttack(), monster.getSpecialDefence(),
                 monster.getType1().getEnglishName(), monster.getType2().getEnglishName(),
-                monster.getSkillId1(), monster.getSkillId2(), monster.getSkillId3(), monster.getSkillId4()
+                List.of(skillService.convertSkill(monster.getSkillId1()),
+                        skillService.convertSkill(monster.getSkillId2()),
+                        skillService.convertSkill(monster.getSkillId3()),
+                        skillService.convertSkill(monster.getSkillId4()))
         );
     }
 

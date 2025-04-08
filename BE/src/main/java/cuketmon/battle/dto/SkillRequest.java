@@ -5,9 +5,9 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class EndBattleResponse {
+public class SkillRequest {
 
-    private Integer battleId;
-    private String result;
+    Integer skillId;
+    String trainerName;
 
 }
