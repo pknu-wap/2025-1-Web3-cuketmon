@@ -3,11 +3,11 @@ import pandas as pd
 import requests
 
 # CSV 파일 로드
-csv_path = "datasets/pokemon_data.csv"
+csv_path = "/mnt/nas-drive/pys/cuketmon/datasets/pokemon_data.csv"
 df = pd.read_csv(csv_path)
 
 # 저장할 폴더 지정
-save_folder = "datasets/pokemon_images"
+save_folder = "/mnt/nas-drive/pys/cuketmon/datasets/pokemon_images"
 os.makedirs(save_folder, exist_ok=True)
 
 # 이미지 다운로드 및 저장
