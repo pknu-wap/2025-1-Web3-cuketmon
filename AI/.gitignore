@@ -1,4 +1,6 @@
 temp.py
 datasets
 venv
-GPT
+*.csv
+*.txt
+__pycache__
