@@ -28,6 +28,7 @@ public class SkillService {
         this.skillWebClient = skillWebClient;
     }
 
+    // TODO: 이 클래스 중복되는 부분이 너무 많음...
     // skillId로 Skill 객체 조회
     @Transactional
     public Skill getSkillById(Integer skillId) {
@@ -66,6 +67,7 @@ public class SkillService {
 
     // 전체 스킬 저장 (919개)
     public void fetchAndSaveAllSkills() {
+        skillRepository.deleteAll();
         for (int i = 1; i <= TOTAL_SKILL; i++) {
             fetchAndSaveSkill(i);
         }
@@ -98,6 +100,10 @@ public class SkillService {
                 skillResponse.getPower(),
                 skillResponse.getPp()
         );
+
+        if (skill.getPower() == null) {
+            throw new IllegalArgumentException("[ERROR] power가 null인 스킬은 받지 않습니다.");
+        }
         skillRepository.save(skill);
 
         System.out.println("Skill 저장완료. Id: " + skillResponse.getId());
