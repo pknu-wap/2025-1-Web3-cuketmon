@@ -2,6 +2,7 @@ package cuketmon.battle.service;
 
 import static cuketmon.util.Damage.makeDamage;
 
+import cuketmon.battle.TeamMaker;
 import cuketmon.battle.constant.BattleStatus;
 import cuketmon.battle.dto.BattleDTO;
 import cuketmon.battle.dto.EndBattleResponse;
@@ -12,7 +13,6 @@ import cuketmon.battle.dto.TrainerRequest;
 import cuketmon.battle.dto.TurnResponse;
 import cuketmon.monster.dto.MonsterDTO;
 import cuketmon.monster.dto.MonsterDTO.MonsterBattleInfo;
-import cuketmon.monster.service.MonsterService;
 import cuketmon.trainer.service.TrainerService;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -29,31 +29,31 @@ import org.springframework.transaction.annotation.Transactional;
 public class BattleMatchService {
 
     private final SimpMessagingTemplate messagingTemplate;
+    private final TrainerService trainerService;
+    private final TeamMaker teamMaker;
 
     private final Queue<BattleDTO.Team> waitingQueue = new LinkedList<>();
     private final Map<Integer, BattleDTO> activeBattles = new HashMap<>();
-    private final MonsterService monsterService;
-    private final TrainerService trainerService;
 
     @Autowired
     public BattleMatchService(SimpMessagingTemplate messagingTemplate,
-                              MonsterService monsterService, TrainerService trainerService) {
+                              TrainerService trainerService, TeamMaker teamMaker) {
         this.messagingTemplate = messagingTemplate;
-        this.monsterService = monsterService;
         this.trainerService = trainerService;
+        this.teamMaker = teamMaker;
     }
 
     @Transactional
     public void findBattle(TrainerRequest request) {
         // 1. 큐 대기
         if (waitingQueue.isEmpty()) {
-            waitingQueue.add(makeTeam(request));
+            waitingQueue.add(teamMaker.makeTeam(request));
             return;
         }
 
         // 2. 팀 생성
         BattleDTO.Team red = waitingQueue.poll();
-        BattleDTO.Team blue = makeTeam(request);
+        BattleDTO.Team blue = teamMaker.makeTeam(request);
 
         // 3. 선공 설정
         if (red.getMonster().getSpeed() > blue.getMonster().getSpeed()) {
@@ -79,7 +79,6 @@ public class BattleMatchService {
 
     // TODO: 클래스 기능 분리하기
     //  matchService에는 match만 관리하도록!
-    // TODO: 테스트!!!!!
     @Transactional
     public void useSkill(Integer battleId, SkillRequest skillRequest) {
         String turnDestination = "/topic/turn/" + battleId;
@@ -149,12 +148,6 @@ public class BattleMatchService {
         defender.changeTurn();
 
         messagingTemplate.convertAndSend(turnDestination, new TurnResponse(battleId, damage));
-    }
-
-    private BattleDTO.Team makeTeam(TrainerRequest request) {
-        return new BattleDTO.Team(request.getTrainerName(),
-                monsterService.getMonsterBattleInfo(request.getMonsterId()),
-                false);
     }
 
     private Integer generateBattleId() {
