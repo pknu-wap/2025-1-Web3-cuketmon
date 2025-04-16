@@ -3,17 +3,21 @@ package cuketmon.util;
 import static cuketmon.type.TypeDamageTable.getDamageMultiplier;
 import static cuketmon.util.Random.getRandomInRange;
 
-import cuketmon.monster.dto.MonsterDTO;
+import cuketmon.monster.dto.MonsterDTO.MonsterBattleInfo;
 import cuketmon.type.Type;
 
 // TODO: 테스트 작성!!!!!!!!!!!!
 public class Damage {
 
-    // TODO: 매직넘버 분리
-    // 데미지 = ([power] × [(sp)attack] × ([affinity] × 2 ÷ 5 + 2 ) ÷ [(sp)defence] ÷ 50 × [critical] + 2 )
-    //          × [typeBonus] × [typeAdvantage1] × [typeAdvantage2] × [randomInt]/255
-    public static double makeDamage(MonsterDTO.MonsterBattleInfo attacker, MonsterDTO.MonsterBattleInfo defender,
-                                    MonsterDTO.MonsterBattleInfo.Skill skill) {
+    private static final int CRITICAL_CHANCE = 20;
+
+    /*
+    데미지 = ([power] × [(sp)attack] × ([affinity] × 2 ÷ 5 + 2 ) ÷ [(sp)defence] ÷ 50 × [critical] + 2)
+            × [typeBonus] × [typeAdvantage1] × [typeAdvantage2] × [randomInt]/255
+     */
+
+    public static double makeDamage(MonsterBattleInfo attacker, MonsterBattleInfo defender,
+                                    MonsterBattleInfo.Skill skill) {
         int attack = getAttack(attacker, skill.getDamageClass());
         int defence = defender.getDefence();
 
@@ -33,7 +37,7 @@ public class Damage {
     }
 
     // TODO: DamageClass Enum 또는 상수화 고려
-    private static int getAttack(MonsterDTO.MonsterBattleInfo monster, String damageClass) {
+    private static int getAttack(MonsterBattleInfo monster, String damageClass) {
         if (damageClass.equals("physical")) {
             return monster.getAttack();
         }
@@ -41,13 +45,13 @@ public class Damage {
     }
 
     private static int getCritical() {
-        if (getRandomInRange(1, 100) < 20) {
+        if (getRandomInRange(1, 100) < CRITICAL_CHANCE) {
             return 2;
         }
         return 1;
     }
 
-    private static double getTypeBonus(MonsterDTO.MonsterBattleInfo monster, String type) {
+    private static double getTypeBonus(MonsterBattleInfo monster, String type) {
         if (monster.getType1().equals(type) || monster.getType2().equals(type)) {
             return 1.5;
         }
