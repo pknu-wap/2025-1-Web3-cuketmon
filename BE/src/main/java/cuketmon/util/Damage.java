@@ -3,6 +3,7 @@ package cuketmon.util;
 import static cuketmon.type.TypeDamageTable.getDamageMultiplier;
 import static cuketmon.util.Random.getRandomInRange;
 
+import cuketmon.damageclass.DamageClass;
 import cuketmon.monster.dto.MonsterDTO.MonsterBattleInfo;
 import cuketmon.type.Type;
 
@@ -36,9 +37,8 @@ public class Damage {
                 * typeBonus * typeAdvantage1 * typeAdvantage2 * randomInt / 255;
     }
 
-    // TODO: DamageClass Enum 또는 상수화 고려
     private static int getAttack(MonsterBattleInfo monster, String damageClass) {
-        if (damageClass.equals("physical")) {
+        if (damageClass.equals(DamageClass.PHYSICAL.toString())) {
             return monster.getAttack();
         }
         return monster.getSpecialAttack();

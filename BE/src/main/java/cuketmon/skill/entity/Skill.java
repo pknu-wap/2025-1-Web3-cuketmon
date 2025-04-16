@@ -1,5 +1,6 @@
 package cuketmon.skill.entity;
 
+import cuketmon.damageclass.DamageClass;
 import cuketmon.type.Type;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -25,8 +26,9 @@ public class Skill {
     @Column(nullable = false)
     private Type type;
 
+    @Enumerated(EnumType.STRING)
     @Column
-    private String damageClass;
+    private DamageClass damageClass;
 
     @Column(nullable = true)
     private Integer accuracy;
