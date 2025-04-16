@@ -30,7 +30,18 @@ class DamageTest {
         BattleDTO.Team attacker = teamMaker.makeTeam(trainerRequest);
         BattleDTO.Team defender = teamMaker.makeTeam(trainerRequest);
 
-        MonsterDTO.MonsterBattleInfo.Skill skill = skillService.convertSkill(Random.getRandomInRange(1, 919));
+        MonsterDTO.MonsterBattleInfo.Skill skill;
+        while (true) {
+            try {
+                skill = skillService.convertSkill(Random.getRandomInRange(1, 919));
+                if (skill != null) {
+                    break;
+                }
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+
+        }
         double damage = Damage.makeDamage(attacker.getMonster(), defender.getMonster(), skill);
         System.out.println("power : " + skill.getPower() + "\ndamage : " + damage);
 

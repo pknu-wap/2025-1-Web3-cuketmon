@@ -7,7 +7,6 @@ import cuketmon.damageclass.DamageClass;
 import cuketmon.monster.dto.MonsterDTO.MonsterBattleInfo;
 import cuketmon.type.Type;
 
-// TODO: 테스트 작성!!!!!!!!!!!!
 public class Damage {
 
     private static final int CRITICAL_CHANCE = 20;
@@ -33,8 +32,13 @@ public class Damage {
         double typeAdvantage1 = getDamageMultiplier(Type.fromString(defender.getType1()), skillType);
         double typeAdvantage2 = getDamageMultiplier(Type.fromString(defender.getType2()), skillType);
 
-        return (power * attack * (affinity * 2.0 / 5 + 2) / defence / 50 * critical + 2)
+        double damage = (power * attack * (affinity * 2.0 / 5 + 2) / defence / 50 * critical + 2)
                 * typeBonus * typeAdvantage1 * typeAdvantage2 * randomInt / 255;
+        if (damage > 255) {
+            damage = 255;
+        }
+
+        return damage;
     }
 
     private static int getAttack(MonsterBattleInfo monster, String damageClass) {
