@@ -60,7 +60,7 @@ public class MonsterService {
                 getRandomInRange(MIN_BASE, MAX_BASE), getRandomInRange(MIN_BASE, MAX_BASE),
                 type1, type2, null, null, null, null);
 
-        DamageClass damageClass = DamageClass.fromString(monster.getDamageClass());
+        DamageClass damageClass = monster.getDamageClass();
         DamageClass altClass = damageClass.getOppositeClass();
         monster.setSkillId1(skillService.getSkillId(type1, damageClass, MIN_DAMAGE, MID_DAMAGE)); // 평타
         monster.setSkillId2(skillService.getSkillId(type1, damageClass, MID_DAMAGE, MAX_DAMAGE)); // 필살기
