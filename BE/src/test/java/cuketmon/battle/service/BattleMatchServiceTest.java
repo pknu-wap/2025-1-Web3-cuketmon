@@ -31,14 +31,6 @@ class BattleMatchServiceIntegrationTest {
     @Autowired
     private SimpMessagingTemplate messagingTemplate;
 
-    @TestConfiguration
-    static class TestMockConfig {
-        @Bean
-        public SimpMessagingTemplate messagingTemplate() {
-            return mock(SimpMessagingTemplate.class);
-        }
-    }
-
     @Test
     void 대기자가_없으면_대기열에_등록된다() {
         TrainerRequest trainer = new TrainerRequest("kng", 1);
@@ -75,6 +67,14 @@ class BattleMatchServiceIntegrationTest {
         battleMatchService.useSkill(battleId, new SkillRequest(1, "attacker"));
 
         verify(messagingTemplate, times(1)).convertAndSend(startsWith("/topic/turn/"), any(TurnResponse.class));
+    }
+
+    @TestConfiguration
+    static class TestMockConfig {
+        @Bean
+        public SimpMessagingTemplate messagingTemplate() {
+            return mock(SimpMessagingTemplate.class);
+        }
     }
 
 }
