@@ -1,5 +1,6 @@
 package cuketmon.monster.entity;
 
+import cuketmon.damageclass.DamageClass;
 import cuketmon.type.Type;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -74,8 +75,8 @@ public class Monster {
         affinity = affinity + plus;
     }
 
-    public String getDamageClass() {
-        return (attack >= specialAttack) ? "physical" : "special";
+    public DamageClass getDamageClass() {
+        return (attack >= specialAttack) ? DamageClass.PHYSICAL : DamageClass.SPECIAL;
     }
 
     public Monster(String name, String image, Integer affinity, Integer hp, Integer speed,

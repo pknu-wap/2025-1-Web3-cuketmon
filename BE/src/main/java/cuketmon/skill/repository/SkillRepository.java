@@ -1,5 +1,6 @@
 package cuketmon.skill.repository;
 
+import cuketmon.damageclass.DamageClass;
 import cuketmon.skill.entity.Skill;
 import cuketmon.type.Type;
 import java.util.List;
@@ -11,6 +12,6 @@ import org.springframework.stereotype.Repository;
 public interface SkillRepository extends JpaRepository<Skill, Integer> {
 
     Optional<List<Skill>> findAllByTypeAndDamageClassAndPowerBetween(
-            Type type, String damageClass, int startDamage, int endDamage);
+            Type type, DamageClass damageClass, int startDamage, int endDamage);
 
 }

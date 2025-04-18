@@ -1,5 +1,6 @@
 package cuketmon.skill.service;
 
+import cuketmon.damageclass.DamageClass;
 import cuketmon.monster.dto.MonsterDTO;
 import cuketmon.skill.dto.SkillResponse;
 import cuketmon.skill.entity.Skill;
@@ -27,6 +28,7 @@ public class SkillService {
         this.skillWebClient = skillWebClient;
     }
 
+    // TODO: 이 클래스 중복되는 부분이 너무 많음...
     // skillId로 Skill 객체 조회
     @Transactional
     public Skill getSkillById(Integer skillId) {
@@ -36,7 +38,7 @@ public class SkillService {
 
     // 스킬 분배 로직
     @Transactional
-    public Integer getSkillId(Type type, String damageClass, int minDamage, int maxDamage) {
+    public Integer getSkillId(Type type, DamageClass damageClass, int minDamage, int maxDamage) {
         List<Skill> skills
                 = skillRepository.findAllByTypeAndDamageClassAndPowerBetween(type, damageClass, minDamage, maxDamage)
                 .orElseThrow(() -> new IllegalArgumentException("[Error] 조건을 만족하는 스킬이 없습니다."));
@@ -49,14 +51,13 @@ public class SkillService {
         return skills.get(new Random().nextInt(skills.size())).getId();
     }
 
-    // TODO: util로 옮기는 것 고려
     public MonsterDTO.MonsterBattleInfo.Skill convertSkill(Integer skillId) {
         Skill skill = skillRepository.findById(skillId)
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당 ID의 스킬이 없습니다."));
 
         return new MonsterDTO.MonsterBattleInfo.Skill(
                 skill.getType(),
-                skill.getDamageClass(),
+                skill.getDamageClass().toString(),
                 skill.getAccuracy(),
                 skill.getName(),
                 skill.getPower(),
@@ -64,10 +65,9 @@ public class SkillService {
         );
     }
 
-
-    // TODO: 너무 느림 flux? 써서 고쳐야함
     // 전체 스킬 저장 (919개)
     public void fetchAndSaveAllSkills() {
+        skillRepository.deleteAll();
         for (int i = 1; i <= TOTAL_SKILL; i++) {
             fetchAndSaveSkill(i);
         }
@@ -94,12 +94,16 @@ public class SkillService {
         Skill skill = new Skill(
                 skillResponse.getId(),
                 Type.fromString(skillResponse.getType().getName()),
-                skillResponse.getDamageClass().getName(),
+                DamageClass.fromString(skillResponse.getDamageClass().getName()),
                 skillResponse.getAccuracy(),
                 skillResponse.getName(),
                 skillResponse.getPower(),
                 skillResponse.getPp()
         );
+
+        if (skill.getPower() == null) {
+            throw new IllegalArgumentException("[ERROR] power가 null인 스킬은 받지 않습니다.");
+        }
         skillRepository.save(skill);
 
         System.out.println("Skill 저장완료. Id: " + skillResponse.getId());

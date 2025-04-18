@@ -60,12 +60,12 @@ public class MonsterService {
                 getRandomInRange(MIN_BASE, MAX_BASE), getRandomInRange(MIN_BASE, MAX_BASE),
                 type1, type2, null, null, null, null);
 
-        DamageClass damageClass = DamageClass.fromString(monster.getDamageClass());
+        DamageClass damageClass = monster.getDamageClass();
         DamageClass altClass = damageClass.getOppositeClass();
-        monster.setSkillId1(skillService.getSkillId(type1, damageClass.getName(), MIN_DAMAGE, MID_DAMAGE)); // 평타
-        monster.setSkillId2(skillService.getSkillId(type1, damageClass.getName(), MID_DAMAGE, MAX_DAMAGE)); // 필살기
-        monster.setSkillId3(skillService.getSkillId(type2, damageClass.getName(), MIN_DAMAGE, MID_DAMAGE));
-        monster.setSkillId4(skillService.getSkillId(type2, altClass.getName(), MIN_DAMAGE, MID_DAMAGE));
+        monster.setSkillId1(skillService.getSkillId(type1, damageClass, MIN_DAMAGE, MID_DAMAGE)); // 평타
+        monster.setSkillId2(skillService.getSkillId(type1, damageClass, MID_DAMAGE, MAX_DAMAGE)); // 필살기
+        monster.setSkillId3(skillService.getSkillId(type2, damageClass, MIN_DAMAGE, MID_DAMAGE));
+        monster.setSkillId4(skillService.getSkillId(type2, altClass, MIN_DAMAGE, MID_DAMAGE));
         monsterRepository.save(monster);
 
         return monster.getId();
