@@ -1,6 +1,7 @@
 package cuketmon.trainer.controller;
 
 import cuketmon.trainer.service.TrainerService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,6 +16,7 @@ public class TrainerController {
 
     private final TrainerService trainerService;
 
+    @Autowired
     public TrainerController(TrainerService trainerService) {
         this.trainerService = trainerService;
     }

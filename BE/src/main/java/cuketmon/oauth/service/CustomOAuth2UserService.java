@@ -44,4 +44,5 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         // 사용자 정보를 Spring Security에 넘김
         return new CustomOAuth2User(trainer.getName(), attributes);
     }
+
 }
