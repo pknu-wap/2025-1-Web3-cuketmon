@@ -5,25 +5,25 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
-class ToyTest {
+class FeedTest {
 
     @Test
-    void 장난감_차감_테스트() {
-        Toy toy = new Toy();
+    void 먹이_차감_테스트() {
+        Feed feed = new Feed();
 
-        int remains = toy.decrease(1);
+        int remains = feed.decrease(1);
         assertEquals(99, remains);
 
-        remains = toy.decrease(1);
+        remains = feed.decrease(1);
         assertEquals(98, remains);
     }
 
     @Test
-    void 장난감_차감_오류_테스트() {
-        Toy toy = new Toy();
+    void 먹이_차감_오류_테스트() {
+        Feed feed = new Feed();
 
         assertThrows(IllegalArgumentException.class, () -> {
-            toy.decrease(101);
+            feed.decrease(101);
         });
     }
 
