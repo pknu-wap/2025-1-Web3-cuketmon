@@ -1,7 +1,9 @@
 package cuketmon.embeddable;
 
 import jakarta.persistence.Embeddable;
+import lombok.Getter;
 
+@Getter
 @Embeddable
 public class Toy {
 

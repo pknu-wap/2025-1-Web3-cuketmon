@@ -90,23 +90,19 @@ public class MonsterService {
 
     @Transactional
     public void feed(Integer monsterId) {
-        // TODO: 현재 로그인 한 사용자를 기반으로 find 하도록 수정해야함
-        //  security context 라는게 있다는데.. (이 방법은 별로인듯 because 누를 때 마다 주인을 찾음)
-        //  아니면 프론트에서 기억하고 있는 이름 좀 넘겨달라고 해도 될 듯
+        // TODO: spring security
         Trainer trainer = trainerRepository.findById(TEST_TRAINER_NAME)
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당 트레이너를 찾을 수 없습니다."));
         Monster monster = monsterRepository.findById(monsterId)
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당 커켓몬을 찾을 수 없습니다."));
 
-        // TODO: validation 로직 분리 (먹이 수량 확인)
-        if (trainer.getFeed() > 0) {
-            trainer.decreaseFeed(FEED_MINUS);
+        try {
+            trainer.getFeed().decrease(FEED_MINUS);
             monster.increaseAffinity(AFFINITY_PLUS);
-
             trainerRepository.save(trainer);
             monsterRepository.save(monster);
-        } else {
-            throw new IllegalArgumentException("[ERROR] 먹이가 부족합니다.");
+        } catch (Exception e) {
+            throw new IllegalArgumentException(e.getMessage());
         }
     }
 
@@ -117,15 +113,13 @@ public class MonsterService {
         Monster monster = monsterRepository.findById(monsterId)
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당 커켓몬을 찾을 수 없습니다."));
 
-        // TODO: validation 로직 분리 (장난감 수량 확인)
-        if (trainer.getToy() > 0) {
-            trainer.decreaseToy(TOY_MINUS);
+        try {
+            trainer.getToy().decrease(FEED_MINUS);
             monster.increaseAffinity(AFFINITY_PLUS);
-
             trainerRepository.save(trainer);
             monsterRepository.save(monster);
-        } else {
-            throw new IllegalArgumentException("[ERROR] 장난감이 부족합니다.");
+        } catch (Exception e) {
+            throw new IllegalArgumentException(e.getMessage());
         }
     }
 
