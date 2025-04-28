@@ -66,6 +66,14 @@ body {
   body {
     height: 80%;
   }
+  .menubarItems {
+    align-items: center;
+
+    border: none;
+    position: fixed; /* 메뉴바를 고정 */
+    bottom: 0; /* 화면 하단에 고정 */
+    left: 0;
+  }
 
   .menubarItems button {
     width: 100%;
