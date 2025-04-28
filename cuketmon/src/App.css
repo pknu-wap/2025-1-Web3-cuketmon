@@ -43,46 +43,40 @@ html {
 }
 
 /*모바일 반응형*/
-@media screen and (min-width: 375px) and (max-width: 1024px) {
-  html {
-    background-color: black;
+@media (max-width: 767px) {
+  #root,
+  body {
+    height: 100%;
+    padding: 0;
   }
-  .App {
-    overflow: hidden;
-    background-image: url("/public/LoginPage/background.png") !important;
-    padding-top: 0;
-    text-align: center;
-    padding-left: 0;
 
-    background-size: cover;
-    background-position: center center;
-    padding-bottom: 0%;
+  .App {
+    height: 100%;
+    padding: 0;
   }
 
   #webLogo {
-    width: 90%;
+    width: 100%;
     padding-top: 40%;
     padding-left: 0;
   }
 
   .buttonContainer .buttonImage {
     position: absolute;
-    width: 40%;
-    left: 30%;
+    width: 53%;
+    left: 28%;
   }
 
   .buttonContainer .buttonImage:hover {
     content: url("/public/button-hover.png");
-    padding-top: 0%;
-    z-index: 0;
-    width: 40%;
+    width: 53%;
   }
 
   .buttonText {
-    position: fixed;
-    top: 70.5%;
-    left: 44.9%;
-    font-size: 7px;
+    position: absolute;
+    top: 72.2%;
+    left: 48%;
+    font-size: 9px;
     font-weight: bold;
     color: white;
     z-index: 1;
