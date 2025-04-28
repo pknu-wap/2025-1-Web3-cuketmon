@@ -114,7 +114,7 @@ public class MonsterService {
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당 커켓몬을 찾을 수 없습니다."));
 
         try {
-            trainer.getToy().decrease(FEED_MINUS);
+            trainer.getToy().decrease(TOY_MINUS);
             monster.increaseAffinity(AFFINITY_PLUS);
             trainerRepository.save(trainer);
             monsterRepository.save(monster);

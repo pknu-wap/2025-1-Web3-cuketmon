@@ -79,6 +79,7 @@ public class Monster {
         return (attack >= specialAttack) ? DamageClass.PHYSICAL : DamageClass.SPECIAL;
     }
 
+    // TODO: 수정 필요...
     public Monster(String name, String image, Integer affinity, Integer hp, Integer speed,
                    Integer attack, Integer defence, Integer specialAttack, Integer specialDefence,
                    Type type1, Type type2, Integer skillId1, Integer skillId2, Integer skillId3, Integer skillId4) {
