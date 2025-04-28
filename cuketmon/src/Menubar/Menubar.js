@@ -1,24 +1,30 @@
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import './Menubar.css';
 
 const MenuBar = () => {
+  const navigate = useNavigate(); 
+
+  const handleNavigation = (path) => {
+    navigate(path);
+  };
+
   return (
     <div className="menubarItems">
-      <button className="makePageLink">
+      <button className="makePageLink" onClick={() => handleNavigation('/Make')}>
         <img src='/Menubar/egg.png' alt="egg" />
-        <Link to="/Make">커켓몬 만들기</Link>
+        커켓몬 만들기
       </button>
-      <button className="battleLink">
+      <button className="battleLink" onClick={() => handleNavigation('/battle')}>
         <img src='/Menubar/battleicon.png' alt="battle" />
-        <Link to="/battle">전투</Link>
+        전투
       </button>
-      <button className="rankingLink">
+      <button className="rankingLink" onClick={() => handleNavigation('/ranking')}>
         <img src='/Menubar/rankingicon.png' alt="ranking" />
-        <Link to="/ranking">랭킹</Link>
+        랭킹
       </button>
-      <button className="myPageLink">
+      <button className="myPageLink" onClick={() => handleNavigation('/mypage')}>
         <img src='/Menubar/mypageicon.png' alt="myPage" />
-        <Link to="/mypage">mypage</Link>
+        마이페이지
       </button>
     </div>
   );
