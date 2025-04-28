@@ -178,6 +178,10 @@ function MyPage() {
         )}
       </div>
 
+    <div className='cuketmonImage'>
+    <img src='/Menubar/egg.png' alt="Cuketmon" />
+    </div>
+
       <div className='cucketmonProfile'>
         {loading ? <p>로딩 중...</p> : <p>{cukemonData?.name || "이름 없음"}</p>}
         <div id='relevanceCount'>
