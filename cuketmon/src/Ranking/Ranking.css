@@ -1,8 +1,14 @@
-.rankingBoard {
+.ranking {
   background-image: url("/public/RankingPage/background.png");
-  text-align: center;
   background-size: cover;
   background-repeat: no-repeat;
+  width: 100%;
+  height: 100%;
+}
+
+.rankingBoard {
+  text-align: center;
+
   width: 100%;
   padding-bottom: 14%;
 }
@@ -55,16 +61,25 @@
 }
 /*모바일 반응형*/
 @media (max-width: 767px) {
-  #root {
+  #root,
+  body {
     height: 100%;
-    margin: 0;
     padding: 0;
+  }
+
+  .ranking {
+    height: 100%;
+    background-image: url("/public/RankingPage/backgroundMobile.png");
   }
 
   .rankingBoard {
     padding-top: 30%;
     font-size: 10px;
-    background-image: url("/public/RankingPage/backgroundMobile.png");
+  }
+
+  .rankingBoard img {
+    width: 25%;
+    margin-bottom: 3%;
   }
 
   .historyBoard {
