@@ -1,7 +1,7 @@
 package cuketmon.trainer.entity;
 
-import cuketmon.embeddable.Feed;
-import cuketmon.embeddable.Toy;
+import cuketmon.trainer.embeddable.Feed;
+import cuketmon.trainer.embeddable.Toy;
 import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.AttributeOverrides;
 import jakarta.persistence.Column;

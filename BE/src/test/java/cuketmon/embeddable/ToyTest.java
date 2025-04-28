@@ -3,6 +3,7 @@ package cuketmon.embeddable;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import cuketmon.trainer.embeddable.Toy;
 import org.junit.jupiter.api.Test;
 
 class ToyTest {

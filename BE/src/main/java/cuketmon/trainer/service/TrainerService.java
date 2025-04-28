@@ -1,7 +1,7 @@
 package cuketmon.trainer.service;
 
-import cuketmon.embeddable.Feed;
-import cuketmon.embeddable.Toy;
+import cuketmon.trainer.embeddable.Feed;
+import cuketmon.trainer.embeddable.Toy;
 import cuketmon.trainer.entity.Trainer;
 import cuketmon.trainer.repository.TrainerRepository;
 import jakarta.transaction.Transactional;

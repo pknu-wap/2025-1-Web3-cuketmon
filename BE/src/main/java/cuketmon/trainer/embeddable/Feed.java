@@ -1,21 +1,21 @@
-package cuketmon.embeddable;
+package cuketmon.trainer.embeddable;
 
 import jakarta.persistence.Embeddable;
 import lombok.Getter;
 
 @Getter
 @Embeddable
-public class Toy {
+public class Feed {
 
     private Integer count;
 
-    public Toy() {
+    public Feed() {
         this.count = 100;
     }
 
     public int decrease(int amount) {
         if (!validate(amount)) {
-            throw new IllegalArgumentException("[ERROR] 장난감이 부족합니다.");
+            throw new IllegalArgumentException("[ERROR] 먹이가 부족합니다.");
         }
         return this.count -= amount;
     }
