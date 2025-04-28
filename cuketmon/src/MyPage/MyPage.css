@@ -33,6 +33,14 @@
   top: 40%;
 }
 
+.cuketmonImage img {
+  position: absolute;
+  transition: transform 1s ease-in-out;
+  width: 15%;
+  left: 40%;
+  top: 35%;
+}
+
 .cucketmonProfile {
   background-image: url("/public/MyPage/cukemonProfile.png");
   background-size: 100% 110%;
@@ -41,7 +49,7 @@
   text-align: center;
   margin-left: 71%;
   background-color: #d9d9d9;
-  margin-bottom: 9%;
+  margin-bottom: 3%;
   padding-bottom: 0.35%;
 }
 
@@ -51,15 +59,17 @@
 }
 
 .buttons {
-  position: absolute;
-  top: 58%;
+  position: relative;
+  top: 78%;
   left: 70%;
 }
 
 #feedButton,
 #playButton {
-  width: 40%;
-  padding-bottom: 5px;
+  width: 11%;
+  margin-bottom: 5%;
+  display: inline-block;
+  margin-right: 3%;
 }
 
 #feedButton:hover,
@@ -67,23 +77,20 @@
   content: url("/public/button-hover.png");
 }
 
-#cuketmonImage {
-  transition: transform 1s ease-in-out;
+.buttons #buttonText1 {
+  color: white;
+  position: absolute;
+  pointer-events: none;
+  margin-left: -9%;
+  margin-top: 1.8%;
 }
 
-.buttons #buttonText1 {
-  position: fixed;
-  color: white;
-  top: 62.5%;
-  left: 75%;
-  pointer-events: none;
-}
 .buttons #buttonText2 {
-  position: fixed;
   color: white;
-  top: 62.5%;
-  left: 87%;
+  position: absolute;
   pointer-events: none;
+  margin-left: -9%;
+  margin-top: 1.8%;
 }
 
 #releaseButton {
@@ -138,22 +145,19 @@
 
 /*모바일 반응형*/
 @media (max-width: 767px) {
-  #root {
+  #root,
+  body {
     height: 100%;
-    margin: 0;
     padding: 0;
+    overflow: hidden;
   }
 
   .myPage {
     background-image: url("/public/MyPage/backgroundMobile.png");
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-    height: 100%;
-    display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    padding-top: 6%;
+    justify-content: center;
+    padding-top: 0%;
+    height: 100%;
   }
 
   .item {
@@ -161,49 +165,61 @@
     margin-bottom: 145.5%;
   }
 
-  #cuketmonImage {
-    margin-top: 5%;
-    margin-left: 0;
-    left: 33%;
+  .cuketmonImage img {
+    left: 38%;
+    top: 35%;
+    width: 27%;
     padding: 0;
     margin: 0;
+
+    border: 1px solid #efc15c;
   }
 
   .cucketmonProfile {
     position: absolute;
-    top: 59%;
+    top: 49%;
     left: 34%;
     margin-left: 0;
     width: 35%;
     margin-top: 5%;
   }
+
   .cucketmonProfile p {
-    font-size: 10px;
+    font-size: 9px;
   }
+
   .cucketmonProfile img,
   .cucketmonProfile span {
     width: 10px;
     height: 10px;
   }
+
   .buttons {
-    top: 75%;
-    left: 20%;
+    position: absolute;
+    top: 60%;
+    left: 28%;
+  }
+
+  #feedButton,
+  #playButton {
+    width: 30%;
   }
 
   .buttons #buttonText1 {
-    top: 78%;
-    left: 33%;
-    font-size: 12px;
+    font-size: 10px;
+    left: 22%;
+    top: 14%;
   }
+
   .buttons #buttonText2 {
-    top: 78%;
-    left: 66%;
-    font-size: 12px;
+    font-size: 10px;
+    left: 55%;
+    top: 14%;
   }
+
   #releaseButton {
-    width: 4%;
-    margin-top: 135%;
-    margin-left: 1%;
+    position: absolute;
+    top: 80%;
     width: 10%;
   }
 }
