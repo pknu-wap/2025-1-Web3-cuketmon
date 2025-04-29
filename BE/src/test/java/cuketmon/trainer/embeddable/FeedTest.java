@@ -1,9 +1,8 @@
-package cuketmon.embeddable;
+package cuketmon.trainer.embeddable;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import cuketmon.trainer.embeddable.Feed;
 import org.junit.jupiter.api.Test;
 
 class FeedTest {
@@ -12,19 +11,20 @@ class FeedTest {
     void 먹이_차감_테스트() {
         Feed feed = new Feed();
 
+        int prev = feed.getCount();
         int remains = feed.decrease(1);
-        assertEquals(99, remains);
 
-        remains = feed.decrease(1);
-        assertEquals(98, remains);
+        assertEquals(prev - 1, remains);
     }
 
     @Test
     void 먹이_차감_오류_테스트() {
         Feed feed = new Feed();
 
+        int maxFeedCount = feed.getCount();
+
         assertThrows(IllegalArgumentException.class, () -> {
-            feed.decrease(101);
+            feed.decrease(maxFeedCount + 1);
         });
     }
 
