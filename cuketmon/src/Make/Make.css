@@ -119,9 +119,10 @@
 .submitButton p {
   position: absolute;
   top: 16%;
-  left: 49.5%;
+  left: 48.5%;
   color: white;
   pointer-events: none;
+  font-size: 19px;
 }
 
 .submitButton #submitButton {
@@ -165,7 +166,7 @@
 
   .Q1 h2,
   .Q2 h2 {
-    font-size: 15px;
+    font-size: 17px;
   }
 
   #S1 {
@@ -219,7 +220,7 @@
   }
 
   .submitButton p {
-    font-size: 15px;
+    font-size: 17px;
     left: 48%;
   }
 }

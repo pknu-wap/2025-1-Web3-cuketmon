@@ -9,9 +9,10 @@ function Make() {
   const [description, setDescription] = useState("");
   const navigate = useNavigate();
 
+
   const handleSubmit = async () => {
-    if (!type1 || !type2 || !description.trim()) {
-      alert("모든 항목을 입력해야 합니다.");
+    if (!(type1 || type2) || !description.trim()) {
+      alert("타입을 하나 이상 선택하고, 모든 항목을 입력해야 합니다.");
       return;
     }
 
@@ -22,7 +23,7 @@ function Make() {
     };
 
     try {
-      const response = await fetch("http://백엔드-서버-주소/submit", {
+      const response = await fetch("/monster/generate", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -35,18 +36,18 @@ function Make() {
         navigate("/MakeResult");
       } else {
         alert("데이터 전송에 실패했습니다.");
+        alert("근데 임의로 /MakeResult로 이동하게 만들어둠 나중에 빼야함 !!!!");
+        navigate("/MakeResult");//임의로 /MakeResult로 이동할수 있게만든 코드 나중에 꼭 빼야함!!! 
       }
     } catch (error) {
       console.error("전송 오류:", error);
-      alert(
-        "데이터 전송에 실패했습니다.임시코드로 navigate(/MakeResult) 넣어둠!! 꼭 나중에 빼야함."
-      );
-      navigate("/MakeResult"); //지금 넣어둔 임시코드 Makersult.js만든 후에는  꼭 빼야함 !!!!!!!!
+      alert("데이터 전송에 실패했습니다.");
+
     }
   };
 
   const types = [
- "불꽃", "물", "풀", "전기", "에스퍼", "얼음", "드래곤", "악", "페어리", "격투", "비행", "고스트", "땅", "독", "바위", "강철", "벌레", "노말"
+    "불꽃", "물", "풀", "전기", "에스퍼", "얼음", "드래곤", "악", "페어리", "격투", "비행", "고스트", "땅", "독", "바위", "강철", "벌레", "노말",
   ];
 
   return (
@@ -65,12 +66,8 @@ function Make() {
         </select>
         <br />
 
-        <select
-          id="S2"
-          value={type2}
-          onChange={(e) => setType2(e.target.value)}
-        >
-           <option value=""></option>
+        <select id="S2" value={type2} onChange={(e) => setType2(e.target.value)}>
+          <option value=""></option>
           {types.map((type) => (
             <option key={type} value={type}>{type}</option>
           ))}
@@ -106,8 +103,8 @@ function Make() {
           />
         </div>
 
-      <MenuBar />
-    </div>    
+        <MenuBar />
+      </div>
     </div>
   );
 }
