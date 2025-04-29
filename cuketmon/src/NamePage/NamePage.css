@@ -33,11 +33,12 @@
   left: 50%;
   top: 10%;
 }
+
 .nameInput {
   display: inline-block;
   position: absolute;
   left: 45%;
-  top: 50%;
+  top: 48%;
 }
 
 .nameInput input {
@@ -47,11 +48,16 @@
   position: absolute;
   background: none;
   cursor: none;
-  top: 20%;
+  top: 38%;
 }
 
 .nameInput {
   font-size: 30px;
+}
+
+.nameInput input {
+  position: absolute;
+  top: 0%;
 }
 
 #ramainWord {
