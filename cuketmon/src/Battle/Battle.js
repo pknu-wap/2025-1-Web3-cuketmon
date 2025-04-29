@@ -201,20 +201,9 @@ function Battle() {
       </div>
     </div>
 
-        {isFighting && (
-          <div className="battleAnimationOverlay">
-            <img
-              src={techs.find(t => t.id === selectedTech)?.animationUrl}
-              className="techAnimation"
-              alt="기술 애니메이션"
-            />
-            <div className="battleMessage">{battleMessage}</div>
-          </div>
-          )}
-
-        {!isFighting && (
           <div className="techSection">
-            <div className="techButtons">
+            {!isFighting &&(
+              <div className="techButtons">
               {techs.map(tech => (
                 <button
                   key={tech.id}
@@ -227,12 +216,23 @@ function Battle() {
                 </button>
               ))}
             </div>
-            <span className="ppInfo">PP  {myPP}/15</span>
-              <span className="cuketmonType">
-                TYPE/{techs.length > 0 ? techs[0].type : '없음'}
-              </span>
+            )}
+            {isFighting && (
+          <div className="battleAnimationOverlay">
+            <img
+              src={techs.find(t => t.id === selectedTech)?.animationUrl}
+              className="techAnimation"
+              alt="기술 애니메이션"/>
+            <div className="battleMessage">{battleMessage}</div>
           </div>
-        )}
+          )}
+
+            <span className="ppInfo">PP  {myPP}/15</span>
+            <span className="cuketmonType">
+              TYPE/{techs.length > 0 ? techs[0].type : '없음'}
+            </span>
+          </div>
+        
       </div>
     </div>
   );
