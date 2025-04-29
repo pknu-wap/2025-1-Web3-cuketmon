@@ -1,5 +1,7 @@
 package cuketmon.oauth.service;
 
+import cuketmon.trainer.embeddable.Feed;
+import cuketmon.trainer.embeddable.Toy;
 import cuketmon.trainer.entity.Trainer;
 import cuketmon.trainer.repository.TrainerRepository;
 import java.util.Map;
@@ -36,8 +38,8 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         Trainer trainer = trainerRepository.findById(name)
                 .orElseGet(() -> trainerRepository.save(Trainer.builder()
                         .name(name)      // PK    name
-                        .toy(100)        // 초기값 설정
-                        .feed(100)       // 초기값 설정
+                        .toy(new Toy())  // 초기값 설정
+                        .feed(new Feed())// 초기값 설정
                         .win(0)          // 초기값 설정
                         .build()));
 
