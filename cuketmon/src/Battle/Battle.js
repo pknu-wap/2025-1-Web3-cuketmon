@@ -18,7 +18,6 @@ function Battle() {
   const [currentAnimation, setCurrentAnimation] = useState(null);
   const [isPlayerHit, setIsPlayerHit] = useState(false); // 커켓몬1이 맞았는지
   const [isEnemyHit, setIsEnemyHit] = useState(false);   // 커켓몬2가 맞았는지
-  const [fontLoaded, setFontLoaded] = useState(false);
 
   const animationMap = {
     fire:{
@@ -96,17 +95,6 @@ function Battle() {
   };
 
   useEffect(() => {
-    const font = new FontFace('PokemonGSK2Mono', "url('/Font/PokemonGSK2Mono.ttf')");
-  font.load().then(() => {
-    document.fonts.add(font);
-    setFontLoaded(true);
-  }).catch(err => {
-    console.error('Font load failed:', err);
-    setFontLoaded(true); // 폰트 로드 실패 시에도 렌더링 진행
-  });
-
-
-
     const mockData = [
       { id: 1, name: '잎날가르기', type: 'grass', damage: 10, description: '잎날가르기'},
       {id: 2, name: '불 퉤퉤', type: 'fire', damage: 80, description: '불퉤퉤'},
@@ -161,7 +149,7 @@ function Battle() {
       setTimeout(() => {
         setIsFighting(false);
         setIsEnemyHit(true);
-        setBattleMessage('으아아아아아아아ㅏ악!!!');
+        setBattleMessage(null);
         setSelectedTech(null);
         setDescription('');
         setCurrentAnimation(null);
@@ -176,51 +164,56 @@ function Battle() {
   return (
     <div className="Battle">
       <div className="content">
-        <div className="battleContainer">
-          <div className="cuketmon">
-            <img
-              src={cuketmonImages.myCuketmon}
-              className={`myCuketmonImage ${isPlayerHit ? 'hitEffect' : ''}`}
-              alt="내 커켓몬"
-            />
-            <div className="myHpBar">
-              <div className="myHpFill" style={{ width: `${myCuketmonHP}%` }}></div>
-            </div>
-          </div>
-          <div className="cuketmon">
-            <img
-              src={cuketmonImages.enemyCuketmon}
-              className={`enemyCuketmonImage ${isEnemyHit ? 'hitEffect' : ''}`}
-              alt="적 커켓몬"
-            />
-            <div className="enemyHpBar">
-              <div className="enemyHpFill" style={{ width: `${enemyCuketmonHP}%` }}></div>
-            </div>
-          </div>
-          {isFighting && (
-            <div className="battleAnimationOverlay">
-              <img
-                src={techs.find(t => t.id === selectedTech)?.animationUrl}
-                className="techAnimation"
-                alt="기술 애니메이션"
-              />
-              <div className="battleMessage">{battleMessage}</div>
-            </div>
-          )}
-          <div className="battleStage">
-            <img src="/BattlePage/stand.png" className="myStage" alt="전투무대" />
-            <img src="/BattlePage/stand.png" className="enemyStage" alt="전투무대" />
-          </div>
-          <div className="hpBackground">
-            <img src="/BattlePage/hpBg.png" className="myHpBackground" alt="체력바배경" />
-            <img src="/BattlePage/hpBg.png" className="enemyHpBackground" alt="체력바배경" />
-            <img src="/BattlePage/hpBar.png" className="myHpImage" alt="체력바" />
-            <img src="/BattlePage/hpBar.png" className="enemyHpImage" alt="체력바" />
-          </div>
+      <div className="battleContainer">
+        
+        <div className="mySection">
+        <div className="hpBackground">
+          <img src="/BattlePage/hpBg.png" className="myHpBackground" alt="체력바배경" />
+          <img src="/BattlePage/hpBar.png" className="myHpImage" alt="체력바" />
         </div>
+        <div className="myHpBar">
+            <div className="myHpFill" style={{ width: `${myCuketmonHP}%` }}></div>
+          </div>
+        <div className="cuketmon">
+          <img
+            src={cuketmonImages.myCuketmon}
+            className={`myCuketmonImage ${isPlayerHit ? 'hitEffect' : ''}`}
+            alt="내 커켓몬"/>
+          <img src="/BattlePage/stand.png" className="myStage" alt="전투무대" />
+        </div>
+      </div>
+
+      <div className="enemySection">
+        <div className="hpBackground">
+          <img src="/BattlePage/hpBg.png" className="enemyHpBackground" alt="체력바배경" />
+          <img src="/BattlePage/hpBar.png" className="enemyHpImage" alt="체력바" />
+        </div>
+        <div className="enemyHpBar">
+            <div className="enemyHpFill" style={{ width: `${enemyCuketmonHP}%` }}></div>
+          </div>
+        <div className="cuketmon">
+          <img
+            src={cuketmonImages.enemyCuketmon}
+            className={`enemyCuketmonImage ${isEnemyHit ? 'hitEffect' : ''}`}
+            alt="적 커켓몬"/>
+          <img src="/BattlePage/stand.png" className="enemyStage" alt="전투무대" />
+        </div>
+      </div>
+    </div>
+
+        {isFighting && (
+          <div className="battleAnimationOverlay">
+            <img
+              src={techs.find(t => t.id === selectedTech)?.animationUrl}
+              className="techAnimation"
+              alt="기술 애니메이션"
+            />
+            <div className="battleMessage">{battleMessage}</div>
+          </div>
+          )}
+
         {!isFighting && (
           <div className="techSection">
-            <img src="/BattlePage/techSelect.png" className="techWindowImg" alt="기술 창" />
             <div className="techButtons">
               {techs.map(tech => (
                 <button
@@ -234,12 +227,10 @@ function Battle() {
                 </button>
               ))}
             </div>
-            <div className="techInfo">
-              <span className="ppInfo">{myPP}/15</span>
+            <span className="ppInfo">PP  {myPP}/15</span>
               <span className="cuketmonType">
-                {techs.length > 0 ? techs[0].type : '없음'}
+                TYPE/{techs.length > 0 ? techs[0].type : '없음'}
               </span>
-            </div>
           </div>
         )}
       </div>
