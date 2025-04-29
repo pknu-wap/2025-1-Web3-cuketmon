@@ -1,6 +1,11 @@
 package cuketmon.trainer.entity;
 
+import cuketmon.trainer.embeddable.Feed;
+import cuketmon.trainer.embeddable.Toy;
+import jakarta.persistence.AttributeOverride;
+import jakarta.persistence.AttributeOverrides;
 import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
@@ -18,23 +23,20 @@ public class Trainer {
     @Id
     private String name;
 
-    // TODO: toy, feed 클래스로 생성후 validation 고려 ex) 0~100
-    @Column(nullable = false)
-    private Integer toy;
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "count", column = @Column(name = "toy", nullable = false))
+    })
+    private Toy toy;
 
-    @Column(nullable = false)
-    private Integer feed;
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "count", column = @Column(name = "feed", nullable = false))
+    })
+    private Feed feed;
 
     @Column(nullable = false)
     private Integer win;
-
-    public void decreaseToy(int minus) {
-        toy = toy - minus;
-    }
-
-    public void decreaseFeed(int minus) {
-        feed = feed - minus;
-    }
 
     public void addWin() {
         win = win + 1;

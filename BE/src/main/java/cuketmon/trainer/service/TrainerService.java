@@ -1,5 +1,7 @@
 package cuketmon.trainer.service;
 
+import cuketmon.trainer.embeddable.Feed;
+import cuketmon.trainer.embeddable.Toy;
 import cuketmon.trainer.entity.Trainer;
 import cuketmon.trainer.repository.TrainerRepository;
 import jakarta.transaction.Transactional;
@@ -9,8 +11,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class TrainerService {
 
-    public static final int INIT_TOY = 100;
-    public static final int INIT_FEED = 100;
     public static final int INIT_WIN = 0;
 
     private final TrainerRepository trainerRepository;
@@ -24,7 +24,7 @@ public class TrainerService {
     @Transactional
     public void tempLogin(String name) {
         if (!trainerRepository.existsById(name)) {
-            Trainer trainer = new Trainer(name, INIT_TOY, INIT_FEED, INIT_WIN);
+            Trainer trainer = new Trainer(name, new Toy(), new Feed(), INIT_WIN);
             trainerRepository.save(trainer);
         }
     }
@@ -33,21 +33,21 @@ public class TrainerService {
     public Integer getRemainingToys(String name) {
         Trainer trainer = trainerRepository.findById(name)
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR]: 해당 트레이너를 찾을 수 없습니다."));
-        return trainer.getToy();
+        return trainer.getToy().getCount();
     }
 
     @Transactional
     public Integer getRemainingFeeds(String name) {
         Trainer trainer = trainerRepository.findById(name)
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR]: 해당 트레이너를 찾을 수 없습니다."));
-        return trainer.getFeed();
+        return trainer.getFeed().getCount();
     }
 
     @Transactional
     public void addWin(String name) {
         Trainer trainer = trainerRepository.findById(name)
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR]: 해당 트레이너를 찾을 수 없습니다."));
-        
+
         trainer.addWin();
     }
 
