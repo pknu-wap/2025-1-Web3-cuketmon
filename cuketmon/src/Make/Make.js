@@ -50,8 +50,8 @@ function Make() {
   ];
 
   return (
-    <div>
-      <div className="Make">
+    <div className="makeBackGround">
+      <div className="make">
         <div className="Q1">
           <img src="./Menubar/mypageicon.png" alt="포켓몬 아이콘" />
           <h2>원하시는 포켓몬의 타입을 선택해 주세요.</h2>
@@ -81,18 +81,19 @@ function Make() {
           <img src="./Menubar/mypageicon.png" alt="포켓몬 아이콘" />
           <h2>원하시는 포켓몬의 특징을 적어주세요.</h2>
         </div>
+
         <div className="cukemonFeature">
           <div className="textBack">
             <textarea
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              maxLength={77}
+              maxLength={75}
               rows={5}
               cols={50}
               placeholder="원하시는 포켓몬의 특징을 기입하세요."
             />
           </div>
-          <p>{description.length} / 77 자</p>
+          <p>{description.length} / 75 자</p>
         </div>
 
         <div className="submitButton">
@@ -104,8 +105,9 @@ function Make() {
             onClick={handleSubmit}
           />
         </div>
-      </div>
+
       <MenuBar />
+    </div>    
     </div>
   );
 }
