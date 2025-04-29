@@ -3,111 +3,93 @@ html, body {
   margin: 0;
   padding: 0;
   overflow: hidden;
-  font-family: 'PokemonGSK2Mono'
+  font-family: 'PokemonGSK2Mono', sans-serif;
 }
 
 @font-face {
-  font-family: 'PokemonGSK2Mono'; /* 사용할 폰트 이름 */
-  src: url('/public/Font/PokemonGSK2Mono.ttf') format('truetype'); /* 파일 경로와 형식 */
-  font-weight: normal; /* 폰트 굵기 */
-  font-style: normal; /* 폰트 스타일 */
-}
-
-.techButton, .battleMessage {
-  font-family: 'PokemonGSK2Mono', sans-serif !important;
-}
-
-.Battle * {
-  font-family: 'PokemonGSK2Mono', sans-serif !important;
+  font-family: 'PokemonGSK2Mono';
+  src: url('/public/Font/PokemonGSK2Mono.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
 }
 
 .Battle {
   background-image: url('/public/BattlePage/background.png');
-  background-size: 100% 100%;
+  background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   height: 100vh;
   width: 100vw;
-  position: relative;
+  padding: 2%;
+  box-sizing: border-box;
 }
 
 .content {
-  height: 100vh;
-  width: 100vw;
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  padding: 10px;
-  box-sizing: border-box;
 }
 
 .battleContainer {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  gap: 40px;
-  padding: 10px;
   width: 100%;
+  height: 60%;
+  padding: 2vw;
+  gap: 5vw;
+  position: relative;
+}
+
+.mySection, .enemySection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 45vw;
   height: 100%;
+  position: relative;
 }
 
-.myStage{
+.myStage, .enemyStage {
   position: absolute;
-  top: 330px;
-  left: 280px;
-  width: 300px;
-  height: 250px;
-  z-index: -0;
-}
-
-.enemyStage{
-  position: absolute;
-  top: 330px;
-  right: 340px;
-  width: 300px;
-  height: 250px;
-  z-index: -0;
+  bottom: 0;
+  width: 50%;
+  height: 30%;
+  z-index: 0;
 }
 
 .cuketmon {
-  position: relative;
-  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 40%;
   height: 100%;
-  text-align: center;
 }
 
-.myCuketmonImage{
-  position: relative;
-  top: 290px;
-  left: 30px;
-  width: 200px;
-  height: 200px;
-  z-index: 1;
-}
-
-
-.enemyCuketmonImage {
-  position: relative; 
-  top: 290px;
-  right: 20px;
-  width: 200px;
-  height: 200px;
+.myCuketmonImage, .enemyCuketmonImage {
+  position: absolute;
+  bottom: 10%;
+  width:  100%;
+  height: auto;
+  max-width: 200px;
   z-index: 1;
 }
 
 .myHpBar, .enemyHpBar {
-  position: relative;
-  width: 200px;
+  width: 27%;
   height: 18px;
+  position: absolute;
+  top: 14.5%;
+  left: 42%;
 }
 
-.myHpFill {
-  position: relative;
-  top: -68.5px;
-  left: 414px;
-  width: 150px;
-  height: 18px;
+.myHpFill, .enemyHpFill {
+  position: absolute;
+  width: 75%;
+  height: 100%;
   background-color: hwb(141 24% 0%);
   border: 3.7px solid #4c6458;
   transition: width 0.3s;
@@ -115,142 +97,92 @@ html, body {
   border-radius: 9px;
 }
 
-
-.enemyHpFill {
-  position: relative;
-  top: -68.5px;
-  left:308px;
-  width: 150px;
-  height: 18px;
-  background-color: hwb(141 24% 0%);
-  border: 3.7px solid #4c6458;
-  transition: width 0.3s;
-  z-index: 1;
-  border-radius: 9px;
-}
-
-.myHpBackground {
+.myHpBackground, .enemyHpBackground {
   position: absolute;
-  top: 100px;
-  left: 310px;
-  width: 350px;
-  height: auto;
-}
-
-.enemyHpBackground {
-  position: absolute;
-  top: 100px;
-  right: 330px;
-  width: 350px;
-  height: auto;
-}
-
-.myHpImage {
-  position: absolute;
-  top: 93px;
-  left: 265px;
-  width: 360px;
-  height: auto;
-}
-
-
-.enemyHpImage {
-  position: absolute;
-  top: 93px;
-  right: 365px;
-  width: 360px;
-  height: auto;
-}
-
-.battleAnimation {
-  position: relative;
-  width: 100%;
-  height: 100%;
-}
-
-.battleAnimationOverlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none; /* 클릭 방지 */
-}
-
-.techAnimation {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-size: 360px 37px;
-  background-repeat: no-repeat;
-  animation: spriteAnimation 1s steps(6) forwards; /* 예: 6프레임, 1초 */
-}
-
-@keyframes spriteAnimation {
-  from {
-    transform: translate3d(-100%,0,0)
-  }
-  to {
-    transform: translate3d(20%,0,0)
-  }
-}
-
-.hitEffect {
-  animation: hitAnimation 0.5 ease forwards;
-}
-
-@keyframes hitAnimation {
-   100% {
-    transform: translateY(-50px);
-    filter: brightness(0.5) sepia(1) hue-rotate(-60deg) saturate(5);
-}
-}
-
-.techSection {
-  margin-top: 20px;
-  text-align: center;
-  position: relative;
-}
-
-.techWindowImg {
-  width: 1000px;
-  max-width: 1200px;
+  left: 30%;
+  width: 45%;
   height: auto;
   z-index: 0;
 }
 
-.techButtons {
+.myHpImage, .enemyHpImage {
   position: absolute;
-  top: 105px;
-  left: 35%;
-  transform: translate(-50%, -50%);
-  width: 80%;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 25px;
-  margin: 0px;
+  top: 0;
+  left:22%;
+  width: 45%;
+  height: auto;
+  z-index: 0;
 }
 
-.techRow {
-  display: flex;
-  justify-content: space-between;
-  gap: 5px;
+.battleAnimationOverlay {
+  position: relative;
+  width: 100%;
+  height: 39vh;
+  pointer-events: none;
+}
+
+.techAnimation {
+  position: absolute;
+  top: -50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 360px;
+  height: 37px;
+  background-repeat: no-repeat;
+  animation: spriteAnimation 1s steps(6) forwards;
+}
+
+@keyframes spriteAnimation {
+  from { transform: translate3d(-100%, 0, 0); }
+  to { transform: translate3d(20%, 0, 0); }
+}
+
+.hitEffect {
+  animation: hitAnimation 0.5s ease forwards;
+}
+
+@keyframes hitAnimation {
+  100% {
+    transform: translateY(-50px);
+    filter: brightness(0.5) sepia(1) hue-rotate(-60deg) saturate(5);
+  }
+}
+
+.techSection {
+  width: 65vw;
+  height: 30vh;
+  position: relative; /* techButtons의 기준점 */
+  padding: 2%;
+  background-image: url('/public/BattlePage/techSelect.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size:contain;
+}
+
+.techButtons {
+  position: absolute;
+  top: 50%;
+  left: 35%;
+  transform: translate(-50%, -50%);
+  width: 60%;
+  max-width: 600px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5%;
+  z-index: 1;
 }
 
 .techButton {
   background-color: transparent;
-  flex: 1;
-  padding: 8px;
+  padding: 2%;
   color: black;
   border: none;
-  cursor: pointer;
-  font-size: 30px;
+  font-size: 1.5vw;
   box-sizing: border-box;
+  margin: 2%;
 }
 
 .techButton.selected {
-  background-color: transparent;
   color: gold;
 }
 
@@ -260,40 +192,124 @@ html, body {
 }
 
 .techInfo {
-  position: relative;
-  bottom: 50px;
-  left: 50%;
-  transform: translateX(-50%);
   display: flex;
-  align-items: right;
-  gap: 10px;
+  justify-content: center;
+  gap: 2%;
+  margin-top: 1%;
+  z-index: 1;
 }
 
 .ppInfo {
-  position: relative;
-  bottom: 115px;
-  left: 850px;
-  background-color: transparent;
+  position: absolute;
+  right: 10%; 
+  top: 29%;
   color: black;
-  padding: 5px 10px;
+  padding: 0.5% 1%;
   border-radius: 5px;
-  font-size: 30px;
+  font-size: 2.5rem;
 }
 
+.cuketmonType {
+  position: absolute;
+  right: 7%;
+  bottom: 28%;
+  font-size: 3rem;
+}
 
 .battleMessage {
+  position: absolute;
+  left: 10%;
+  bottom: 10%;
+  width: 80%;
+  height: 10%;
   background-color: rgba(0, 0, 0, 0.7);
   color: white;
-  padding: 20px;
+  padding: 2%;
   border-radius: 10px;
   border: 2px solid #fff;
   text-align: center;
+  font-size: 2rem;
 }
 
+/* 모바일 반응형 */
+@media (max-width: 767px) {
+  .Battle {
+    background-image: url('/public/BattlePage/background.png');
+    padding: 5%;
+  }
 
-.cuketmonType {
-  position: relative;
-  bottom: 55px;
-  left: 70%;
-  font-size: 55px;
+  .battleContainer {
+    flex-direction: column;
+    height: 70%;
+    gap: 10%;
+  }
+
+  .myStage, .enemyStage {
+    width: 50%;
+    height: 20%;
+  }
+
+  .cuketmon {
+    width: 80%;
+  }
+
+  .myCuketmonImage, .enemyCuketmonImage {
+    width: 70%;
+    max-width: 150px;
+  }
+
+  .myHpBar, .enemyHpBar {
+    width: 70%;
+  }
+
+  .myHpFill, .enemyHpFill {
+    width: 60%;
+  }
+
+  .myHpBackground, .enemyHpBackground {
+    width: 90%;
+  }
+
+  .myHpImage, .enemyHpImage {
+    width: 95%;
+  }
+
+  .techSection {
+    padding: 5%;
+  }
+
+  .techWindowImg {
+    width: 90%;
+    max-width: 600px;
+  }
+
+  .techButtons {
+    width: 90%;
+    grid-template-columns: 1fr;
+    gap: 3%;
+  }
+
+  .techButton {
+    font-size: 1.5rem;
+    padding: 2%;
+  }
+
+  .techInfo {
+    flex-direction: column;
+    align-items: center;
+    margin-top: 3%;
+  }
+
+  .ppInfo {
+    font-size: 1rem;
+  }
+
+  .cuketmonType {
+    font-size: 1.5rem;
+  }
+
+  .battleMessage {
+    font-size: 1rem;
+    padding: 3%;
+  }
 }
