@@ -1,0 +1,62 @@
+.namePage {
+  background-image: url("/public/NamePage/background.webp");
+  width: 100%;
+  height: 100%;
+  background-repeat: none;
+  background-size: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.nameInputBox {
+  position: absolute;
+  background-image: url("/public/NamePage/nameBox.webp");
+  background-size: cover;
+  background-repeat: none;
+  width: 57%;
+  height: 35%;
+  left: 20%;
+  top: 30%;
+}
+
+.namePage .cukemonImage {
+  width: 30%;
+  position: absolute;
+  top: -18%;
+  left: 10%;
+}
+
+.nameInputBox p {
+  position: absolute;
+  font-size: 40px;
+  left: 50%;
+  top: 10%;
+}
+.nameInput {
+  display: inline-block;
+  position: absolute;
+  left: 45%;
+  top: 50%;
+}
+
+.nameInput input {
+  border: none;
+  background-color: none;
+  font-size: 25px;
+  position: absolute;
+  background: none;
+  cursor: none;
+  top: 20%;
+}
+
+.nameInput {
+  font-size: 30px;
+}
+
+#ramainWord {
+  display: inline-block;
+  font-size: 12px;
+  top: 70%;
+  white-space: nowrap;
+}

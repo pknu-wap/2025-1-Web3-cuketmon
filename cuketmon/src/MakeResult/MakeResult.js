@@ -17,11 +17,17 @@ function MakeResult() {
         .then((data) => {
           setPokemonImage(data.imageUrl);
           setMentText("처음보는 포켓몬이 나타났다!");
+          navigate("/namePage");
         })
         .catch((error) => {
           console.error("이미지 로드 실패:", error);
           setPokemonImage(""); 
           setMentText("커켓몬이 도망쳤다.(다시 시도하려면 클릭)");
+          navigate("/NamePage"); //잘되는지 확인하려고 넣은거임 ! 나중에 빼야함
+          alert(
+            "임시코드로 navigate(/NamePage) 넣어둠!! 꼭 나중에 빼야함."
+          );
+
         });
     };
 
