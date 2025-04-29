@@ -1,10 +1,18 @@
 package cuketmon.trainer.entity;
 
 import jakarta.persistence.*;
+import cuketmon.trainer.entity.Trainer;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
+import java.util.Optional;
 
 @Getter
 @Setter

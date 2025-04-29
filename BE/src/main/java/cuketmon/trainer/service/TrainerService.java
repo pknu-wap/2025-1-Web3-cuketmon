@@ -2,14 +2,17 @@ package cuketmon.trainer.service;
 
 import cuketmon.trainer.entity.Trainer;
 import cuketmon.trainer.repository.TrainerRepository;
-import jakarta.transaction.Transactional;
-//import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import jakarta.transaction.Transactional;
+//import lombok.RequiredArgsConstructor;
+
+import java.util.List;
 import java.util.Optional;
 
 @Service
+
 public class TrainerService {
 
     public static final int INIT_TOY = 100;
@@ -17,6 +20,17 @@ public class TrainerService {
     public static final int INIT_WIN = 0;
 
     private final TrainerRepository trainerRepository;
+
+    @Transactional
+    public List<Trainer> getTrainerRanking() {
+        return trainerRepository.findAllByWinDesc();
+    }
+
+    //현재 랭킹 조회
+    @Transactional
+    public int getTrainerRank(String kakaoId) {
+        return trainerRepository.findTrainerRanking(kakaoId);
+    }
 
     @Autowired
     public TrainerService(TrainerRepository trainerRepository, cuketmon.trainer.repository.TrainerRepository trainerRepository1) {

@@ -4,7 +4,7 @@ import cuketmon.trainer.entity.Trainer;
 import cuketmon.trainer.repository.TrainerRepository;
 import cuketmon.trainer.service.TrainerService;
 
-//import ch.qos.logback.core.model.Model;
+import ch.qos.logback.core.model.Model;
 import jakarta.annotation.PostConstruct;
 import jakarta.transaction.Transactional;
 
@@ -13,14 +13,17 @@ import lombok.Getter;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-//import org.springdoc.core.configuration.oauth2.SpringDocOAuth2Token;
-//import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springdoc.core.configuration.oauth2.SpringDocOAuth2Token;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
-//import java.io.IOException;
+
+
+import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -28,7 +31,7 @@ import java.util.Map;
 
 @Getter
 @RestController
-@RequestMapping("/kakaoLogin")
+@RequestMapping("/trainers")
 @RequiredArgsConstructor
 
 //@ConfigurationProperties(prefix = "kakao")
@@ -42,6 +45,19 @@ public class TrainerController {
     private static String redirectUri;
     //private  static String code;
     private  static String clientSecret;
+
+    @GetMapping("/ranking")
+    public ResponseEntity<List<Trainer>> getTrainerRanking() {
+        List<Trainer> ranking = trainerService.getTrainerRanking();
+        return ResponseEntity.ok(ranking);
+    }
+
+    //현재 랭킹 조회
+    @GetMapping("/{trainerName}/ranking")
+    public ResponseEntity<Integer> getTrainerRank(@PathVariable String trainerName) {
+        int rank = trainerService.getTrainerRank(trainerName);
+        return ResponseEntity.ok(rank);
+    }
 
     @Autowired
     public TrainerController(TrainerRepository trainerRepository, TrainerRepository trainerRepository2) {
