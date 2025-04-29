@@ -3,15 +3,9 @@ html, body {
   margin: 0;
   padding: 0;
   overflow: hidden;
-  font-family: 'PokemonGSK2Mono', sans-serif;
 }
 
-@font-face {
-  font-family: 'PokemonGSK2Mono';
-  src: url('/public/Font/PokemonGSK2Mono.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
-}
+
 
 .Battle {
   background-image: url('/public/BattlePage/background.png');
@@ -119,6 +113,7 @@ html, body {
   width: 100%;
   height: 39vh;
   pointer-events: none;
+  z-index: 2;
 }
 
 .techAnimation {
@@ -153,10 +148,11 @@ html, body {
   height: 30vh;
   position: relative; /* techButtons의 기준점 */
   padding: 2%;
-  background-image: url('/public/BattlePage/techSelect.png');
+  background-image: url('/public/BattlePage/techselect.png');
   background-repeat: no-repeat;
   background-position: center;
-  background-size:contain;
+  background-size:100% 80%;
+  z-index: 0;
 }
 
 .techButtons {
@@ -206,110 +202,26 @@ html, body {
   color: black;
   padding: 0.5% 1%;
   border-radius: 5px;
-  font-size: 2.5rem;
+  font-size: 2rem;
 }
 
 .cuketmonType {
   position: absolute;
   right: 7%;
   bottom: 28%;
-  font-size: 3rem;
+  font-size: 2rem;
 }
 
 .battleMessage {
   position: absolute;
-  left: 10%;
-  bottom: 10%;
+  right: 20%;
+  top: 25%;
   width: 80%;
   height: 10%;
-  background-color: rgba(0, 0, 0, 0.7);
-  color: white;
+  color: black;
   padding: 2%;
-  border-radius: 10px;
-  border: 2px solid #fff;
   text-align: center;
   font-size: 2rem;
+  z-index: 2;
 }
 
-/* 모바일 반응형 */
-@media (max-width: 767px) {
-  .Battle {
-    background-image: url('/public/BattlePage/background.png');
-    padding: 5%;
-  }
-
-  .battleContainer {
-    flex-direction: column;
-    height: 70%;
-    gap: 10%;
-  }
-
-  .myStage, .enemyStage {
-    width: 50%;
-    height: 20%;
-  }
-
-  .cuketmon {
-    width: 80%;
-  }
-
-  .myCuketmonImage, .enemyCuketmonImage {
-    width: 70%;
-    max-width: 150px;
-  }
-
-  .myHpBar, .enemyHpBar {
-    width: 70%;
-  }
-
-  .myHpFill, .enemyHpFill {
-    width: 60%;
-  }
-
-  .myHpBackground, .enemyHpBackground {
-    width: 90%;
-  }
-
-  .myHpImage, .enemyHpImage {
-    width: 95%;
-  }
-
-  .techSection {
-    padding: 5%;
-  }
-
-  .techWindowImg {
-    width: 90%;
-    max-width: 600px;
-  }
-
-  .techButtons {
-    width: 90%;
-    grid-template-columns: 1fr;
-    gap: 3%;
-  }
-
-  .techButton {
-    font-size: 1.5rem;
-    padding: 2%;
-  }
-
-  .techInfo {
-    flex-direction: column;
-    align-items: center;
-    margin-top: 3%;
-  }
-
-  .ppInfo {
-    font-size: 1rem;
-  }
-
-  .cuketmonType {
-    font-size: 1.5rem;
-  }
-
-  .battleMessage {
-    font-size: 1rem;
-    padding: 3%;
-  }
-}

@@ -1,6 +1,13 @@
+@font-face {
+  font-family: 'neodgm';
+  src: url('/public/Font/neodgm.woff') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
 /*로그인화면 CSS*/
 html {
   background-color: black;
+  font-family: 'neodgm', sans-serif;
 }
 
 .App {
