@@ -49,12 +49,21 @@ public class MonsterService {
     }
 
     // 임시 포켓몬 생성 함수
+    // TODO: 구조 변경 잘하면 깔끔해질 듯
     @Transactional
     public Integer tempGenerate(GenerateApiRequestBody requestBody) {
         Type type1 = Type.fromString(requestBody.getType1());
         Type type2 = Type.fromString(requestBody.getType2()); // nullable 값
 
-        Monster monster = new Monster("", null, INIT_AFFINITY,
+        /*
+            서버에서는 image를 null처리해놓음
+            AI에서 image가 null인 monster가 들어오면 관측 후 이미지 생성
+
+            1. DB에서 직접 변경하여 커켓몬 이미지 지정
+            or
+            2. 백엔드에서 api 만들어서 커켓몬 이미지 지정
+        */
+        Monster monster = new Monster("", null, requestBody.getDescription(), INIT_AFFINITY,
                 getRandomInRange(MIN_BASE, MAX_BASE), getRandomInRange(MIN_BASE, MAX_BASE),
                 getRandomInRange(MIN_BASE, MAX_BASE), getRandomInRange(MIN_BASE, MAX_BASE),
                 getRandomInRange(MIN_BASE, MAX_BASE), getRandomInRange(MIN_BASE, MAX_BASE),

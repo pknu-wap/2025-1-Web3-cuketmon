@@ -83,11 +83,12 @@ public class Monster {
     }
 
     // TODO: 수정 필요...
-    public Monster(String name, String image, Integer affinity, Integer hp, Integer speed,
+    public Monster(String name, String image, String description, Integer affinity, Integer hp, Integer speed,
                    Integer attack, Integer defence, Integer specialAttack, Integer specialDefence,
                    Type type1, Type type2, Integer skillId1, Integer skillId2, Integer skillId3, Integer skillId4) {
         this.name = name;
         this.image = image;
+        this.description = description;
         this.affinity = affinity;
         this.hp = hp;
         this.speed = speed;
