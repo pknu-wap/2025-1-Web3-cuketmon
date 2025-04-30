@@ -1,0 +1,101 @@
+.namePage {
+  background-image: url("/public/NamePage/background.webp");
+  width: 100%;
+  height: 100%;
+  background-repeat: none;
+  background-size: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.nameInputBox {
+  position: relative;
+  background-image: url("/public/NamePage/nameBox.webp");
+  background-size: cover;
+  background-repeat: none;
+  width: 63.5%;
+  height: 39%;
+  left: 17%;
+  top: 25%;
+}
+
+.namePage .cukemonImage {
+  width: 30%;
+  position: absolute;
+  top: -18%;
+  left: 10%;
+}
+
+.nameInputBox p {
+  position: absolute;
+  font-size: 40px;
+  left: 53%;
+  top: 8%;
+}
+
+.nameInput {
+  display: inline;
+  position: absolute;
+  left: 45%;
+  top: 46%;
+}
+
+.nameInput input {
+  outline: none;
+  border: none;
+  background: none;
+  font-size: 25px;
+  position: absolute;
+  cursor: none;
+  top: 38%;
+  margin-left: 40%;
+  border-bottom: 2px dotted black;
+}
+
+.nameInput {
+  font-size: 30px;
+}
+
+.nameInput input {
+  position: absolute;
+  top: 0%;
+}
+
+#remainWord {
+  font-size: 12px;
+  left: 100%;
+}
+
+.choiceButtons {
+  position: absolute;
+  color: white;
+  font-size: 15px;
+  top: 63%;
+  left: 48%;
+}
+
+#remake,
+#bringToMypage {
+  width: 30%;
+  margin-right: 3%;
+}
+
+.choiceButtons #buttonText1 {
+  position: absolute;
+  left: 13%;
+  top: 38%;
+  cursor: none;
+}
+
+.choiceButtons #buttonText2 {
+  position: absolute;
+  left: 46%;
+  top: 38%;
+  cursor: none;
+}
+
+#remake:hover,
+#bringToMypage:hover {
+  content: url("/public/button-hover.png");
+}

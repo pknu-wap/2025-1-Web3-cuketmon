@@ -1,6 +1,6 @@
 @font-face {
-  font-family: 'neodgm';
-  src: url('/public/Font/neodgm.woff') format('truetype');
+  font-family: "neodgm";
+  src: url("/public/Font/neodgm.woff") format("truetype");
   font-weight: normal;
   font-style: normal;
 }
@@ -11,6 +11,7 @@ html, body, *{
 /*로그인화면 CSS*/
 html {
   background-color: black;
+  font-family: "neodgm", sans-serif;
 }
 
 .App {
@@ -46,7 +47,7 @@ html {
   position: absolute;
   top: 75.9%;
   left: 49.5%;
-  font-size: 12px;
+  font-size: 15px;
   font-weight: bold;
   color: white;
   z-index: 1;
