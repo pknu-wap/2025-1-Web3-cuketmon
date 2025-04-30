@@ -8,6 +8,8 @@ import static org.mockito.Mockito.startsWith;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
+import cuketmon.TestDummyDataConfig;
+import cuketmon.TestSkillDataConfig;
 import cuketmon.battle.dto.MatchResponse;
 import cuketmon.battle.dto.SkillRequest;
 import cuketmon.battle.dto.TrainerRequest;
@@ -18,12 +20,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Import;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.test.annotation.DirtiesContext;
 
+@Import({TestSkillDataConfig.class, TestDummyDataConfig.class})
 @SpringBootTest
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
-class BattleMatchServiceIntegrationTest {
+class BattleMatchServiceTest {
 
     @Autowired
     private BattleMatchService battleMatchService;
@@ -33,7 +37,7 @@ class BattleMatchServiceIntegrationTest {
 
     @Test
     void 대기자가_없으면_대기열에_등록된다() {
-        TrainerRequest trainer = new TrainerRequest("kng", 1);
+        TrainerRequest trainer = new TrainerRequest("dummy_trainer", 1);
 
         battleMatchService.findBattle(trainer);
 

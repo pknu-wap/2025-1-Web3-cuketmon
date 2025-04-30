@@ -2,6 +2,8 @@ package cuketmon.util;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import cuketmon.TestDummyDataConfig;
+import cuketmon.TestSkillDataConfig;
 import cuketmon.battle.TeamMaker;
 import cuketmon.battle.dto.BattleDTO;
 import cuketmon.battle.dto.TrainerRequest;
@@ -10,7 +12,9 @@ import cuketmon.skill.service.SkillService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
 
+@Import({TestSkillDataConfig.class, TestDummyDataConfig.class})
 @SpringBootTest
 class DamageTest {
 

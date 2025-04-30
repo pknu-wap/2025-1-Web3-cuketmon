@@ -3,13 +3,17 @@ package cuketmon.skill.service;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import cuketmon.TestDummyDataConfig;
+import cuketmon.TestSkillDataConfig;
 import cuketmon.damageclass.DamageClass;
 import cuketmon.skill.entity.Skill;
 import cuketmon.type.Type;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
 
+@Import({TestSkillDataConfig.class, TestDummyDataConfig.class})
 @SpringBootTest
 class SkillServiceTest {
 

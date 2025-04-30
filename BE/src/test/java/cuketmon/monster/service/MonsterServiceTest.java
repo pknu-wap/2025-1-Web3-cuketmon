@@ -2,6 +2,8 @@ package cuketmon.monster.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import cuketmon.TestDummyDataConfig;
+import cuketmon.TestSkillDataConfig;
 import cuketmon.monster.entity.Monster;
 import cuketmon.monster.repository.MonsterRepository;
 import cuketmon.trainer.entity.Trainer;
@@ -10,12 +12,10 @@ import cuketmon.trainer.service.TrainerService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Rollback;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.context.annotation.Import;
 
+@Import({TestSkillDataConfig.class, TestDummyDataConfig.class})
 @SpringBootTest
-@Transactional
-@Rollback
 class MonsterServiceTest {
 
     @Autowired
