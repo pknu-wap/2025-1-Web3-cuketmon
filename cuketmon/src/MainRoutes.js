@@ -6,6 +6,7 @@ import Battle from './Battle/Battle';
 import Ranking from './Ranking/Ranking';
 import MyPage from './MyPage/MyPage';
 import MakeResult from "./MakeResult/MakeResult";
+import NamePage from './NamePage/NamePage';
 
 function MainRoutes() {
   return (
@@ -16,6 +17,7 @@ function MainRoutes() {
       <Route path="/ranking" element={<Ranking />} />
       <Route path="/mypage" element={<MyPage />} />
       <Route path="/MakeResult" element={<MakeResult/>} />
+      <Route path="/namePage" element={<NamePage/>} />
     </Routes>
   );
 }
