@@ -26,9 +26,9 @@ public class Monster {
     @Column
     private String name;
 
-    // AI와의 연결은 여기 예상
+    // AI에서는 base64로 이미지를 입력할 수 있음
     @Column(nullable = true)
-    private String image;
+    private byte[] image;
 
     @Column(length = 75)
     private String description;
@@ -83,7 +83,7 @@ public class Monster {
     }
 
     // TODO: 수정 필요...
-    public Monster(String name, String image, String description, Integer affinity, Integer hp, Integer speed,
+    public Monster(String name, byte[] image, String description, Integer affinity, Integer hp, Integer speed,
                    Integer attack, Integer defence, Integer specialAttack, Integer specialDefence,
                    Type type1, Type type2, Integer skillId1, Integer skillId2, Integer skillId3, Integer skillId4) {
         this.name = name;

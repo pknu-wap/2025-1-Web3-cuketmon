@@ -9,20 +9,22 @@ import lombok.Getter;
 @AllArgsConstructor
 public class MonsterDTO {
 
+    // for myPage
     @Getter
     @AllArgsConstructor
     public static class MonsterInfo {
         private Integer id;
         private String name;
-        private String image;
+        private byte[] image;
         private Integer affinity;
     }
 
+    // for battle
     @Getter
     @AllArgsConstructor
     public static class MonsterBattleInfo {
         private String name;
-        private String image;
+        private byte[] image;
         private Integer affinity;
 
         private Integer hp;
