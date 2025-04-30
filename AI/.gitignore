@@ -5,3 +5,5 @@ venv
 *.txt
 *.png
 __pycache__
+*.jsonl
+private

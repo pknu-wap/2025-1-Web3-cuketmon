@@ -18,7 +18,7 @@ for index, row in df.iterrows():
         continue
 
     # 파일명 생성: "versions/" 이후의 경로만 사용
-    filename = image_url.split("versions/")[-1].replace("/", "_")
+    filename = row["image_filename"]
     save_path = os.path.join(save_folder, filename)
 
     # 이미지 다운로드
