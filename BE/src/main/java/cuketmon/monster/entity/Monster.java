@@ -4,6 +4,8 @@ import cuketmon.damageclass.DamageClass;
 import cuketmon.type.Type;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -59,9 +61,11 @@ public class Monster {
     private Integer specialDefence;
 
     // 타입 (1~2개)
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Type type1;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = true)
     private Type type2;
 
