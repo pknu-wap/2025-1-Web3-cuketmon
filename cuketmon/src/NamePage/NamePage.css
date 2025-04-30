@@ -10,14 +10,14 @@
 }
 
 .nameInputBox {
-  position: absolute;
+  position: relative;
   background-image: url("/public/NamePage/nameBox.webp");
   background-size: cover;
   background-repeat: none;
-  width: 57%;
-  height: 35%;
-  left: 20%;
-  top: 30%;
+  width: 63.5%;
+  height: 39%;
+  left: 17%;
+  top: 25%;
 }
 
 .namePage .cukemonImage {
@@ -30,25 +30,27 @@
 .nameInputBox p {
   position: absolute;
   font-size: 40px;
-  left: 50%;
-  top: 10%;
+  left: 53%;
+  top: 8%;
 }
 
 .nameInput {
-  display: inline-block;
+  display: inline;
   position: absolute;
   left: 45%;
-  top: 48%;
+  top: 46%;
 }
 
 .nameInput input {
+  outline: none;
   border: none;
-  background-color: none;
+  background: none;
   font-size: 25px;
   position: absolute;
-  background: none;
   cursor: none;
   top: 38%;
+  margin-left: 40%;
+  border-bottom: 2px dotted black;
 }
 
 .nameInput {
@@ -60,9 +62,40 @@
   top: 0%;
 }
 
-#ramainWord {
-  display: inline-block;
+#remainWord {
   font-size: 12px;
-  top: 70%;
-  white-space: nowrap;
+  left: 100%;
+}
+
+.choiceButtons {
+  position: absolute;
+  color: white;
+  font-size: 15px;
+  top: 63%;
+  left: 48%;
+}
+
+#remake,
+#bringToMypage {
+  width: 30%;
+  margin-right: 3%;
+}
+
+.choiceButtons #buttonText1 {
+  position: absolute;
+  left: 13%;
+  top: 38%;
+  cursor: none;
+}
+
+.choiceButtons #buttonText2 {
+  position: absolute;
+  left: 46%;
+  top: 38%;
+  cursor: none;
+}
+
+#remake:hover,
+#bringToMypage:hover {
+  content: url("/public/button-hover.png");
 }
