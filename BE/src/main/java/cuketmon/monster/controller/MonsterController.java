@@ -30,7 +30,7 @@ public class MonsterController {
     // 임시 몬스터 생성 기능
     @PostMapping("/generate")
     public ResponseEntity<Integer> generateMonster(@Validated @RequestBody GenerateApiRequestBody requestBody) {
-        Integer monsterId = monsterService.tempGenerate(requestBody);
+        Integer monsterId = monsterService.generate(requestBody);
         return ResponseEntity.ok(monsterId);
     }
 

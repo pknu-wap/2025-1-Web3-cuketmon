@@ -48,24 +48,45 @@ public class MonsterService {
         this.skillService = skillService;
     }
 
-    // 임시 포켓몬 생성 함수
+    // 포켓몬 생성 함수
     @Transactional
-    public Integer tempGenerate(GenerateApiRequestBody requestBody) {
+    public Integer generate(GenerateApiRequestBody requestBody) {
         Type type1 = Type.fromString(requestBody.getType1());
         Type type2 = Type.fromString(requestBody.getType2()); // nullable 값
 
-        Monster monster = new Monster("", null, INIT_AFFINITY,
-                getRandomInRange(MIN_BASE, MAX_BASE), getRandomInRange(MIN_BASE, MAX_BASE),
-                getRandomInRange(MIN_BASE, MAX_BASE), getRandomInRange(MIN_BASE, MAX_BASE),
-                getRandomInRange(MIN_BASE, MAX_BASE), getRandomInRange(MIN_BASE, MAX_BASE),
-                type1, type2, null, null, null, null);
-
-        DamageClass damageClass = monster.getDamageClass();
+        int attack = getRandomInRange(MIN_BASE, MAX_BASE);
+        int specialAttack = getRandomInRange(MIN_BASE, MAX_BASE);
+        DamageClass damageClass = (attack >= specialAttack) ? DamageClass.PHYSICAL : DamageClass.SPECIAL;
         DamageClass altClass = damageClass.getOppositeClass();
-        monster.setSkillId1(skillService.getSkillId(type1, damageClass, MIN_DAMAGE, MID_DAMAGE)); // 평타
-        monster.setSkillId2(skillService.getSkillId(type1, damageClass, MID_DAMAGE, MAX_DAMAGE)); // 필살기
-        monster.setSkillId3(skillService.getSkillId(type2, damageClass, MIN_DAMAGE, MID_DAMAGE));
-        monster.setSkillId4(skillService.getSkillId(type2, altClass, MIN_DAMAGE, MID_DAMAGE));
+
+        /*
+            서버에서는 image를 null처리해놓음
+            AI에서 image가 null인 monster가 들어오면 관측 후 이미지 생성
+
+            1. DB에서 직접 변경하여 커켓몬 이미지 지정
+            or
+            2. 백엔드에서 api 만들어서 커켓몬 이미지 지정
+        */
+
+        Monster monster = Monster.builder()
+                .name("")
+                .image(null)
+                .description(requestBody.getDescription())
+                .affinity(INIT_AFFINITY)
+                .hp(getRandomInRange(MIN_BASE, MAX_BASE))
+                .speed(getRandomInRange(MIN_BASE, MAX_BASE))
+                .attack(attack)
+                .defence(getRandomInRange(MIN_BASE, MAX_BASE))
+                .specialAttack(specialAttack)
+                .specialDefence(getRandomInRange(MIN_BASE, MAX_BASE))
+                .type1(type1)
+                .type2(type2)
+                .skillId1(skillService.getSkillId(type1, damageClass, MIN_DAMAGE, MID_DAMAGE)) // 평타
+                .skillId2(skillService.getSkillId(type1, damageClass, MID_DAMAGE, MAX_DAMAGE)) // 필살기
+                .skillId3(type2 != null ? skillService.getSkillId(type2, damageClass, MIN_DAMAGE, MID_DAMAGE) : null)
+                .skillId4(type2 != null ? skillService.getSkillId(type2, altClass, MIN_DAMAGE, MID_DAMAGE) : null)
+                .build();
+
         monsterRepository.save(monster);
 
         return monster.getId();
