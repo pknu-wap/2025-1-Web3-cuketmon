@@ -15,7 +15,7 @@ public class MonsterDTO {
     public static class MonsterInfo {
         private Integer id;
         private String name;
-        private byte[] image;
+        private String image;
         private Integer affinity;
     }
 
@@ -24,7 +24,7 @@ public class MonsterDTO {
     @AllArgsConstructor
     public static class MonsterBattleInfo {
         private String name;
-        private byte[] image;
+        private String image;
         private Integer affinity;
 
         private Integer hp;
