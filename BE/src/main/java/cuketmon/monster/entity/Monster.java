@@ -8,12 +8,14 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -23,7 +25,7 @@ public class Monster {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column
+    @Column(nullable = true)
     private String name;
 
     // AI에서는 base64로 이미지를 입력할 수 있음
@@ -57,17 +59,23 @@ public class Monster {
     private Integer specialDefence;
 
     // 타입 (1~2개)
+    @Column(nullable = false)
     private Type type1;
 
+    @Column(nullable = true)
     private Type type2;
 
     // 스킬 (4개)
+    @Column(nullable = false)
     private Integer skillId1;
 
+    @Column(nullable = false)
     private Integer skillId2;
 
+    @Column(nullable = true)
     private Integer skillId3;
 
+    @Column(nullable = true)
     private Integer skillId4;
 
     public void changeNameTo(String name) {
@@ -80,28 +88,6 @@ public class Monster {
 
     public DamageClass getDamageClass() {
         return (attack >= specialAttack) ? DamageClass.PHYSICAL : DamageClass.SPECIAL;
-    }
-
-    // TODO: 수정 필요...
-    public Monster(String name, byte[] image, String description, Integer affinity, Integer hp, Integer speed,
-                   Integer attack, Integer defence, Integer specialAttack, Integer specialDefence,
-                   Type type1, Type type2, Integer skillId1, Integer skillId2, Integer skillId3, Integer skillId4) {
-        this.name = name;
-        this.image = image;
-        this.description = description;
-        this.affinity = affinity;
-        this.hp = hp;
-        this.speed = speed;
-        this.attack = attack;
-        this.defence = defence;
-        this.specialAttack = specialAttack;
-        this.specialDefence = specialDefence;
-        this.type1 = type1;
-        this.type2 = type2;
-        this.skillId1 = skillId1;
-        this.skillId2 = skillId2;
-        this.skillId3 = skillId3;
-        this.skillId4 = skillId4;
     }
 
 }
