@@ -4,6 +4,10 @@
   font-weight: normal;
   font-style: normal;
 }
+
+html, body, *{
+  font-family: 'neodgm', sans-serif;
+}
 /*로그인화면 CSS*/
 html {
   background-color: black;
