@@ -32,7 +32,7 @@ public class Monster {
 
     // AI에서는 base64로 이미지를 입력할 수 있음
     @Column(nullable = true)
-    private byte[] image;
+    private String image;
 
     @Column(length = 75)
     private String description;
