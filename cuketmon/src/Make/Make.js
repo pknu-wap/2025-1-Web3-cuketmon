@@ -84,13 +84,13 @@ function Make() {
             <textarea
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              maxLength={75}
+              maxLength={35}
               rows={5}
               cols={50}
               placeholder="원하시는 포켓몬의 특징을 기입하세요."
             />
           </div>
-          <p>{description.length} / 75 자</p>
+          <p>{description.length} / 35 자</p>
         </div>
 
         <div className="submitButton">
