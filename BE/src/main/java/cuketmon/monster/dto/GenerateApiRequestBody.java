@@ -16,6 +16,7 @@ public class GenerateApiRequestBody {
 
     private String type2;
 
-    @Size(max = 1000, message = "특징은 1000자 이내여야 합니다.")
-    private String feature;
+    @Size(max = 75, message = "특징은 75자 이내여야 합니다.")
+    private String description;
+
 }
