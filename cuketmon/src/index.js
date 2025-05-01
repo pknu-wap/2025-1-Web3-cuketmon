@@ -6,6 +6,7 @@ import MainRoutes from './MainRoutes';
 import { AuthProvider } from './AuthContext';
 import TokenInitializer from './TokenInitializer';
 import './index.css';
+import './App.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
