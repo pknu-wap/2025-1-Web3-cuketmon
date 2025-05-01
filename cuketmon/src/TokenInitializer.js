@@ -5,14 +5,10 @@ const TokenInitializer = () => {
   const { setToken } = useAuth();
 
   useEffect(() => {
-    console.log('✅ TokenInitializer 실행됨');
-    console.log('✅ window.location.href:', window.location.href);
-
+    console.log('TokenInitializer 실행됨');
     const params = new URLSearchParams(window.location.search);
-    console.log('✅ window.location.search:', window.location.search);
-
     const token = params.get('token');
-    console.log('✅ token from URL:', token);
+    console.log('token:', token);
 
     if (token) {
       setToken(token);
