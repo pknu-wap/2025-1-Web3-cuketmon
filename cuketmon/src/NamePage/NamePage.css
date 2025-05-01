@@ -13,10 +13,12 @@
   position: relative;
   background-image: url("/public/NamePage/nameBox.webp");
   background-size: cover;
-  background-repeat: none;
-  width: 63.5%;
-  height: 39%;
-  left: 17%;
+  background-repeat: no-repeat;
+  width: 80vw;
+  max-width: 860px;
+  height: auto;
+  aspect-ratio: 3.4 / 1;
+  margin: 0 auto;
   top: 25%;
 }
 
