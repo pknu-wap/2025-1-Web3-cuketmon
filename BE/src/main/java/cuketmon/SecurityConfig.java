@@ -28,9 +28,10 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
+                .cors(cors -> cors.configurationSource(corsConfigurationSource())) // CORS 활성화
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/login", "oauth/**", "/").permitAll()
+                        .requestMatchers("/login", "/oauth/**", "/").permitAll()
                         .anyRequest().authenticated()
                 )
                 .oauth2Login(oauth2 -> {
@@ -38,7 +39,6 @@ public class SecurityConfig {
                             .userInfoEndpoint(userInfo -> userInfo.userService(customOAuth2UserService))
                             .successHandler(oAuth2SuccessHandler);
                 })
-                // JWT 필터를 UsernamePasswordAuthenticationFilter 앞에 추가
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
@@ -62,6 +62,4 @@ public class SecurityConfig {
 
         return source;
     }
-
-
 }
