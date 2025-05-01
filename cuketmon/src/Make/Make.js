@@ -16,6 +16,7 @@ function Make() {
     const params = new URLSearchParams(searchParams);
     const tokenFromURL = params.get("token");
 
+    console.log(API_URL);
     console.log("추출된 token:", tokenFromURL); 
 
     if (tokenFromURL) {
@@ -41,11 +42,9 @@ function Make() {
     try {
       const response = await fetch(`${API_URL}/monster/generate`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
         body: JSON.stringify(requestData),
       });
+      console.log(requestData)
 
       if (response.ok) {
         alert("데이터가 성공적으로 전송되었습니다!");
