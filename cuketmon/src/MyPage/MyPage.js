@@ -31,7 +31,7 @@ function MyPage() {
       const trainerInfo = await trainerRes.json();
       setTrainerName(trainerInfo.name);
 
-      const toyResponse = await fetch(`${API_URL}/trainer/${trainerInfo.name}/toys`, {
+      const toyResponse = await fetch(`${API_URL}/trainer/toys`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -39,7 +39,7 @@ function MyPage() {
       const toyData = await toyResponse.json();
       setToyCount(Number(toyData));
 
-      const feedResponse = await fetch(`${API_URL}/trainer/${trainerInfo.name}/feeds`, {
+      const feedResponse = await fetch(`${API_URL}/trainer/feeds`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
