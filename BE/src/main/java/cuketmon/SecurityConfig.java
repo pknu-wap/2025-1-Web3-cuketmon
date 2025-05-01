@@ -25,16 +25,16 @@ public class SecurityConfig {
     private final OAuth2SuccessHandler oAuth2SuccessHandler;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
-
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
+                // CORS 활성화 (등록된 CorsConfigurationSource 빈 사용)
+                .cors()
+                .and()
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/login", "oauth/**", "/")
-                        .permitAll()
-                        .anyRequest()
-                        .authenticated()
+                        .requestMatchers("/login", "oauth/**", "/").permitAll()
+                        .anyRequest().authenticated()
                 )
                 .oauth2Login(oauth2 -> {
                     oauth2
@@ -50,11 +50,15 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(List.of(
-                "*"
+        // 정확한 origin을 하나씩 나열하거나, 와일드카드 패턴 허용
+        config.setAllowedOriginPatterns(List.of(
+                "http://localhost:3000",
+                "https://frolicking-gnome-f1b1ad.netlify.app"
         ));
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        // 요청에 담길 수 있는 모든 헤더 허용
         config.setAllowedHeaders(List.of("*"));
+        // 클라이언트에서 자격증명(쿠키·Authorization 헤더) 전달 허용
         config.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
