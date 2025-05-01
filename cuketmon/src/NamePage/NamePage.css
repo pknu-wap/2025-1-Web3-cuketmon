@@ -44,6 +44,7 @@
 }
 
 .nameInput input {
+  width: 20vw;
   outline: none;
   border: none;
   background: none;

@@ -12,7 +12,7 @@
 .Q1 {
   display: flex;
   position: absolute;
-  top: 0.5px;
+  top: 0.7px;
 }
 
 .Q1 img {
@@ -24,6 +24,7 @@
 
 .Q1 h2 {
   font-size: 20px;
+  margin-top: 2.5%;
 }
 
 #typeicon {
@@ -55,7 +56,7 @@
 
 #S1 option,
 #S2 option {
-  font-family: 'NeoDunggeunmo';
+  font-family: "NeoDunggeunmo";
   text-align: center;
   padding: 40%;
 }
@@ -64,13 +65,12 @@
 .Q2 {
   display: flex;
   position: absolute;
-  top: 40%;
+  top: 42%;
 }
 
 .Q2 img {
   width: 10%;
   height: 10%;
-  margin-top: 2.5%;
   padding-right: 0.5%;
 }
 
@@ -83,15 +83,13 @@
   position: absolute;
   margin-left: 3%;
   top: 50%;
-  width: 100%;
+  height: 50vh;
 }
-textarea{
-  font-family: 'NeoDunggeunmo';
+textarea {
+  font-family: "NeoDunggeunmo";
 }
 .make .cukemonFeature .textBack {
-  width: 70%;
-  max-width: 650px;
-  height: auto;
+  height: 11vh;
   background-repeat: no-repeat;
   background-size: cover;
   overflow: hidden;
@@ -100,13 +98,13 @@ textarea{
 .make .cukemonFeature textarea {
   margin-left: 5%;
   margin-top: 3%;
-  width: 85%;
+  width: 80%;
   height: 70%;
   border: none;
   outline: none;
   background: none;
   resize: none;
-  font-size: 15px;
+  font-size: 18px;
 }
 
 .make .cukemonFeature p {
@@ -125,8 +123,8 @@ textarea{
 
 .submitButton p {
   position: absolute;
-  top: 16%;
-  left: 47.5%;
+  top: 25%;
+  left: 46.5%;
   color: white;
   pointer-events: none;
   font-size: 19px;
@@ -138,7 +136,6 @@ textarea{
 
 .submitButton #submitButton:hover {
   content: url("/public/button-hover.png");
-
   top: 80%;
   left: 30%;
 }
@@ -193,7 +190,8 @@ textarea{
   .make .cukemonFeature {
     padding: 0;
     margin: 0;
-    width: 80%;
+    width: 83vw;
+    height: 45vw;
     font-size: 8px;
     flex-direction: column;
     margin-left: 2%;
@@ -205,8 +203,7 @@ textarea{
     background-size: cover;
     background-image: url("/public/MakePage/selectBackground.png");
     padding: 0;
-    width: 110%;
-    height: auto;
+    height: 10.5vh;
   }
 
   .cukemonFeature textarea {
