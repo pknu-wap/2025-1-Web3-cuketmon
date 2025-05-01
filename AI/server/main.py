@@ -37,13 +37,13 @@ def process_images():
                         image = model_inference(monster_id, monster_description)
                         save_image(image, monster_id, monster, db)
 
-            db.commit()  # 마지막에 commit 한 번 더 확실히
+                        db.commit()
         except Exception as e:
             print(f"Error in process_images: {e}")
             db.rollback()
         finally:
-            db.close()  # 꼭 닫아줘야 함
-        time.sleep(1)  # 1초 대기
+            db.close()
+        time.sleep(1)
 
 def start_background_task():
     thread = Thread(target=process_images)  # <-- () 쓰지 말고, 인자도 넘기지 말기
