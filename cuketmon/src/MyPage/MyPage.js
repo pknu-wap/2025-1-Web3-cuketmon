@@ -23,14 +23,6 @@ function MyPage() {
     try {
       setLoading(true);
 
-      const trainerRes = await fetch(`${API_URL}/trainer/`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      const trainerInfo = await trainerRes.json();
-      setTrainerName(trainerInfo.name);
-
       const toyResponse = await fetch(`${API_URL}/trainer/toys`, {
         headers: {
           Authorization: `Bearer ${token}`,
