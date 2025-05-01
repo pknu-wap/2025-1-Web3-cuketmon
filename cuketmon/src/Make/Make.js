@@ -8,7 +8,7 @@ function Make() {
   const [type1, setType1] = useState("");
   const [type2, setType2] = useState("");
   const [description, setDescription] = useState("");
-  const [tokenFromURL, setTokenFromURL] = useState("");  // token 상태 추가
+  const [tokenFromURL, setTokenFromURL] = useState("");  
   const navigate = useNavigate();
   const { setToken } = useAuth();
   const API_URL = process.env.REACT_APP_API_URL;
@@ -55,11 +55,10 @@ function Make() {
     
       if (response.ok) {
         const monsterId = await response.json();
-        localStorage.setItem('monsterId', monsterId.toString());
-        navigate("/MakeResult");
+        localStorage.setItem('monsterId', monsterId);
+        navigate("/MakeResult",{ state: { monsterId } });
       } else {
         alert("데이터 전송에 실패했습니다.");
-        navigate("/MakeResult");
       }
     } catch (error) {
       console.error("에러 발생:", error);
