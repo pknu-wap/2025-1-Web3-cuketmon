@@ -31,7 +31,7 @@
 
 .nameInputBox p {
   position: absolute;
-  font-size: 40px;
+  font-size: clamp(10px, 2.5vw, 40px);
   left: 53%;
   top: 8%;
 }
@@ -39,7 +39,7 @@
 .nameInput {
   display: inline;
   position: absolute;
-  left: 45%;
+  left: 47%;
   top: 46%;
 }
 
@@ -47,16 +47,17 @@
   outline: none;
   border: none;
   background: none;
-  font-size: 25px;
+  font-size: clamp(8px, 1.5vw, 30px);
   position: absolute;
   cursor: none;
   top: 38%;
-  margin-left: 40%;
+  margin-left: 42%;
   border-bottom: 2px dotted black;
 }
 
 .nameInput {
-  font-size: 30px;
+  font-size: clamp(8px, 1vw, 30px);
+  padding-left: 2.5%;
 }
 
 .nameInput input {
@@ -65,14 +66,14 @@
 }
 
 #remainWord {
-  font-size: 12px;
+  font-size: clamp(10px, 1vw, 12px);
   left: 100%;
 }
 
 .choiceButtons {
   position: absolute;
   color: white;
-  font-size: 15px;
+  font-size: clamp(3px, 1.5vw, 15px);
   top: 63%;
   left: 48%;
 }
