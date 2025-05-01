@@ -20,7 +20,7 @@ function MakeResult() {
       fetch(`/monster/${monsterId}/info`, { method: "GET" })
         .then((response) => response.json())
         .then((data) => {
-          setCukemonImage(`data:image/png;base64,${data.base64Image}`); 
+          setCukemonImage(`data:image/png;base64,${data.image}`); 
           setMentText("처음보는 포켓몬이 나타났다!");
         })
         .catch((error) => {
