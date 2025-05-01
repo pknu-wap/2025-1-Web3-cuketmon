@@ -76,7 +76,7 @@ function Make() {
 
         <div className="Q2">
           <img src="./Menubar/mypageicon.png" alt="포켓몬 아이콘" />
-          <h2>원하시는 포켓몬의 특징을 적어주세요.</h2>
+          <h2>커켓몬 특징을 나타내는 단어들을 적어주세요.</h2>
         </div>
 
         <div className="cukemonFeature">
@@ -84,13 +84,13 @@ function Make() {
             <textarea
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              maxLength={35}
+              maxLength={44}
               rows={5}
               cols={50}
-              placeholder="원하시는 포켓몬의 특징을 기입하세요."
+              placeholder="영어로 기입해주세요. 예시) beige, normal/flying, sharp-beaked bird"
             />
           </div>
-          <p>{description.length} / 35 자</p>
+          <p>{description.length} / 44 자</p>
         </div>
 
         <div className="submitButton">
