@@ -3,7 +3,10 @@
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  padding-top: 50%;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  position: absolute;
 }
 
 .Q1 {
@@ -83,13 +86,13 @@
 }
 
 .make .cukemonFeature .textBack {
-  width: 50%;
-  height: 130px;
+  width: 70%;
+  max-width: 650px;
+  height: auto;
   background-repeat: no-repeat;
   background-size: cover;
   overflow: hidden;
   background-image: url("/public/MakePage/textareaBackground.png");
-  margin-bottom: 2%;
 }
 .make .cukemonFeature textarea {
   margin-left: 5%;
@@ -98,6 +101,7 @@
   height: 70%;
   border: none;
   outline: none;
+  background: none;
   resize: none;
   font-size: 15px;
 }
@@ -197,10 +201,9 @@
     background-repeat: no-repeat;
     background-size: cover;
     background-image: url("/public/MakePage/selectBackground.png");
-    margin: 0;
     padding: 0;
-    width: 350px;
-    height: 100px;
+    width: 110%;
+    height: auto;
   }
 
   .cukemonFeature textarea {
