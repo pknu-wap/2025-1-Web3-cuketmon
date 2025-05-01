@@ -41,29 +41,29 @@ function Make() {
       type2,
       description
     };
+    
 
     try {
       const response = await fetch(`${API_URL}/monster/generate`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${tokenFromURL}`  
+          "Authorization": `Bearer ${tokenFromURL}`
         },
         body: JSON.stringify(requestData)
       });
-      localStorage.setItem('monserId',response.monsterId.toString()); //monsterId string으로 저장 -> 사용시 parseInt()로 전환 필요
-      console.log(requestData);
-
+    
       if (response.ok) {
-        alert("데이터가 성공적으로 전송되었습니다!");
+        const monsterId = await response.json();
+        localStorage.setItem('monsterId', monsterId.toString());
         navigate("/MakeResult");
       } else {
         alert("데이터 전송에 실패했습니다.");
         navigate("/MakeResult");
       }
     } catch (error) {
-      console.error("전송 오류:", error);
-      alert("데이터 전송에 실패했습니다.");
+      console.error("에러 발생:", error);
+      alert("서버와의 통신 중 오류가 발생했습니다.");
     }
   };
 
