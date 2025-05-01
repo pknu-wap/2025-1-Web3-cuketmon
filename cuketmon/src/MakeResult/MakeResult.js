@@ -8,7 +8,7 @@ function MakeResult() {
   const eggRef = useRef(null);
   const navigate = useNavigate(); 
   const [monsterId, setMonsterId] = useState(null);
-
+  const API_URL = process.env.REACT_APP_API_URL;
   const location = useLocation(); 
   useEffect(() => {
     const monsterIdFromState = location.state?.monsterId;
@@ -17,10 +17,10 @@ function MakeResult() {
     }
 
     if (monsterId) {
-      fetch(`/monster/${monsterId}/info`, { method: "GET" })
+      fetch(`${API_URL}/monster/${monsterId}/info`, { method: "GET" })
         .then((response) => response.json())
         .then((data) => {
-          setCukemonImage(`data:image/png;base64,${data.image}`); 
+          setCukemonImage(`data:image/png;base64,${data.base64Image}`); 
           setMentText("처음보는 포켓몬이 나타났다!");
         })
         .catch((error) => {
@@ -29,7 +29,7 @@ function MakeResult() {
           setMentText("커켓몬이 도망쳤다.(다시 시도하려면 클릭)");
         });
     }
-  }, [monsterId, location]);
+  }, [monsterId, location, API_URL]);
 
   const handleTextClick = () => {
     navigate("/make");
