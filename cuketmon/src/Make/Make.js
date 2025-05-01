@@ -10,7 +10,7 @@ function Make() {
   const [description, setDescription] = useState("");
   const navigate = useNavigate();
   const { setToken } = useAuth();
-
+  const API_URL = process.env.REACT_APP_API_URL;
   useEffect(() => {
     const searchParams = decodeURIComponent(window.location.search);
     const params = new URLSearchParams(searchParams);
@@ -35,11 +35,11 @@ function Make() {
     const requestData = {
       type1,
       type2,
-      description,
+      description
     };
 
     try {
-      const response = await fetch("/monster/generate", {
+      const response = await fetch(`${API_URL}/monster/generate`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
