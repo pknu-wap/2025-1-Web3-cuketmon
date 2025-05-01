@@ -12,18 +12,15 @@ function Make() {
   const { setToken } = useAuth();
 
   useEffect(() => {
-    // URL을 디코딩하여 가져오기
     const searchParams = decodeURIComponent(window.location.search);
-    console.log("디코딩된 URL 쿼리:", searchParams);  // 디코딩된 URL 쿼리 확인
-
     const params = new URLSearchParams(searchParams);
     const tokenFromURL = params.get("token");
 
-    console.log("추출된 token:", tokenFromURL); // 추출된 token 확인
+    console.log("추출된 token:", tokenFromURL); 
 
     if (tokenFromURL) {
-      setToken(tokenFromURL);  // 상태에 토큰 저장
-      localStorage.setItem("jwt", tokenFromURL);  // 로컬 스토리지에 토큰 저장
+      setToken(tokenFromURL);  
+      localStorage.setItem("jwt", tokenFromURL); 
     } else {
       console.log("토큰이 없습니다.");
     }
