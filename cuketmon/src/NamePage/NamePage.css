@@ -85,14 +85,12 @@
   position: absolute;
   left: 13%;
   top: 38%;
-  cursor: none;
 }
 
 .choiceButtons #buttonText2 {
   position: absolute;
   left: 46%;
   top: 38%;
-  cursor: none;
 }
 
 #remake:hover,
