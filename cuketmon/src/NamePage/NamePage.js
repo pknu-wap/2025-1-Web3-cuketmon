@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom"; 
+import { useAuth } from '../AuthContext';
 import "./NamePage.css";
 
 function NamePage() {
@@ -7,6 +8,7 @@ function NamePage() {
   const [pokemonImage, setPokemonImage] = useState("/Menubar/egg.png"); // 임시 이미지 백엔드 연동시 바꿀 예정
   const navigate = useNavigate();
   const maxLength = 12;
+  const { token } = useAuth(); 
 
   useEffect(() => {
     if (name) {
@@ -28,9 +30,12 @@ function NamePage() {
   };
 
   const handleGoToMypage = () => {
+
     if (name.trim().length > 0) {
+      if (token){
       alert("커켓몬이 생성되었습니다.");
-      navigate("/mypage"); 
+      navigate("/mypage?token="+token);
+    } 
     } else {
       alert("이름을 입력해주세요.");
     }
