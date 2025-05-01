@@ -53,7 +53,9 @@ public class SecurityConfig {
                 "http://localhost:3000",
                 "http://localhost:8000",
                 "http://ec2-3-34-197-50.ap-northeast-2.compute.amazonaws.com:3000",
-                "http://ec2-3-34-197-50.ap-northeast-2.compute.amazonaws.com:8000"
+                "http://ec2-3-34-197-50.ap-northeast-2.compute.amazonaws.com:8000",
+                "https://frolicking-gnome-f1b1ad.netlify.app",
+                "https://damaged-jacqueline-kangrae-jo-8fa06d25.koyeb.app"
         ));
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(List.of("*"));
