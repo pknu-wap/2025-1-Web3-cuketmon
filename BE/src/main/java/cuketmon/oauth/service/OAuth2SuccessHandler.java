@@ -30,7 +30,7 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
         String accessToken = jwtUtil.createToken(trainerName);
 
         // JWT를 프론트에 리다이렉트하며 전달
-        String redirectUrl = CLIENT_URL + "/oauth2/success?token=" + accessToken;
+        String redirectUrl = CLIENT_URL + "/?token=" + accessToken;
         response.sendRedirect(redirectUrl);
     }
 
