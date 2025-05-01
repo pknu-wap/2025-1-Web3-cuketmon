@@ -14,9 +14,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-@CrossOrigin(originPatterns = "https://frolicking-gnome-f1b1ad.netlify.app")
+@CrossOrigin(origins = "*", methods = RequestMethod.POST)
 @Validated
 @RestController
 @RequestMapping("/monster")
