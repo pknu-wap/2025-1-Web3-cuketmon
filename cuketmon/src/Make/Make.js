@@ -68,7 +68,7 @@ function Make() {
     <div className="makeBackGround">
       <div className="make">
         <div className="Q1">
-          <img src="./Menubar/mypageicon.png" alt="포켓몬 아이콘" />
+          <img src="/Menubar/mypageicon.png" alt="포켓몬 아이콘" />
           <h2>원하시는 포켓몬의 타입을 선택해 주세요.</h2>
         </div>
 
@@ -89,7 +89,7 @@ function Make() {
         <img src="./MakePage/type.png" id="typeicon" alt="포켓몬 타입 이미지" />
 
         <div className="Q2">
-          <img src="./Menubar/mypageicon.png" alt="포켓몬 아이콘" />
+          <img src="/Menubar/mypageicon.png" alt="포켓몬 아이콘" />
           <h2>커켓몬 특징을 나타내는 단어들을 적어주세요.</h2>
         </div>
 
