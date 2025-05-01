@@ -7,6 +7,7 @@ function MakeResult() {
   const [mentText, setMentText] = useState("어라...?");
   const eggRef = useRef(null);
   const navigate = useNavigate(); 
+  
   const [monsterId, setMonsterId] = useState(null);
   const API_URL = process.env.REACT_APP_API_URL;
   const location = useLocation(); 
@@ -20,7 +21,8 @@ function MakeResult() {
       fetch(`${API_URL}/monster/${monsterId}/info`, { method: "GET" })
         .then((response) => response.json())
         .then((data) => {
-          setCukemonImage(`data:image/png;base64,${data.base64Image}`); 
+          console.log(data.Image)
+          setCukemonImage(`data:image/png;base64,${data.Image}`); 
           setMentText("처음보는 포켓몬이 나타났다!");
         })
         .catch((error) => {
@@ -32,7 +34,8 @@ function MakeResult() {
   }, [monsterId, location, API_URL]);
 
   const handleTextClick = () => {
-    navigate("/make");
+    const token = localStorage.getItem('token');
+    navigate("/makepage?token="+token);
   };
 
   return (
