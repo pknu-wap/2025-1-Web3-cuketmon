@@ -1,0 +1,77 @@
+.login {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    background: url("/public/LoginPage/background.png") no-repeat center center fixed; 
+    background-size:contain; 
+    background-color: black;
+}
+  
+#webLogo {
+    position: absolute;
+    top: 5vh;
+    width: 30vw;
+}
+  
+.kakaoButton {
+    position: relative;
+    width: 20vw;
+    height: 8vw;
+    margin: 5vh auto;
+    margin-top: 60vh;
+    background: none;
+    background-image: url('/public/button.png');
+    background-size: cover;
+    background-position: center;
+    border: none;
+    cursor: pointer;
+    font-size: 1vw;
+    font-weight: bold;
+    color: white;
+    text-align: center;
+    transition: background-image 0.3s ease;
+}
+  
+.kakaoButton:hover {
+    background-image: url("/public/button-hover.png");
+}
+  
+/* 반응형 */
+@media (max-width: 767px) {
+    #root,
+    body {
+        height: 100%;
+        padding: 0;
+    }
+  
+    .login {
+        background-position: top center; 
+    }
+  
+    #webLogo {
+        width: 80%;
+        top: 10vh;
+    }
+
+    .kakaoButton {
+        width: 50vw; 
+        height: 20vw; 
+        margin-top: 70vh; 
+        font-size: 4vw; 
+    }
+
+    .kakaoButton:hover {
+        background-image: url("/public/button-hover.png");
+    }
+
+    .kakaoButton:hover {
+        font-size: 5vw;
+    }
+  
+    .buttonText {
+        font-size: 6vw; 
+        top: 80%; 
+    }
+}
