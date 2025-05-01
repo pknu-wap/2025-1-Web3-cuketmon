@@ -34,8 +34,12 @@ function MakeResult() {
   }, [monsterId, location, API_URL]);
 
   const handleTextClick = () => {
-    const token = localStorage.getItem('token');
-    navigate("/makepage?token="+token);
+    const token = localStorage.getItem('jwt');
+    navigate(`/makepage?token=${token}`);
+    if (!token) {
+      alert("토큰이 없습니다.");
+      return;
+    }
   };
 
   return (
