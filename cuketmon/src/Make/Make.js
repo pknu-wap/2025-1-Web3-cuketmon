@@ -62,7 +62,8 @@ function Make() {
         const data = await response.json(); 
         const monsterId = data.monsterId;
         localStorage.setItem('monsterId', monsterId);
-        navigate(`/MakeResult?token=${tokenFromURL}`, { state: { monsterId } });
+        const token = localStorage.getItem('jwt');
+        navigate(`/MakeResult?token=${token}`, { state: { monsterId } });
       } else {
         alert("데이터 전송에 실패했습니다.");
       }
