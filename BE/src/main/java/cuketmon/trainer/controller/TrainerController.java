@@ -42,7 +42,7 @@ public class TrainerController {
     }
 
     /*
-        소셜 로그인 구현에 따른 controller 및 api 변경 예전
+        소셜 로그인 구현에 따른 controller 및 api 변경 예정
      */
 
     // 남은 장난감의 개수를 확인
