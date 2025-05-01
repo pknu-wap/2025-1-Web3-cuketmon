@@ -8,20 +8,23 @@ function Make() {
   const [type1, setType1] = useState("");
   const [type2, setType2] = useState("");
   const [description, setDescription] = useState("");
+  const [tokenFromURL, setTokenFromURL] = useState("");  // token 상태 추가
   const navigate = useNavigate();
   const { setToken } = useAuth();
   const API_URL = process.env.REACT_APP_API_URL;
+  
   useEffect(() => {
     const searchParams = decodeURIComponent(window.location.search);
     const params = new URLSearchParams(searchParams);
-    const tokenFromURL = params.get("token");
+    const token = params.get("token");
 
     console.log(API_URL);
-    console.log("추출된 token:", tokenFromURL); 
+    console.log("추출된 token:", token); 
 
-    if (tokenFromURL) {
-      setToken(tokenFromURL);  
-      localStorage.setItem("jwt", tokenFromURL); 
+    if (token) {
+      setTokenFromURL(token);  
+      setToken(token);  
+      localStorage.setItem("jwt", token); 
     } else {
       console.log("토큰이 없습니다.");
     }
@@ -42,9 +45,14 @@ function Make() {
     try {
       const response = await fetch(`${API_URL}/monster/generate`, {
         method: "POST",
-        body: JSON.stringify(requestData),
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${tokenFromURL}`  
+        },
+        body: JSON.stringify(requestData)
       });
-      console.log(requestData)
+      localStorage.setItem('monserId',response.monsterId.toString()); //monsterId string으로 저장 -> 사용시 parseInt()로 전환 필요
+      console.log(requestData);
 
       if (response.ok) {
         alert("데이터가 성공적으로 전송되었습니다!");
@@ -86,7 +94,7 @@ function Make() {
             <option key={type} value={type}>{type}</option>
           ))}
         </select>
-        <img src="./MakePage/type.png" id="typeicon" alt="포켓몬 타입 이미지" />
+        <img src="/MakePage/type.png" id="typeicon" alt="포켓몬 타입 이미지" />
 
         <div className="Q2">
           <img src="/Menubar/mypageicon.png" alt="포켓몬 아이콘" />
