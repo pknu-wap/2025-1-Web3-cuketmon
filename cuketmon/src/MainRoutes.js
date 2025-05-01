@@ -2,6 +2,7 @@ import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import App from './App';
 import Make from './Make/Make';
+import Login from './Login/Login';
 import Battle from './Battle/Battle';
 import Ranking from './Ranking/Ranking';
 import MyPage from './MyPage/MyPage';
@@ -13,6 +14,7 @@ function MainRoutes() {
     <Routes>
       <Route path="/" element={<App />} />  
       <Route path="/make" element={<Make />} /> 
+      <Route path="/login" element={<Login />} /> 
       <Route path="/battle" element={<Battle />} />
       <Route path="/ranking" element={<Ranking />} />
       <Route path="/mypage" element={<MyPage />} />
