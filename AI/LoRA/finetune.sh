@@ -1,6 +1,6 @@
 export MODEL_NAME="stable-diffusion-v1-5/stable-diffusion-v1-5"
-export CHECKPOINT="/mnt/nas-drive/pys/cuketmon/weight/checkpoint-8000"
-export OUTPUT_DIR="/mnt/nas-drive/pys/cuketmon/weight"
+export CHECKPOINT="/mnt/nas-drive/pys/cuketmon/second/weight/checkpoint-13500"
+export OUTPUT_DIR="/mnt/nas-drive/pys/cuketmon/second/weight"
 export DATASET_NAME="/mnt/nas-drive/pys/cuketmon/datasets/pokemon_images"
 
 accelerate launch train_text_to_image_lora.py \

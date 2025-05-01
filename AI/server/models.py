@@ -1,5 +1,6 @@
 from sqlalchemy import Column, Integer, String, Text
 from sqlalchemy.orm import declarative_base
+from sqlalchemy.dialects.mysql import MEDIUMTEXT
 
 Base = declarative_base()
 
@@ -11,7 +12,7 @@ class MonsterTable(Base):
     attack = Column(Integer, nullable=True)
     defence = Column(Integer, nullable=True)
     hp = Column(Integer, nullable=True)
-    image = Column(Text, nullable=True)
+    image = Column(MEDIUMTEXT, nullable=True)
     name = Column(Text, nullable=True)
     description = Column(Text, nullable=True)
     skill_id1 = Column(Integer, nullable=True)

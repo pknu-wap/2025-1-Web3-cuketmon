@@ -3,7 +3,7 @@ import pandas as pd
 import requests
 
 # CSV 파일 로드
-csv_path = "/mnt/nas-drive/pys/cuketmon/datasets/pokemon_data.csv"
+csv_path = "/home/pys/2025-1-Web3-cuketmon/AI/filtered_file.csv"
 df = pd.read_csv(csv_path)
 
 # 저장할 폴더 지정
