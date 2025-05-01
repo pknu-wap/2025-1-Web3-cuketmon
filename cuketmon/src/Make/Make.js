@@ -1,14 +1,33 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Make.css";
 import MenuBar from "../Menubar/Menubar.js";
+import { useAuth } from "../AuthContext";
 
 function Make() {
   const [type1, setType1] = useState("");
   const [type2, setType2] = useState("");
   const [description, setDescription] = useState("");
   const navigate = useNavigate();
+  const { setToken } = useAuth();
 
+  useEffect(() => {
+    // URL을 디코딩하여 가져오기
+    const searchParams = decodeURIComponent(window.location.search);
+    console.log("디코딩된 URL 쿼리:", searchParams);  // 디코딩된 URL 쿼리 확인
+
+    const params = new URLSearchParams(searchParams);
+    const tokenFromURL = params.get("token");
+
+    console.log("추출된 token:", tokenFromURL); // 추출된 token 확인
+
+    if (tokenFromURL) {
+      setToken(tokenFromURL);  // 상태에 토큰 저장
+      localStorage.setItem("jwt", tokenFromURL);  // 로컬 스토리지에 토큰 저장
+    } else {
+      console.log("토큰이 없습니다.");
+    }
+  }, [setToken]);
 
   const handleSubmit = async () => {
     if (!(type1 || type2) || !description.trim()) {
@@ -36,18 +55,17 @@ function Make() {
         navigate("/MakeResult");
       } else {
         alert("데이터 전송에 실패했습니다.");
-        alert("근데 임의로 /MakeResult로 이동하게 만들어둠 나중에 빼야함 !!!!");
-        navigate("/MakeResult");//임의로 /MakeResult로 이동할수 있게만든 코드 나중에 꼭 빼야함!!! 
+        navigate("/MakeResult");
       }
     } catch (error) {
       console.error("전송 오류:", error);
       alert("데이터 전송에 실패했습니다.");
-
     }
   };
 
   const types = [
-    "불꽃", "물", "풀", "전기", "에스퍼", "얼음", "드래곤", "악", "페어리", "격투", "비행", "고스트", "땅", "독", "바위", "강철", "벌레", "노말",
+    "불꽃", "물", "풀", "전기", "에스퍼", "얼음", "드래곤", "악", "페어리",
+    "격투", "비행", "고스트", "땅", "독", "바위", "강철", "벌레", "노말",
   ];
 
   return (
