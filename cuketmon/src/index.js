@@ -3,11 +3,18 @@ import ReactDOM from 'react-dom/client';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';  // BrowserRouter import 추가
 import MainRoutes from './MainRoutes';
+import { AuthProvider } from './AuthContext';
+import TokenInitializer from './TokenInitializer';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-    <BrowserRouter>
-      <MainRoutes /> 
-    </BrowserRouter>
+  <React.StrictMode>
+    <AuthProvider> 
+      <BrowserRouter>
+        <MainRoutes />
+        <TokenInitializer /> 
+      </BrowserRouter>
+    </AuthProvider>
+  </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function

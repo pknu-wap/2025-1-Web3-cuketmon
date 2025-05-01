@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import MenuBar from "../Menubar/Menubar.js";
 import './MyPage.css';
+import { useAuth } from '../AuthContext';
 
 function MyPage() {
   const [toyCount, setToyCount] = useState();
@@ -9,32 +10,50 @@ function MyPage() {
   const [isPlayed, setIsPlayed] = useState(false);
   const [loading, setLoading] = useState(true);
   const [cukemonData, setCukemonData] = useState(null);
-
-  const trainerName = "kng"; // 카카오 로그인으로 받아오기
-  const API_URL = process.env.REACT_APP_API_URL;
+  const [trainerName, setTrainerName] = useState(null);
+  const [monsterId, setMonsterId] = useState(2);
   const pageRef = useRef(null);
-  const [monsterId, setMonsterId] = useState(2); // monsterId 상태를 추가
 
-  // 데이터를 가져오는 함수
+  const API_URL = process.env.REACT_APP_API_URL;
+  const { token } = useAuth();
+
   const fetchData = async () => {
+    if (!token) return;
+
     try {
       setLoading(true);
 
-      // 장난감 데이터
-      const toyResponse = await fetch(`${API_URL}/trainer/${trainerName}/toys`);
+      const trainerRes = await fetch(`${API_URL}/trainer/me`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const trainerInfo = await trainerRes.json();
+      setTrainerName(trainerInfo.name);
+
+      const toyResponse = await fetch(`${API_URL}/trainer/${trainerInfo.name}/toys`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       const toyData = await toyResponse.json();
       setToyCount(Number(toyData));
 
-      // 먹이 데이터
-      const feedResponse = await fetch(`${API_URL}/trainer/${trainerName}/feeds`);
+      const feedResponse = await fetch(`${API_URL}/trainer/${trainerInfo.name}/feeds`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       const feedData = await feedResponse.json();
       setFeedCount(Number(feedData));
 
-      // 커켓몬 데이터
-      const cukemonResponse = await fetch(`${API_URL}/monster/${monsterId}/info`);
+      const cukemonResponse = await fetch(`${API_URL}/monster/${monsterId}/info`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       const cukemonData = await cukemonResponse.json();
       setCukemonData(cukemonData);
-
     } catch (error) {
       console.error('데이터 로드 실패', error);
     } finally {
@@ -44,45 +63,38 @@ function MyPage() {
 
   useEffect(() => {
     fetchData();
-  }, [monsterId]); 
+  }, [monsterId, token]);
 
-  // 키보드 이벤트
   useEffect(() => {
     const handleKeyPress = (event) => {
       if (event.key === 'ArrowLeft') {
-        setMonsterId((prevId) => Math.max(1, prevId - 1)); 
+        setMonsterId((prevId) => Math.max(1, prevId - 1));
       } else if (event.key === 'ArrowRight') {
-        setMonsterId((prevId) => prevId + 1); 
+        setMonsterId((prevId) => prevId + 1);
       }
     };
-
     window.addEventListener('keydown', handleKeyPress);
-
-    return () => {
-      window.removeEventListener('keydown', handleKeyPress);
-    };
+    return () => window.removeEventListener('keydown', handleKeyPress);
   }, []);
 
-  // 먹이주기
   const feedCukemon = async () => {
-    if (!monsterId) {
-      alert("몬스터 ID가 없습니다.");
-      return;
-    }
+    if (!monsterId || !trainerName) return;
 
     try {
       const response = await fetch(`${API_URL}/monster/${monsterId}/feed`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
       });
 
       const result = await response.text();
-
       if (response.ok) {
         alert(result);
-        const updatedFeedData = await fetch(`${API_URL}/trainer/${trainerName}/feeds`);
+        const updatedFeedData = await fetch(`${API_URL}/trainer/${trainerName}/feeds`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
         const feedData = await updatedFeedData.json();
         setFeedCount(Number(feedData));
       } else {
@@ -93,36 +105,32 @@ function MyPage() {
     }
   };
 
-  // 먹이주기 버튼 클릭 처리
   const handleFeedClick = async () => {
     setIsFed(true);
-    setTimeout(() => {
-      setIsFed(false);
-    }, 1000);
+    setTimeout(() => setIsFed(false), 1000);
     await feedCukemon();
   };
 
-  // 놀아주기
   const playCukemon = async () => {
-    if (!monsterId) {
-      alert("몬스터 ID가 없습니다.");
-      return;
-    }
+    if (!monsterId || !trainerName) return;
 
     try {
       const response = await fetch(`${API_URL}/monster/${monsterId}/play`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
       });
 
       const result = await response.text();
-
       if (response.ok) {
         alert(result);
-        const updatedToyData = await (await fetch(`${API_URL}/trainer/${trainerName}/toys`)).json();
-        setToyCount(updatedToyData);
+        const updatedToyData = await fetch(`${API_URL}/trainer/${trainerName}/toys`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        const toyData = await updatedToyData.json();
+        setToyCount(Number(toyData));
       } else {
         throw new Error(result);
       }
@@ -131,29 +139,30 @@ function MyPage() {
     }
   };
 
-  // 놀아주기 버튼 클릭 처리
   const handlePlayClick = async () => {
     setIsPlayed(true);
-    setTimeout(() => {
-      setIsPlayed(false);
-    }, 1000);
+    setTimeout(() => setIsPlayed(false), 1000);
     await playCukemon();
   };
 
-  // 커켓몬 방출
   const releaseCukemon = async () => {
-    if (!monsterId) {
-      alert("몬스터 ID가 없습니다.");
-      return;
-    }
+    if (!monsterId || !token) return;
+
     try {
-      const response = await fetch(`${API_URL}/monster/${monsterId}/release`, { method: "DELETE" });
+      const response = await fetch(`${API_URL}/monster/${monsterId}/release`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
       if (!response.ok) {
         throw new Error(`삭제 실패: ${response.status}`);
       }
+
       alert('커켓몬이 방출되었습니다.');
     } catch (error) {
-      alert("에러 발생:", error);
+      alert(`에러 발생: ${error.message}`);
     }
   };
 
@@ -178,9 +187,9 @@ function MyPage() {
         )}
       </div>
 
-    <div className='cuketmonImage'>
-    <img src='/Menubar/egg.png' alt="Cuketmon" />
-    </div>
+      <div className='cuketmonImage'>
+        <img src='/Menubar/egg.png' alt="Cuketmon" />
+      </div>
 
       <div className='cucketmonProfile'>
         {loading ? <p>로딩 중...</p> : <p>{cukemonData?.name || "이름 없음"}</p>}

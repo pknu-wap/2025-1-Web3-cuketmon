@@ -1,58 +1,44 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';  
 import './App.css';
+import { useAuth } from './AuthContext';
 
 function App() {
   const navigate = useNavigate();
   const API_URL = process.env.REACT_APP_API_URL;
+  const { setToken } = useAuth(); 
 
   const handleLogin = () => {
-    window.location.href = "http://ec2-3-34-197-50.ap-northeast-2.compute.amazonaws.com:8000/oauth2/authorization/kakao";
+    window.location.href = `${API_URL}/oauth2/authorization/kakao`;
   };
-
   useEffect(() => {
     const queryParams = new URLSearchParams(window.location.search);
-    const code = queryParams.get('code');  
+    const token = queryParams.get('token'); 
+    console.log(token)
 
-    if (code) {
-      fetch(`${API_URL}/getKakaoToken`, {
+    if (token) {
+      localStorage.setItem('accessToken', token); 
+
+      fetch(`${API_URL}/trainer/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,  
         },
-        body: JSON.stringify({ code }),  
+        body: JSON.stringify({ token }),  
       })
       .then(response => response.json())
       .then(data => {
-        const jwt = data.jwt;  
-        console.log('JWT:', jwt);
-
-        localStorage.setItem('jwt', jwt); 
-
-        fetch(`${API_URL}/trainer/login`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${jwt}`,  
-          },
-          body: JSON.stringify({ token: jwt }),  
-        })
-        .then(response => response.json())
-        .then(data => {
-          console.log('백엔드 응답:', data);  
-          navigate('/make');  
-        })
-        .catch(error => {
-          console.error('백엔드 요청 오류:', error); 
-        });
+        console.log('백엔드 응답:', data);  
+        navigate('/make');  // 로그인 후 /make 페이지로 리다이렉트
       })
       .catch(error => {
-        console.error('카카오 토큰 요청 오류:', error); 
+        console.error('백엔드 요청 오류:', error); 
       });
     } else {
-      console.error('Code 값이 존재하지 않습니다.');
+      console.error('Token 값이 존재하지 않습니다.');
     }
-  }, [navigate, API_URL]);
+  }, [navigate, API_URL, setToken]);
 
   return (
     <div className="App">
