@@ -55,6 +55,7 @@
 
 #S1 option,
 #S2 option {
+  font-family: 'NeoDunggeunmo';
   text-align: center;
   padding: 40%;
 }
@@ -84,7 +85,9 @@
   top: 50%;
   width: 100%;
 }
-
+textarea{
+  font-family: 'NeoDunggeunmo';
+}
 .make .cukemonFeature .textBack {
   width: 70%;
   max-width: 650px;

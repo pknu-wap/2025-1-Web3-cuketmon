@@ -36,11 +36,15 @@
 }
 
 .historyBoard th {
+  font-family: 'NeoDunggeunmo';
+
   background-color: white;
   padding: 14.8px;
 }
 
 .historyBoard td {
+  font-family: 'NeoDunggeunmo';
+
   background-color: white;
   text-align: center;
   padding: 10px;
