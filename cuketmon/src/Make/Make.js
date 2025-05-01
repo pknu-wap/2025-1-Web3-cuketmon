@@ -31,8 +31,13 @@ function Make() {
   }, [setToken]);
 
   const handleSubmit = async () => {
-    if (!(type1 || type2) || !description.trim()) {
-      alert("타입을 하나 이상 선택하고, 모든 항목을 입력해야 합니다.");
+    if (!type1 && !type2) {
+      alert("타입을 하나 이상 선택해야 합니다.");
+      return;
+    }
+  
+    if (!description.trim()) {
+      alert("특징을 입력해야 합니다.");
       return;
     }
 
@@ -57,7 +62,7 @@ function Make() {
         const data = await response.json(); 
         const monsterId = data.monsterId;
         localStorage.setItem('monsterId', monsterId);
-        navigate("/MakeResult", { state: { monsterId } });
+        navigate(`/MakeResult?token=${tokenFromURL}`, { state: { monsterId } });
       } else {
         alert("데이터 전송에 실패했습니다.");
       }
