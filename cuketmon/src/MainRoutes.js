@@ -1,6 +1,5 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
-import App from './App';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import Make from './Make/Make';
 import Login from './Login/Login';
 import Battle from './Battle/Battle';
@@ -12,9 +11,9 @@ import NamePage from './NamePage/NamePage';
 function MainRoutes() {
   return (
     <Routes>
-      <Route path="/" element={<App />} />  
-      <Route path="/make" element={<Make />} /> 
+      <Route path="/" element={<Navigate to="/login" replace />} />
       <Route path="/login" element={<Login />} /> 
+      <Route path="/make" element={<Make />} /> 
       <Route path="/battle" element={<Battle />} />
       <Route path="/ranking" element={<Ranking />} />
       <Route path="/mypage" element={<MyPage />} />
