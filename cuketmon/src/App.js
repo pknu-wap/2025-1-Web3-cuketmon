@@ -1,53 +1,13 @@
-import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';  
-import './App.css';
-import { useAuth } from './AuthContext';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import Login from './Login/Login';
 
 function App() {
-  const navigate = useNavigate();
-  const API_URL = process.env.REACT_APP_API_URL;
-  const { setToken } = useAuth(); 
-
-  const handleLogin = () => {
-    window.location.href = `${API_URL}/oauth2/authorization/kakao`;
-  };
-  useEffect(() => {
-    const queryParams = new URLSearchParams(window.location.search);
-    const token = queryParams.get('token'); 
-    console.log(token)
-
-    if (token) {
-      localStorage.setItem('accessToken', token); 
-
-      fetch(`${API_URL}/trainer/login`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`,  
-        },
-        body: JSON.stringify({ token }),  
-      })
-      .then(response => response.json())
-      .then(data => {
-        console.log('백엔드 응답:', data);  
-        navigate('/make');  // 로그인 후 /make 페이지로 리다이렉트
-      })
-      .catch(error => {
-        console.error('백엔드 요청 오류:', error); 
-      });
-    } else {
-      console.error('Token 값이 존재하지 않습니다.');
-    }
-  }, [navigate, API_URL, setToken]);
-
   return (
-    <div className="App">
-      <img src='/LoginPage/logo.png' id='webLogo' alt="웹 로고" />
-      <div onClick={handleLogin} className="buttonContainer" display='None'> 
-        <span className="buttonText">카카오 로그인으로 시작하기</span>
-        <img src='/button.png' alt="카카오 로그인 버튼" className="buttonImage" />
-      </div>
-    </div>
+      <Routes>
+        <Route path="/" element={<Navigate to="/login" replace />} />
+        <Route path="/login" element={<Login />} />
+      </Routes>
   );
 }
 
