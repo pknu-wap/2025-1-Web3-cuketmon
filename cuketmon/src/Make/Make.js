@@ -54,10 +54,10 @@ function Make() {
       });
     
       if (response.ok) {
-        const data = await response.json();
-        const monsterId = data; 
-        localStorage.setItem('monsterId', monsterId.toString())
-        navigate("/MakeResult",{ state: { monsterId } });
+        const data = await response.json(); 
+        const monsterId = data.monsterId;
+        localStorage.setItem('monsterId', monsterId);
+        navigate("/MakeResult", { state: { monsterId } });
       } else {
         alert("데이터 전송에 실패했습니다.");
       }
