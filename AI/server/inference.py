@@ -34,5 +34,3 @@ def save_image(image: Image.Image, monster_id: int, monster, db: Session):
 
     encoded_string = base64.b64encode(buffered.read()).decode('utf-8')
     monster.image = encoded_string
-
-    db.commit()
