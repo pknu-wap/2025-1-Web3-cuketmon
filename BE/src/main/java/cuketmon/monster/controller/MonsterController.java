@@ -34,7 +34,7 @@ public class MonsterController {
             @Validated @RequestBody GenerateApiRequestBody requestBody) {
         System.out.println("generate 진입");
         Integer monsterId = monsterService.generate(requestBody);
-        return ResponseEntity.ok(Map.of("monsterId", monsterId));  // 👈 프론트 구조에 맞춰 JSON 객체 반환
+        return ResponseEntity.ok(Map.of("monsterId", monsterId));
     }
 
     // 커켓몬 이름 지정
