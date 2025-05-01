@@ -1,5 +1,7 @@
 package cuketmon;
 
+import static org.springframework.security.config.Customizer.withDefaults;
+
 import cuketmon.oauth.service.CustomOAuth2UserService;
 import cuketmon.oauth.service.JwtAuthenticationFilter;
 import cuketmon.oauth.service.OAuth2SuccessHandler;
@@ -28,7 +30,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .cors(cors -> cors.configurationSource(corsConfigurationSource())) // CORS 활성화
+                .cors(withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/login", "/oauth/**", "/").permitAll()
