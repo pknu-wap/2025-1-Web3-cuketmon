@@ -46,13 +46,14 @@ function Make() {
       type2,
       description
     };
+    
 
     try {
       const response = await fetch(`${API_URL}/monster/generate`, {
         method: "POST",
         headers: {
-    "Content-Type": "application/json; charset=utf-8",
-    "Authorization": `Bearer ${tokenFromURL}`
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${tokenFromURL}`
         },
         body: JSON.stringify(requestData)
       });
@@ -72,9 +73,14 @@ function Make() {
     }
   };
 
+  // const types = [
+  //   "불꽃", "물", "풀", "전기", "에스퍼", "얼음", "드래곤", "악", "페어리",
+  //   "격투", "비행", "고스트", "땅", "독", "바위", "강철", "벌레", "노말",
+  // ];
   const types = [
-    "불꽃", "물", "풀", "전기", "에스퍼", "얼음", "드래곤", "악", "페어리",
-    "격투", "비행", "고스트", "땅", "독", "바위", "강철", "벌레", "노말",
+    "normal", "fire", "water", "electric", "grass", "ice",
+    "fighting", "poison", "ground", "flying", "psychic", "bug",
+    "rock", "ghost", "dragon", "dark", "steel", "fairy"
   ];
 
   return (
@@ -91,9 +97,6 @@ function Make() {
             <option key={type} value={type}>{type}</option>
           ))}
         </select>
-
-
-
         <br />
 
         <select id="S2" value={type2} onChange={(e) => setType2(e.target.value)}>
