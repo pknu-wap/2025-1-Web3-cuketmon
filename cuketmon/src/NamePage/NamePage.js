@@ -57,7 +57,7 @@ function NamePage() {
   };
 
   const handleGoTOMakePage = async()=>{
-    navigate(`/make?token${token}`)
+    navigate(`/make?token=${token}`)
   }
 
   return (
@@ -85,7 +85,7 @@ function NamePage() {
         </div>
 
         <div className="choiceButtons">
-          <img src="/button.png" id="remake" navigate='/mypage?token=${token}' onClick={handleGoTOMakePage}/>
+          <img src="/button.png" id="remake"  onClick={handleGoTOMakePage}/>
           <img src="/button.png" id="bringToMypage" onClick={handleGoToMypage} />
           <span id="buttonText1">재부화</span>
           <span id="buttonText2">데려가기</span>
