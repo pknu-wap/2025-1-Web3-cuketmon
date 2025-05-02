@@ -35,7 +35,7 @@ function MakeResult() {
 
   const handleTextClick = () => {
     const token = localStorage.getItem('jwt');
-    navigate(`/makepage?token=${token}`);
+    navigate(`/make?token=${token}`);
     if (!token) {
       alert("토큰이 없습니다.");
       return;
