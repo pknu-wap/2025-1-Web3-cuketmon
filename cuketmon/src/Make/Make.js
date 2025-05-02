@@ -73,15 +73,11 @@ function Make() {
     }
   };
 
-  // const types = [
-  //   "불꽃", "물", "풀", "전기", "에스퍼", "얼음", "드래곤", "악", "페어리",
-  //   "격투", "비행", "고스트", "땅", "독", "바위", "강철", "벌레", "노말",
-  // ];
   const types = [
-    "normal", "fire", "water", "electric", "grass", "ice",
-    "fighting", "poison", "ground", "flying", "psychic", "bug",
-    "rock", "ghost", "dragon", "dark", "steel", "fairy"
+    "불꽃", "풀", "전기", "에스퍼", "얼음", "드래곤", "악", "페어리",
+     "격투", "비행", "고스트", "땅", "독", "바위", "강철", "벌레", "노말",
   ];
+
 
   return (
     <div className="makeBackGround">
