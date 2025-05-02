@@ -3,15 +3,19 @@
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  bottom: 0;
   width: 100%;
   height: 100%;
-  text-align: center;
+
   animation: blinkEffect 1s ease-in-out 2;
+  margin-bottom: 10%;
 }
 
 .resultPage #egg {
+  position: relative;
   width: 20%;
   padding-top: 25%;
+  left: 40%;
 }
 
 .chatBox {
