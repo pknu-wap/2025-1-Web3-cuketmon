@@ -46,14 +46,13 @@ function Make() {
       type2,
       description
     };
-    
 
     try {
       const response = await fetch(`${API_URL}/monster/generate`, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${tokenFromURL}`
+    "Content-Type": "application/json; charset=utf-8",
+    "Authorization": `Bearer ${tokenFromURL}`
         },
         body: JSON.stringify(requestData)
       });
@@ -92,6 +91,9 @@ function Make() {
             <option key={type} value={type}>{type}</option>
           ))}
         </select>
+
+
+
         <br />
 
         <select id="S2" value={type2} onChange={(e) => setType2(e.target.value)}>
