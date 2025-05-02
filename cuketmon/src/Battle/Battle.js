@@ -20,80 +20,87 @@ function Battle() {
   const [isEnemyHit, setIsEnemyHit] = useState(false);
   const [myTurn, setMyTurn] = useState(false);
   const [ws, setWs] = useState(null);
+  const [isBattleEnded, setIsBattleEnded] = useState(false);
+  const [winner, setWinner] = useState(null);
 
   const animationMap = {
     fire: {
-      high: ['/BattlePage/animation/fire/highDamage1.png'],
-      normal: ['/BattlePage/animation/fire/normalDamage1.png'],
+      high: ['/BattlePage/Animation/Fire/highDamage1.png'],
+      normal: ['/BattlePage/Animation/Fire/normalDamage1.png'],
     },
     water: {
-      high: ['/BattlePage/animation/water/highDamage1.png'],
-      normal: ['/BattlePage/animation/water/normalDamage1.png'],
+      high: ['/BattlePage/Animation/Water/highDamage1.png'],
+      normal: ['/BattlePage/Animation/Water/normalDamage1.png'],
     },
     normal: {
-      high: ['/BattlePage/animation/normal/highDamage1.png'],
-      normal: ['/BattlePage/animation/normal/normalDamage1.png'],
+      high: ['/BattlePage/Animation/Normal/highDamage1.png'],
+      normal: ['/BattlePage/Animation/Normal/normalDamage1.png'],
     },
     grass: {
-      high: ['/BattlePage/animation/grass/highDamage1.png'],
-      normal: ['/BattlePage/animation/grass/normalDamage1.png'],
+      high: ['/BattlePage/Animation/Grass/highDamage1.png'],
+      normal: ['/BattlePage/Animation/Grass/normalDamage1.png'],
     },
     electric: {
-      high: ['/BattlePage/animation/electric/highDamage1.png'],
-      normal: ['/BattlePage/animation/electric/normalDamage1.png'],
+      high: ['/BattlePage/Animation/Electric/highDamage1.png'],
+      normal: ['/BattlePage/Animation/Electric/normalDamage1.png'],
     },
     psychic: {
-      high: ['/BattlePage/animation/psychic/highDamage1.png'],
-      normal: ['/BattlePage/animation/psychic/normalDamage1.png'],
+      high: ['/BattlePage/Animation/Psychic/highDamage1.png'],
+      normal: ['/BattlePage/Animation/Psychic/normalDamage1.png'],
     },
     rock: {
-      high: ['/BattlePage/animation/rock/highDamage1.png'],
-      normal: ['/BattlePage/animation/rock/normalDamage1.png'],
+      high: ['/BattlePage/Animation/Rock/highDamage1.png'],
+      normal: ['/BattlePage/Animation/Rock/normalDamage1.png'],
     },
     iron: {
-      high: ['/BattlePage/animation/iron/highDamage1.png'],
-      normal: ['/BattlePage/animation/iron/normalDamage1.png'],
+      high: ['/BattlePage/Animation/Iron/highDamage1.png'],
+      normal: ['/BattlePage/Animation/Iron/normalDamage1.png'],
     },
     ice: {
-      high: ['/BattlePage/animation/ice/highDamage1.png'],
-      normal: ['/BattlePage/animation/ice/normalDamage1.png'],
+      high: ['/BattlePage/Animation/Ice/highDamage1.png'],
+      normal: ['/BattlePage/Animation/Ice/normalDamage1.png'],
     },
     dragon: {
-      high: ['/BattlePage/animation/dragon/highDamage1.png'],
-      normal: ['/BattlePage/animation/dragon/normalDamage1.png'],
+      high: ['/BattlePage/Animation/Dragon/highDamage1.png'],
+      normal: ['/BattlePage/Animation/Dragon/normalDamage1.png'],
     },
     evil: {
-      high: ['/BattlePage/animation/evil/highDamage1.png'],
-      normal: ['/BattlePage/animation/evil/normalDamage1.png'],
+      high: ['/BattlePage/Animation/Evil/highDamage1.png'],
+      normal: ['/BattlePage/Animation/Evil/normalDamage1.png'],
     },
     fairy: {
-      high: ['/BattlePage/animation/fairy/highDamage1.png'],
-      normal: ['/BattlePage/animation/fairy/normalDamage1.png'],
+      high: ['/BattlePage/Animation/Fairy/highDamage1.png'],
+      normal: ['/BattlePage/Animation/Fairy/normalDamage1.png'],
     },
     poison: {
-      high: ['/BattlePage/animation/poison/highDamage1.png'],
-      normal: ['/BattlePage/animation/poison/normalDamage1.png'],
+      high: ['/BattlePage/Animation/Poison/highDamage1.png'],
+      normal: ['/BattlePage/Animation/Poison/normalDamage1.png'],
     },
     bug: {
-      high: ['/BattlePage/animation/bug/highDamage1.png'],
-      normal: ['/BattlePage/animation/bug/normalDamage1.png'],
+      high: ['/BattlePage/Animation/Bug/highDamage1.png'],
+      normal: ['/BattlePage/Animation/Bug/normalDamage1.png'],
     },
     ground: {
-      high: ['/BattlePage/animation/ground/highDamage1.png'],
-      normal: ['/BattlePage/animation/ground/normalDamage1.png'],
+      high: ['/BattlePage/Animation/Ground/highDamage1.png'],
+      normal: ['/BattlePage/Animation/Ground/normalDamage1.png'],
     },
     fly: {
-      high: ['/BattlePage/animation/fly/highDamage1.png'],
-      normal: ['/BattlePage/animation/fly/normalDamage1.png'],
+      high: ['/BattlePage/Animation/Fly/highDamage1.png'],
+      normal: ['/BattlePage/Animation/Fly/normalDamage1.png'],
     },
     fighter: {
-      high: ['/BattlePage/animation/fighter/highDamage1.png'],
-      normal: ['/BattlePage/animation/fighter/normalDamage1.png'],
+      high: ['/BattlePage/Animation/Fighter/highDamage1.png'],
+      normal: ['/BattlePage/Animation/Fighter/normalDamage1.png'],
     },
     ghost: {
-      high: ['/BattlePage/animation/ghost/highDamage1.png'],
-      normal: ['/BattlePage/animation/ghost/normalDamage1.png'],
+      high: ['/BattlePage/Animation/Ghost/highDamage1.png'],
+      normal: ['/BattlePage/Animation/Ghost/normalDamage1.png'],
     },
+  };
+
+  const getHpColor = (hp) => {
+    const hue = hp * 1.2; // 120 (초록)에서 0 (빨강)으로 점진적 변화
+    return `hsl(${hue}, 100%, 50%)`;
   };
 
   useEffect(() => {
@@ -155,8 +162,14 @@ function Battle() {
         setBattleMessage('');
         setSelectedTech(null);
         setCurrentAnimation(null);
-        setMyTurn(false);
-        setEnemyCuketmonHP((prev) => Math.max(prev - damage, 0));
+        /*setMyTurn(false);*/
+        const newEnemyHP = Math.max(enemyCuketmonHP - damage, 0);
+        setEnemyCuketmonHP(newEnemyHP);
+
+        if (newEnemyHP <= 0) {
+          setIsBattleEnded(true);
+          setWinner('player');
+        }
 
         setTimeout(() => {
           setIsEnemyHit(false);
@@ -173,6 +186,15 @@ function Battle() {
       </div>
     );
   }
+  
+  if (isBattleEnded) {
+    return (
+      <div className="resultScreen">
+        <h1>{winner === 'player' ? '승리!' : '패배...'}</h1>
+        <button onClick={() => window.location.reload()}>아이겼다</button>
+      </div>
+    );
+  }
 
   return (
     <div className="Battle">
@@ -180,12 +202,13 @@ function Battle() {
         <div className="battleContainer">
           <div className="mySection">
             <div className="hpBackground">
-              <img src="/BattlePage/hpBg.png" className="myHpBackground" alt="체력바배경" />
+              <p>커켓몬1</p>
               <img src="/BattlePage/hpBar.png" className="myHpImage" alt="체력바" />
               <div className="myHpBar">
-              <div className="myHpFill" style={{ width: `${myCuketmonHP}%` }}></div>
+              <div className="myHpFill" style={{ width: `${myCuketmonHP}%`, backgroundcolor: getHpColor(myCuketmonHP) }}></div>
             </div>
             </div>
+            
             
             <div className="cuketmon">
               <img
@@ -199,14 +222,13 @@ function Battle() {
 
           <div className="enemySection">
             <div className="hpBackground">
-              <img src="/BattlePage/hpBg.png" className="enemyHpBackground" alt="체력바배경" />
+              <p>커켓몬2</p>
               <img src="/BattlePage/hpBar.png" className="enemyHpImage" alt="체력바" />
               <div className="enemyHpBar">
-              <div className="enemyHpFill" style={{ width: `${enemyCuketmonHP}%` }}>
-              
-              </div>
+              <div className="enemyHpFill" style={{ width: `${enemyCuketmonHP}%`, backgroundcolor: getHpColor(enemyCuketmonHP) }}></div>
             </div>
             </div>
+            
             
             <div className="cuketmon">
               <img
