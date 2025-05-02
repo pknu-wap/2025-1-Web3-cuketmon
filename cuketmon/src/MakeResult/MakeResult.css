@@ -52,5 +52,5 @@
   }
 }
 .blinkEffect {
-  animation: blinkEffect 1s ease-in-out 2;
+  animation: blinkEffect 2s ease-in-out 4;
 }
