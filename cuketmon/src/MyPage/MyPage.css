@@ -35,20 +35,12 @@ span {
   font-size: 20px;
 }
 
-#cuketmonImage {
-  position: absolute;
-  margin-left: 44%;
-  width: 140px;
-  height: 140px;
-  top: 40%;
-}
-
-.cuketmonImage img {
+.cukemonImg img {
   position: absolute;
   transition: transform 1s ease-in-out;
-  width: 15%;
-  left: 40%;
-  top: 35%;
+  width: 20%;
+  left: 40vw;
+  top: 24vh;
 }
 
 .cucketmonProfile {
