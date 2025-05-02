@@ -4,13 +4,13 @@ import './MyPage.css';
 import { useAuth } from '../AuthContext';
 
 function MyPage() {
-  const [toyCount, setToyCount] = useState();
-  const [feedCount, setFeedCount] = useState();
+  const [toyCount, setToyCount] = useState(0);
+  const [feedCount, setFeedCount] = useState(0);
   const [isFed, setIsFed] = useState(false);
-  const [isPlayed, setIsPlayed] = useState(false);
+  const [isPlayed, setIsPlayed] = useState(false); 
   const [loading, setLoading] = useState(true);
   const [cukemonData, setCukemonData] = useState(null);
-  const [trainerName, setTrainerName] = useState(null);
+  const [trainerName, setTrainerName] = useState(null); 
   const [monsterId, setMonsterId] = useState(2);
   const pageRef = useRef(null);
 
@@ -23,6 +23,7 @@ function MyPage() {
     try {
       setLoading(true);
 
+      // 장난감 체크
       const toyResponse = await fetch(`${API_URL}/trainer/toys`, {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -31,6 +32,7 @@ function MyPage() {
       const toyData = await toyResponse.json();
       setToyCount(Number(toyData));
 
+      // 먹이 체크
       const feedResponse = await fetch(`${API_URL}/trainer/feeds`, {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -39,13 +41,25 @@ function MyPage() {
       const feedData = await feedResponse.json();
       setFeedCount(Number(feedData));
 
+      // 커켓몬 데이터 받아오기
       const cukemonResponse = await fetch(`${API_URL}/monster/${monsterId}/info`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
       const cukemonData = await cukemonResponse.json();
-      setCukemonData(cukemonData);
+      const cukemonImg = `data:image/png;base64,${cukemonData.image || ''}`;
+      const cukemonAffinity = parseInt(cukemonData?.affinity) || 0;
+      const cukemonId = parseInt(cukemonData?.id) || 0;
+      const cukemonName = String(cukemonData?.name || '이름 없음');
+
+      setCukemonData({
+        ...cukemonData,
+        img: cukemonImg,
+        affinity: cukemonAffinity,
+        id: cukemonId,
+        name: cukemonName,
+      });
     } catch (error) {
       console.error('데이터 로드 실패', error);
     } finally {
@@ -55,7 +69,7 @@ function MyPage() {
 
   useEffect(() => {
     fetchData();
-  }, [monsterId, token]);
+  }, [monsterId]);
 
   useEffect(() => {
     const handleKeyPress = (event) => {
@@ -69,6 +83,7 @@ function MyPage() {
     return () => window.removeEventListener('keydown', handleKeyPress);
   }, []);
 
+  // 먹이주기
   const feedCukemon = async () => {
     if (!monsterId || !trainerName) return;
 
@@ -103,6 +118,7 @@ function MyPage() {
     await feedCukemon();
   };
 
+  // 놀아주기 구현
   const playCukemon = async () => {
     if (!monsterId || !trainerName) return;
 
@@ -137,6 +153,7 @@ function MyPage() {
     await playCukemon();
   };
 
+  // 커켓몬 방출
   const releaseCukemon = async () => {
     if (!monsterId || !token) return;
 
@@ -165,7 +182,7 @@ function MyPage() {
   }, []);
 
   return (
-    <div className='myPage' ref={pageRef} tabIndex={0}>
+    <div className='myPage' ref={pageRef} tabIndex={cukemonData?.id || 0}>
       <div className='item'>
         {loading ? (
           <span>로딩 중...</span>
@@ -179,15 +196,15 @@ function MyPage() {
         )}
       </div>
 
-      <div className='cuketmonImage'>
-        <img src='/Menubar/egg.png' alt="Cuketmon" />
+      <div className='cukemonImage'>
+        <img src={cukemonData?.img || '/default-image.png'} alt="Cukemon" />
       </div>
 
       <div className='cucketmonProfile'>
         {loading ? <p>로딩 중...</p> : <p>{cukemonData?.name || "이름 없음"}</p>}
         <div id='relevanceCount'>
           <img src='/MyPage/relevance.png' alt="친밀도 아이콘" />
-          <span>{cukemonData?.affinity ?? 0}</span>
+          <span>{cukemonData?.affinity || "정보 없음"}</span>
         </div>
       </div>
 
