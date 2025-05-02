@@ -24,8 +24,8 @@ function MakeResult() {
           }
         });
         const data = await response.json();
-        console.log(data.Image);
-        setCukemonImage(`data:image/png;base64,${data.Image}`);
+        console.log(data.image);
+        setCukemonImage(`data:image/png;base64,${data.image}`);
         setMentText("처음보는 포켓몬이 나타났다!");
       } catch (error) {
         console.error("이미지 로드 실패:", error);
