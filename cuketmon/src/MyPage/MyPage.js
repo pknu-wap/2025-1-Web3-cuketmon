@@ -51,14 +51,13 @@ function MyPage() {
       const cukemonImg = `data:image/png;base64,${cukemonData.image || ''}`;
       const cukemonAffinity = parseInt(cukemonData?.affinity) || 0;
       const cukemonId = parseInt(cukemonData?.id) || 0;
-      const cukemonName = String(cukemonData?.name || '이름 없음');
+
+
 
       setCukemonData({
-        ...cukemonData,
         img: cukemonImg,
         affinity: cukemonAffinity,
-        id: cukemonId,
-        name: cukemonName,
+        id: cukemonId, 
       });
     } catch (error) {
       console.error('데이터 로드 실패', error);
@@ -182,7 +181,7 @@ function MyPage() {
   }, []);
 
   return (
-    <div className='myPage' ref={pageRef} tabIndex={cukemonData?.id || 0}>
+    <div className='myPage' ref={pageRef} tabIndex={0}>
       <div className='item'>
         {loading ? (
           <span>로딩 중...</span>
@@ -196,8 +195,8 @@ function MyPage() {
         )}
       </div>
 
-      <div className='cukemonImage'>
-        <img src={cukemonData?.img || '/default-image.png'} alt="Cukemon" />
+      <div className='cukemonImg'>
+        <img src={cukemonData?.img || '/menubar/egg.png'} alt="Cukemon" />
       </div>
 
       <div className='cucketmonProfile'>
