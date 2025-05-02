@@ -57,7 +57,7 @@ public class SecurityConfig {
                 "https://frolicking-gnome-f1b1ad.netlify.app",
                 "https://damaged-jacqueline-kangrae-jo-8fa06d25.koyeb.app"
         ));
-        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
         config.setAllowedHeaders(List.of("*"));
         config.setAllowCredentials(true);
 
