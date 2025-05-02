@@ -3,8 +3,9 @@ import { useLocation, useNavigate } from "react-router-dom";
 import "./MakeResult.css";
 
 function MakeResult() {
-  const [pokemonImage, setCukemonImage] = useState("/MakeResultPage/movingEgg.gif");
+  const [cukemonImage, setCukemonImage] = useState("/MakeResultPage/movingEgg.gif");
   const [mentText, setMentText] = useState("어라...?");
+  const [base64Image, setBase64Image] = useState(""); 
   const eggRef = useRef(null);
   const navigate = useNavigate();
   const location = useLocation();
@@ -29,8 +30,16 @@ function MakeResult() {
           console.log(data.image);
 
           if (data.image) {
-            setCukemonImage(`data:image/png;base64,${data.image}`);
+            const fullImage = `data:image/png;base64,${data.image}`;
+            setCukemonImage(fullImage);
+            setBase64Image(fullImage);
             setMentText("처음보는 포켓몬이 나타났다!");
+            navigate(`/NamePage?token=${token}`, {
+              state: {
+                monsterId: monsterId,
+                image: fullImage,
+              },
+            });
           } else {
             throw new Error("이미지 없음");
           }
@@ -39,27 +48,33 @@ function MakeResult() {
           setCukemonImage("");
           setMentText("커켓몬이 도망쳤다.(다시 시도하려면 클릭)");
         }
-      }, 15000); 
+      }, 10000);
     };
 
     delayAndFetch();
-  }, [monsterId, API_URL, token]);
+  }, [monsterId, API_URL, token, navigate]);
 
   const handleTextClick = () => {
     if (!token) {
       alert("토큰이 없습니다.");
       return;
     }
-    navigate(`/make?token=${token}`);
+
+    navigate(`/NamePage?token=${token}`, {
+      state: {
+        monsterId: monsterId,
+        image: base64Image,
+      },
+    });
   };
 
   return (
     <div className="resultPage">
-      {pokemonImage && (
+      {cukemonImage && (
         <img
           id="egg"
           ref={eggRef}
-          src={pokemonImage}
+          src={cukemonImage}
           alt="cukemonImage"
           className="blinkEffect"
         />
