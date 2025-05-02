@@ -33,7 +33,6 @@ html, body {
   width: 100%;
   height: 60%;
   padding: 2vw;
-  gap: 5vw;
   position: relative;
 }
 
@@ -72,15 +71,14 @@ html, body {
 }
 
 .myHpBar, .enemyHpBar {
-  width: 27%;
-  height: 18px;
+  top: 50%;
+  left: 31.5%;
+  width: 40%;
+  height: 15px;
   position: absolute;
-  top: 14.5%;
-  left: 42%;
 }
 
 .myHpFill, .enemyHpFill {
-  width: 75%;
   height: 100%;
   background-color: hwb(141 24% 0%);
   border: 3.7px solid #4c6458;
@@ -88,20 +86,30 @@ html, body {
   border-radius: 9px;
 }
 
-.myHpBackground, .enemyHpBackground {
+.hpBackground{
   position: relative;
-  right: 30%;
-  width: 170%;
-  height: auto;
+  top: 0%;
+  width: 90%;
+  height: 90%;
+  background-image: url('/public/BattlePage/HPbg.png');
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.hpBackground > p {
+  position: absolute;
+  top: 10%;
+  left: 25%;
+  font-size: 1.5vw;
 }
 
 .myHpImage, .enemyHpImage {
   position: absolute;
-  top: 0%;
-  right:33%;
-  width: 45%;
-  height: auto;
-  z-index: 0;
+  top: 50%;
+  left: 25%;
+  width: 50px;
+  
 }
 
 .battleAnimationOverlay {
@@ -193,12 +201,12 @@ html, body {
 
 .ppInfo {
   position: absolute;
-  right: 12%; 
+  right: 8%; 
   top: 29%;
   color: black;
   padding: 0.5% 1%;
   border-radius: 5px;
-  font-size: 2.5rem;
+  font-size: 3vw;
 }
 
 .turnInfo {
@@ -212,9 +220,9 @@ html, body {
 
 .cuketmonType {
   position: absolute;
-  right: 10%;
+  right: 5%;
   bottom: 28%;
-  font-size: 2.5rem;
+  font-size: 3vw;
 }
 
 .battleMessage {
@@ -246,6 +254,20 @@ html, body {
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}
+
+.resultScreen {
+  background-image: url('/public/BattlePage/background.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  color: black;
+  font-size: 2rem;
 }
 
 
