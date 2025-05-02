@@ -7,31 +7,29 @@ function MakeResult() {
   const [mentText, setMentText] = useState("어라...?");
   const eggRef = useRef(null);
   const navigate = useNavigate(); 
-  
-  const [monsterId, setMonsterId] = useState(null);
+  const location = useLocation();
+  const { monsterId } = location.state || {};
   const API_URL = process.env.REACT_APP_API_URL;
-  const location = useLocation(); 
-  useEffect(() => {
-    const monsterIdFromState = location.state?.monsterId;
-    if (monsterIdFromState) {
-      setMonsterId(monsterIdFromState);
-    }
 
-    if (monsterId) {
-      fetch(`${API_URL}/monster/${monsterId}/info`, { method: "GET" })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log(data.Image)
-          setCukemonImage(`data:image/png;base64,${data.Image}`); 
-          setMentText("처음보는 포켓몬이 나타났다!");
-        })
-        .catch((error) => {
-          console.error("이미지 로드 실패:", error);
-          setCukemonImage("");
-          setMentText("커켓몬이 도망쳤다.(다시 시도하려면 클릭)");
-        });
-    }
-  }, [monsterId, location, API_URL]);
+  useEffect(() => {
+    const fetchPokemonInfo = async () => {
+      if (!monsterId) return;
+  
+      try {
+        const response = await fetch(`${API_URL}/monster/${monsterId}/info`);
+        const data = await response.json();
+        console.log(data.Image);
+        setCukemonImage(`data:image/png;base64,${data.Image}`);
+        setMentText("처음보는 포켓몬이 나타났다!");
+      } catch (error) {
+        console.error("이미지 로드 실패:", error);
+        setCukemonImage("");
+        setMentText("커켓몬이 도망쳤다.(다시 시도하려면 클릭)");
+      }
+    };
+  
+    fetchPokemonInfo();
+  }, [monsterId,API_URL]);
 
   const handleTextClick = () => {
     const token = localStorage.getItem('jwt');
