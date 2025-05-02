@@ -10,13 +10,19 @@ function MakeResult() {
   const location = useLocation();
   const { monsterId } = location.state || {};
   const API_URL = process.env.REACT_APP_API_URL;
+  const token = localStorage.getItem('jwt');
 
   useEffect(() => {
     const fetchPokemonInfo = async () => {
       if (!monsterId) return;
   
       try {
-        const response = await fetch(`${API_URL}/monster/${monsterId}/info`);
+        const response = await fetch(`${API_URL}/monster/${monsterId}/info`, {
+          method: "GET", 
+          headers:{
+             "Authorization": `Bearer ${token}`
+          }
+        });
         const data = await response.json();
         console.log(data.Image);
         setCukemonImage(`data:image/png;base64,${data.Image}`);
@@ -28,11 +34,10 @@ function MakeResult() {
       }
     };
   
-    fetchPokemonInfo();
-  }, [monsterId,API_URL]);
+    fetchPokemonInfo(); 
+  }, [monsterId, API_URL]);
 
   const handleTextClick = () => {
-    const token = localStorage.getItem('jwt');
     navigate(`/make?token=${token}`);
     if (!token) {
       alert("토큰이 없습니다.");
