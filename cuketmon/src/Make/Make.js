@@ -53,6 +53,7 @@ function Make() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          "Authorization": `Bearer ${tokenFromURL}`
         },
         body: JSON.stringify(requestData)
       });
