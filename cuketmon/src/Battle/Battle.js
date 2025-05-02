@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './Battle.css';
+import { useNavigate } from 'react-router-dom';
 
 function Battle() {
   const [myCuketmonHP, setMyCuketmonHP] = useState(100);
@@ -22,6 +23,7 @@ function Battle() {
   const [ws, setWs] = useState(null);
   const [isBattleEnded, setIsBattleEnded] = useState(false);
   const [winner, setWinner] = useState(null);
+  const navigate = useNavigate();
 
   const animationMap = {
     fire: {
@@ -188,10 +190,16 @@ function Battle() {
   }
   
   if (isBattleEnded) {
-    return (
-      <div className="resultScreen">
-        <h1>{winner === 'player' ? '승리!' : '패배...'}</h1>
-        <button onClick={() => window.location.reload()}>아이겼다</button>
+      const winnerImage = winner === 'player' ? cuketmonImages.myCuketmon : cuketmonImages.enemyCuketmon;
+      return (
+        <div className="resultScreen">
+          <h1>{winner === 'player' ? '승리!' : '패배...'}</h1>
+          <img
+            src={winnerImage}
+            className="winnerCuketmonImage"
+            alt="승리자"
+          />
+        <button className="endBattle" onClick={() => navigate('/mypage')}>전투종료</button>
       </div>
     );
   }
@@ -205,7 +213,7 @@ function Battle() {
               <p>커켓몬1</p>
               <img src="/BattlePage/hpBar.png" className="myHpImage" alt="체력바" />
               <div className="myHpBar">
-              <div className="myHpFill" style={{ width: `${myCuketmonHP}%`, backgroundcolor: getHpColor(myCuketmonHP) }}></div>
+              <div className="myHpFill" style={{ width: `${myCuketmonHP}%`, backgroundColor: getHpColor(myCuketmonHP) }}></div>
             </div>
             </div>
             
@@ -225,7 +233,7 @@ function Battle() {
               <p>커켓몬2</p>
               <img src="/BattlePage/hpBar.png" className="enemyHpImage" alt="체력바" />
               <div className="enemyHpBar">
-              <div className="enemyHpFill" style={{ width: `${enemyCuketmonHP}%`, backgroundcolor: getHpColor(enemyCuketmonHP) }}></div>
+              <div className="enemyHpFill" style={{ width: `${enemyCuketmonHP}%`, backgroundColor: getHpColor(enemyCuketmonHP) }}></div>
             </div>
             </div>
             
