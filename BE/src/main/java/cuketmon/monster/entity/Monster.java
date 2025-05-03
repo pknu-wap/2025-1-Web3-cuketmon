@@ -1,6 +1,5 @@
 package cuketmon.monster.entity;
 
-import cuketmon.damageclass.DamageClass;
 import cuketmon.type.Type;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -36,7 +35,6 @@ public class Monster {
     @Column(length = 75)
     private String description;
 
-    // TODO: 최대값, 종족값 늘려주는 등의 행위 논의 필요
     @Column(nullable = false)
     private Integer affinity;
 
@@ -87,10 +85,6 @@ public class Monster {
 
     public void increaseAffinity(int plus) {
         affinity = affinity + plus;
-    }
-
-    public DamageClass getDamageClass() {
-        return (attack >= specialAttack) ? DamageClass.PHYSICAL : DamageClass.SPECIAL;
     }
 
 }
