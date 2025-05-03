@@ -61,7 +61,6 @@ function Make() {
     } catch (error) {
       console.error("에러 발생:", error);
       alert("서버와의 통신 중 오류가 발생했습니다.");
-      navigate("/MakeResult");
     }
   };
 
