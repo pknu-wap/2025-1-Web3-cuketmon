@@ -13,6 +13,8 @@ const TokenInitializer = () => {
     if (token) {
       setToken(token);
       console.log('✅ setToken() 호출 완료');
+      const urlWithoutToken = window.location.href.split('?')[0]; 
+      window.history.replaceState({}, document.title, urlWithoutToken);
     } else {
       console.warn('❌ token이 null입니다.');
     }
