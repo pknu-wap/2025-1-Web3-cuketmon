@@ -4,7 +4,7 @@ span {
 
 .myPage {
   overflow: hidden;
-  background-image: url("/public/MyPage/background.png");
+  background-image: url("/public/MyPage/background.webp");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -38,13 +38,13 @@ span {
 .cukemonImg img {
   position: absolute;
   transition: transform 1s ease-in-out;
-  width: 20%;
+  width: clamp(150px, 20%, 300px);
   left: 40vw;
   top: 24vh;
 }
 
 .cucketmonProfile {
-  background-image: url("/public/MyPage/cukemonProfile.png");
+  background-image: url("/public/MyPage/cukemonProfile.webp");
   background-size: 100% 110%;
   border: 2px solid #bab8b8;
   width: 22%;
@@ -63,38 +63,46 @@ span {
 }
 
 .buttons {
-  position: relative;
-  top: 35%;
-  left: 70%;
+  display: flex;
 }
 
 #feedButton,
 #playButton {
-  width: 11%;
-  margin-bottom: 5%;
+  background: none;
+  background-image: url("/public/button.png");
+  background-size: cover;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  left: 71vw;
+  top: 35vh;
   display: inline-block;
-  margin-right: 3%;
+  width: 11vw;
+  height: 5vw;
+  margin-right: 1.5%;
 }
 
 #feedButton:hover,
 #playButton:hover {
-  content: url("/public/button-hover.png");
+  background-image: url("/public/button-hover.png");
+  background-size: cover;
 }
 
-.buttons #buttonText1 {
+#buttonText1 {
+  position: absolute;
+  top: 54.3%;
+  left: 75.5vw;
+  font-size: 18px;
+  color: white;
+}
+
+#buttonText2 {
   color: white;
   position: absolute;
   pointer-events: none;
-  margin-left: -9%;
-  margin-top: 1.8%;
-}
-
-.buttons #buttonText2 {
-  color: white;
-  position: absolute;
-  pointer-events: none;
-  margin-left: -9%;
-  margin-top: 1.8%;
+  font-size: 18px;
+  top: 54.3%;
+  left: 88vw;
 }
 
 #releaseButton {
@@ -102,7 +110,7 @@ span {
   margin-bottom: 1%;
   margin-left: 1%;
   position: relative;
-  top: 39%;
+  top: 50vh;
 }
 
 #releaseButton:hover {
@@ -158,7 +166,7 @@ span {
   }
 
   .myPage {
-    background-image: url("/public/MyPage/backgroundMobile.png");
+    background-image: url("/public/MyPage/backgroundMobile.webp");
     flex-direction: column;
     justify-content: center;
     padding-top: 0%;
@@ -170,19 +178,17 @@ span {
     margin-bottom: 145.5%;
   }
 
-  .cuketmonImage img {
-    left: 38%;
-    top: 35%;
-    width: 27%;
-    padding: 0;
-    margin: 0;
-
-    border: 1px solid #efc15c;
+  #cuketmonImage {
+    border: 2px solid salmon;
+    position: absolute;
+    top: 41%;
+    width: 35%;
+    left: 34%;
   }
 
   .cucketmonProfile {
     position: absolute;
-    top: 52%;
+    top: 62%;
     left: 34%;
     margin-left: 0;
     width: 35%;
@@ -190,7 +196,7 @@ span {
   }
 
   .cucketmonProfile p {
-    font-size: 9px;
+    font-size: 20px;
   }
 
   .cucketmonProfile img,
@@ -200,31 +206,38 @@ span {
   }
 
   .buttons {
-    position: absolute;
-    top: 66%;
-    left: 28%;
+    width: 100%;
   }
 
-  #feedButton,
   #playButton {
-    width: 30%;
+    position: absolute;
+    height: 50px;
+    width: 120px;
+    top: 72%;
+    left: 20%;
+  }
+  #feedButton {
+    position: absolute;
+    top: 72%;
+    left: 52%;
+    height: 50px;
+    width: 120px;
+  }
+  #buttonText1 {
+    font-size: 12px;
+    left: 33%;
+    top: 74.3%;
   }
 
-  .buttons #buttonText1 {
-    font-size: 10px;
-    left: 22%;
-    top: 16%;
-  }
-
-  .buttons #buttonText2 {
-    font-size: 10px;
-    left: 55%;
-    top: 16%;
+  #buttonText2 {
+    font-size: 12px;
+    left: 65%;
+    top: 74.3%;
   }
 
   #releaseButton {
     position: absolute;
-    top: 80%;
-    width: 10%;
+    top: 85%;
+    width: 12%;
   }
 }
