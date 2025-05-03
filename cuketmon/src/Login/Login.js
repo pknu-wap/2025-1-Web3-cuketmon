@@ -11,30 +11,16 @@ function Login() {
   const handleLogin = () => {
     window.location.href = `${API_URL}/oauth2/authorization/kakao`;
   };
+
   useEffect(() => {
     const queryParams = new URLSearchParams(window.location.search);
     const token = queryParams.get('token'); 
-    console.log(token)
+    console.log('카카오 로그인 후 받은 토큰:', token);
 
     if (token) {
       localStorage.setItem('accessToken', token); 
-
-      fetch(`${API_URL}/oauth2/authorization/kakao`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`,  
-        },
-        body: JSON.stringify({ token }),  
-      })
-      .then(response => response.json())
-      .then(data => {
-        console.log('백엔드 응답:', data);  
-        navigate('/make');
-      })
-      .catch(error => {
-        console.error('백엔드 요청 오류:', error); 
-      });
+      setToken(token); 
+      navigate('/make');
     } else {
       console.error('Token 값이 존재하지 않습니다.');
     }
@@ -42,11 +28,10 @@ function Login() {
 
   return (
     <div className="login">
-        <img src="../LoginPage/logo.webp" id="webLogo" alt="웹 로고" />
-        <button className="kakaoButton" onClick={handleLogin}/>
-        <span id='loginStart'>카카오 로그인으로 시작</span> 
+      <img src="../LoginPage/logo.webp" id="webLogo" alt="웹 로고" />
+      <button className="kakaoButton" onClick={handleLogin} />
+      <span id='loginStart'>카카오 로그인으로 시작</span> 
     </div>
-
   );
 }
 
