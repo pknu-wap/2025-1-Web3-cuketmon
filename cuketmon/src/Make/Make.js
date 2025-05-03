@@ -8,34 +8,27 @@ function Make() {
   const [type1, setType1] = useState("");
   const [type2, setType2] = useState("");
   const [description, setDescription] = useState("");
-  const [tokenFromURL, setTokenFromURL] = useState("");  
   const navigate = useNavigate();
   const { setToken } = useAuth();
   const API_URL = process.env.REACT_APP_API_URL;
-  
+
   useEffect(() => {
-    const searchParams = decodeURIComponent(window.location.search);
-    const params = new URLSearchParams(searchParams);
-    const token = params.get("token");
-
-    console.log(API_URL);
-    console.log("추출된 token:", token); 
-
+    const token = localStorage.getItem("jwt"); 
     if (token) {
-      setTokenFromURL(token);  
-      setToken(token);  
-      localStorage.setItem("jwt", token); 
+      setToken(token);
     } else {
-      console.log("토큰이 없습니다.");
+      console.warn("토큰이 없습니다.");
     }
   }, [setToken]);
 
   const handleSubmit = async () => {
+    const token = localStorage.getItem("jwt"); 
+
     if (!type1 && !type2) {
       alert("타입을 하나 이상 선택해야 합니다.");
       return;
     }
-  
+
     if (!description.trim()) {
       alert("특징을 입력해야 합니다.");
       return;
@@ -46,23 +39,21 @@ function Make() {
       type2,
       description
     };
-    
 
     try {
-      const response = await fetch(`${API_URL}/monster/generate`, {
+      const response = await fetch(`${API_URL}/api/monster/generate`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${tokenFromURL}`
+          "Authorization": `Bearer ${token}`
         },
         body: JSON.stringify(requestData)
       });
-    
+
       if (response.ok) {
-        const data = await response.json(); 
+        const data = await response.json();
         const monsterId = data.monsterId;
         localStorage.setItem('monsterId', monsterId);
-
         navigate("/MakeResult", { state: { monsterId } });
       } else {
         alert("데이터 전송에 실패했습니다.");
@@ -70,14 +61,14 @@ function Make() {
     } catch (error) {
       console.error("에러 발생:", error);
       alert("서버와의 통신 중 오류가 발생했습니다.");
+      navigate("/MakeResult");
     }
   };
 
   const types = [
     "불꽃", "풀", "전기", "에스퍼", "얼음", "드래곤", "악", "페어리",
-     "격투", "비행", "고스트", "땅", "독", "바위", "강철", "벌레", "노말",
+    "격투", "비행", "고스트", "땅", "독", "바위", "강철", "벌레", "노말",
   ];
-
 
   return (
     <div className="makeBackGround">
