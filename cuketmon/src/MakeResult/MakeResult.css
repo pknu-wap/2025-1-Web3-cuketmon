@@ -20,7 +20,6 @@
   background-image: url("/public/MakeResultPage/chatBox.png");
   width: 60%;
   height: 25%;
-
   margin-left: 20%;
   background-size: contain;
   background-position: center;
@@ -53,4 +52,23 @@
 }
 .blinkEffect {
   animation: blinkEffect 2s ease-in-out 4;
+}
+
+/* 반응형 */
+@media (max-width: 767px) {
+  .resultPage #egg {
+    top: 37vh;
+    left: 25vw;
+    width: 50%;
+  }
+
+  .chatBox {
+    position: relative;
+    width: 100vw;
+    top: 30vh;
+    margin-left: 0;
+  }
+  .chatBox #ment {
+    top: 33%;
+  }
 }
