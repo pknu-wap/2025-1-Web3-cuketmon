@@ -7,6 +7,7 @@ import cuketmon.oauth.service.JwtAuthenticationFilter;
 import cuketmon.oauth.service.OAuth2SuccessHandler;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -27,6 +28,9 @@ public class SecurityConfig {
     private final CustomOAuth2UserService customOAuth2UserService;
     private final OAuth2SuccessHandler oAuth2SuccessHandler;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
+
+    @Value("${client.redirect-url}")
+    private String clientUrl;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -54,10 +58,7 @@ public class SecurityConfig {
         config.setAllowedOrigins(List.of(
                 "http://localhost:3000",
                 "http://localhost:8000",
-                "http://ec2-3-34-197-50.ap-northeast-2.compute.amazonaws.com:3000",
-                "http://ec2-3-34-197-50.ap-northeast-2.compute.amazonaws.com:8000",
-                "https://frolicking-gnome-f1b1ad.netlify.app",
-                "https://damaged-jacqueline-kangrae-jo-8fa06d25.koyeb.app"
+                clientUrl
         ));
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
         config.setAllowedHeaders(List.of("*"));
@@ -68,4 +69,5 @@ public class SecurityConfig {
 
         return source;
     }
+
 }
