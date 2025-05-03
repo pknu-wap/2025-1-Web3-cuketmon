@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Validated
 @RestController
-@RequestMapping("/monster")
+@RequestMapping("/api/monster")
 public class MonsterController {
 
     private final MonsterService monsterService;
