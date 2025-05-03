@@ -20,8 +20,8 @@ function Login() {
     if (token) {
       localStorage.setItem('accessToken', token); 
       setToken(token); 
-      navigate('/make', { replace: true });
       window.history.replaceState({}, document.title, "/make");
+      navigate('/make', { replace: true });
     } else {
       console.error('Token 값이 존재하지 않습니다.');
     }
