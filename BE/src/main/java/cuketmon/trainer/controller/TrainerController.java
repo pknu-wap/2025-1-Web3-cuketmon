@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,18 +25,6 @@ public class TrainerController {
     @GetMapping("/ranking")
     public ResponseEntity<List<Trainer>> getTrainerRanking() {
         return ResponseEntity.ok(trainerService.getTop5TrainersByWin());
-    }
-
-    // 남은 장난감의 개수를 확인
-    @GetMapping("/{trainerName}/toys")
-    public Integer getRemainingToys_(@PathVariable String trainerName) {
-        return trainerService.getRemainingToys(trainerName);
-    }
-
-    // 남은 먹이의 개수를 확인
-    @GetMapping("/{trainerName}/feeds")
-    public Integer getRemainingFeeds_(@PathVariable String trainerName) {
-        return trainerService.getRemainingFeeds(trainerName);
     }
 
     // 남은 장난감의 개수를 확인

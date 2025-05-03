@@ -6,6 +6,7 @@ import cuketmon.monster.service.MonsterService;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -61,9 +62,10 @@ public class MonsterController {
 
     // 먹이 주기
     @PostMapping("/{monsterId}/feed")
-    public ResponseEntity<String> feedMonster(@PathVariable Integer monsterId) {
+    public ResponseEntity<String> feedMonster(@AuthenticationPrincipal String trainerName,
+                                              @PathVariable Integer monsterId) {
         try {
-            monsterService.feed(monsterId);
+            monsterService.feed(trainerName, monsterId);
             return ResponseEntity.ok("먹이를 주었습니다.");
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -72,9 +74,10 @@ public class MonsterController {
 
     // 놀아 주기
     @PostMapping("/{monsterId}/play")
-    public ResponseEntity<String> playWithMonster(@PathVariable Integer monsterId) {
+    public ResponseEntity<String> playWithMonster(@AuthenticationPrincipal String trainerName,
+                                                  @PathVariable Integer monsterId) {
         try {
-            monsterService.play(monsterId);
+            monsterService.play(trainerName, monsterId);
             return ResponseEntity.ok("놀아주었습니다.");
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());

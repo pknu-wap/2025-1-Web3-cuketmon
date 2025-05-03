@@ -7,6 +7,7 @@ import cuketmon.monster.dto.GenerateApiRequestBody;
 import cuketmon.monster.dto.MonsterDTO;
 import cuketmon.monster.dto.MonsterDTO.MonsterBattleInfo;
 import cuketmon.monster.dto.MonsterDTO.MonsterInfo;
+import cuketmon.monster.embeddable.Affinity;
 import cuketmon.monster.entity.Monster;
 import cuketmon.monster.repository.MonsterRepository;
 import cuketmon.skill.service.SkillService;
@@ -21,16 +22,12 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class MonsterService {
 
-    private static final String TEST_TRAINER_NAME = "kng";
-
     public static final int MIN_BASE = 60;
     public static final int MAX_BASE = 100;
 
     public static final int MIN_DAMAGE = 10;
     public static final int MID_DAMAGE = 80;
     public static final int MAX_DAMAGE = 500;
-
-    public static final int INIT_AFFINITY = 30;
 
     private static final int FEED_MINUS = 1;
     private static final int TOY_MINUS = 1;
@@ -68,11 +65,12 @@ public class MonsterService {
             2. 백엔드에서 api 만들어서 커켓몬 이미지 지정
         */
 
+        // TODO: 타입이 널일 때 스킬 받아오는 데 문제 생김
         Monster monster = Monster.builder()
                 .name("")
                 .image(null)
                 .description(requestBody.getDescription())
-                .affinity(INIT_AFFINITY)
+                .affinity(new Affinity())
                 .hp(getRandomInRange(MIN_BASE, MAX_BASE))
                 .speed(getRandomInRange(MIN_BASE, MAX_BASE))
                 .attack(attack)
@@ -110,17 +108,17 @@ public class MonsterService {
         monsterRepository.delete(monster);
     }
 
+    // TODO: 스피드도 객체화 하면 좋을 듯
     @Transactional
-    public void feed(Integer monsterId) {
-        // TODO: spring security
-        Trainer trainer = trainerRepository.findById(TEST_TRAINER_NAME)
+    public void feed(String trainerName, Integer monsterId) {
+        Trainer trainer = trainerRepository.findById(trainerName)
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당 트레이너를 찾을 수 없습니다."));
         Monster monster = monsterRepository.findById(monsterId)
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당 커켓몬을 찾을 수 없습니다."));
 
         try {
             trainer.getFeed().decrease(FEED_MINUS);
-            monster.increaseAffinity(AFFINITY_PLUS);
+            monster.increaseSpeed(monster.getAffinity().increase(AFFINITY_PLUS));
             trainerRepository.save(trainer);
             monsterRepository.save(monster);
         } catch (Exception e) {
@@ -129,15 +127,15 @@ public class MonsterService {
     }
 
     @Transactional
-    public void play(Integer monsterId) {
-        Trainer trainer = trainerRepository.findById(TEST_TRAINER_NAME)
+    public void play(String trainerName, Integer monsterId) {
+        Trainer trainer = trainerRepository.findById(trainerName)
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당 트레이너를 찾을 수 없습니다."));
         Monster monster = monsterRepository.findById(monsterId)
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당 커켓몬을 찾을 수 없습니다."));
 
         try {
             trainer.getToy().decrease(TOY_MINUS);
-            monster.increaseAffinity(AFFINITY_PLUS);
+            monster.increaseSpeed(monster.getAffinity().increase(AFFINITY_PLUS));
             trainerRepository.save(trainer);
             monsterRepository.save(monster);
         } catch (Exception e) {
@@ -150,7 +148,11 @@ public class MonsterService {
         Monster monster = monsterRepository.findById(monsterId)
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당 커켓몬을 찾을 수 없습니다."));
 
-        return new MonsterInfo(monster.getId(), monster.getName(), monster.getImage(), monster.getAffinity());
+        return new MonsterInfo(
+                monster.getId(),
+                monster.getName(), monster.getImage(),
+                monster.getAffinity().getCount()
+        );
     }
 
     @Transactional
@@ -159,7 +161,7 @@ public class MonsterService {
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당 커켓몬을 찾을 수 없습니다."));
 
         return new MonsterBattleInfo(
-                monster.getName(), monster.getImage(), monster.getAffinity(),
+                monster.getName(), monster.getImage(), monster.getAffinity().getCount(),
                 monster.getHp(), monster.getSpeed(),
                 monster.getAttack(), monster.getDefence(),
                 monster.getSpecialAttack(), monster.getSpecialDefence(),
