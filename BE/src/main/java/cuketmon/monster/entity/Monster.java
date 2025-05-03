@@ -1,7 +1,11 @@
 package cuketmon.monster.entity;
 
+import cuketmon.monster.embeddable.Affinity;
 import cuketmon.type.Type;
+import jakarta.persistence.AttributeOverride;
+import jakarta.persistence.AttributeOverrides;
 import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -35,8 +39,11 @@ public class Monster {
     @Column(length = 75)
     private String description;
 
-    @Column(nullable = false)
-    private Integer affinity;
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "count", column = @Column(name = "affinity", nullable = false))
+    })
+    private Affinity affinity;
 
     // 종족값 (6개)
     @Column(nullable = false)
@@ -83,8 +90,8 @@ public class Monster {
         this.name = name;
     }
 
-    public void increaseAffinity(int plus) {
-        affinity = affinity + plus;
+    public void increaseSpeed(int amount) {
+        this.speed += amount;
     }
 
 }
