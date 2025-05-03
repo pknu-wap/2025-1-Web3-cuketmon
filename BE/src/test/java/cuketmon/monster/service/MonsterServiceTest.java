@@ -35,7 +35,7 @@ class MonsterServiceTest {
         Trainer trainer = trainerRepository.findById("kng").get();
         int prevFeed = trainer.getFeed().getCount();
 
-        monsterService.feed(1);
+        monsterService.feed("kng", 1);
 
         Trainer updatedTrainer = trainerRepository.findById("kng").get();
         assertEquals(prevFeed - 1, updatedTrainer.getFeed().getCount());
@@ -46,7 +46,7 @@ class MonsterServiceTest {
         Trainer trainer = trainerRepository.findById("kng").get();
         int prevToy = trainer.getToy().getCount();
 
-        monsterService.play(1);
+        monsterService.play("kng", 1);
 
         Trainer updatedTrainer = trainerRepository.findById("kng").get();
         assertEquals(prevToy - 1, updatedTrainer.getToy().getCount());
@@ -57,7 +57,7 @@ class MonsterServiceTest {
         Monster monster = monsterRepository.findById(1).get();
         int prevAffinity = monster.getAffinity();
 
-        monsterService.play(1);
+        monsterService.play("kng", 1);
 
         Monster updatedMonster = monsterRepository.findById(1).get();
         assertEquals(prevAffinity + 1, updatedMonster.getAffinity());

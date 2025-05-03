@@ -21,8 +21,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class MonsterService {
 
-    private static final String TEST_TRAINER_NAME = "kng";
-
     public static final int MIN_BASE = 60;
     public static final int MAX_BASE = 100;
 
@@ -111,9 +109,8 @@ public class MonsterService {
     }
 
     @Transactional
-    public void feed(Integer monsterId) {
-        // TODO: spring security
-        Trainer trainer = trainerRepository.findById(TEST_TRAINER_NAME)
+    public void feed(String trainerName, Integer monsterId) {
+        Trainer trainer = trainerRepository.findById(trainerName)
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당 트레이너를 찾을 수 없습니다."));
         Monster monster = monsterRepository.findById(monsterId)
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당 커켓몬을 찾을 수 없습니다."));
@@ -129,8 +126,8 @@ public class MonsterService {
     }
 
     @Transactional
-    public void play(Integer monsterId) {
-        Trainer trainer = trainerRepository.findById(TEST_TRAINER_NAME)
+    public void play(String trainerName, Integer monsterId) {
+        Trainer trainer = trainerRepository.findById(trainerName)
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당 트레이너를 찾을 수 없습니다."));
         Monster monster = monsterRepository.findById(monsterId)
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당 커켓몬을 찾을 수 없습니다."));
