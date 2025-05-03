@@ -25,23 +25,20 @@ public class SecurityConfig {
     private final OAuth2SuccessHandler oAuth2SuccessHandler;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
-
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
+                .cors(cors -> cors.configurationSource(corsConfigurationSource())) // CORS 활성화
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/login", "oauth/**", "/")
-                        .permitAll()
-                        .anyRequest()
-                        .authenticated()
+                        .requestMatchers("/login", "/oauth/**", "/").permitAll()
+                        .anyRequest().authenticated()
                 )
                 .oauth2Login(oauth2 -> {
                     oauth2
                             .userInfoEndpoint(userInfo -> userInfo.userService(customOAuth2UserService))
                             .successHandler(oAuth2SuccessHandler);
                 })
-                // JWT 필터를 UsernamePasswordAuthenticationFilter 앞에 추가
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
@@ -52,7 +49,9 @@ public class SecurityConfig {
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowedOrigins(List.of(
                 "http://localhost:3000",
-                "https://frolicking-gnome-f1b1ad.netlify.app"
+                "http://localhost:8000",
+                "http://ec2-3-34-197-50.ap-northeast-2.compute.amazonaws.com:3000",
+                "http://ec2-3-34-197-50.ap-northeast-2.compute.amazonaws.com:8000"
         ));
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(List.of("*"));
@@ -63,5 +62,4 @@ public class SecurityConfig {
 
         return source;
     }
-
 }
