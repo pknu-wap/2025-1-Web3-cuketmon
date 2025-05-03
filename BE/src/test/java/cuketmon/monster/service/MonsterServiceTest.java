@@ -55,7 +55,7 @@ class MonsterServiceTest {
     @Test
     void 친밀도가_올바르게_증가되어_DB에_저장되고_조회된다() {
         Monster monster = monsterRepository.findById(1).get();
-        int prevAffinity = monster.getAffinity();
+        int prevAffinity = monster.getAffinity().getCount();
 
         monsterService.play("kng", 1);
 

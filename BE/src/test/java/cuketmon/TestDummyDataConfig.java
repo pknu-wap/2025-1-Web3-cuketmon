@@ -1,5 +1,6 @@
 package cuketmon;
 
+import cuketmon.monster.embeddable.Affinity;
 import cuketmon.monster.entity.Monster;
 import cuketmon.monster.repository.MonsterRepository;
 import cuketmon.trainer.embeddable.Feed;
@@ -29,7 +30,7 @@ public class TestDummyDataConfig {
                 .name("dummy_monster1")
                 .image(null)
                 .description("this is dummy monster1 for test")
-                .affinity(30)
+                .affinity(new Affinity())
                 .hp(89)
                 .speed(100)
                 .attack(83)
@@ -48,7 +49,7 @@ public class TestDummyDataConfig {
                 .name("dummy_monster2")
                 .image(null)
                 .description("this is dummy monster2 for test")
-                .affinity(30)
+                .affinity(new Affinity())
                 .hp(89)
                 .speed(92)
                 .attack(83)
