@@ -1,5 +1,7 @@
 package cuketmon.trainer.controller;
 
+import cuketmon.trainer.dto.TrainerDTO;
+import cuketmon.trainer.entity.Trainer;
 import cuketmon.trainer.service.TrainerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +12,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/trainer")
@@ -29,6 +33,12 @@ public class TrainerController {
         return ResponseEntity.ok("로그인 성공, 사용자 이름: " + name);
     }
 
+    // 랭킹 시스템
+    @GetMapping("/ranking")
+    public ResponseEntity<List<Trainer>> getTrainerRanking() {
+        return ResponseEntity.ok(trainerService.getTop5TrainersByWin());
+    }
+
     // 남은 장난감의 개수를 확인
     @GetMapping("/{trainerName}/toys")
     public Integer getRemainingToys_(@PathVariable String trainerName) {
@@ -40,10 +50,6 @@ public class TrainerController {
     public Integer getRemainingFeeds_(@PathVariable String trainerName) {
         return trainerService.getRemainingFeeds(trainerName);
     }
-
-    /*
-        소셜 로그인 구현에 따른 controller 및 api 변경 예정
-     */
 
     // 남은 장난감의 개수를 확인
     @GetMapping("/toys")

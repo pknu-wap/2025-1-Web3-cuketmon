@@ -8,6 +8,12 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import cuketmon.trainer.dto.TrainerDTO;
+
+
 @Service
 public class TrainerService {
 
@@ -51,4 +57,26 @@ public class TrainerService {
         trainer.addWin();
     }
 
+
+    @Transactional
+    public List<Trainer> getTop5TrainersByWin() {
+        return trainerRepository.findTop5ByOrderByWinDesc();
+    }
+
+    //랭킹 시스템
+    @Transactional
+    public List<TrainerDTO> getTrainerRanking() {
+        List<Trainer> sortedTrainers = trainerRepository.findAllByOrderByWinDesc();
+
+        List<TrainerDTO> rankingList = new ArrayList<>();
+        int rank = 1;
+
+        for (Trainer trainer : sortedTrainers) {
+            rankingList.add(new TrainerDTO(rank, trainer.getName(), trainer.getWin()));
+            rank++;
+        }
+
+        return rankingList;
+    }
 }
+
