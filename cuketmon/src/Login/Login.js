@@ -19,7 +19,7 @@ function Login() {
     if (token) {
       localStorage.setItem('accessToken', token); 
 
-      fetch(`${API_URL}/trainer/login`, {
+      fetch(`${API_URL}/oauth2/authorization/kakao`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -42,10 +42,9 @@ function Login() {
 
   return (
     <div className="login">
-        <img src="../LoginPage/logo.png" id="webLogo" alt="웹 로고" />
-        <button className="kakaoButton" onClick={handleLogin}>
-            카카오 로그인으로 시작하기
-        </button>
+        <img src="../LoginPage/logo.webp" id="webLogo" alt="웹 로고" />
+        <button className="kakaoButton" onClick={handleLogin}/>
+        <span id='loginStart'>카카오 로그인으로 시작</span> 
     </div>
 
   );
