@@ -33,7 +33,7 @@ public class SkillService {
     @Transactional
     public Skill getSkillById(Integer skillId) {
         return skillRepository.findById(skillId)
-                .orElseThrow(() -> new IllegalArgumentException("[Error] 해당 ID의 스킬이 없습니다."));
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당 ID의 스킬이 없습니다."));
     }
 
     // 스킬 분배 로직
@@ -41,10 +41,10 @@ public class SkillService {
     public Integer getSkillId(Type type, DamageClass damageClass, int minDamage, int maxDamage) {
         List<Skill> skills
                 = skillRepository.findAllByTypeAndDamageClassAndPowerBetween(type, damageClass, minDamage, maxDamage)
-                .orElseThrow(() -> new IllegalArgumentException("[Error] 조건을 만족하는 스킬이 없습니다."));
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 조건을 만족하는 스킬이 없습니다."));
 
         if (skills.isEmpty()) {
-            throw new IllegalArgumentException("[Error] 조건을 만족하는 스킬이 없습니다.");
+            throw new IllegalArgumentException("[ERROR] 조건을 만족하는 스킬이 없습니다.");
         }
 
         // 찾은 스킬들 중 랜덤으로 하나 선택
@@ -85,7 +85,7 @@ public class SkillService {
                 saveSkill(skillResponse);
             }
         } catch (Exception e) {
-            System.out.println("[ERROR] " + skillId + "번 스킬 저장 중 오류 발생: " + e.getMessage());
+            System.out.println(e.getMessage());
         }
     }
 

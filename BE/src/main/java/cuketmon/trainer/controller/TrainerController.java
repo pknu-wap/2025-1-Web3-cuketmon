@@ -1,19 +1,15 @@
 package cuketmon.trainer.controller;
 
-import cuketmon.trainer.dto.TrainerDTO;
 import cuketmon.trainer.entity.Trainer;
 import cuketmon.trainer.service.TrainerService;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/trainer")
@@ -24,13 +20,6 @@ public class TrainerController {
     @Autowired
     public TrainerController(TrainerService trainerService) {
         this.trainerService = trainerService;
-    }
-
-    // 임시 로그인 기능
-    @PostMapping("tempLogin")
-    public ResponseEntity<String> login(@RequestParam String name) {
-        trainerService.tempLogin(name);
-        return ResponseEntity.ok("로그인 성공, 사용자 이름: " + name);
     }
 
     // 랭킹 시스템

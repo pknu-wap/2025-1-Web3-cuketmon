@@ -30,7 +30,6 @@ public class Monster {
     @Column(nullable = true)
     private String name;
 
-    // AI에서는 base64로 이미지를 입력할 수 있음
     @Column(nullable = true, columnDefinition = "TEXT")
     private String image;
 

@@ -1,17 +1,13 @@
 package cuketmon.trainer.service;
 
-import cuketmon.trainer.embeddable.Feed;
-import cuketmon.trainer.embeddable.Toy;
+import cuketmon.trainer.dto.TrainerDTO;
 import cuketmon.trainer.entity.Trainer;
 import cuketmon.trainer.repository.TrainerRepository;
 import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.List;
-
-import cuketmon.trainer.dto.TrainerDTO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 
 @Service
@@ -24,15 +20,6 @@ public class TrainerService {
     @Autowired
     public TrainerService(TrainerRepository trainerRepository) {
         this.trainerRepository = trainerRepository;
-    }
-
-    // 임시 로그인 기능임
-    @Transactional
-    public void tempLogin(String name) {
-        if (!trainerRepository.existsById(name)) {
-            Trainer trainer = new Trainer(name, new Toy(), new Feed(), INIT_WIN);
-            trainerRepository.save(trainer);
-        }
     }
 
     @Transactional
