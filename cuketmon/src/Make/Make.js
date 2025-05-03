@@ -62,8 +62,8 @@ function Make() {
         const data = await response.json(); 
         const monsterId = data.monsterId;
         localStorage.setItem('monsterId', monsterId);
-        const token = localStorage.getItem('jwt');
-        navigate(`/MakeResult?token=${token}`, { state: { monsterId } });
+
+        navigate("/MakeResult", { state: { monsterId } });
       } else {
         alert("데이터 전송에 실패했습니다.");
       }
@@ -123,13 +123,8 @@ function Make() {
         </div>
 
         <div className="submitButton">
+          <button id='submit' onClick={handleSubmit} />
           <p>제출하기</p>
-          <img
-            src="/button.png"
-            id="submitButton"
-            alt="제출 버튼"
-            onClick={handleSubmit}
-          />
         </div>
 
         <MenuBar />
