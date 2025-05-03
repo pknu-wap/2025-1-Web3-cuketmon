@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/battle")
+@RequestMapping("/api/battle")
 public class BattleController {
 
     private final BattleService battleService;

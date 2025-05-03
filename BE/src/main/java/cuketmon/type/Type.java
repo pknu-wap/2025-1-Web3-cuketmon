@@ -40,6 +40,8 @@ public enum Type {
             throw new IllegalArgumentException("[ERROR] 입력값이 비어있습니다.");
         }
 
+        System.out.println("[LOG] 입력된 타입 값: \"" + name + "\"");
+
         return Arrays.stream(values())
                 .filter(type -> type.name().equalsIgnoreCase(name) ||
                         type.koreanName.equalsIgnoreCase(name) ||

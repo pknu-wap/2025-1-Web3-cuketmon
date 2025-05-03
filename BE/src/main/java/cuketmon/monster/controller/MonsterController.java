@@ -3,6 +3,7 @@ package cuketmon.monster.controller;
 import cuketmon.monster.dto.GenerateApiRequestBody;
 import cuketmon.monster.dto.NamingDTO;
 import cuketmon.monster.service.MonsterService;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -17,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Validated
 @RestController
-@RequestMapping("/monster")
+@RequestMapping("/api/monster")
 public class MonsterController {
 
     private final MonsterService monsterService;
@@ -29,10 +30,11 @@ public class MonsterController {
 
     // 임시 몬스터 생성 기능
     @PostMapping("/generate")
-    public ResponseEntity<Integer> generateMonster(@Validated @RequestBody GenerateApiRequestBody requestBody) {
+    public ResponseEntity<Map<String, Integer>> generateMonster(
+            @Validated @RequestBody GenerateApiRequestBody requestBody) {
         System.out.println("generate 진입");
         Integer monsterId = monsterService.generate(requestBody);
-        return ResponseEntity.ok(monsterId);
+        return ResponseEntity.ok(Map.of("monsterId", monsterId));
     }
 
     // 커켓몬 이름 지정
