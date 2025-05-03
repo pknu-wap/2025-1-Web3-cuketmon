@@ -11,11 +11,15 @@ function MyPage() {
   const [loading, setLoading] = useState(true);
   const [cukemonData, setCukemonData] = useState(null);
   const [trainerName, setTrainerName] = useState(null); 
-  const [monsterId, setMonsterId] = useState(2);
+  const [monsterId, setMonsterId] = useState();
   const pageRef = useRef(null);
 
   const API_URL = process.env.REACT_APP_API_URL;
   const { token } = useAuth();
+
+  useEffect(() => {
+    localStorage.setItem('monsterId', monsterId);
+  }, [monsterId]);
 
   const fetchData = async () => {
     if (!token) return;
@@ -48,12 +52,10 @@ function MyPage() {
         },
       });
       const cukemonData = await cukemonResponse.json();
-      const cukemonImg = `data:image/png;base64,${cukemonData.image || ''}`;
+      const cukemonImg = `data:image/png;base64,${cukemonData.image || './Menubar/egg.png'}`;
       const cukemonAffinity = parseInt(cukemonData?.affinity) || 0;
       const cukemonId = parseInt(cukemonData?.id) || 0;
-
-
-
+     
       setCukemonData({
         img: cukemonImg,
         affinity: cukemonAffinity,
@@ -65,10 +67,6 @@ function MyPage() {
       setLoading(false);
     }
   };
-
-  useEffect(() => {
-    fetchData();
-  }, [monsterId]);
 
   useEffect(() => {
     const handleKeyPress = (event) => {
@@ -187,34 +185,34 @@ function MyPage() {
           <span>로딩 중...</span>
         ) : (
           <>
-            <img src='/MyPage/feed.png' id='feed' alt="밥 아이콘" />
+            <img src='/MyPage/feed.webp' id='feed' alt="밥 아이콘" />
             <span>{feedCount}</span>
-            <img src='/MyPage/toy.png' alt="장난감 아이콘" />
+            <img src='/MyPage/toy.webp' alt="장난감 아이콘" />
             <span>{toyCount}</span>
           </>
         )}
       </div>
 
       <div className='cukemonImg'>
-        <img src={cukemonData?.img || '/menubar/egg.png'} alt="Cukemon" />
+        <img src='/Menubar/egg.png' alt="Cukemon" id='cuketmonImage'/>
       </div>
 
       <div className='cucketmonProfile'>
         {loading ? <p>로딩 중...</p> : <p>{cukemonData?.name || "이름 없음"}</p>}
         <div id='relevanceCount'>
-          <img src='/MyPage/relevance.png' alt="친밀도 아이콘" />
+          <img src='/MyPage/relevance.webp' alt="친밀도 아이콘" />
           <span>{cukemonData?.affinity || "정보 없음"}</span>
         </div>
       </div>
 
-      <div className='buttons'>
-        <img src='/button.png' id="feedButton" onClick={handleFeedClick} />
-        <span id="buttonText1">먹이주기</span>
-        <img src='/button.png' id="playButton" onClick={handlePlayClick} />
-        <span id="buttonText2">놀아주기</span>
-      </div>
+    <div className="buttons">
+     <button id="feedButton" onClick={handleFeedClick}/>
+     <button id="playButton" onClick={handlePlayClick}/>
+    </div>
+    <span id="buttonText1">먹이주기</span>
+    <span id="buttonText2">놀아주기</span>
 
-      <img src='/MyPage/releaseButton.png' id="releaseButton" onClick={releaseCukemon} />
+      <img src='/MyPage/releaseButton.webp' id="releaseButton" onClick={releaseCukemon} />
 
       <MenuBar />
     </div>
