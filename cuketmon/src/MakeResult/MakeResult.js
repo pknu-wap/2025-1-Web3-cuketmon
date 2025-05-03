@@ -19,7 +19,7 @@ function MakeResult() {
         if (!monsterId || !token) return;
 
         try {
-          const response = await fetch(`${API_URL}/monster/${monsterId}/info`, {
+          const response = await fetch(`${API_URL}/api/monster/${monsterId}/info`, {
             method: "GET",
             headers: {
               Authorization: `Bearer ${token}`,
@@ -60,7 +60,7 @@ function MakeResult() {
       return;
     }
 
-    navigate(`/NamePage?token=${token}`, {
+    navigate(`/NamePage`, {
       state: {
         monsterId: monsterId,
         image: base64Image,
