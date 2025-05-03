@@ -28,7 +28,7 @@ public class MonsterController {
         this.monsterService = monsterService;
     }
 
-    // 임시 몬스터 생성 기능
+    // 몬스터 생성 기능
     @PostMapping("/generate")
     public ResponseEntity<Map<String, Integer>> generateMonster(
             @Validated @RequestBody GenerateApiRequestBody requestBody) {

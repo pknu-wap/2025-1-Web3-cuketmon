@@ -53,13 +53,11 @@ public class MonsterService {
     public Integer generate(GenerateApiRequestBody requestBody) {
         Type type1 = Type.fromString(requestBody.getType1());
         Type type2 = Type.fromString(requestBody.getType2()); // nullable 값
-        System.out.println("타입 완");
 
         int attack = getRandomInRange(MIN_BASE, MAX_BASE);
         int specialAttack = getRandomInRange(MIN_BASE, MAX_BASE);
         DamageClass damageClass = (attack >= specialAttack) ? DamageClass.PHYSICAL : DamageClass.SPECIAL;
         DamageClass altClass = damageClass.getOppositeClass();
-        System.out.println("데미지 완");
 
         /*
             서버에서는 image를 null처리해놓음
@@ -88,7 +86,6 @@ public class MonsterService {
                 .skillId3(type2 != null ? skillService.getSkillId(type2, damageClass, MIN_DAMAGE, MID_DAMAGE) : null)
                 .skillId4(type2 != null ? skillService.getSkillId(type2, altClass, MIN_DAMAGE, MID_DAMAGE) : null)
                 .build();
-        System.out.println("몬스터 생성 완");
 
         monsterRepository.save(monster);
         System.out.println("디비 저장 완");
