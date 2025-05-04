@@ -6,7 +6,7 @@ function Ranking() {
   const [Myrank, setMyrank] = useState(0);
   const [battleCount, setBattleCount] = useState(0);
   const [winCount, setWinCount] = useState(0);
-  const [imageUrl, setImageUrl] = useState('/Menubar/egg.png');
+  const [imageUrl, setImageUrl] = useState('/Menubar/egg.webp');
 
 
   const trainerName = "xami"; //임시로 xami로 둠. 나중에 카카오 로그인 연동 후 각 사용자 이름을 받아오게 만들것!!

@@ -7,7 +7,7 @@ const MenuBar = () => {
   return (
     <div className="menubarItems">
       <button className="makePageLink" onClick={() => navigate('/make')}>
-        <img src="/Menubar/egg.png" alt="egg" />
+        <img src="/Menubar/egg.webp" alt="egg" />
         커켓몬 만들기
       </button>
       <button className="battleLink" onClick={() => navigate('/battle')}>
@@ -15,11 +15,11 @@ const MenuBar = () => {
         전투
       </button>
       <button className="rankingLink" onClick={() => navigate('/ranking')}>
-        <img src="/Menubar/rankingicon.png" alt="ranking" />
+        <img src="/Menubar/rankingicon.webp" alt="ranking" />
         랭킹
       </button>
       <button className="myPageLink" onClick={() => navigate('/mypage')}>
-        <img src="/Menubar/mypageicon.png" alt="myPage" />
+        <img src="/Menubar/mypageicon.webp" alt="myPage" />
         마이페이지
       </button>
     </div>
