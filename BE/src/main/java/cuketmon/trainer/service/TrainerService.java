@@ -79,5 +79,27 @@ public class TrainerService {
     }
 
     //트레이너 개인 랭킹
+//    @Transactional
+//    public TrainerDTO getSingleRanking(){
+//        List<Trainer> sorted = trainerRepository.findAllByOrderByWinDesc();
+//
+//        int rank = 1;
+//        for(Trainer t : sorted) {
+//            if(t.getName().equals(trainerName)) {
+//                return new TrainerDTO(
+//
+//                        rank,
+//                        t.getName(),
+//                        t.getWin(),
+//                        t.getLose(),
+//                        t.getallBattles()
+//                );
+//            }
+//
+//            rank++;
+//        }
+//        throw  new IllegalArgumentException("[ERROR]: 해당 트레이너를 찾을 수 없습니다.");
+//    }
+
 }
 

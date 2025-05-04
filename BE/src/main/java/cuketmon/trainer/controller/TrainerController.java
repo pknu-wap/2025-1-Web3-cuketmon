@@ -4,6 +4,7 @@ import cuketmon.trainer.dto.TrainerDTO;
 import cuketmon.trainer.entity.Trainer;
 import cuketmon.trainer.service.TrainerService;
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,9 +51,23 @@ public class TrainerController {
     }
 
     // 랭킹 시스템
+    //전체 트레이너 랭킹
     @GetMapping("/ranking")
     public ResponseEntity<List<TrainerDTO>> getTrainerRanking() {
         return ResponseEntity.ok(trainerService.getTrainerRanking());
     }
+
+    //개인 트레이너 개뵬 랭킹
+//    @GetMapping("/raking/{trainerName}")
+//    public ResponseEntity<?> getSingleRanking(@PathVariable String trainerName) {
+//        try{
+//            TrainerDTO dto = trainerService.getSingleRanking(trainerName);
+//            return ResponseEntity.ok(dto);
+//        } catch (NoSuchElementException e) {
+//            return ResponseEntity
+//                    .status(404)
+//                    .body(Map.of("error", e.getMessage()));
+//        }
+//    }
 
 }
