@@ -58,16 +58,16 @@ public class TrainerController {
     }
 
     //개인 트레이너 개뵬 랭킹
-//    @GetMapping("/raking/{trainerName}")
-//    public ResponseEntity<?> getSingleRanking(@PathVariable String trainerName) {
-//        try{
-//            TrainerDTO dto = trainerService.getSingleRanking(trainerName);
-//            return ResponseEntity.ok(dto);
-//        } catch (NoSuchElementException e) {
-//            return ResponseEntity
-//                    .status(404)
-//                    .body(Map.of("error", e.getMessage()));
-//        }
-//    }
+    @GetMapping("/raking/{trainerName}")
+    public ResponseEntity<?> getSingleRanking(@PathVariable String trainerName) {
+        try{
+            TrainerDTO dto = trainerService.getSingleRanking(trainerName);
+            return ResponseEntity.ok(dto);
+        } catch (NoSuchElementException e) {
+            return ResponseEntity
+                    .status(404)
+                    .body(Map.of("error", e.getMessage()));
+        }
+    }
 
 }
