@@ -41,7 +41,7 @@ public class Trainer {
     private Integer win;
 
     public void addWin() {
-        win = win + 1;
+        win += 1;
     }
 
 }

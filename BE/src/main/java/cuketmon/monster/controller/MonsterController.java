@@ -33,7 +33,6 @@ public class MonsterController {
     @PostMapping("/generate")
     public ResponseEntity<Map<String, Integer>> generateMonster(
             @Validated @RequestBody GenerateApiRequestBody requestBody) {
-        System.out.println("generate 진입");
         Integer monsterId = monsterService.generate(requestBody);
         return ResponseEntity.ok(Map.of("monsterId", monsterId));
     }
@@ -50,6 +49,7 @@ public class MonsterController {
         }
     }
 
+    // 커켓몬 놓아주기
     @DeleteMapping("/{monsterId}/release")
     public ResponseEntity<String> releaseMonster(@PathVariable Integer monsterId) {
         try {

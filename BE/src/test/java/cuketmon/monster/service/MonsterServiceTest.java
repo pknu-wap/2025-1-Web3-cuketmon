@@ -60,7 +60,7 @@ class MonsterServiceTest {
         monsterService.play("kng", 1);
 
         Monster updatedMonster = monsterRepository.findById(1).get();
-        assertEquals(prevAffinity + 1, updatedMonster.getAffinity());
+        assertEquals(prevAffinity + 1, updatedMonster.getAffinity().getCount());
     }
 
 }

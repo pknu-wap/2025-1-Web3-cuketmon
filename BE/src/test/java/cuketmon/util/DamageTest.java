@@ -18,7 +18,10 @@ import org.springframework.context.annotation.Import;
 @SpringBootTest
 class DamageTest {
 
+    @Autowired
     private final TeamMaker teamMaker;
+    
+    @Autowired
     private final SkillService skillService;
 
     private final TrainerRequest trainerRequest = new TrainerRequest("kng", 1);
