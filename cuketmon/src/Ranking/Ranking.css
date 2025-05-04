@@ -1,5 +1,5 @@
 .ranking {
-  background-image: url("/public/RankingPage/background.png");
+  background-image: url("/public/RankingPage/background.webp");
   background-size: cover;
   background-repeat: no-repeat;
   width: 100%;
@@ -36,14 +36,14 @@
 }
 
 .historyBoard th {
-  font-family: 'NeoDunggeunmo';
+  font-family: "NeoDunggeunmo";
 
   background-color: white;
   padding: 14.8px;
 }
 
 .historyBoard td {
-  font-family: 'NeoDunggeunmo';
+  font-family: "NeoDunggeunmo";
 
   background-color: white;
   text-align: center;
@@ -73,7 +73,7 @@
 
   .ranking {
     height: 100%;
-    background-image: url("/public/RankingPage/backgroundMobile.png");
+    background-image: url("/public/RankingPage/backgroundMobile.webp");
   }
 
   .rankingBoard {
