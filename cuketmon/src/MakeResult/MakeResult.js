@@ -19,7 +19,7 @@ function MakeResult() {
         if (!monsterId || !token) return;
 
         try {
-          const response = await fetch(`${API_URL}/api/monster/${monsterId}/info`, {
+          const response = await fetch(`${API_URL}/api/monster/${monsterId}/info`, { //수정 예정임(백엔드에서 이미지를 url로 받게!)
             method: "GET",
             headers: {
               Authorization: `Bearer ${token}`,
@@ -34,7 +34,7 @@ function MakeResult() {
             setCukemonImage(fullImage);
             setBase64Image(fullImage);
             setMentText("처음보는 포켓몬이 나타났다!");
-            navigate(`/NamePage?token=${token}`, {
+            navigate(`/NamePage`, {
               state: {
                 monsterId: monsterId,
                 image: fullImage,
@@ -54,19 +54,6 @@ function MakeResult() {
     delayAndFetch();
   }, [monsterId, API_URL, token, navigate]);
 
-  const handleTextClick = () => {
-    if (!token) {
-      alert("토큰이 없습니다.");
-      return;
-    }
-
-    navigate(`/NamePage`, {
-      state: {
-        monsterId: monsterId,
-        image: base64Image,
-      },
-    });
-  };
 
   return (
     <div className="resultPage">
@@ -82,7 +69,7 @@ function MakeResult() {
       <div className="chatBox">
         <p
           id="ment"
-          onClick={mentText.includes("도망") ? handleTextClick : undefined}
+          onClick={mentText.includes("도망") ? () => navigate("/Make") : undefined}
           style={{ cursor: mentText.includes("도망") ? "pointer" : "default" }}
         >
           {mentText}
