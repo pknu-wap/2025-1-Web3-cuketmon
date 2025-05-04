@@ -1,8 +1,10 @@
 package cuketmon.trainer.controller;
 
+import cuketmon.trainer.dto.TrainerDTO;
 import cuketmon.trainer.entity.Trainer;
 import cuketmon.trainer.service.TrainerService;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -23,9 +25,10 @@ public class TrainerController {
     }
 
     // 랭킹 시스템
+    //
     @GetMapping("/ranking")
-    public ResponseEntity<List<Trainer>> getTrainerRanking() {
-        return ResponseEntity.ok(trainerService.getTop5TrainersByWin());
+    public ResponseEntity<List<TrainerDTO>> getTrainerRanking() {
+        return ResponseEntity.ok(trainerService.getTrainerRanking());
     }
 
     // 남은 장난감의 개수를 확인

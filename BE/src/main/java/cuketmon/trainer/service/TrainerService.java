@@ -44,26 +44,19 @@ public class TrainerService {
         trainer.addWin();
     }
 
-
-    @Transactional
-    public List<Trainer> getTop5TrainersByWin() {
-        return trainerRepository.findTop5ByOrderByWinDesc();
-    }
-
     //랭킹 시스템
     @Transactional
     public List<TrainerDTO> getTrainerRanking() {
-        List<Trainer> sortedTrainers = trainerRepository.findAllByOrderByWinDesc();
+        List<Trainer> sorted = trainerRepository.findAllByOrderByWinDesc();
 
         List<TrainerDTO> rankingList = new ArrayList<>();
         int rank = 1;
-
-        for (Trainer trainer : sortedTrainers) {
-            rankingList.add(new TrainerDTO(rank, trainer.getName(), trainer.getWin()));
-            rank++;
+        for (Trainer t : sorted) {
+            rankingList.add(new TrainerDTO(rank++, t.getName(), t.getWin()));
         }
 
         return rankingList;
     }
+
 }
 
