@@ -10,5 +10,7 @@ public class TrainerDTO {
     private int rank;
     private String name;
     private int win;
+    private int lose;
+    private int allBattles;
 
 }

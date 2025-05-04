@@ -37,11 +37,20 @@ public class Trainer {
     })
     private Feed feed;
 
+    //랭킹 시스템
+
     @Column(nullable = false)
     private Integer win;
 
-    public void addWin() {
-        win = win + 1;
+    @Column(nullable = false)
+    private Integer lose;
+
+    public void addWin() { this.win += 1; }
+
+    public void addLose() { this.lose += 1; }
+
+    public int getallBattles() {
+        return this.win + this.lose;
     }
 
 }

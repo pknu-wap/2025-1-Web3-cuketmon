@@ -6,6 +6,8 @@ import cuketmon.trainer.repository.TrainerRepository;
 import jakarta.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -43,20 +45,39 @@ public class TrainerService {
 
         trainer.addWin();
     }
+    @Transactional
+    public void addLose(String name) {
+        Trainer trainer = trainerRepository.findById(name)
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR]: 해당 트레이너를 찾을 수 없습니다."));
+
+        trainer.addLose();
+    }
 
     //랭킹 시스템
+    //트레이너 전체 랭킹
     @Transactional
     public List<TrainerDTO> getTrainerRanking() {
         List<Trainer> sorted = trainerRepository.findAllByOrderByWinDesc();
 
         List<TrainerDTO> rankingList = new ArrayList<>();
+
         int rank = 1;
+
         for (Trainer t : sorted) {
-            rankingList.add(new TrainerDTO(rank++, t.getName(), t.getWin()));
+            rankingList.add(new TrainerDTO(
+                            rank++,
+                            t.getName(),
+                            t.getWin(),
+                            t.getLose(),
+                            t.getallBattles()
+
+                    )
+            );
         }
 
         return rankingList;
     }
 
+    //트레이너 개인 랭킹
 }
 

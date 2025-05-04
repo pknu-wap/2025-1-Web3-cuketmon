@@ -4,6 +4,7 @@ import cuketmon.trainer.dto.TrainerDTO;
 import cuketmon.trainer.entity.Trainer;
 import cuketmon.trainer.service.TrainerService;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -22,13 +23,6 @@ public class TrainerController {
     @Autowired
     public TrainerController(TrainerService trainerService) {
         this.trainerService = trainerService;
-    }
-
-    // 랭킹 시스템
-    //
-    @GetMapping("/ranking")
-    public ResponseEntity<List<TrainerDTO>> getTrainerRanking() {
-        return ResponseEntity.ok(trainerService.getTrainerRanking());
     }
 
     // 남은 장난감의 개수를 확인
@@ -53,6 +47,12 @@ public class TrainerController {
     @GetMapping("/feeds")
     public Integer getRemainingFeeds(@AuthenticationPrincipal String trainerName) {
         return trainerService.getRemainingFeeds(trainerName);
+    }
+
+    // 랭킹 시스템
+    @GetMapping("/ranking")
+    public ResponseEntity<List<TrainerDTO>> getTrainerRanking() {
+        return ResponseEntity.ok(trainerService.getTrainerRanking());
     }
 
 }
