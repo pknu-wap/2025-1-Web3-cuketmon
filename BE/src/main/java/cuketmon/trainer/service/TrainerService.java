@@ -9,11 +9,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
 @Service
 public class TrainerService {
-
-    public static final int INIT_WIN = 0;
 
     private final TrainerRepository trainerRepository;
 
@@ -44,7 +41,6 @@ public class TrainerService {
         trainer.addWin();
     }
 
-
     @Transactional
     public List<Trainer> getTop5TrainersByWin() {
         return trainerRepository.findTop5ByOrderByWinDesc();
@@ -65,5 +61,5 @@ public class TrainerService {
 
         return rankingList;
     }
-}
 
+}
