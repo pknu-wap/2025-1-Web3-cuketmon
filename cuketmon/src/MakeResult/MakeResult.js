@@ -18,7 +18,7 @@ function MakeResult() {
       setTimeout(async () => {
         if (!monsterId || !token) return;
 
-        try {
+        /*try*/{
           const response = await fetch(`${API_URL}/api/monster/${monsterId}/info`, { //수정 예정임(백엔드에서 이미지를 url로 받게!)
             method: "GET",
             headers: {
@@ -43,11 +43,11 @@ function MakeResult() {
           } else {
             throw new Error("이미지 없음");
           }
-        } catch (error) {
-          console.error("이미지 로드 실패:", error);
-          setCukemonImage("");
-          setMentText("커켓몬이 도망쳤다.(다시 시도하려면 클릭)");
-        }
+        } //catch (error) {
+        //   console.error("이미지 로드 실패:", error);
+        //   setCukemonImage("");
+        //   setMentText("커켓몬이 도망쳤다.(다시 시도하려면 클릭)");
+        // }
       }, 10000);
     };
 
