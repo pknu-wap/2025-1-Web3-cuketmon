@@ -11,7 +11,7 @@ function MyPage() {
   const [loading, setLoading] = useState(true);
   const [cukemonData, setCukemonData] = useState(null);
   const [monsterId, setMonsterId] = useState();
-  const [monsters, setMonsters] = useState(); 
+  const [monsters, setMonsters] = useState([]); 
   const API_URL = process.env.REACT_APP_API_URL;
   const { token } = useAuth();
 
@@ -31,6 +31,9 @@ function MyPage() {
       console.error("커켓몬 로딩에 실패했습니다.", error.message);
     }
   };
+  useEffect(() => {
+    loadCukemon();
+  }, []);
 
   /*먹이, 장난감 기저 상태 불러오기*/
   const loadTrainerData = async () => {
