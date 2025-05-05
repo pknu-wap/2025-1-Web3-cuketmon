@@ -31,9 +31,9 @@ public class MonsterController {
 
     // 몬스터 생성 기능
     @PostMapping("/generate")
-    public ResponseEntity<Map<String, Integer>> generateMonster(
-            @Validated @RequestBody GenerateApiRequestBody requestBody) {
-        Integer monsterId = monsterService.generate(requestBody);
+    public ResponseEntity<Map<String, Integer>> generateMonster(@AuthenticationPrincipal String trainerName,
+                                                                @Validated @RequestBody GenerateApiRequestBody requestBody) {
+        Integer monsterId = monsterService.generate(trainerName, requestBody);
         return ResponseEntity.ok(Map.of("monsterId", monsterId));
     }
 

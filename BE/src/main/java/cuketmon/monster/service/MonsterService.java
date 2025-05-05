@@ -51,7 +51,10 @@ public class MonsterService {
 
     // 포켓몬 생성 함수
     @Transactional
-    public Integer generate(GenerateApiRequestBody requestBody) {
+    public Integer generate(String trainerName, GenerateApiRequestBody requestBody) {
+        Trainer trainer = trainerRepository.findById(trainerName)
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당 트레이너를 찾을 수 없습니다."));
+
         Type type1 = Type.fromString(requestBody.getType1());
         Type type2 = Type.fromString(requestBody.getType2()); // nullable 값
 
@@ -85,6 +88,7 @@ public class MonsterService {
                 .skillId4(skillService.getSkillId(type2, altClass, MIN_DAMAGE, MID_DAMAGE))
                 .build();
 
+        trainer.addMonster(monster);
         monsterRepository.save(monster);
         promptService.save(monster.getId(), type1, type2, requestBody.getDescription());
 
