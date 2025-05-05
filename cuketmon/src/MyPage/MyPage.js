@@ -90,7 +90,6 @@ function MyPage() {
 
   /*데이터 업뎃*/
   const fetchData = async () => {
-    if (!token || monsters.length === 0) return;
     try {
       setLoading(true);
       const trainerData = await loadTrainerData(); 
@@ -107,14 +106,16 @@ function MyPage() {
   };
 
   useEffect(() => {
+    console.log('현재 MonsterId:', monsterId);
     fetchData();
+
   }, [monsterId]);  
 
   /*먹이,놀아 주기 애니메이션*/
   const handleActionClick = async (actionFn, setActionState) => {
     setActionState(true);
-    setTimeout(() => setActionState(false), 1000);
     await actionFn();
+    setTimeout(() => setActionState(false), 1000);
   };
 
   const releaseCukemon = async () => {
@@ -135,18 +136,18 @@ function MyPage() {
   /*desktop 커켓몬 전환 키보드 액션*/
   useEffect(() => {
     const handleKeyPress = (event) => {
-      setMonsterId((prevIndex) => {
-        if (event.key === 'ArrowLeft') {
-          return prevIndex > 0 ? prevIndex - 1 : prevIndex; 
-        } else if (event.key === 'ArrowRight') {
-          return prevIndex < monsters.length - 1 ? prevIndex + 1 : prevIndex; 
-        }
-        return prevIndex; 
-      });
+      if (event.key === 'ArrowLeft') {
+        setMonsterId((prevIndex) =>
+          prevIndex > 0 ? prevIndex - 1 : 0
+        );
+      } else if (event.key === 'ArrowRight') {
+        setMonsterId((prevIndex) =>
+          prevIndex < monsters.length - 1 ? prevIndex + 1 : prevIndex
+        );
+      }
     };
-
+  
     window.addEventListener('keydown', handleKeyPress);
-
     return () => window.removeEventListener('keydown', handleKeyPress);
   }, [monsters]);
 
