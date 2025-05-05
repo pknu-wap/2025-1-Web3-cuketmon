@@ -1,5 +1,6 @@
 package cuketmon.skill.service;
 
+import cuketmon.CustomLogger;
 import cuketmon.damageclass.DamageClass;
 import cuketmon.monster.dto.MonsterDTO;
 import cuketmon.skill.dto.SkillResponse;
@@ -9,6 +10,7 @@ import cuketmon.type.Type;
 import cuketmon.util.Random;
 import java.util.Collections;
 import java.util.List;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,6 +18,8 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 @Service
 public class SkillService {
+
+    private static final Logger log = CustomLogger.getLogger(SkillService.class);
 
     private static final int TOTAL_SKILL = 919;
     private static final String SKILL_API_URL = "https://pokeapi.co/api/v2/move";
@@ -81,7 +85,7 @@ public class SkillService {
                 saveSkill(skillResponse);
             }
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            log.info("{}", e.getMessage());
         }
     }
 
@@ -98,11 +102,11 @@ public class SkillService {
         );
 
         if (skill.getPower() == null) {
-            throw new IllegalArgumentException("[INFO ] power가 null인 스킬은 받지 않습니다.");
+            throw new IllegalArgumentException("power가 null인 스킬은 받지 않습니다.");
         }
 
         skillRepository.save(skill);
-        System.out.println("[INFO ] Skill 저장완료. Id: " + skillResponse.getId());
+        log.info("{}번 Skill 저장완료.", skillResponse.getId());
     }
 
 }

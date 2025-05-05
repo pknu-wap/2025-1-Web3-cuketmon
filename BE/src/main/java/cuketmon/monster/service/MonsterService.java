@@ -2,6 +2,7 @@ package cuketmon.monster.service;
 
 import static cuketmon.util.Random.getRandomInRange;
 
+import cuketmon.CustomLogger;
 import cuketmon.damageclass.DamageClass;
 import cuketmon.monster.dto.GenerateApiRequestBody;
 import cuketmon.monster.dto.MonsterDTO;
@@ -16,12 +17,15 @@ import cuketmon.trainer.entity.Trainer;
 import cuketmon.trainer.repository.TrainerRepository;
 import cuketmon.type.Type;
 import java.util.List;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class MonsterService {
+
+    private static final Logger log = CustomLogger.getLogger(MonsterService.class);
 
     // TODO: 상수 묶어내기
     public static final int MIN_BASE = 60;
@@ -68,7 +72,6 @@ public class MonsterService {
             2. 이미지 생성에 필요한 정보 DB 생성 (id, type1, type2, description)
             3. AI서버에서 2번 DB를 읽고 이미지 생성, DB 저장 + GDS 저장
         */
-
         Monster monster = Monster.builder()
                 .name("")
                 .image(null)
@@ -87,6 +90,7 @@ public class MonsterService {
                 .skillId3(skillService.getSkillId(type2, damageClass, MIN_DAMAGE, MID_DAMAGE))
                 .skillId4(skillService.getSkillId(type2, altClass, MIN_DAMAGE, MID_DAMAGE))
                 .build();
+        log.info("커켓몬 생성, id={}, description={}", monster.getId(), monster.getDescription());
 
         trainer.addMonster(monster);
         monsterRepository.save(monster);
@@ -102,6 +106,7 @@ public class MonsterService {
 
         monster.changeNameTo(monsterName);
         monsterRepository.save(monster);
+        log.info("커켓몬 이름 지정 name={}", monster.getName());
     }
 
     @Transactional
@@ -110,6 +115,7 @@ public class MonsterService {
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당 커켓몬을 찾을 수 없습니다."));
 
         monsterRepository.delete(monster);
+        log.info("커켓몬 놓아주기 name={}", monster.getName());
     }
 
     @Transactional
@@ -124,6 +130,7 @@ public class MonsterService {
             monster.increaseSpeed(monster.getAffinity().increase(AFFINITY_PLUS));
             trainerRepository.save(trainer);
             monsterRepository.save(monster);
+            log.info("커켓몬 먹이주기 trainer={}, monster={}", trainerName, monster.getName());
         } catch (Exception e) {
             throw new IllegalArgumentException(e.getMessage());
         }
@@ -141,6 +148,8 @@ public class MonsterService {
             monster.increaseSpeed(monster.getAffinity().increase(AFFINITY_PLUS));
             trainerRepository.save(trainer);
             monsterRepository.save(monster);
+            log.info("커켓몬 놀아주기 trainer={}, monster={}", trainerName, monster.getName());
+
         } catch (Exception e) {
             throw new IllegalArgumentException(e.getMessage());
         }
