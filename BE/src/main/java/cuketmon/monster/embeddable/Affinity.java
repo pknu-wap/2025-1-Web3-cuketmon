@@ -15,7 +15,6 @@ public class Affinity {
         this.count = 30;
     }
 
-    // TODO: 하드 코딩 고치기
     public int increase(int amount) {
         this.count += amount;
         if (this.count >= BOUND) {
