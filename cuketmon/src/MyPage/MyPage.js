@@ -6,8 +6,8 @@ import { useAuth } from '../AuthContext';
 function MyPage() {
   const [toyCount, setToyCount] = useState();
   const [feedCount, setFeedCount] = useState();
-  const [setIsFed] = useState(false);
-  const [setIsPlayed] = useState(false);
+  const [isFed,setIsFed] = useState(false);
+  const [isPlayed, setIsPlayed] = useState(false);
   const [loading, setLoading] = useState(true);
   const [cukemonData, setCukemonData] = useState(null);
   const [monsterId, setMonsterId] = useState();
@@ -24,7 +24,7 @@ function MyPage() {
         headers: { 'Authorization': `Bearer ${token}` },
       });
       const data = await res.json();
-      const monsterIds = data.id;
+      const monsterIds = Array.isArray(data.id) ? data.id : [data.id];
       setMonsters(monsterIds);     
       setMonsterId(0);             
     } catch (error) {
