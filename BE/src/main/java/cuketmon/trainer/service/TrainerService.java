@@ -64,12 +64,12 @@ public class TrainerService {
 
         for (Trainer t : sorted) {
             rankingList.add(new TrainerDTO(
+
                             rank++,
                             t.getName(),
                             t.getWin(),
                             t.getLose(),
                             t.getallBattles()
-
                     )
             );
         }
@@ -83,6 +83,7 @@ public class TrainerService {
         List<Trainer> sorted = trainerRepository.findAllByOrderByWinDesc();
 
         int rank = 1;
+
         for(Trainer t : sorted) {
             if(t.getName().equals(trainerName)) {
                 return new TrainerDTO(

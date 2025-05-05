@@ -7,13 +7,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
+import jakarta.persistence.PostRemove;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/trainer")
@@ -50,23 +48,39 @@ public class TrainerController {
         return trainerService.getRemainingFeeds(trainerName);
     }
 
+
+
     // 랭킹 시스템
     //전체 트레이너 랭킹
-    @GetMapping("/ranking")
-    public ResponseEntity<List<TrainerDTO>> getTrainerRanking() {
+//    @GetMapping("/ranking")
+//    public ResponseEntity<List<TrainerDTO>> getTrainerRanking() {
+//        return ResponseEntity.ok(trainerService.getTrainerRanking());
+//    }
+
+    @PostMapping("/ranking")
+    public ResponseEntity<List<TrainerDTO>> getTrainerRanking(@RequestBody TrainerDTO request){
         return ResponseEntity.ok(trainerService.getTrainerRanking());
     }
 
-    //개인 트레이너 개뵬 랭킹
-    @GetMapping("/raking/{trainerName}")
-    public ResponseEntity<?> getSingleRanking(@PathVariable String trainerName) {
-        try{
+    //개인 트레이너 개별 랭킹
+//    @GetMapping("/raking/{trainerName}")
+//    public ResponseEntity<?> getSingleRanking(@PathVariable String trainerName) {
+//        try{
+//            TrainerDTO dto = trainerService.getSingleRanking(trainerName);
+//            return ResponseEntity.ok(dto);
+//        } catch (NoSuchElementException e) {
+//            return ResponseEntity.status(404).body(Map.of("[ERROR]", e.getMessage()));
+//        }
+//    }
+
+    @PostMapping("/ranking/{trainerName}")
+    public ResponseEntity<?> getSingleRanking(@RequestBody TrainerDTO request) {
+        try {
+            String trainerName = request.getTrainerName ();
             TrainerDTO dto = trainerService.getSingleRanking(trainerName);
             return ResponseEntity.ok(dto);
         } catch (NoSuchElementException e) {
-            return ResponseEntity
-                    .status(404)
-                    .body(Map.of("error", e.getMessage()));
+            return ResponseEntity.status(404).body(Map.of("[ERROR]", e.getMessage()));
         }
     }
 
