@@ -10,6 +10,7 @@ import cuketmon.monster.dto.MonsterDTO.MonsterInfo;
 import cuketmon.monster.embeddable.Affinity;
 import cuketmon.monster.entity.Monster;
 import cuketmon.monster.repository.MonsterRepository;
+import cuketmon.prompt.service.PromptService;
 import cuketmon.skill.service.SkillService;
 import cuketmon.trainer.entity.Trainer;
 import cuketmon.trainer.repository.TrainerRepository;
@@ -22,6 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class MonsterService {
 
+    // TODO: 상수 묶어내기
     public static final int MIN_BASE = 60;
     public static final int MAX_BASE = 100;
 
@@ -36,13 +38,15 @@ public class MonsterService {
     private final TrainerRepository trainerRepository;
     private final MonsterRepository monsterRepository;
     private final SkillService skillService;
+    private final PromptService promptService;
 
     @Autowired
     public MonsterService(TrainerRepository trainerRepository, MonsterRepository monsterRepository,
-                          SkillService skillService) {
+                          SkillService skillService, PromptService promptService) {
         this.trainerRepository = trainerRepository;
         this.monsterRepository = monsterRepository;
         this.skillService = skillService;
+        this.promptService = promptService;
     }
 
     // 포켓몬 생성 함수
@@ -57,12 +61,9 @@ public class MonsterService {
         DamageClass altClass = damageClass.getOppositeClass();
 
         /*
-            서버에서는 image를 null처리해놓음
-            AI에서 image가 null인 monster가 들어오면 관측 후 이미지 생성
-
-            1. DB에서 직접 변경하여 커켓몬 이미지 지정
-            or
-            2. 백엔드에서 api 만들어서 커켓몬 이미지 지정
+            1. BE서버에서는 image를 null처리하여 임시 저장
+            2. 이미지 생성에 필요한 정보 DB 생성 (id, type1, type2, description)
+            3. AI서버에서 2번 DB를 읽고 이미지 생성, DB 저장 + GDS 저장
         */
 
         // TODO: 타입이 널일 때 스킬 받아오는 데 문제 생김
@@ -86,7 +87,7 @@ public class MonsterService {
                 .build();
 
         monsterRepository.save(monster);
-        System.out.println("디비 저장 완");
+        promptService.save(monster.getId(), type1, type2, requestBody.getDescription());
 
         return monster.getId();
     }
