@@ -52,5 +52,4 @@ class SkillServiceTest {
         assertNotNull(skillId, "type이 null이어도 랜덤 스킬 ID가 반환되어야 합니다.");
     }
 
-
 }
