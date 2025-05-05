@@ -1,19 +1,16 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState} from 'react';
 import MenuBar from "../Menubar/Menubar.js";
 import './MyPage.css';
 import { useAuth } from '../AuthContext';
 
 function MyPage() {
-  const [toyCount, setToyCount] = useState(0);
-  const [feedCount, setFeedCount] = useState(0);
-  const [isFed, setIsFed] = useState(false);
-  const [isPlayed, setIsPlayed] = useState(false);
+  const [toyCount, setToyCount] = useState();
+  const [feedCount, setFeedCount] = useState();
+  const [setIsFed] = useState(false);
+  const [setIsPlayed] = useState(false);
   const [loading, setLoading] = useState(true);
   const [cukemonData, setCukemonData] = useState(null);
-  const [trainerName, setTrainerName] = useState(null);
-  const [monsterId, setMonsterId] = useState();
-  const pageRef = useRef(null);
-
+  const [monsterId, setMonsterId] = useState(2); //test용 코드(일부로 2로 맞춰둠) 무조건 무조건 뺴야함...
   const API_URL = process.env.REACT_APP_API_URL;
   const { token } = useAuth();
 
@@ -21,46 +18,53 @@ function MyPage() {
     localStorage.setItem('monsterId', monsterId);
   }, [monsterId]);
 
-  const fetchWithAuth = async (url, token, options = {}) => {
-    const response = await fetch(url, {
-      ...options,
-      headers: {
-        ...(options.headers || {}),
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json',
-      },
-    });
-    if (!response.ok) throw new Error(await response.text());
-    return response.json();
-  };
-
+  /*먹이, 장난감 기저 상태 불러오기*/
   const loadTrainerData = async () => {
-    const [toys, feeds] = await Promise.all([
-      fetchWithAuth(`${API_URL}/api/trainer/toys`, token),
-      fetchWithAuth(`${API_URL}/api/trainer/feeds`, token),
-    ]);
-    return { toys: Number(toys), feeds: Number(feeds) };
+    const [toysResponse, feedsResponse] = await Promise.all([
+      fetch(`${API_URL}/api/trainer/toys`), 
+      fetch(`${API_URL}/api/trainer/feeds`),
+    ])
+    const toysOriginalData = await toysResponse.text();
+    const feedsOriginalData = await feedsResponse.text();
+    return { toys: Number(toysOriginalData), feeds: Number(feedsOriginalData) };
   };
 
-  const loadCukemonData = async () => {
-    const res = await fetchWithAuth(`${API_URL}/api/monster/${monsterId}/info`, token);
-    return {
-      img: res.image ? `data:image/png;base64,${res.image}` : '/Menubar/egg.png',
-      affinity: parseInt(res?.affinity) || 0,
-      id: parseInt(res?.id) || 0,
-      name: res?.name || "이름 없음",
-    };
+  const feedCukemon = async () => {
+    if (!monsterId) return;
+    try {
+      await fetch(`${API_URL}/api/monster/${monsterId}/feed`, { method: "POST" });
+      const newFeedResponse = await fetch(`${API_URL}/api/trainer/feeds`);
+      const newFeedData=newFeedResponse.text();
+      setFeedCount(Number(newFeedData));
+      alert("커켓몬에게 먹이를 주었다!");
+    } catch (err) {
+      alert("먹이 주기 실패: " + err.message);
+    }
   };
 
+  const playCukemon = async () => {
+    if (!monsterId) return;
+    try {
+      await fetch(`${API_URL}/api/monster/${monsterId}/play`, { method: "POST" });
+      const newToysResponse = await fetch(`${API_URL}/api/trainer/toys`);
+      const newToysData=newToysResponse.text();
+      setToyCount(Number(newToysData));
+      alert("커켓몬과 놀아주었다!");
+    } catch (err) {
+      alert("놀아주기 실패: " + err.message);
+    }
+  };
+
+  /*데이터 업뎃*/
   const fetchData = async () => {
     if (!token || !monsterId) return;
     try {
       setLoading(true);
-      const trainerData = await loadTrainerData();
-      setToyCount(trainerData.toys);
+      const trainerData = await loadTrainerData(); //먹이 장난감 업뎃
+      setToyCount(trainerData.toys);  
       setFeedCount(trainerData.feeds);
 
-      const cukemon = await loadCukemonData();
+      const cukemon = await loadCukemonData(); //커켓몬 데이터 없뎃
       setCukemonData(cukemon);
     } catch (error) {
       console.error("데이터 로딩 실패:", error.message);
@@ -69,10 +73,43 @@ function MyPage() {
     }
   };
 
+  /*local storage에 저장된 커켓몬 id 불러오기 */
+  useEffect(() => {
+    const savedMonsterId = localStorage.getItem('monsterId');
+    if (savedMonsterId) {
+      setMonsterId(savedMonsterId); 
+    }
+  }, []);
+
   useEffect(() => {
     fetchData();
-  }, [monsterId]);
+  }, [monsterId]);  //몬스터 id가 바뀔때 마다 새로운 data 받아오게함.
 
+
+
+
+  /*먹이,놀아 주기 애니메이션*/
+  const handleActionClick = async (actionFn, setActionState) => {
+    setActionState(true);
+    setTimeout(() => setActionState(false), 1000);
+    await actionFn();
+  };
+
+
+  const releaseCukemon = async () => {
+    if (!monsterId) return;
+    try {
+      const res = await fetch(`${API_URL}/api/monster/${monsterId}/release`, {
+        method: "DELETE",
+      });
+      if (!res.ok) throw new Error(`삭제 실패: ${res.status}`);
+      alert("커켓몬이 원래 있던곳으로 돌아갔습니다.");
+    } catch (err) {
+      alert("에러 발생: " + err.message);
+    }
+  };
+
+  /*desktop 커켓몬 전환 키보드 액션 (추후 수정 예정)*/
   useEffect(() => {
     const handleKeyPress = (event) => {
       if (event.key === 'ArrowLeft') {
@@ -85,62 +122,20 @@ function MyPage() {
     return () => window.removeEventListener('keydown', handleKeyPress);
   }, []);
 
-  const feedCukemon = async () => {
-    if (!monsterId || !trainerName) return;
-    try {
-      await fetchWithAuth(`${API_URL}/api/monster/${monsterId}/feed`, token, { method: "POST" });
-      const newFeed = await fetchWithAuth(`${API_URL}/api/trainer/${trainerName}/feeds`, token);
-      setFeedCount(Number(newFeed));
-      alert("먹이를 주었습니다!");
-    } catch (err) {
-      alert("먹이 주기 실패: " + err.message);
-    }
+  /*커켓몬 데이터 불러오기(이미지를 url로 받게 수정)*/
+  const loadCukemonData = async () => {
+    const res = await fetch(`${API_URL}/api/monster/${monsterId}/info`);
+    const data = await res.json();
+    return {
+      img: data?.image || '/Menubar/egg.png',  
+      affinity: parseInt(data?.affinity) || 0,  
+      id: parseInt(data?.id) || "정보 없음",  
+      name: data?.name || "이름 없음",  
+    };
   };
-
-  const handleFeedClick = async () => {
-    setIsFed(true);
-    setTimeout(() => setIsFed(false), 1000);
-    await feedCukemon();
-  };
-
-  const playCukemon = async () => {
-    if (!monsterId || !trainerName) return;
-    try {
-      await fetchWithAuth(`${API_URL}/api/monster/${monsterId}/play`, token, { method: "POST" });
-      const newToys = await fetchWithAuth(`${API_URL}/api/trainer/${trainerName}/toys`, token);
-      setToyCount(Number(newToys));
-      alert("놀아주었습니다!");
-    } catch (err) {
-      alert("놀아주기 실패: " + err.message);
-    }
-  };
-
-  const handlePlayClick = async () => {
-    setIsPlayed(true);
-    setTimeout(() => setIsPlayed(false), 1000);
-    await playCukemon();
-  };
-
-  const releaseCukemon = async () => {
-    if (!monsterId || !token) return;
-    try {
-      const res = await fetch(`${API_URL}/api/monster/${monsterId}/release`, {
-        method: "DELETE",
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      if (!res.ok) throw new Error(`삭제 실패: ${res.status}`);
-      alert("커켓몬이 방출되었습니다.");
-    } catch (err) {
-      alert("에러 발생: " + err.message);
-    }
-  };
-
-  useEffect(() => {
-    if (pageRef.current) pageRef.current.focus();
-  }, []);
 
   return (
-    <div className='myPage' ref={pageRef} tabIndex={0}>
+    <div className='myPage'>
       <div className='item'>
         {loading ? (
           <span>로딩 중...</span>
@@ -159,7 +154,7 @@ function MyPage() {
       </div>
 
       <div className='cucketmonProfile'>
-        {loading ? <p>로딩 중...</p> : <p>{cukemonData?.name}</p>}
+      {loading ? <p>로딩 중...</p> : <p>{cukemonData?.name || "이름 없음"}</p>}
         <div id='relevanceCount'>
           <img src='/MyPage/relevance.webp' alt="친밀도 아이콘" />
           <span>{cukemonData?.affinity ?? "정보 없음"}</span>
@@ -167,8 +162,8 @@ function MyPage() {
       </div>
 
       <div className="buttons">
-        <button id="feedButton" onClick={handleFeedClick} />
-        <button id="playButton" onClick={handlePlayClick} />
+        <button id="feedButton" onClick={() => handleActionClick(feedCukemon, setIsFed)} />
+        <button id="playButton" onClick={() => handleActionClick(playCukemon, setIsPlayed)} />
       </div>
       <span id="buttonText1">먹이주기</span>
       <span id="buttonText2">놀아주기</span>
