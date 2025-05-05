@@ -45,6 +45,7 @@ public class Trainer {
     private Integer win;
 
     @OneToMany(mappedBy = "trainer", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @Builder.Default
     private List<Monster> monsters = new ArrayList<>();
 
     public void addWin() {
