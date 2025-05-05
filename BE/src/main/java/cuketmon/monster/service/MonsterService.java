@@ -66,7 +66,6 @@ public class MonsterService {
             3. AI서버에서 2번 DB를 읽고 이미지 생성, DB 저장 + GDS 저장
         */
 
-        // TODO: 타입이 널일 때 스킬 받아오는 데 문제 생김
         Monster monster = Monster.builder()
                 .name("")
                 .image(null)
@@ -82,8 +81,8 @@ public class MonsterService {
                 .type2(type2)
                 .skillId1(skillService.getSkillId(type1, damageClass, MIN_DAMAGE, MID_DAMAGE)) // 평타
                 .skillId2(skillService.getSkillId(type1, damageClass, MID_DAMAGE, MAX_DAMAGE)) // 필살기
-                .skillId3(type2 != null ? skillService.getSkillId(type2, damageClass, MIN_DAMAGE, MID_DAMAGE) : null)
-                .skillId4(type2 != null ? skillService.getSkillId(type2, altClass, MIN_DAMAGE, MID_DAMAGE) : null)
+                .skillId3(skillService.getSkillId(type2, damageClass, MIN_DAMAGE, MID_DAMAGE))
+                .skillId4(skillService.getSkillId(type2, altClass, MIN_DAMAGE, MID_DAMAGE))
                 .build();
 
         monsterRepository.save(monster);
@@ -109,7 +108,6 @@ public class MonsterService {
         monsterRepository.delete(monster);
     }
 
-    // TODO: 스피드도 객체화 하면 좋을 듯
     @Transactional
     public void feed(String trainerName, Integer monsterId) {
         Trainer trainer = trainerRepository.findById(trainerName)
