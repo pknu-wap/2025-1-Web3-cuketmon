@@ -10,13 +10,27 @@ function MyPage() {
   const [setIsPlayed] = useState(false);
   const [loading, setLoading] = useState(true);
   const [cukemonData, setCukemonData] = useState(null);
-  const [monsterId, setMonsterId] = useState(2); //test용 코드(일부로 2로 맞춰둠) 무조건 무조건 뺴야함...
+  const [monsterId, setMonsterId] = useState();
+  const [monsters, setMonsters] = useState(); 
   const API_URL = process.env.REACT_APP_API_URL;
   const { token } = useAuth();
 
-  useEffect(() => {
-    localStorage.setItem('monsterId', monsterId);
-  }, [monsterId]);
+
+  /*유저 소유 커켓몬 조회하기 */
+  const loadCukemon = async () => {
+    if (!token) return;
+    try {
+      const res = await fetch(`${API_URL}/api/trainer/monsters`, {
+        headers: { 'Authorization': `Bearer ${token}` },
+      });
+      const data = await res.json();
+      const monsterIds = data.id;
+      setMonsters(monsterIds);     
+      setMonsterId(0);             
+    } catch (error) {
+      console.error("커켓몬 로딩에 실패했습니다.", error.message);
+    }
+  };
 
   /*먹이, 장난감 기저 상태 불러오기*/
   const loadTrainerData = async () => {
@@ -34,9 +48,10 @@ function MyPage() {
   };
 
   const feedCukemon = async () => {
-    if (!monsterId) return;
+    if (!monsterId || monsters.length === 0) return;
     try {
-      await fetch(`${API_URL}/api/monster/${monsterId}/feed`, {
+      const currentMonsterId = monsters[monsterId]; 
+      await fetch(`${API_URL}/api/monster/${currentMonsterId}/feed`, {
         method: "POST",
         headers: { 'Authorization': `Bearer ${token}` },
       });
@@ -52,9 +67,10 @@ function MyPage() {
   };
 
   const playCukemon = async () => {
-    if (!monsterId) return;
+    if (!monsterId || monsters.length === 0) return;
     try {
-      await fetch(`${API_URL}/api/monster/${monsterId}/play`, {
+      const currentMonsterId = monsters[monsterId]; 
+      await fetch(`${API_URL}/api/monster/${currentMonsterId}/play`, {
         method: "POST",
         headers: { 'Authorization': `Bearer ${token}` },
       });
@@ -71,14 +87,14 @@ function MyPage() {
 
   /*데이터 업뎃*/
   const fetchData = async () => {
-    if (!token || !monsterId) return;
+    if (!token || monsters.length === 0) return;
     try {
       setLoading(true);
-      const trainerData = await loadTrainerData(); //먹이 장난감 업뎃
+      const trainerData = await loadTrainerData(); 
       setToyCount(trainerData.toys);  
       setFeedCount(trainerData.feeds);
 
-      const cukemon = await loadCukemonData(); //커켓몬 데이터 없뎃
+      const cukemon = await loadCukemonData(); 
       setCukemonData(cukemon);
     } catch (error) {
       console.error("데이터 로딩 실패:", error.message);
@@ -87,17 +103,9 @@ function MyPage() {
     }
   };
 
-  /*local storage에 저장된 커켓몬 id 불러오기 */
-  useEffect(() => {
-    const savedMonsterId = localStorage.getItem('monsterId');
-    if (savedMonsterId) {
-      setMonsterId(savedMonsterId); 
-    }
-  }, []);
-
   useEffect(() => {
     fetchData();
-  }, [monsterId]);  //몬스터 id가 바뀔때 마다 새로운 data 받아오게함.
+  }, [monsterId]);  
 
   /*먹이,놀아 주기 애니메이션*/
   const handleActionClick = async (actionFn, setActionState) => {
@@ -107,9 +115,10 @@ function MyPage() {
   };
 
   const releaseCukemon = async () => {
-    if (!monsterId) return;
+    if (!monsterId || monsters.length === 0) return;
     try {
-      const res = await fetch(`${API_URL}/api/monster/${monsterId}/release`, {
+      const currentMonsterId = monsters[monsterId]; 
+      const res = await fetch(`${API_URL}/api/monster/${currentMonsterId}/release`, {
         method: "DELETE",
         headers: { 'Authorization': `Bearer ${token}` },
       });
@@ -120,28 +129,28 @@ function MyPage() {
     }
   };
 
-  /*desktop 커켓몬 전환 키보드 액션 (추후 수정 예정)*/
+  /*desktop 커켓몬 전환 키보드 액션*/
   useEffect(() => {
     const handleKeyPress = (event) => {
-      setMonsterId((prevId) => {
-        const numericPrevId = Number(prevId); 
+      setMonsterId((prevIndex) => {
         if (event.key === 'ArrowLeft') {
-          return Math.max(1, numericPrevId - 1); 
+          return prevIndex > 0 ? prevIndex - 1 : prevIndex; 
         } else if (event.key === 'ArrowRight') {
-          return numericPrevId + 1;
+          return prevIndex < monsters.length - 1 ? prevIndex + 1 : prevIndex; 
         }
-        return numericPrevId; 
+        return prevIndex; 
       });
     };
-    
-    window.addEventListener('keydown', handleKeyPress);
-    
-    return () => window.removeEventListener('keydown', handleKeyPress);
-  }, []);
 
+    window.addEventListener('keydown', handleKeyPress);
+
+    return () => window.removeEventListener('keydown', handleKeyPress);
+  }, [monsters]);
 
   const loadCukemonData = async () => {
-    const res = await fetch(`${API_URL}/api/monster/${monsterId}/info`, {
+    if (monsters.length === 0 || monsterId === undefined) return;
+    const currentMonsterId = monsters[monsterId]; 
+    const res = await fetch(`${API_URL}/api/monster/${currentMonsterId}/info`, {
       headers: { 'Authorization': `Bearer ${token}` },
     });
     const data = await res.json();
