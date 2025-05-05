@@ -188,7 +188,7 @@ span {
 
   .cucketmonProfile {
     position: absolute;
-    top: 62%;
+    top: 60%;
     left: 34%;
     margin-left: 0;
     width: 35%;
@@ -224,20 +224,20 @@ span {
     width: 120px;
   }
   #buttonText1 {
-    font-size: 12px;
+    font-size: 12.5px;
     left: 33%;
     top: 74.3%;
   }
 
   #buttonText2 {
-    font-size: 12px;
+    font-size: 12.5px;
     left: 65%;
     top: 74.3%;
   }
 
   #releaseButton {
     position: absolute;
-    top: 85%;
+    top: 83%;
     width: 12%;
   }
 }
