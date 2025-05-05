@@ -36,7 +36,7 @@ public class Monster {
     @Column(nullable = true, columnDefinition = "TEXT")
     private String image;
 
-    @Column(length = 75)
+    @Column
     private String description;
 
     @Embedded
@@ -64,7 +64,7 @@ public class Monster {
     @Column(nullable = false)
     private Integer specialDefence;
 
-    // 타입 (1~2개)
+    // 타입
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Type type1;
@@ -73,7 +73,7 @@ public class Monster {
     @Column(nullable = true)
     private Type type2;
 
-    // 스킬 (4개)
+    // 스킬
     @Column(nullable = false)
     private Integer skillId1;
 
