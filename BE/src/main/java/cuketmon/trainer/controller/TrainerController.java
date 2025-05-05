@@ -39,4 +39,10 @@ public class TrainerController {
         return trainerService.getRemainingFeeds(trainerName);
     }
 
+    // 자신의 커켓몬 보기
+    @GetMapping("/monsters")
+    public ResponseEntity<List<Integer>> getMyMonsterIds(@AuthenticationPrincipal String trainerName) {
+        return ResponseEntity.ok(trainerService.getMonsterIds(trainerName));
+    }
+
 }
