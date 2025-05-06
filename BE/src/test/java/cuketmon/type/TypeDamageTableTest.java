@@ -1,8 +1,9 @@
 package cuketmon.type;
 
-import static cuketmon.type.TypeDamageTable.getDamageMultiplier;
+import static cuketmon.constant.type.TypeDamageTable.getDamageMultiplier;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import cuketmon.constant.type.Type;
 import org.junit.jupiter.api.Test;
 
 class TypeDamageTableTest {

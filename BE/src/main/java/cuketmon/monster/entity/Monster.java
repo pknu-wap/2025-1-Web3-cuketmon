@@ -1,8 +1,8 @@
 package cuketmon.monster.entity;
 
+import cuketmon.constant.type.Type;
 import cuketmon.monster.embeddable.Affinity;
 import cuketmon.trainer.entity.Trainer;
-import cuketmon.type.Type;
 import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.AttributeOverrides;
 import jakarta.persistence.Column;

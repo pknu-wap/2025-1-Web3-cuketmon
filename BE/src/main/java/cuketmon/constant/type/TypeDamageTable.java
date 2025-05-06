@@ -1,4 +1,4 @@
-package cuketmon.type;
+package cuketmon.constant.type;
 
 import java.util.ArrayList;
 import java.util.List;

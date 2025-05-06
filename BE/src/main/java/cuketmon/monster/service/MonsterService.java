@@ -2,7 +2,8 @@ package cuketmon.monster.service;
 
 import static cuketmon.util.Random.getRandomInRange;
 
-import cuketmon.damageclass.DamageClass;
+import cuketmon.constant.damageclass.DamageClass;
+import cuketmon.constant.type.Type;
 import cuketmon.monster.dto.GenerateApiRequestBody;
 import cuketmon.monster.dto.MonsterDTO;
 import cuketmon.monster.dto.MonsterDTO.MonsterBattleInfo;
@@ -10,11 +11,10 @@ import cuketmon.monster.dto.MonsterDTO.MonsterInfo;
 import cuketmon.monster.embeddable.Affinity;
 import cuketmon.monster.entity.Monster;
 import cuketmon.monster.repository.MonsterRepository;
-import cuketmon.prompt.service.PromptService;
+import cuketmon.skill.prompt.service.PromptService;
 import cuketmon.skill.service.SkillService;
 import cuketmon.trainer.entity.Trainer;
 import cuketmon.trainer.repository.TrainerRepository;
-import cuketmon.type.Type;
 import cuketmon.util.CustomLogger;
 import java.util.List;
 import org.apache.logging.log4j.Logger;

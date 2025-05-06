@@ -6,10 +6,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import cuketmon.config.TestDummyDataConfig;
 import cuketmon.config.TestSkillDataConfig;
-import cuketmon.damageclass.DamageClass;
+import cuketmon.constant.damageclass.DamageClass;
+import cuketmon.constant.type.Type;
 import cuketmon.skill.entity.Skill;
 import cuketmon.skill.repository.SkillRepository;
-import cuketmon.type.Type;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

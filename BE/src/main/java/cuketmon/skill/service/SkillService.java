@@ -1,11 +1,11 @@
 package cuketmon.skill.service;
 
-import cuketmon.damageclass.DamageClass;
+import cuketmon.constant.damageclass.DamageClass;
+import cuketmon.constant.type.Type;
 import cuketmon.monster.dto.MonsterDTO;
 import cuketmon.skill.dto.SkillResponse;
 import cuketmon.skill.entity.Skill;
 import cuketmon.skill.repository.SkillRepository;
-import cuketmon.type.Type;
 import cuketmon.util.CustomLogger;
 import cuketmon.util.Random;
 import java.util.Collections;

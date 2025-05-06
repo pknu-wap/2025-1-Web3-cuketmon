@@ -1,8 +1,8 @@
 package cuketmon.skill.repository;
 
-import cuketmon.damageclass.DamageClass;
+import cuketmon.constant.damageclass.DamageClass;
+import cuketmon.constant.type.Type;
 import cuketmon.skill.entity.Skill;
-import cuketmon.type.Type;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;

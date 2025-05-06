@@ -1,4 +1,4 @@
-package cuketmon.damageclass;
+package cuketmon.constant.damageclass;
 
 import java.util.Arrays;
 

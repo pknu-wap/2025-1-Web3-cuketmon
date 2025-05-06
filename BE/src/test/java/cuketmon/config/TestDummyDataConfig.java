@@ -1,5 +1,6 @@
 package cuketmon.config;
 
+import cuketmon.constant.type.Type;
 import cuketmon.monster.embeddable.Affinity;
 import cuketmon.monster.entity.Monster;
 import cuketmon.monster.repository.MonsterRepository;
@@ -7,7 +8,6 @@ import cuketmon.trainer.embeddable.Feed;
 import cuketmon.trainer.embeddable.Toy;
 import cuketmon.trainer.entity.Trainer;
 import cuketmon.trainer.repository.TrainerRepository;
-import cuketmon.type.Type;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.TestConfiguration;
