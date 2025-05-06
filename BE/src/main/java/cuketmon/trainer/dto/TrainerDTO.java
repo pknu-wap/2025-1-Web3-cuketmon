@@ -1,14 +1,22 @@
 package cuketmon.trainer.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.*;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
+
 public class TrainerDTO {
 
-    private int rank;
-    private String name;
+    //Get
+   private int rank;
+//    private String name;
     private int win;
+    private int lose;
+    private int allBattles;
 
+    //Request
+    private String trainerName;
 }

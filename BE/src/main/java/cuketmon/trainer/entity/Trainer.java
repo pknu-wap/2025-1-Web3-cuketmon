@@ -41,16 +41,24 @@ public class Trainer {
     })
     private Feed feed;
 
+    //랭킹 시스템
     @Column(nullable = false)
     private Integer win;
 
+    @Column(nullable = false)
+    private Integer lose;
+
+    public void addWin() { this.win += 1; }
+
+    public void addLose() { this.lose += 1; }
+
+    public int getallBattles() {
+        return this.win + this.lose;
+    }
+  
     @OneToMany(mappedBy = "trainer", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @Builder.Default
     private List<Monster> monsters = new ArrayList<>();
-
-    public void addWin() {
-        win += 1;
-    }
 
     public void addMonster(Monster monster) {
         monsters.add(monster);
