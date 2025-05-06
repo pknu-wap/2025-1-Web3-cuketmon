@@ -1,21 +1,25 @@
 package cuketmon.trainer.entity;
 
+import cuketmon.monster.entity.Monster;
 import cuketmon.trainer.embeddable.Feed;
 import cuketmon.trainer.embeddable.Toy;
 import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.AttributeOverrides;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Getter
-@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -38,7 +42,6 @@ public class Trainer {
     private Feed feed;
 
     //랭킹 시스템
-
     @Column(nullable = false)
     private Integer win;
 
@@ -51,6 +54,15 @@ public class Trainer {
 
     public int getallBattles() {
         return this.win + this.lose;
+    }
+  
+    @OneToMany(mappedBy = "trainer", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @Builder.Default
+    private List<Monster> monsters = new ArrayList<>();
+
+    public void addMonster(Monster monster) {
+        monsters.add(monster);
+        monster.setTrainer(this);
     }
 
 }

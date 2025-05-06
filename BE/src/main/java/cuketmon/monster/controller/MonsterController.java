@@ -6,6 +6,7 @@ import cuketmon.monster.service.MonsterService;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,10 +31,9 @@ public class MonsterController {
 
     // 몬스터 생성 기능
     @PostMapping("/generate")
-    public ResponseEntity<Map<String, Integer>> generateMonster(
-            @Validated @RequestBody GenerateApiRequestBody requestBody) {
-        System.out.println("generate 진입");
-        Integer monsterId = monsterService.generate(requestBody);
+    public ResponseEntity<Map<String, Integer>> generateMonster(@AuthenticationPrincipal String trainerName,
+                                                                @Validated @RequestBody GenerateApiRequestBody requestBody) {
+        Integer monsterId = monsterService.generate(trainerName, requestBody);
         return ResponseEntity.ok(Map.of("monsterId", monsterId));
     }
 
@@ -49,6 +49,7 @@ public class MonsterController {
         }
     }
 
+    // 커켓몬 놓아주기
     @DeleteMapping("/{monsterId}/release")
     public ResponseEntity<String> releaseMonster(@PathVariable Integer monsterId) {
         try {
@@ -61,9 +62,10 @@ public class MonsterController {
 
     // 먹이 주기
     @PostMapping("/{monsterId}/feed")
-    public ResponseEntity<String> feedMonster(@PathVariable Integer monsterId) {
+    public ResponseEntity<String> feedMonster(@AuthenticationPrincipal String trainerName,
+                                              @PathVariable Integer monsterId) {
         try {
-            monsterService.feed(monsterId);
+            monsterService.feed(trainerName, monsterId);
             return ResponseEntity.ok("먹이를 주었습니다.");
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -72,9 +74,10 @@ public class MonsterController {
 
     // 놀아 주기
     @PostMapping("/{monsterId}/play")
-    public ResponseEntity<String> playWithMonster(@PathVariable Integer monsterId) {
+    public ResponseEntity<String> playWithMonster(@AuthenticationPrincipal String trainerName,
+                                                  @PathVariable Integer monsterId) {
         try {
-            monsterService.play(monsterId);
+            monsterService.play(trainerName, monsterId);
             return ResponseEntity.ok("놀아주었습니다.");
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());

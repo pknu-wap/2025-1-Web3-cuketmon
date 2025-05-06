@@ -11,7 +11,10 @@ import jakarta.persistence.PostRemove;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/trainer")
@@ -25,18 +28,6 @@ public class TrainerController {
     }
 
     // 남은 장난감의 개수를 확인
-    @GetMapping("/{trainerName}/toys")
-    public Integer getRemainingToys_(@PathVariable String trainerName) {
-        return trainerService.getRemainingToys(trainerName);
-    }
-
-    // 남은 먹이의 개수를 확인
-    @GetMapping("/{trainerName}/feeds")
-    public Integer getRemainingFeeds_(@PathVariable String trainerName) {
-        return trainerService.getRemainingFeeds(trainerName);
-    }
-
-    // 남은 장난감의 개수를 확인
     @GetMapping("/toys")
     public Integer getRemainingToys(@AuthenticationPrincipal String trainerName) {
         return trainerService.getRemainingToys(trainerName);
@@ -47,8 +38,6 @@ public class TrainerController {
     public Integer getRemainingFeeds(@AuthenticationPrincipal String trainerName) {
         return trainerService.getRemainingFeeds(trainerName);
     }
-
-
 
     // 랭킹 시스템
     //전체 트레이너 랭킹
@@ -82,6 +71,10 @@ public class TrainerController {
         } catch (NoSuchElementException e) {
             return ResponseEntity.status(404).body(Map.of("[ERROR]", e.getMessage()));
         }
+    // 자신의 커켓몬 보기
+    @GetMapping("/monsters")
+    public ResponseEntity<List<Integer>> getMyMonsterIds(@AuthenticationPrincipal String trainerName) {
+        return ResponseEntity.ok(trainerService.getMonsterIds(trainerName));
     }
 
 }

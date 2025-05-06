@@ -37,10 +37,8 @@ public enum Type {
 
     public static Type fromString(String name) {
         if (name == null || name.isBlank()) {
-            throw new IllegalArgumentException("[ERROR] 입력값이 비어있습니다.");
+            return null;
         }
-
-        System.out.println("[LOG] 입력된 타입 값: \"" + name + "\"");
 
         return Arrays.stream(values())
                 .filter(type -> type.name().equalsIgnoreCase(name) ||
