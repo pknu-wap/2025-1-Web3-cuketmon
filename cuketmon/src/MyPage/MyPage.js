@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {  useRef, useEffect, useState } from 'react';
 import MenuBar from "../Menubar/Menubar.js";
 import './MyPage.css';
 import { useAuth } from '../AuthContext';
@@ -14,7 +14,7 @@ function MyPage() {
   const [monsters, setMonsters] = useState([]); 
   const API_URL = process.env.REACT_APP_API_URL;
   const { token } = useAuth();
-
+  const isLoadingRef = useRef(false);
 
   /*유저 소유 커켓몬 조회하기 */
   const loadCukemon = async () => {
@@ -92,18 +92,20 @@ function MyPage() {
 
   /*데이터 업뎃*/
   const fetchData = async () => {
+    if (isLoadingRef.current) return;  
+    isLoadingRef.current = true;  
     try {
       setLoading(true);
       const trainerData = await loadTrainerData(); 
       setToyCount(trainerData.toys);  
       setFeedCount(trainerData.feeds);
-
       const cukemon = await loadCukemonData(); 
       setCukemonData(cukemon);
     } catch (error) {
       console.error("데이터 로딩 실패:", error.message);
     } finally {
       setLoading(false);
+      isLoadingRef.current = false; 
     }
   };
   useEffect(() => {
