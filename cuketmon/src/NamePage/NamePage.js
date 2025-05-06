@@ -37,7 +37,7 @@ function NamePage() {
     }
 
     try {
-      const response = await fetch(`${API_URL}/monster/${monsterId}/name`, {
+      const response = await fetch(`${API_URL}/api/monster/${monsterId}/name`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -78,7 +78,7 @@ function NamePage() {
             type="text"
             value={name}
             onChange={namingCukemon}
-            placeholder="커켓몬 이름을 입력해주세요."
+            placeholder="커켓몬 이름 입력"
             maxLength={maxLength}
           />
           <div id="remainWord">{name.length}/{maxLength}자</div>
