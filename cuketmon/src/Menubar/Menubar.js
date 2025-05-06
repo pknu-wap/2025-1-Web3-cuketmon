@@ -1,33 +1,25 @@
-import { useAuth } from '../AuthContext';
+import { useNavigate } from 'react-router-dom';
 import './Menubar.css';
 
 const MenuBar = () => {
-  const { token } = useAuth(); 
-
-  const handleNavigation = (path) => {
-    const url = new URL(window.location.origin + path);
-    if (token) {
-      url.searchParams.set('token', token);
-    }
-    window.location.href = url.toString();
-  };
+  const navigate = useNavigate();
 
   return (
     <div className="menubarItems">
-      <button className="makePageLink" onClick={() => handleNavigation('/make')}>
-        <img src="/Menubar/egg.png" alt="egg" />
+      <button className="makePageLink" onClick={() => navigate('/make')}>
+        <img src="/Menubar/egg.webp" alt="egg" />
         커켓몬 만들기
       </button>
-      <button className="battleLink" onClick={() => handleNavigation('/battle')}>
-        <img src="/Menubar/battleicon.png" alt="battle" />
+      <button className="battleLink" onClick={() => navigate('/battle')}>
+        <img src="/Menubar/battleicon.webp" alt="battle" />
         전투
       </button>
-      <button className="rankingLink" onClick={() => handleNavigation('/ranking')}>
-        <img src="/Menubar/rankingicon.png" alt="ranking" />
+      <button className="rankingLink" onClick={() => navigate('/ranking')}>
+        <img src="/Menubar/rankingicon.webp" alt="ranking" />
         랭킹
       </button>
-      <button className="myPageLink" onClick={() => handleNavigation('/mypage')}>
-        <img src="/Menubar/mypageicon.png" alt="myPage" />
+      <button className="myPageLink" onClick={() => navigate('/mypage')}>
+        <img src="/Menubar/mypageicon.webp" alt="myPage" />
         마이페이지
       </button>
     </div>

@@ -4,7 +4,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background: url("/public/LoginPage/background.png") no-repeat center center
+  background: url("/public/LoginPage/background.webp") no-repeat center center
     fixed;
   background-size: contain;
   background-color: black;
@@ -28,11 +28,18 @@
   background-position: center;
   border: none;
   cursor: pointer;
-  font-size: 1vw;
   font-weight: bold;
   color: white;
   text-align: right;
   transition: background-image 0.3s ease;
+}
+
+#loginStart {
+  color: white;
+  position: absolute;
+  top: 76.5%;
+  left: 47.5%;
+  font-size: 1vw;
 }
 
 .kakaoButton:hover {
@@ -48,7 +55,7 @@
   }
 
   .login {
-    background-position: top center;
+    background-position: center;
   }
 
   #webLogo {
@@ -64,15 +71,12 @@
   }
 
   .kakaoButton:hover {
-    background-image: url("/public/button-hover.png");
-  }
-
-  .kakaoButton:hover {
     font-size: 5vw;
   }
 
-  .buttonText {
-    font-size: 6vw;
-    top: 80%;
+  #loginStart {
+    font-size: 10px;
+    top: 82%;
+    left: 43.8%;
   }
 }
