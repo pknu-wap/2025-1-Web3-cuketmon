@@ -1,6 +1,7 @@
 package cuketmon.trainer.embeddable;
 
 import static cuketmon.constant.message.ErrorMessages.FEED_INVALID_AMOUNT;
+import static cuketmon.trainer.constant.TrainerConst.INIT_FEED_COUNT;
 
 import jakarta.persistence.Embeddable;
 import lombok.Getter;
@@ -12,7 +13,7 @@ public class Feed {
     private Integer count;
 
     public Feed() {
-        this.count = 100;
+        this.count = INIT_FEED_COUNT;
     }
 
     public int decrease(int amount) {

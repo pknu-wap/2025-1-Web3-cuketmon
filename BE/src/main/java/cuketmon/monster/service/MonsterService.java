@@ -2,6 +2,14 @@ package cuketmon.monster.service;
 
 import static cuketmon.constant.message.ErrorMessages.MONSTER_NOT_FOUND;
 import static cuketmon.constant.message.ErrorMessages.TRAINER_NOT_FOUND;
+import static cuketmon.monster.constant.MonsterConst.AFFINITY_PLUS;
+import static cuketmon.monster.constant.MonsterConst.FEED_MINUS;
+import static cuketmon.monster.constant.MonsterConst.MAX_BASE;
+import static cuketmon.monster.constant.MonsterConst.MAX_DAMAGE;
+import static cuketmon.monster.constant.MonsterConst.MID_DAMAGE;
+import static cuketmon.monster.constant.MonsterConst.MIN_BASE;
+import static cuketmon.monster.constant.MonsterConst.MIN_DAMAGE;
+import static cuketmon.monster.constant.MonsterConst.TOY_MINUS;
 import static cuketmon.util.Random.getRandomInRange;
 
 import cuketmon.constant.damageclass.DamageClass;
@@ -28,18 +36,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class MonsterService {
 
     private static final Logger log = CustomLogger.getLogger(MonsterService.class);
-
-    // TODO: 상수 묶어내기
-    public static final int MIN_BASE = 60;
-    public static final int MAX_BASE = 100;
-
-    public static final int MIN_DAMAGE = 10;
-    public static final int MID_DAMAGE = 80;
-    public static final int MAX_DAMAGE = 500;
-
-    private static final int FEED_MINUS = 1;
-    private static final int TOY_MINUS = 1;
-    private static final int AFFINITY_PLUS = 1;
 
     private final TrainerRepository trainerRepository;
     private final MonsterRepository monsterRepository;

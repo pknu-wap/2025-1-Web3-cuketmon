@@ -1,6 +1,8 @@
 package cuketmon.skill.service;
 
 import static cuketmon.constant.message.ErrorMessages.SKILL_NOT_FOUND;
+import static cuketmon.skill.constant.SkillConst.SKILL_API_URL;
+import static cuketmon.skill.constant.SkillConst.TOTAL_SKILL;
 
 import cuketmon.constant.damageclass.DamageClass;
 import cuketmon.constant.type.Type;
@@ -22,9 +24,6 @@ import org.springframework.web.reactive.function.client.WebClient;
 public class SkillService {
 
     private static final Logger log = CustomLogger.getLogger(SkillService.class);
-
-    private static final int TOTAL_SKILL = 919;
-    private static final String SKILL_API_URL = "https://pokeapi.co/api/v2/move";
 
     private final SkillRepository skillRepository;
     private final WebClient skillWebClient;
