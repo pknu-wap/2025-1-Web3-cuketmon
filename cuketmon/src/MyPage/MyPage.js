@@ -24,7 +24,7 @@ function MyPage() {
         headers: { 'Authorization': `Bearer ${token}` },
       });
       const data = await res.json();
-      const monsterIds = Array.isArray(data.id) ? data.id : [data.id];
+      const monsterIds = Array.isArray(data) ? data : [];  
       setMonsters(monsterIds);     
       console.log(monsterIds)
       setMonsterId(0);             
