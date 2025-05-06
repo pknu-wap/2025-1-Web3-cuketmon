@@ -1,5 +1,7 @@
 package cuketmon.battle.service;
 
+import static cuketmon.constant.TestConfig.TRAINER1;
+import static cuketmon.constant.TestConfig.TRAINER2;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.anyString;
 import static org.mockito.Mockito.mock;
@@ -8,12 +10,12 @@ import static org.mockito.Mockito.startsWith;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-import cuketmon.TestDummyDataConfig;
-import cuketmon.TestSkillDataConfig;
 import cuketmon.battle.dto.MatchResponse;
 import cuketmon.battle.dto.SkillRequest;
 import cuketmon.battle.dto.TrainerRequest;
 import cuketmon.battle.dto.TurnResponse;
+import cuketmon.config.TestDummyDataConfig;
+import cuketmon.config.TestSkillDataConfig;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +39,7 @@ class BattleMatchServiceTest {
 
     @Test
     void 대기자가_없으면_대기열에_등록된다() {
-        TrainerRequest trainer = new TrainerRequest("dummy_trainer", 1);
+        TrainerRequest trainer = new TrainerRequest(TRAINER1, 1);
 
         battleMatchService.findBattle(trainer);
 
@@ -46,8 +48,8 @@ class BattleMatchServiceTest {
 
     @Test
     void 대기자가_있으면_매칭되고_메시지가_전송된다() {
-        TrainerRequest trainer1 = new TrainerRequest("first", 1);
-        TrainerRequest trainer2 = new TrainerRequest("second", 2);
+        TrainerRequest trainer1 = new TrainerRequest(TRAINER1, 1);
+        TrainerRequest trainer2 = new TrainerRequest(TRAINER2, 2);
 
         battleMatchService.findBattle(trainer1);
         battleMatchService.findBattle(trainer2);
@@ -57,8 +59,8 @@ class BattleMatchServiceTest {
 
     @Test
     void 커켓몬_스킬을_사용하면_계산된_데미지가_전송된다() {
-        TrainerRequest trainer1 = new TrainerRequest("attacker", 1);
-        TrainerRequest trainer2 = new TrainerRequest("defender", 2);
+        TrainerRequest trainer1 = new TrainerRequest(TRAINER1, 1);
+        TrainerRequest trainer2 = new TrainerRequest(TRAINER2, 2);
         battleMatchService.findBattle(trainer1);
         battleMatchService.findBattle(trainer2);
 
@@ -68,7 +70,7 @@ class BattleMatchServiceTest {
         verify(messagingTemplate, times(1)).convertAndSend(startsWith("/topic/match/"), captor.capture());
 
         int battleId = captor.getValue().getBattleId();
-        battleMatchService.useSkill(battleId, new SkillRequest(1, "attacker"));
+        battleMatchService.useSkill(battleId, new SkillRequest(1, TRAINER1));
 
         verify(messagingTemplate, times(1)).convertAndSend(startsWith("/topic/turn/"), any(TurnResponse.class));
     }

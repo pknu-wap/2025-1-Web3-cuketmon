@@ -1,13 +1,13 @@
 package cuketmon.monster.embeddable;
 
+import static cuketmon.monster.constant.MonsterConst.BOUND;
+
 import jakarta.persistence.Embeddable;
 import lombok.Getter;
 
 @Getter
 @Embeddable
 public class Affinity {
-
-    private static final int BOUND = 100;
 
     private Integer count;
 

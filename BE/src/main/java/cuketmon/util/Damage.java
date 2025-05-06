@@ -1,11 +1,11 @@
 package cuketmon.util;
 
-import static cuketmon.type.TypeDamageTable.getDamageMultiplier;
+import static cuketmon.constant.type.TypeDamageTable.getDamageMultiplier;
 import static cuketmon.util.Random.getRandomInRange;
 
-import cuketmon.damageclass.DamageClass;
+import cuketmon.constant.damageclass.DamageClass;
+import cuketmon.constant.type.Type;
 import cuketmon.monster.dto.MonsterDTO.MonsterBattleInfo;
-import cuketmon.type.Type;
 
 public class Damage {
 

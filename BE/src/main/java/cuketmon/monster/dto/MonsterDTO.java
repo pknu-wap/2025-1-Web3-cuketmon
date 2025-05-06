@@ -1,6 +1,6 @@
 package cuketmon.monster.dto;
 
-import cuketmon.type.Type;
+import cuketmon.constant.type.Type;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

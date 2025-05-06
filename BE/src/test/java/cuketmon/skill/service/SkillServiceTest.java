@@ -1,15 +1,16 @@
 package cuketmon.skill.service;
 
+import static cuketmon.constant.message.ErrorMessages.SKILL_NOT_FOUND;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import cuketmon.TestDummyDataConfig;
-import cuketmon.TestSkillDataConfig;
-import cuketmon.damageclass.DamageClass;
+import cuketmon.config.TestDummyDataConfig;
+import cuketmon.config.TestSkillDataConfig;
+import cuketmon.constant.damageclass.DamageClass;
+import cuketmon.constant.type.Type;
 import cuketmon.skill.entity.Skill;
 import cuketmon.skill.repository.SkillRepository;
-import cuketmon.type.Type;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -30,7 +31,7 @@ class SkillServiceTest {
         Integer skillId = skillService.getSkillId(Type.WATER, DamageClass.SPECIAL, 30, 100);
 
         Skill skill = skillRepository.findById(skillId)
-                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당 ID의 스킬이 없습니다."));
+                .orElseThrow(() -> new IllegalArgumentException(SKILL_NOT_FOUND));
 
         assertEquals(DamageClass.SPECIAL.toString(), skill.getDamageClass().toString());
     }
@@ -40,7 +41,7 @@ class SkillServiceTest {
         Integer skillId = skillService.getSkillId(Type.GRASS, DamageClass.SPECIAL, 30, 100);
 
         Skill skill = skillRepository.findById(skillId)
-                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당 ID의 스킬이 없습니다."));
+                .orElseThrow(() -> new IllegalArgumentException(SKILL_NOT_FOUND));
 
         assertTrue(skill.getPower() >= 30 && skill.getPower() <= 100);
     }

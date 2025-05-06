@@ -1,5 +1,8 @@
 package cuketmon.trainer.embeddable;
 
+import static cuketmon.constant.message.ErrorMessages.TOY_INVALID_AMOUNT;
+import static cuketmon.trainer.constant.TrainerConst.INIT_FEED_COUNT;
+
 import jakarta.persistence.Embeddable;
 import lombok.Getter;
 
@@ -10,12 +13,12 @@ public class Toy {
     private Integer count;
 
     public Toy() {
-        this.count = 100;
+        this.count = INIT_FEED_COUNT;
     }
 
     public int decrease(int amount) {
         if (!validate(amount)) {
-            throw new IllegalArgumentException("[ERROR] 장난감이 부족합니다.");
+            throw new IllegalArgumentException(TOY_INVALID_AMOUNT);
         }
         return this.count -= amount;
     }

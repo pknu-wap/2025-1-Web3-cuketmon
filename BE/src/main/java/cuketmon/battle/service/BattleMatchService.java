@@ -2,7 +2,6 @@ package cuketmon.battle.service;
 
 import static cuketmon.util.Damage.makeDamage;
 
-import cuketmon.battle.TeamMaker;
 import cuketmon.battle.constant.BattleStatus;
 import cuketmon.battle.dto.BattleDTO;
 import cuketmon.battle.dto.EndBattleResponse;
@@ -11,6 +10,7 @@ import cuketmon.battle.dto.MatchResponse;
 import cuketmon.battle.dto.SkillRequest;
 import cuketmon.battle.dto.TrainerRequest;
 import cuketmon.battle.dto.TurnResponse;
+import cuketmon.battle.util.TeamMaker;
 import cuketmon.monster.dto.MonsterDTO;
 import cuketmon.monster.dto.MonsterDTO.MonsterBattleInfo;
 import cuketmon.trainer.service.TrainerService;

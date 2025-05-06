@@ -2,11 +2,11 @@ package cuketmon.util;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import cuketmon.TestDummyDataConfig;
-import cuketmon.TestSkillDataConfig;
-import cuketmon.battle.TeamMaker;
 import cuketmon.battle.dto.BattleDTO;
 import cuketmon.battle.dto.TrainerRequest;
+import cuketmon.battle.util.TeamMaker;
+import cuketmon.config.TestDummyDataConfig;
+import cuketmon.config.TestSkillDataConfig;
 import cuketmon.monster.dto.MonsterDTO;
 import cuketmon.skill.service.SkillService;
 import org.junit.jupiter.api.Test;
@@ -20,7 +20,7 @@ class DamageTest {
 
     @Autowired
     private final TeamMaker teamMaker;
-    
+
     @Autowired
     private final SkillService skillService;
 

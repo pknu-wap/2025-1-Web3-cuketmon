@@ -2,8 +2,8 @@ package cuketmon.monster.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import cuketmon.TestDummyDataConfig;
-import cuketmon.TestSkillDataConfig;
+import cuketmon.config.TestDummyDataConfig;
+import cuketmon.config.TestSkillDataConfig;
 import cuketmon.monster.entity.Monster;
 import cuketmon.monster.repository.MonsterRepository;
 import cuketmon.trainer.entity.Trainer;

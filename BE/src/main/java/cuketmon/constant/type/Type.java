@@ -1,4 +1,4 @@
-package cuketmon.type;
+package cuketmon.constant.type;
 
 import java.util.Arrays;
 import lombok.Getter;

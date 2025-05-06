@@ -1,6 +1,6 @@
 package cuketmon.prompt.entity;
 
-import cuketmon.type.Type;
+import cuketmon.constant.type.Type;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
