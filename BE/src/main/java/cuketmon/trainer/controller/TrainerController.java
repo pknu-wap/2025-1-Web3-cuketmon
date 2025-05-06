@@ -40,15 +40,9 @@ public class TrainerController {
     // 랭킹 시스템
     //전체 트레이너 랭킹
 
-<<<<<<< Updated upstream
-    @PostMapping("/ranking")
-    public ResponseEntity<List<TrainerDTO>> getTrainerRanking(@RequestBody TrainerDTO request) {
-        return ResponseEntity.ok(trainerService.getTrainerRanking());
-=======
     @PostMapping("/ranking/all")
     public ResponseEntity<List<TrainerDTO>> getAllRanking() {
         return ResponseEntity.ok(trainerService.getAllRanking());
->>>>>>> Stashed changes
     }
 
     //개인 트레이너 개별 랭킹
@@ -57,11 +51,7 @@ public class TrainerController {
     public ResponseEntity<?> getSingleRanking(@AuthenticationPrincipal String trainerName){
     //public ResponseEntity<?> getSingleRanking(@RequestBody TrainerDTO request) {
         try {
-<<<<<<< Updated upstream
-            String trainerName = request.getTrainerName();
-=======
             //String trainerName = request.getTrainerName ();
->>>>>>> Stashed changes
             TrainerDTO dto = trainerService.getSingleRanking(trainerName);
             return ResponseEntity.ok(dto);
         } catch (IllegalArgumentException e) {//catch (NoSuchElementException e) {
