@@ -5,7 +5,6 @@ import "./MakeResult.css";
 function MakeResult() {
   const [cukemonImage, setCukemonImage] = useState("/MakeResultPage/movingEgg.gif");
   const [mentText, setMentText] = useState("어라...?");
-  const [base64Image, setBase64Image] = useState(""); 
   const eggRef = useRef(null);
   const navigate = useNavigate();
   const location = useLocation();
@@ -18,8 +17,8 @@ function MakeResult() {
       setTimeout(async () => {
         if (!monsterId || !token) return;
 
-        /*try*/{
-          const response = await fetch(`${API_URL}/api/monster/${monsterId}/info`, { //수정 예정임(백엔드에서 이미지를 url로 받게!)
+        try{
+          const response = await fetch(`${API_URL}/api/monster/${monsterId}/info`, {
             method: "GET",
             headers: {
               Authorization: `Bearer ${token}`,
@@ -30,24 +29,22 @@ function MakeResult() {
           console.log(data.image);
 
           if (data.image) {
-            const fullImage = `data:image/png;base64,${data.image}`;
-            setCukemonImage(fullImage);
-            setBase64Image(fullImage);
+            setCukemonImage(data.image);     
             setMentText("처음보는 포켓몬이 나타났다!");
             navigate(`/NamePage`, {
               state: {
                 monsterId: monsterId,
-                image: fullImage,
+                image: data.image,
               },
             });
           } else {
             throw new Error("이미지 없음");
           }
-        } //catch (error) {
-        //   console.error("이미지 로드 실패:", error);
-        //   setCukemonImage("");
-        //   setMentText("커켓몬이 도망쳤다.(다시 시도하려면 클릭)");
-        // }
+        } catch (error) {
+           console.error("이미지 로드 실패:", error);
+           setCukemonImage("");
+           setMentText("커켓몬이 도망쳤다.(다시 시도하려면 클릭)");
+        }
       }, 10000);
     };
 
