@@ -1,10 +1,10 @@
 package cuketmon.trainer.service;
 
-import cuketmon.CustomLogger;
 import cuketmon.monster.entity.Monster;
 import cuketmon.trainer.dto.TrainerDTO;
 import cuketmon.trainer.entity.Trainer;
 import cuketmon.trainer.repository.TrainerRepository;
+import cuketmon.util.CustomLogger;
 import jakarta.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;

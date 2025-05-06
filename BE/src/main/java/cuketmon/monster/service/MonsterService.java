@@ -2,7 +2,6 @@ package cuketmon.monster.service;
 
 import static cuketmon.util.Random.getRandomInRange;
 
-import cuketmon.CustomLogger;
 import cuketmon.damageclass.DamageClass;
 import cuketmon.monster.dto.GenerateApiRequestBody;
 import cuketmon.monster.dto.MonsterDTO;
@@ -16,6 +15,7 @@ import cuketmon.skill.service.SkillService;
 import cuketmon.trainer.entity.Trainer;
 import cuketmon.trainer.repository.TrainerRepository;
 import cuketmon.type.Type;
+import cuketmon.util.CustomLogger;
 import java.util.List;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;

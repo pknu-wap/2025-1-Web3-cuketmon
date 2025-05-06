@@ -1,9 +1,9 @@
 package cuketmon.prompt.service;
 
-import cuketmon.CustomLogger;
 import cuketmon.prompt.entity.Prompt;
 import cuketmon.prompt.repository.PromptRepository;
 import cuketmon.type.Type;
+import cuketmon.util.CustomLogger;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
