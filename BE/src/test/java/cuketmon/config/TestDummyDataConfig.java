@@ -1,4 +1,4 @@
-package cuketmon;
+package cuketmon.config;
 
 import cuketmon.monster.embeddable.Affinity;
 import cuketmon.monster.entity.Monster;

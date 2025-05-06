@@ -4,8 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import cuketmon.TestDummyDataConfig;
-import cuketmon.TestSkillDataConfig;
+import cuketmon.config.TestDummyDataConfig;
+import cuketmon.config.TestSkillDataConfig;
 import cuketmon.damageclass.DamageClass;
 import cuketmon.skill.entity.Skill;
 import cuketmon.skill.repository.SkillRepository;

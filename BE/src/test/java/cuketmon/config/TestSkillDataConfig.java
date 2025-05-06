@@ -1,4 +1,4 @@
-package cuketmon;
+package cuketmon.config;
 
 import cuketmon.damageclass.DamageClass;
 import cuketmon.skill.entity.Skill;

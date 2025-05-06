@@ -1,4 +1,4 @@
-package cuketmon.battle;
+package cuketmon.battle.util;
 
 import cuketmon.battle.dto.BattleDTO;
 import cuketmon.battle.dto.TrainerRequest;

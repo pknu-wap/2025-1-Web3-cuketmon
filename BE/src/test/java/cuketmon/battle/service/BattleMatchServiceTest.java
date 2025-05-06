@@ -8,12 +8,12 @@ import static org.mockito.Mockito.startsWith;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-import cuketmon.TestDummyDataConfig;
-import cuketmon.TestSkillDataConfig;
 import cuketmon.battle.dto.MatchResponse;
 import cuketmon.battle.dto.SkillRequest;
 import cuketmon.battle.dto.TrainerRequest;
 import cuketmon.battle.dto.TurnResponse;
+import cuketmon.config.TestDummyDataConfig;
+import cuketmon.config.TestSkillDataConfig;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.springframework.beans.factory.annotation.Autowired;
