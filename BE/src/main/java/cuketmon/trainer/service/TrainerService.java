@@ -7,7 +7,6 @@ import cuketmon.trainer.repository.TrainerRepository;
 import jakarta.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -62,10 +61,8 @@ public class TrainerService {
         List<TrainerDTO> rankingList = new ArrayList<>();
 
         int rank = 1;
-
         for (Trainer t : sorted) {
             rankingList.add(new TrainerDTO(
-
                             rank++,
                             t.getName(),
                             t.getWin(),
@@ -74,18 +71,17 @@ public class TrainerService {
                     )
             );
         }
-
         return rankingList;
     }
 
     //트레이너 개인 랭킹
     @Transactional
-    public TrainerDTO getSingleRanking(String trainerName){
+    public TrainerDTO getSingleRanking(String trainerName) {
         List<Trainer> sorted = trainerRepository.findAllByOrderByWinDesc();
 
         int rank = 1;
-        for(Trainer t : sorted) {
-            if(t.getName().equals(trainerName)) {
+        for (Trainer t : sorted) {
+            if (t.getName().equals(trainerName)) {
                 return new TrainerDTO(
                         rank,
                         t.getName(),
