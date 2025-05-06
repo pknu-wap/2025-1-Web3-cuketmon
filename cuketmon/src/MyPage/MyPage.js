@@ -162,10 +162,11 @@ function MyPage() {
         headers: { 'Authorization': `Bearer ${token}` },
       });
       const data = await res.json();
+      const parsedId = parseInt(data?.id);
       return {
-        img: data?.image || '/Menubar/egg.png',
+        img: data?.image ? `data:image/png;base64,${data.image}` : '/Menubar/egg.png', 
         affinity: parseInt(data?.affinity) || 0,
-        id: parseInt(data?.id) || "정보 없음",
+        id: isNaN(parsedId) ? null : parsedId,
         name: data?.name || "이름 없음",
       };
     } catch (error) {
