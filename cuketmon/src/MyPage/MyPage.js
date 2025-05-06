@@ -109,10 +109,8 @@ function MyPage() {
     }
   };
   useEffect(() => {
-    if (monsterId != null && monsters.length > 0 && monsters[monsterId] != null) {
       fetchData();
-    }
-  }, [monsterId, monsters])
+  }, [monsterId])
 
   /*먹이,놀아 주기 애니메이션*/
   const handleActionClick = async (actionFn, setActionState) => {
