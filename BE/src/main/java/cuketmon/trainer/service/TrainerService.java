@@ -4,14 +4,18 @@ import cuketmon.monster.entity.Monster;
 import cuketmon.trainer.dto.TrainerDTO;
 import cuketmon.trainer.entity.Trainer;
 import cuketmon.trainer.repository.TrainerRepository;
+import cuketmon.util.CustomLogger;
 import jakarta.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class TrainerService {
+
+    private static final Logger log = CustomLogger.getLogger(TrainerService.class);
 
     private final TrainerRepository trainerRepository;
 
@@ -22,6 +26,7 @@ public class TrainerService {
 
     @Transactional
     public Integer getRemainingToys(String name) {
+        log.info("잔여 장난감 조회 요청: {}", name);
         Trainer trainer = trainerRepository.findById(name)
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당 트레이너를 찾을 수 없습니다."));
 
@@ -30,6 +35,7 @@ public class TrainerService {
 
     @Transactional
     public Integer getRemainingFeeds(String name) {
+        log.info("잔여 먹이 조회 요청: {}", name);
         Trainer trainer = trainerRepository.findById(name)
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당 트레이너를 찾을 수 없습니다."));
 
@@ -38,6 +44,7 @@ public class TrainerService {
 
     @Transactional
     public void addWin(String name) {
+        log.info("승리 추가 요청: {}", name);
         Trainer trainer = trainerRepository.findById(name)
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당 트레이너를 찾을 수 없습니다."));
 

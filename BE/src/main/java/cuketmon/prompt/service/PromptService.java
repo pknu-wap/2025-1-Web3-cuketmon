@@ -3,11 +3,15 @@ package cuketmon.prompt.service;
 import cuketmon.prompt.entity.Prompt;
 import cuketmon.prompt.repository.PromptRepository;
 import cuketmon.type.Type;
+import cuketmon.util.CustomLogger;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class PromptService {
+
+    private static final Logger log = CustomLogger.getLogger(PromptService.class);
 
     private final PromptRepository promptRepository;
 
@@ -25,6 +29,7 @@ public class PromptService {
                 .build();
 
         promptRepository.save(prompt);
+        log.info("커켓몬 프롬프트 생성, id={}, description={}", id, description);
     }
 
 }
