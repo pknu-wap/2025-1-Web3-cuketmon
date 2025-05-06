@@ -38,9 +38,10 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         Trainer trainer = trainerRepository.findById(name)
                 .orElseGet(() -> trainerRepository.save(Trainer.builder()
                         .name(name)      // PK    name
-                        .toy(new Toy())  // 초기값 설정
-                        .feed(new Feed())// 초기값 설정
-                        .win(0)          // 초기값 설정
+                        .toy(new Toy())
+                        .feed(new Feed())
+                        .win(0)
+                        .lose(0)
                         .build()));
 
         // 사용자 정보를 Spring Security에 넘김

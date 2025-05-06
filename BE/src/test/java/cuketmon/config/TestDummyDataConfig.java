@@ -33,12 +33,14 @@ public class TestDummyDataConfig {
                 .toy(new Toy())
                 .feed(new Feed())
                 .win(0)
+                .lose(0)
                 .build());
         trainerRepository.save(Trainer.builder()
                 .name(TRAINER2)
                 .toy(new Toy())
                 .feed(new Feed())
                 .win(0)
+                .lose(0)
                 .build());
 
         monsterRepository.save(Monster.builder()

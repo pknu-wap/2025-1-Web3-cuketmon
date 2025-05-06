@@ -76,7 +76,7 @@ public class TrainerService {
                             t.getName(),
                             t.getWin(),
                             t.getLose(),
-                            t.getallBattles()
+                            t.getAllBattles()
                     )
             );
         }
@@ -96,7 +96,7 @@ public class TrainerService {
                         t.getName(),
                         t.getWin(),
                         t.getLose(),
-                        t.getallBattles()
+                        t.getAllBattles()
                 );
             }
             rank++;
