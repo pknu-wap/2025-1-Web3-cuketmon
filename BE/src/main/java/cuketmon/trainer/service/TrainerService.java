@@ -64,7 +64,7 @@ public class TrainerService {
     //랭킹 시스템
     //트레이너 전체 랭킹
     @Transactional
-    public List<TrainerDTO> getTrainerRanking() {
+    public List<TrainerDTO> getAllRanking() {
         List<Trainer> sorted = trainerRepository.findAllByOrderByWinDesc();
 
         List<TrainerDTO> rankingList = new ArrayList<>();
