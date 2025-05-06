@@ -1,5 +1,10 @@
 package cuketmon.config;
 
+import static cuketmon.constant.TestConfig.MONSTER1;
+import static cuketmon.constant.TestConfig.MONSTER2;
+import static cuketmon.constant.TestConfig.TRAINER1;
+import static cuketmon.constant.TestConfig.TRAINER2;
+
 import cuketmon.constant.type.Type;
 import cuketmon.monster.embeddable.Affinity;
 import cuketmon.monster.entity.Monster;
@@ -24,20 +29,20 @@ public class TestDummyDataConfig {
     @PostConstruct
     public void initDummyData() {
         trainerRepository.save(Trainer.builder()
-                .name("dummy_trainer")
+                .name(TRAINER1)
                 .toy(new Toy())
                 .feed(new Feed())
                 .win(0)
                 .build());
         trainerRepository.save(Trainer.builder()
-                .name("kng")
+                .name(TRAINER2)
                 .toy(new Toy())
                 .feed(new Feed())
                 .win(0)
                 .build());
 
         monsterRepository.save(Monster.builder()
-                .name("dummy_monster1")
+                .name(MONSTER1)
                 .image(null)
                 .description("this is dummy monster1 for test")
                 .affinity(new Affinity())
@@ -55,7 +60,7 @@ public class TestDummyDataConfig {
                 .skillId4(4)
                 .build());
         monsterRepository.save(Monster.builder()
-                .name("dummy_monster2")
+                .name(MONSTER2)
                 .image(null)
                 .description("this is dummy monster2 for test")
                 .affinity(new Affinity())

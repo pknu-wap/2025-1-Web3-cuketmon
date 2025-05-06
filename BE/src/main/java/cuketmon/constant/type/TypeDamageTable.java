@@ -1,14 +1,14 @@
 package cuketmon.constant.type;
 
+import static cuketmon.constant.type.TypeConst.HIGH;
+import static cuketmon.constant.type.TypeConst.LOW;
+import static cuketmon.constant.type.TypeConst.MID;
+import static cuketmon.constant.type.TypeConst.NONE;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class TypeDamageTable {
-
-    public static final double HIGH = 2.0;
-    public static final double MID = 1.0;
-    public static final double LOW = 0.5;
-    public static final double NONE = 0.0;
 
     private static final List<List<Double>> typeDamageTable;
 
