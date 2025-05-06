@@ -1,4 +1,4 @@
-package cuketmon.skill.prompt.entity;
+package cuketmon.prompt.entity;
 
 import cuketmon.constant.type.Type;
 import jakarta.persistence.Column;

@@ -1,8 +1,8 @@
-package cuketmon.skill.prompt.service;
+package cuketmon.prompt.service;
 
 import cuketmon.constant.type.Type;
-import cuketmon.skill.prompt.entity.Prompt;
-import cuketmon.skill.prompt.repository.PromptRepository;
+import cuketmon.prompt.entity.Prompt;
+import cuketmon.prompt.repository.PromptRepository;
 import cuketmon.util.CustomLogger;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;

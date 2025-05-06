@@ -1,5 +1,7 @@
 package cuketmon.skill.service;
 
+import static cuketmon.constant.message.ErrorMessages.SKILL_NOT_FOUND;
+
 import cuketmon.constant.damageclass.DamageClass;
 import cuketmon.constant.type.Type;
 import cuketmon.monster.dto.MonsterDTO;
@@ -52,7 +54,7 @@ public class SkillService {
 
     public MonsterDTO.MonsterBattleInfo.Skill convertSkill(Integer skillId) {
         Skill skill = skillRepository.findById(skillId)
-                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당 ID의 스킬이 없습니다."));
+                .orElseThrow(() -> new IllegalArgumentException(SKILL_NOT_FOUND));
 
         return new MonsterDTO.MonsterBattleInfo.Skill(
                 skill.getType(),

@@ -1,6 +1,6 @@
-package cuketmon.skill.prompt.repository;
+package cuketmon.prompt.repository;
 
-import cuketmon.skill.prompt.entity.Prompt;
+import cuketmon.prompt.entity.Prompt;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

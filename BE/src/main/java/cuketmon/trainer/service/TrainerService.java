@@ -1,5 +1,7 @@
 package cuketmon.trainer.service;
 
+import static cuketmon.constant.message.ErrorMessages.TRAINER_NOT_FOUND;
+
 import cuketmon.monster.entity.Monster;
 import cuketmon.trainer.dto.TrainerDTO;
 import cuketmon.trainer.entity.Trainer;
@@ -28,7 +30,7 @@ public class TrainerService {
     public Integer getRemainingToys(String name) {
         log.info("잔여 장난감 조회 요청: {}", name);
         Trainer trainer = trainerRepository.findById(name)
-                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당 트레이너를 찾을 수 없습니다."));
+                .orElseThrow(() -> new IllegalArgumentException(TRAINER_NOT_FOUND));
 
         return trainer.getToy().getCount();
     }
@@ -37,7 +39,7 @@ public class TrainerService {
     public Integer getRemainingFeeds(String name) {
         log.info("잔여 먹이 조회 요청: {}", name);
         Trainer trainer = trainerRepository.findById(name)
-                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당 트레이너를 찾을 수 없습니다."));
+                .orElseThrow(() -> new IllegalArgumentException(TRAINER_NOT_FOUND));
 
         return trainer.getFeed().getCount();
     }
@@ -46,7 +48,7 @@ public class TrainerService {
     public void addWin(String name) {
         log.info("승리 추가 요청: {}", name);
         Trainer trainer = trainerRepository.findById(name)
-                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당 트레이너를 찾을 수 없습니다."));
+                .orElseThrow(() -> new IllegalArgumentException(TRAINER_NOT_FOUND));
 
         trainer.addWin();
     }
@@ -54,7 +56,7 @@ public class TrainerService {
     @Transactional
     public void addLose(String name) {
         Trainer trainer = trainerRepository.findById(name)
-                .orElseThrow(() -> new IllegalArgumentException("[ERROR]: 해당 트레이너를 찾을 수 없습니다."));
+                .orElseThrow(() -> new IllegalArgumentException(TRAINER_NOT_FOUND));
 
         trainer.addLose();
     }
@@ -99,12 +101,12 @@ public class TrainerService {
             }
             rank++;
         }
-        throw new IllegalArgumentException("[ERROR]: 해당 트레이너를 찾을 수 없습니다.");
+        throw new IllegalArgumentException(TRAINER_NOT_FOUND);
     }
 
     public List<Integer> getMonsterIds(String trainerName) {
         Trainer trainer = trainerRepository.findById(trainerName)
-                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당 트레이너를 찾을 수 없습니다."));
+                .orElseThrow(() -> new IllegalArgumentException(TRAINER_NOT_FOUND));
 
         return trainer.getMonsters().stream()
                 .map(Monster::getId)

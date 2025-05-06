@@ -1,5 +1,7 @@
 package cuketmon.monster.service;
 
+import static cuketmon.constant.message.ErrorMessages.MONSTER_NOT_FOUND;
+import static cuketmon.constant.message.ErrorMessages.TRAINER_NOT_FOUND;
 import static cuketmon.util.Random.getRandomInRange;
 
 import cuketmon.constant.damageclass.DamageClass;
@@ -11,7 +13,7 @@ import cuketmon.monster.dto.MonsterDTO.MonsterInfo;
 import cuketmon.monster.embeddable.Affinity;
 import cuketmon.monster.entity.Monster;
 import cuketmon.monster.repository.MonsterRepository;
-import cuketmon.skill.prompt.service.PromptService;
+import cuketmon.prompt.service.PromptService;
 import cuketmon.skill.service.SkillService;
 import cuketmon.trainer.entity.Trainer;
 import cuketmon.trainer.repository.TrainerRepository;
@@ -57,7 +59,7 @@ public class MonsterService {
     @Transactional
     public Integer generate(String trainerName, GenerateApiRequestBody requestBody) {
         Trainer trainer = trainerRepository.findById(trainerName)
-                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당 트레이너를 찾을 수 없습니다."));
+                .orElseThrow(() -> new IllegalArgumentException(TRAINER_NOT_FOUND));
 
         Type type1 = Type.fromString(requestBody.getType1());
         Type type2 = Type.fromString(requestBody.getType2()); // nullable 값
@@ -102,7 +104,7 @@ public class MonsterService {
     @Transactional
     public void naming(Integer monsterId, String monsterName) {
         Monster monster = monsterRepository.findById(monsterId)
-                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당 커켓몬을 찾을 수 없습니다."));
+                .orElseThrow(() -> new IllegalArgumentException(MONSTER_NOT_FOUND));
 
         monster.changeNameTo(monsterName);
         monsterRepository.save(monster);
@@ -112,7 +114,7 @@ public class MonsterService {
     @Transactional
     public void release(Integer monsterId) {
         Monster monster = monsterRepository.findById(monsterId)
-                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당 커켓몬을 찾을 수 없습니다."));
+                .orElseThrow(() -> new IllegalArgumentException(MONSTER_NOT_FOUND));
 
         monsterRepository.delete(monster);
         log.info("커켓몬 놓아주기 name={}", monster.getName());
@@ -121,9 +123,9 @@ public class MonsterService {
     @Transactional
     public void feed(String trainerName, Integer monsterId) {
         Trainer trainer = trainerRepository.findById(trainerName)
-                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당 트레이너를 찾을 수 없습니다."));
+                .orElseThrow(() -> new IllegalArgumentException(TRAINER_NOT_FOUND));
         Monster monster = monsterRepository.findById(monsterId)
-                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당 커켓몬을 찾을 수 없습니다."));
+                .orElseThrow(() -> new IllegalArgumentException(MONSTER_NOT_FOUND));
 
         try {
             trainer.getFeed().decrease(FEED_MINUS);
@@ -139,9 +141,9 @@ public class MonsterService {
     @Transactional
     public void play(String trainerName, Integer monsterId) {
         Trainer trainer = trainerRepository.findById(trainerName)
-                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당 트레이너를 찾을 수 없습니다."));
+                .orElseThrow(() -> new IllegalArgumentException(TRAINER_NOT_FOUND));
         Monster monster = monsterRepository.findById(monsterId)
-                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당 커켓몬을 찾을 수 없습니다."));
+                .orElseThrow(() -> new IllegalArgumentException(MONSTER_NOT_FOUND));
 
         try {
             trainer.getToy().decrease(TOY_MINUS);
@@ -158,7 +160,7 @@ public class MonsterService {
     @Transactional
     public MonsterDTO.MonsterInfo getMonsterInfo(Integer monsterId) {
         Monster monster = monsterRepository.findById(monsterId)
-                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당 커켓몬을 찾을 수 없습니다."));
+                .orElseThrow(() -> new IllegalArgumentException(MONSTER_NOT_FOUND));
 
         return new MonsterInfo(
                 monster.getId(),
@@ -170,7 +172,7 @@ public class MonsterService {
     @Transactional
     public MonsterDTO.MonsterBattleInfo getMonsterBattleInfo(Integer monsterId) {
         Monster monster = monsterRepository.findById(monsterId)
-                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당 커켓몬을 찾을 수 없습니다."));
+                .orElseThrow(() -> new IllegalArgumentException(MONSTER_NOT_FOUND));
 
         return new MonsterBattleInfo(
                 monster.getName(), monster.getImage(), monster.getAffinity().getCount(),
