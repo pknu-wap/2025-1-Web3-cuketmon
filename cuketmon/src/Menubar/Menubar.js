@@ -10,7 +10,7 @@ const MenuBar = () => {
         <img src="/Menubar/egg.webp" alt="egg" />
         커켓몬 만들기
       </button>
-      <button className="battleLink" onClick={() => navigate('/battle')}>
+      <button className="battleLink" onClick={() => navigate('/PickScreen')}>
         <img src="/Menubar/battleicon.webp" alt="battle" />
         전투
       </button>
