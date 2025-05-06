@@ -43,27 +43,5 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
-    <script>
-      // 브라우저 확대 방지
-      function preventZoom() {
-        window.addEventListener(
-          "wheel",
-          function (e) {
-            if (e.ctrlKey) e.preventDefault();
-          },
-          { passive: false }
-        );
-
-        window.addEventListener("keydown", function (e) {
-          if ((e.ctrlKey || e.metaKey) && ["+", "-", "="].includes(e.key)) {
-            e.preventDefault();
-          }
-        });
-      }
-
-      document.addEventListener("DOMContentLoaded", function () {
-        preventZoom();
-      });
-    </script>
   </body>
 </html>
