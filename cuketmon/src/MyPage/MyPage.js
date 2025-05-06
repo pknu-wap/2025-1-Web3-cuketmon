@@ -66,10 +66,12 @@ function MyPage() {
       const newFeedData = await newFeedResponse.text();
       setFeedCount(Number(newFeedData));
       alert("커켓몬에게 먹이를 주었다!");
+      await fetchData(); 
     } catch (err) {
       alert("먹이 주기 실패: " + err.message);
     }
   };
+
   /*놀아주기*/
   const playCukemon = async () => {
     if (!monsterId || monsters.length === 0) return;
@@ -85,6 +87,7 @@ function MyPage() {
       const newToysData = await newToysResponse.text();
       setToyCount(Number(newToysData));
       alert("커켓몬과 놀아주었다!");
+      await fetchData(); 
     } catch (err) {
       alert("놀아주기 실패: " + err.message);
     }
@@ -111,6 +114,7 @@ function MyPage() {
   useEffect(() => {
       fetchData();
   }, [monsterId])
+  
 
   /*먹이,놀아 주기 애니메이션*/
   const handleActionClick = async (actionFn, setActionState) => {
@@ -130,24 +134,25 @@ function MyPage() {
       });
       if (!res.ok) throw new Error(`삭제 실패: ${res.status}`);
       alert("커켓몬이 원래 있던곳으로 돌아갔습니다.");
+      loadCukemon();
     } catch (err) {
       alert("에러 발생: " + err.message);
     }
   };
 
-  /*desktop 커켓몬 전환 키보드 액션*/
   useEffect(() => {
     const handleKeyPress = (event) => {
       if (event.key === 'ArrowLeft') {
         setMonsterId((prevIndex) =>
-          prevIndex > 0 ? prevIndex - 1 : 0
+          prevIndex > 0 ? prevIndex - 1 : monsters.length - 1
         );
       } else if (event.key === 'ArrowRight') {
         setMonsterId((prevIndex) =>
-          prevIndex < monsters.length - 1 ? prevIndex + 1 : prevIndex
+          prevIndex < monsters.length - 1 ? prevIndex + 1 : 0
         );
       }
     };
+  
     window.addEventListener('keydown', handleKeyPress);
     return () => window.removeEventListener('keydown', handleKeyPress);
   }, [monsters]);
@@ -164,7 +169,7 @@ function MyPage() {
       const data = await res.json();
       const parsedId = parseInt(data?.id);
       return {
-        img: data?.image ? `data:image/png;base64,${data.image}` : '/Menubar/egg.png', 
+        img: data?.image ? data.image : '', //이미지 URL로 받게 (수정)
         affinity: parseInt(data?.affinity) || 0,
         id: isNaN(parsedId) ? null : parsedId,
         name: data?.name || "이름 없음",
@@ -192,7 +197,7 @@ function MyPage() {
       </div>
 
       <div className='cukemonImg'>
-        <img src={cukemonData?.img || '/Menubar/egg.webp'} alt="Cukemon" id='cuketmonImage' />
+        <img src={cukemonData?.img} alt="Cukemon" id='cuketmonImage' />
       </div>
 
       <div className='cucketmonProfile'>
