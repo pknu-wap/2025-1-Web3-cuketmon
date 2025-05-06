@@ -25,35 +25,38 @@
 .namePage .cukemonImage {
   width: 30%;
   position: absolute;
-  top: -15%;
+  top: 0%;
   left: 10%;
 }
 
 .nameInputBox p {
   position: absolute;
-  font-size: clamp(10px, 2.5vw, 40px);
-  left: 53%;
+  font-size: clamp(20px, 3vw, 40px);
+  left: 55%;
   top: 8%;
+  font-weight: bold;
+  font-family: "NeoDunggeunmo";
 }
 
 .nameInput {
-  display: inline;
+  display: flex;
   position: absolute;
-  left: 47%;
-  top: 46%;
+  left: 44%;
+  top: 40%;
 }
 
 .nameInput input {
-  width: 20vw;
+  width: 18vw;
   outline: none;
   border: none;
   background: none;
-  font-size: clamp(8px, 1.5vw, 30px);
+  font-size: clamp(8px, 2vw, 25px);
   position: absolute;
   cursor: none;
-  top: 38%;
   margin-left: 42%;
   border-bottom: 2px dotted black;
+  color: #525252;
+  font-family: "NeoDunggeunmo";
 }
 
 .nameInput {
@@ -67,37 +70,73 @@
 }
 
 #remainWord {
-  font-size: clamp(10px, 1vw, 12px);
-  left: 100%;
+  font-size: clamp(7px, 1vw, 12px);
+  position: relative;
+  left: 20vw;
+  top: 2vh;
 }
 
 .choiceButtons {
   position: absolute;
   color: white;
   font-size: clamp(3px, 1.5vw, 15px);
-  top: 63%;
+  top: 60%;
   left: 48%;
 }
 
 #remake,
 #bringToMypage {
-  width: 30%;
+  width: 33%;
   margin-right: 3%;
 }
 
 .choiceButtons #buttonText1 {
   position: absolute;
-  left: 13%;
+  left: 14%;
   top: 38%;
 }
 
 .choiceButtons #buttonText2 {
   position: absolute;
-  left: 46%;
+  left: 49%;
   top: 38%;
 }
 
 #remake:hover,
 #bringToMypage:hover {
   content: url("/public/button-hover.png");
+}
+
+/*모바일 반응형*/
+@media (max-width: 767px) {
+  .nameInputBox {
+    top: 40%;
+  }
+  .nameInputBox p {
+    left: 42vw;
+  }
+
+  .namePage .cukemonImage {
+    font-size: 10px;
+    top: 0%;
+  }
+
+  .nameInput {
+    top: 40%;
+    left: 43%;
+  }
+
+  .choiceButtons #buttonText1,
+  .choiceButtons #buttonText2 {
+    font-size: 7px;
+  }
+
+  .nameInput input {
+    width: 24.5vw;
+  }
+
+  #remainWord {
+    top: 0.5vh;
+    left: 28vw;
+  }
 }
