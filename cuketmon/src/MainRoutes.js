@@ -7,6 +7,7 @@ import Ranking from './Ranking/Ranking';
 import MyPage from './MyPage/MyPage';
 import MakeResult from "./MakeResult/MakeResult";
 import NamePage from './NamePage/NamePage';
+import PickScreen from './PickScreen/PickScreen';
 
 function MainRoutes() {
   return (
@@ -19,6 +20,7 @@ function MainRoutes() {
       <Route path="/mypage" element={<MyPage />} />
       <Route path="/MakeResult" element={<MakeResult/>} />
       <Route path="/namePage" element={<NamePage/>} />
+      <Route path="/PickScreen" element={<PickScreen />} />
     </Routes>
   );
 }
