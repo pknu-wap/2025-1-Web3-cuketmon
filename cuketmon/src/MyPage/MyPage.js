@@ -26,6 +26,7 @@ function MyPage() {
       const data = await res.json();
       const monsterIds = Array.isArray(data.id) ? data.id : [data.id];
       setMonsters(monsterIds);     
+      console.log(monsterIds)
       setMonsterId(0);             
     } catch (error) {
       console.error("커켓몬 로딩에 실패했습니다.", error.message);
@@ -50,6 +51,7 @@ function MyPage() {
     return { toys: Number(toysOriginalData), feeds: Number(feedsOriginalData) };
   };
 
+  /*먹이주기*/
   const feedCukemon = async () => {
     if (!monsterId || monsters.length === 0) return;
     try {
@@ -68,7 +70,7 @@ function MyPage() {
       alert("먹이 주기 실패: " + err.message);
     }
   };
-
+  /*놀아주기*/
   const playCukemon = async () => {
     if (!monsterId || monsters.length === 0) return;
     try {
@@ -104,12 +106,11 @@ function MyPage() {
       setLoading(false);
     }
   };
-
   useEffect(() => {
-    console.log('현재 MonsterId:', monsterId);
-    fetchData();
-
-  }, [monsterId]);  
+    if (monsterId != null && monsters.length > 0 && monsters[monsterId] != null) {
+      fetchData();
+    }
+  }, [monsterId, monsters])
 
   /*먹이,놀아 주기 애니메이션*/
   const handleActionClick = async (actionFn, setActionState) => {
@@ -118,6 +119,7 @@ function MyPage() {
     setTimeout(() => setActionState(false), 1000);
   };
 
+  /*방출 */
   const releaseCukemon = async () => {
     if (!monsterId || monsters.length === 0) return;
     try {
@@ -146,25 +148,36 @@ function MyPage() {
         );
       }
     };
-  
     window.addEventListener('keydown', handleKeyPress);
     return () => window.removeEventListener('keydown', handleKeyPress);
   }, [monsters]);
 
+  /*커켓몬 정보 불러오기 */
   const loadCukemonData = async () => {
-    if (monsters.length === 0 || monsterId === undefined) return;
-    const currentMonsterId = monsters[monsterId]; 
-    const res = await fetch(`${API_URL}/api/monster/${currentMonsterId}/info`, {
-      headers: { 'Authorization': `Bearer ${token}` },
-    });
-    const data = await res.json();
-    return {
-      img: data?.image || '/Menubar/egg.png',  
-      affinity: parseInt(data?.affinity) || 0,  
-      id: parseInt(data?.id) || "정보 없음",  
-      name: data?.name || "이름 없음",  
-    };
+    if (monsterId == null || monsters.length === 0 || monsters[monsterId] == null) {
+      console.warn("유효하지 않은 monsterId", monsterId, monsters);
+      return null;
+    }
+    const currentMonsterId = monsters[monsterId];
+    console.log("현재 monsterId:", currentMonsterId);
+    console.log("monsters 배열:", monsters);
+    try {
+      const res = await fetch(`${API_URL}/api/monster/${currentMonsterId}/info`, {
+        headers: { 'Authorization': `Bearer ${token}` },
+      });
+      const data = await res.json();
+      return {
+        img: data?.image || '/Menubar/egg.png',
+        affinity: parseInt(data?.affinity) || 0,
+        id: parseInt(data?.id) || "정보 없음",
+        name: data?.name || "이름 없음",
+      };
+    } catch (error) {
+      console.error("커켓몬 데이터 로딩 실패:", error.message);
+      return null;
+    }
   };
+
 
   return (
     <div className='myPage'>
