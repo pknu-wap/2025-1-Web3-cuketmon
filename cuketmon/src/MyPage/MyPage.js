@@ -152,12 +152,8 @@ function MyPage() {
     return () => window.removeEventListener('keydown', handleKeyPress);
   }, [monsters]);
 
-  /*커켓몬 정보 불러오기 */
+  /*커켓몬 정보 불러오기 */ 
   const loadCukemonData = async () => {
-    if (monsterId == null || monsters.length === 0 || monsters[monsterId] == null) {
-      console.warn("유효하지 않은 monsterId", monsterId, monsters);
-      return null;
-    }
     const currentMonsterId = monsters[monsterId];
     console.log("현재 monsterId:", currentMonsterId);
     console.log("monsters 배열:", monsters);
