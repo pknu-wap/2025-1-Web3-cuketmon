@@ -1,7 +1,9 @@
 package cuketmon.monster.service;
 
 import static cuketmon.constant.TestConfig.TRAINER1;
+import static cuketmon.constant.TestConfig.TRAINER2;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import cuketmon.config.TestDummyDataConfig;
 import cuketmon.config.TestSkillDataConfig;
@@ -62,6 +64,13 @@ class MonsterServiceTest {
 
         Monster updatedMonster = monsterRepository.findById(1).get();
         assertEquals(prevAffinity + 1, updatedMonster.getAffinity().getCount());
+    }
+
+    @Test
+    void 자신의_커켓몬이_아닐경우_오류를_발생시킨다() {
+        assertThrows(IllegalArgumentException.class, () -> monsterService.play(TRAINER2, 1));
+        assertThrows(IllegalArgumentException.class, () -> monsterService.feed(TRAINER2, 1));
+        assertThrows(IllegalArgumentException.class, () -> monsterService.naming(TRAINER2, 1, "temp"));
     }
 
 }
