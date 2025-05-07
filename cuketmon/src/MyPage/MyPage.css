@@ -119,7 +119,7 @@ span {
 
 /*밥주기 움직임*/
 .moveImage {
-  animation: moveUpDown 1s ease-in-out;
+  animation: moveUpDown 3s ease-in-out;
 }
 
 @keyframes moveUpDown {
@@ -136,7 +136,7 @@ span {
 
 /*놀아주기 움직임*/
 .shakeImage {
-  animation: shakeLeftRight 1s ease-in-out;
+  animation: shakeLeftRight 3s ease-in-out;
 }
 
 @keyframes shakeLeftRight {
