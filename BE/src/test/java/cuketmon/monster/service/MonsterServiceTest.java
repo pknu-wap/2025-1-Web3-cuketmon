@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import cuketmon.config.TestDummyDataConfig;
 import cuketmon.config.TestSkillDataConfig;
+import cuketmon.monster.dto.GenerateApiRequestBody;
 import cuketmon.monster.entity.Monster;
 import cuketmon.monster.repository.MonsterRepository;
 import cuketmon.trainer.entity.Trainer;
@@ -71,6 +72,19 @@ class MonsterServiceTest {
         assertThrows(IllegalArgumentException.class, () -> monsterService.play(TRAINER2, 1));
         assertThrows(IllegalArgumentException.class, () -> monsterService.feed(TRAINER2, 1));
         assertThrows(IllegalArgumentException.class, () -> monsterService.naming(TRAINER2, 1, "temp"));
+    }
+
+    @Test
+    void 커켓몬을_다섯마리_이상_보유할_시_오류를_발생시킨다() {
+        GenerateApiRequestBody body = new GenerateApiRequestBody("FIRE", "ELECTRIC", "temp");
+        monsterService.generate(TRAINER1, body);
+        monsterService.generate(TRAINER1, body);
+        monsterService.generate(TRAINER1, body);
+        monsterService.generate(TRAINER1, body);
+
+        // 5마리 제한 확인
+        // config에서 1마리 생성했으므로 4마리 추가 생성 후 assertThrows 테스트
+        assertThrows(IllegalArgumentException.class, () -> monsterService.generate(TRAINER1, body));
     }
 
 }
