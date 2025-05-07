@@ -12,7 +12,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class TrainerDTO {
-    //Dto trainer name 빼는 방향
 
     private int rank;
     private String trainerName;
@@ -20,5 +19,4 @@ public class TrainerDTO {
     private int lose;
     private int allBattles;
 
-    //public TrainerDTO(int i, String name, Integer win, Integer lose, Integer allBattles) { }
 }

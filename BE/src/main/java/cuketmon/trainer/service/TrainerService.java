@@ -61,8 +61,8 @@ public class TrainerService {
         trainer.addLose();
     }
 
-    //랭킹 시스템
-    //트레이너 전체 랭킹
+    // 랭킹 시스템
+    // 트레이너 전체 랭킹
     @Transactional
     public List<TrainerDTO> getAllRanking() {
         List<Trainer> sorted = trainerRepository.findAllByOrderByWinDesc();
@@ -83,7 +83,7 @@ public class TrainerService {
         return rankingList;
     }
 
-    //트레이너 개인 랭킹
+    // 트레이너 개인 랭킹
     @Transactional
     public TrainerDTO getSingleRanking(String trainerName) {
         List<Trainer> sorted = trainerRepository.findAllByOrderByWinDesc();

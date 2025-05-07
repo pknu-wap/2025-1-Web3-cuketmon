@@ -4,12 +4,10 @@ import cuketmon.trainer.dto.TrainerDTO;
 import cuketmon.trainer.service.TrainerService;
 import java.util.List;
 import java.util.Map;
-import java.util.NoSuchElementException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -36,21 +34,18 @@ public class TrainerController {
     public Integer getRemainingFeeds(@AuthenticationPrincipal String trainerName) {
         return trainerService.getRemainingFeeds(trainerName);
     }
-  
-    // 랭킹 시스템
-    //Dto trainer name 빼는 방향
-    //전체 트레이너 랭킹
 
+    // 랭킹 시스템
+    // 전체 트레이너 랭킹
     @GetMapping("/ranking/all")
     public ResponseEntity<List<TrainerDTO>> getAllRanking() {
         return ResponseEntity.ok(trainerService.getAllRanking());
     }
 
     //개인 트레이너 개별 랭킹
-
     @GetMapping("/ranking")
-    public ResponseEntity<?> getSingleRanking(@AuthenticationPrincipal String trainerName, @RequestBody TrainerDTO request){
-    //public ResponseEntity<?> getSingleRanking(@RequestBody TrainerDTO request) {
+    public ResponseEntity<?> getSingleRanking(@AuthenticationPrincipal String trainerName,
+                                              @RequestBody TrainerDTO request) {
         try {
             TrainerDTO dto = trainerService.getSingleRanking(trainerName);
             return ResponseEntity.ok(dto);
