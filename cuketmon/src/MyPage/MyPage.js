@@ -61,7 +61,7 @@ function MyPage() {
 
   /*먹이주기*/
   const feedCukemon = async () => {
-    if (!monsterId || monsters.length === 0) return;
+    if (monsterId == null  || monsters.length === 0) return;
     try {
       const currentMonsterId = monsters[monsterId]; 
       console.log(currentMonsterId);
@@ -83,7 +83,7 @@ function MyPage() {
 
   /*놀아주기*/
   const playCukemon = async () => {
-    if (!monsterId || monsters.length === 0) return;
+    if (monsterId == null  || monsters.length === 0) return;
     try {
       const currentMonsterId = monsters[monsterId]; 
       console.log(currentMonsterId);
@@ -136,7 +136,7 @@ function MyPage() {
 
   /*방출 */
   const releaseCukemon = async () => {
-    if (!monsterId || monsters.length === 0) return;
+    if (monsterId == null  || monsters.length === 0) return;
     try {
       const currentMonsterId = monsters[monsterId]; 
       const res = await fetch(`${API_URL}/api/monster/${currentMonsterId}/release`, {
