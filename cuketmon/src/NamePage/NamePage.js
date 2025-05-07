@@ -7,7 +7,8 @@ function NamePage() {
   const [name, setName] = useState("");
   const [cukemonImage, setCukemonImage] = useState("/Menubar/egg.png");
   const navigate = useNavigate();
-  const { token } = useAuth();
+  const { token: contextToken } = useAuth();
+  const token = contextToken || localStorage.getItem('jwt');
   const location = useLocation();
   const maxLength = 12;
   const API_URL = process.env.REACT_APP_API_URL;
