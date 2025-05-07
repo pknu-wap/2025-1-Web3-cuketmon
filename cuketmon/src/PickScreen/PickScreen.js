@@ -1,32 +1,97 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../AuthContext';
 import './PickScreen.css';
 
 const PickScreen = () => {
   const [cuketmons, setCuketmons] = useState([]);
+  const [monsterIdList, setMonsterIdList] = useState([]); // monsterIds를 monsterIdList로 변경
   const [currentIndex, setCurrentIndex] = useState(0);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+  const { token } = useAuth();
+  const API_URL = process.env.REACT_APP_API_URL;
 
+  // 유저 소유 커켓몬 ID 목록 조회
+  const loadCukemonIds = async () => {
+    if (!token) {
+      console.error('토큰이 없습니다. 로그인 페이지로 이동합니다.');
+      navigate('/login');
+      return;
+    }
+    try {
+      const res = await fetch(`${API_URL}/api/trainer/monsters`, {
+        headers: { 'Authorization': `Bearer ${token}` },
+      });
+      if (!res.ok) {
+        throw new Error(`HTTP error! status: ${res.status}`);
+      }
+      const data = await res.json();
+      const ids = Array.isArray(data) ? data : [];
+      setMonsterIdList(ids);
+      if (ids.length === 0) {
+        console.warn('커켓몬 ID 목록이 비어 있습니다.');
+      }
+    } catch (error) {
+      console.error('커켓몬 ID 로딩에 실패했습니다:', error.message);
+      if (error.message.includes('401')) {
+        navigate('/login');
+      }
+    }
+  };
+
+  // 커켓몬 전투 정보 조회
+  const loadCukemonData = async (monsterId) => {
+    if (!monsterId) return null;
+    try {
+      const res = await fetch(`${API_URL}/api/monster/${monsterId}/battleInfo`, {
+        headers: { 'Authorization': `Bearer ${token}` },
+      });
+      if (!res.ok) {
+        throw new Error(`HTTP error! status: ${res.status}`);
+      }
+      const data = await res.json();
+      return {
+        id: data?.id || null,
+        name: data?.name || '이름 없음',
+        image: data?.image || '',
+        type1: data?.type1 || '타입 없음',
+        type2: data?.type2 || '타입 없음',
+      };
+    } catch (error) {
+      console.error(`커켓몬 ${monsterId} 데이터 로딩 실패:`, error.message);
+      return null;
+    }
+  };
+
+  // 커켓몬 데이터 초기화
   useEffect(() => {
     const fetchCuketmons = async () => {
-      try {
-        const response = await fetch('');
-        const data = await response.json();
-        const mockCuketmons = data.slice(0, 3).map((item, index) => ({
-          id: item.id,
-          name: `커켓몬${index + 1}`,
-          image: `https://via.placeholder.com/150?text=커켓몬${index + 1}`,
-        }));
-        setCuketmons(mockCuketmons);
-      } catch (error) {
-        console.error('커켓몬 데이터를 가져오는 데 실패했습니다:', error);
-      } finally {
-        setLoading(false);
+      await loadCukemonIds();
+      if (monsterIdList.length > 0) {
+        const cuketmonData = [];
+        for (const id of monsterIdList) {
+          const data = await loadCukemonData(id);
+          if (data) {
+            cuketmonData.push(data);
+          }
+        }
+        setCuketmons(cuketmonData);
       }
+      setLoading(false);
     };
+
     fetchCuketmons();
-  }, []);
+
+    const retryTimeout = setTimeout(() => {
+      if (!cuketmons || cuketmons.length === 0) {
+        console.log('커켓몬 데이터가 비어 있어 재시도합니다.');
+        fetchCuketmons();
+      }
+    }, 500);
+
+    return () => clearTimeout(retryTimeout);
+  }, [monsterIdList.length]);
 
   const handlePrev = () => {
     setCurrentIndex((prev) => (prev === 0 ? cuketmons.length - 1 : prev - 1));
@@ -37,7 +102,11 @@ const PickScreen = () => {
   };
 
   const handleSelect = (cuketmon) => {
-    navigate(`/battle`, { state: { selectedCuketmon: cuketmon } });
+    if (cuketmon) {
+      navigate('/battle', { state: { selectedCuketmon: cuketmon } });
+    } else {
+      console.error('선택된 커켓몬이 없습니다.');
+    }
   };
 
   if (loading) {
@@ -54,7 +123,7 @@ const PickScreen = () => {
     <div className="pick-screen">
       <h1 className="pick-title">커켓몬 선택</h1>
       <div className="pick-content">
-        <button onClick={handlePrev} className="arrow-button arrow-left">
+        <button onClick={handlePrev} className="arrow-button arrow-left" disabled={cuketmons.length <= 1}>
           ◀
         </button>
         <div className="cuketmon-card">
@@ -64,14 +133,19 @@ const PickScreen = () => {
             className="cuketmon-image"
           />
           <p className="cuketmon-name">{currentCuketmon.name}</p>
+          <p className="cuketmon-type">
+            타입: {currentCuketmon.type1}
+            {currentCuketmon.type2 && ` / ${currentCuketmon.type2}`}
+          </p>
           <button
             onClick={() => handleSelect(currentCuketmon)}
             className="select-button"
+            disabled={!currentCuketmon}
           >
             선택
           </button>
         </div>
-        <button onClick={handleNext} className="arrow-button arrow-right">
+        <button onClick={handleNext} className="arrow-button arrow-right" disabled={cuketmons.length <= 1}>
           ▶
         </button>
       </div>
