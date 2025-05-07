@@ -34,6 +34,13 @@ function MyPage() {
   };
   useEffect(() => {
     loadCukemon();
+    const retryTimeout = setTimeout(() => {
+      if (!monsters || monsters.length === 0) {
+        console.log("몬스터가 비어 있어 재시도합니다.");
+        loadCukemon();
+      }
+    }, 500); 
+    return () => clearTimeout(retryTimeout); 
   }, []);
 
   /*먹이, 장난감 기저 상태 불러오기*/
