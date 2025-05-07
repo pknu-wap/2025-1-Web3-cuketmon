@@ -60,7 +60,7 @@ public class Trainer {
         this.lose += 1;
     }
 
-    public int getAllBattles() {
+    public Integer getAllBattles() {
         return this.win + this.lose;
     }
 

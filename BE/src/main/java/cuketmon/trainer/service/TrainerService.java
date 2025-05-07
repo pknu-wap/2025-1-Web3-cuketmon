@@ -70,13 +70,13 @@ public class TrainerService {
         List<TrainerDTO> rankingList = new ArrayList<>();
 
         int rank = 1;
-        for (Trainer t : sorted) {
+        for (Trainer trainer : sorted) {
             rankingList.add(new TrainerDTO(
                             rank++,
-                            t.getName(),
-                            t.getWin(),
-                            t.getLose(),
-                            t.getAllBattles()
+                            trainer.getName(),
+                            trainer.getWin(),
+                            trainer.getLose(),
+                            trainer.getAllBattles()
                     )
             );
         }
@@ -89,14 +89,14 @@ public class TrainerService {
         List<Trainer> sorted = trainerRepository.findAllByOrderByWinDesc();
 
         int rank = 1;
-        for (Trainer t : sorted) {
-            if (t.getName().equals(trainerName)) {
+        for (Trainer trainer : sorted) {
+            if (trainer.getName().equals(trainerName)) {
                 return new TrainerDTO(
                         rank,
-                        t.getName(),
-                        t.getWin(),
-                        t.getLose(),
-                        t.getAllBattles()
+                        trainer.getName(),
+                        trainer.getWin(),
+                        trainer.getLose(),
+                        trainer.getAllBattles()
                 );
             }
             rank++;
