@@ -1,5 +1,6 @@
 package cuketmon.monster.service;
 
+import static cuketmon.constant.message.ErrorMessages.GENERATE_LIMIT_EXCEEDED;
 import static cuketmon.constant.message.ErrorMessages.MONSTER_INVALID_OWNER;
 import static cuketmon.constant.message.ErrorMessages.MONSTER_LIMIT_EXCEEDED;
 import static cuketmon.constant.message.ErrorMessages.MONSTER_NOT_FOUND;
@@ -8,6 +9,7 @@ import static cuketmon.monster.constant.MonsterConst.AFFINITY_PLUS;
 import static cuketmon.monster.constant.MonsterConst.FEED_MINUS;
 import static cuketmon.monster.constant.MonsterConst.MAX_BASE;
 import static cuketmon.monster.constant.MonsterConst.MAX_DAMAGE;
+import static cuketmon.monster.constant.MonsterConst.MAX_GENERATE_LIMIT;
 import static cuketmon.monster.constant.MonsterConst.MAX_MONSTER_LIMIT;
 import static cuketmon.monster.constant.MonsterConst.MID_DAMAGE;
 import static cuketmon.monster.constant.MonsterConst.MIN_BASE;
@@ -29,6 +31,7 @@ import cuketmon.skill.service.SkillService;
 import cuketmon.trainer.entity.Trainer;
 import cuketmon.trainer.repository.TrainerRepository;
 import cuketmon.util.CustomLogger;
+import java.time.LocalDateTime;
 import java.util.List;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,8 +63,22 @@ public class MonsterService {
         Trainer trainer = trainerRepository.findById(trainerName)
                 .orElseThrow(() -> new IllegalArgumentException(TRAINER_NOT_FOUND));
 
+        // 최대 보유 커켓몬 제한
         if (trainer.getMonsters().size() >= MAX_MONSTER_LIMIT) {
             throw new IllegalArgumentException(MONSTER_LIMIT_EXCEEDED);
+        }
+
+        // 일일 최대 커켓몬 생성 제한
+        Integer generateCount = trainer.addGenerateCount();
+        if (generateCount >= MAX_GENERATE_LIMIT) {
+            if (isOver24Hours(trainer.getLastGenerateTime())) {
+                trainer.initGenerateCount();
+            } else {
+                throw new IllegalArgumentException(GENERATE_LIMIT_EXCEEDED);
+            }
+        }
+        if (generateCount == MAX_GENERATE_LIMIT - 1) {
+            trainer.setLastGenerateTime(LocalDateTime.now());
         }
 
         Type type1 = Type.fromString(requestBody.getType1());
@@ -211,6 +228,13 @@ public class MonsterService {
                 .orElseThrow(() -> new IllegalArgumentException(TRAINER_NOT_FOUND));
 
         return trainer.getMonsters().contains(monster);
+    }
+
+    private boolean isOver24Hours(LocalDateTime last) {
+        if (last == null) {
+            return true;
+        }
+        return last.isBefore(LocalDateTime.now().minusHours(24));
     }
 
 }
