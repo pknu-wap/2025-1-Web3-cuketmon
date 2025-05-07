@@ -1,0 +1,86 @@
+.pick-screen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-color: #c6d4e1;
+  }
+  
+  .pick-title {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 2rem;
+    color: #333;
+  }
+  
+  .pick-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    width:  50vw;
+    height: 50vh;
+  }
+  
+  .arrow-button {
+    background-color: black;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    font-size: 1.5rem;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  .arrow-button:hover {
+    background-color: gold;
+  }
+  
+  .cuketmon-card {
+    text-align: center;
+    background-color: #ffffff;
+    border: 2px solid #333;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width:60%;
+    height: 100%;
+  }
+  
+  .cuketmon-image {
+    width: 70%;
+    height: auto;
+  }
+  
+  .cuketmon-name {
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+  }
+  
+  .cuketmon-hp {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+  }
+  
+  .select-button {
+    background-color: #22c55e;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  .select-button:hover {
+    background-color: #16a34a;
+  }
+  
+  .loading, .no-data {
+    font-size: 1.5rem;
+    color: #666;
+  }

@@ -10,7 +10,7 @@ function MyPage() {
   const [isPlayed, setIsPlayed] = useState(false);
   const [loading, setLoading] = useState(true);
   const [cukemonData, setCukemonData] = useState(null);
-  const [monsterId, setMonsterId] = useState();
+  const [monsterId, setMonsterId] = useState(null);
   const [monsters, setMonsters] = useState([]); 
   const API_URL = process.env.REACT_APP_API_URL;
   const { token } = useAuth();
@@ -27,14 +27,19 @@ function MyPage() {
       const monsterIds = Array.isArray(data) ? data : [];  
       setMonsters(monsterIds);     
       console.log(monsterIds)
-      setMonsterId(0);             
     } catch (error) {
       console.error("커켓몬 로딩에 실패했습니다.", error.message);
     }
   };
   useEffect(() => {
-    loadCukemon();
+    loadCukemon(); //최초 1회 실행 코드 (5/7수정)
   }, []);
+
+  useEffect(() => {
+    if (monsters.length > 0 && monsterId === null) {
+      setMonsterId(0); //loadcukemon에서 배열 받받아왔으면 인덱스를 0으로 설정하게 (5/7수정)
+    }
+  }, [monsters]);
 
   /*먹이, 장난감 기저 상태 불러오기*/
   const loadTrainerData = async () => {
@@ -66,10 +71,12 @@ function MyPage() {
       const newFeedData = await newFeedResponse.text();
       setFeedCount(Number(newFeedData));
       alert("커켓몬에게 먹이를 주었다!");
+      await fetchData(); 
     } catch (err) {
       alert("먹이 주기 실패: " + err.message);
     }
   };
+
   /*놀아주기*/
   const playCukemon = async () => {
     if (!monsterId || monsters.length === 0) return;
@@ -85,6 +92,7 @@ function MyPage() {
       const newToysData = await newToysResponse.text();
       setToyCount(Number(newToysData));
       alert("커켓몬과 놀아주었다!");
+      await fetchData(); 
     } catch (err) {
       alert("놀아주기 실패: " + err.message);
     }
@@ -93,6 +101,7 @@ function MyPage() {
   /*데이터 업뎃*/
   const fetchData = async () => {
     if (isLoadingRef.current) return;  
+    if (!monsters.length || monsterId === undefined) return;
     isLoadingRef.current = true;  
     try {
       setLoading(true);
@@ -111,6 +120,7 @@ function MyPage() {
   useEffect(() => {
       fetchData();
   }, [monsterId])
+  
 
   /*먹이,놀아 주기 애니메이션*/
   const handleActionClick = async (actionFn, setActionState) => {
@@ -130,24 +140,25 @@ function MyPage() {
       });
       if (!res.ok) throw new Error(`삭제 실패: ${res.status}`);
       alert("커켓몬이 원래 있던곳으로 돌아갔습니다.");
+      loadCukemon();
     } catch (err) {
       alert("에러 발생: " + err.message);
     }
   };
 
-  /*desktop 커켓몬 전환 키보드 액션*/
   useEffect(() => {
     const handleKeyPress = (event) => {
       if (event.key === 'ArrowLeft') {
         setMonsterId((prevIndex) =>
-          prevIndex > 0 ? prevIndex - 1 : 0
+          prevIndex > 0 ? prevIndex - 1 : monsters.length - 1
         );
       } else if (event.key === 'ArrowRight') {
         setMonsterId((prevIndex) =>
-          prevIndex < monsters.length - 1 ? prevIndex + 1 : prevIndex
+          prevIndex < monsters.length - 1 ? prevIndex + 1 : 0
         );
       }
     };
+  
     window.addEventListener('keydown', handleKeyPress);
     return () => window.removeEventListener('keydown', handleKeyPress);
   }, [monsters]);
@@ -164,10 +175,10 @@ function MyPage() {
       const data = await res.json();
       const parsedId = parseInt(data?.id);
       return {
-        img: data?.image ? `data:image/png;base64,${data.image}` : '/Menubar/egg.png', 
+        img: data?.image ? data.image : '', 
         affinity: parseInt(data?.affinity) || 0,
         id: isNaN(parsedId) ? null : parsedId,
-        name: data?.name || "이름 없음",
+        name: data?.name || "로딩중..",
       };
     } catch (error) {
       console.error("커켓몬 데이터 로딩 실패:", error.message);
@@ -192,14 +203,14 @@ function MyPage() {
       </div>
 
       <div className='cukemonImg'>
-        <img src={cukemonData?.img || '/Menubar/egg.webp'} alt="Cukemon" id='cuketmonImage' />
+        <img src={cukemonData?.img} alt="Cukemon" id='cuketmonImage' />
       </div>
 
       <div className='cucketmonProfile'>
         {loading ? <p>로딩 중...</p> : <p>{cukemonData?.name || "이름 없음"}</p>}
         <div id='relevanceCount'>
           <img src='/MyPage/relevance.webp' alt="친밀도 아이콘" />
-          <span>{cukemonData?.affinity ?? "정보 없음"}</span>
+          <span>{cukemonData?.affinity ?? "로딩중.."}</span>
         </div>
       </div>
 
