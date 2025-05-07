@@ -14,10 +14,17 @@
   top: 10%;
 }
 
-.rankingBoard img {
+.cukemonImageContainer {
+  width: 42%;
+
   position: relative;
-  width: 14%;
-  height: 14%;
+  margin-top: 5%;
+  left: 28%;
+  transition: transform 0.2s;
+}
+
+.cukemonImage:hover {
+  transform: scale(1.05);
 }
 
 .rankingBoard .Myrank {
@@ -84,9 +91,9 @@
     padding-bottom: 0;
   }
 
-  .rankingBoard img {
-    width: 30%;
-    margin-bottom: 3%;
+  .cukemonImageContainer {
+    white-space: nowrap;
+    left: 18%;
   }
 
   .historyBoard {
