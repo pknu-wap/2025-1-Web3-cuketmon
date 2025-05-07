@@ -9,4 +9,6 @@ public class ErrorMessages {
     public static final String FEED_INVALID_AMOUNT = "[ERROR] 남은 먹이가 부족합니다.";
     public static final String TOY_INVALID_AMOUNT = "[ERROR] 남은 장난감이 부족합니다.";
 
+    public static final String MONSTER_INVALID_OWNER = "[ERROR] 당신의 커켓몬이 아닙니다!";
+
 }

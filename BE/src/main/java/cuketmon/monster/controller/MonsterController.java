@@ -44,10 +44,11 @@ public class MonsterController {
 
     // 커켓몬 이름 지정
     @PatchMapping("/{monsterId}/name")
-    public ResponseEntity<String> namingMonster(@PathVariable Integer monsterId,
+    public ResponseEntity<String> namingMonster(@AuthenticationPrincipal String trainerName,
+                                                @PathVariable Integer monsterId,
                                                 @Validated @RequestBody NamingDTO monsterName) {
         try {
-            monsterService.naming(monsterId, monsterName.getName());
+            monsterService.naming(trainerName, monsterId, monsterName.getName());
             return ResponseEntity.ok(NAME_CHANGE_SUCCESS);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -56,9 +57,10 @@ public class MonsterController {
 
     // 커켓몬 놓아주기
     @DeleteMapping("/{monsterId}/release")
-    public ResponseEntity<String> releaseMonster(@PathVariable Integer monsterId) {
+    public ResponseEntity<String> releaseMonster(@AuthenticationPrincipal String trainerName,
+                                                 @PathVariable Integer monsterId) {
         try {
-            monsterService.release(monsterId);
+            monsterService.release(trainerName, monsterId);
             return ResponseEntity.ok(RELEASE_SUCCESS);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
