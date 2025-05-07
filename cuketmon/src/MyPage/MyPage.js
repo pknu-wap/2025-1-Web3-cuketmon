@@ -14,8 +14,10 @@ function MyPage() {
   const [monsters, setMonsters] = useState([]); 
   const API_URL = process.env.REACT_APP_API_URL;
   const { token: contextToken } = useAuth();
-  const token = contextToken || localStorage.getItem('token');
+  const token = contextToken || localStorage.getItem('jwt');
   const isLoadingRef = useRef(false);
+
+  
 
   /*유저 소유 커켓몬 조회하기 */
   const loadCukemon = async () => {
