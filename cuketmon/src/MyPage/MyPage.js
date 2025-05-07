@@ -10,7 +10,7 @@ function MyPage() {
   const [isPlayed, setIsPlayed] = useState(false);
   const [loading, setLoading] = useState(true);
   const [cukemonData, setCukemonData] = useState(null);
-  const [monsterId, setMonsterId] = useState();
+  const [monsterId, setMonsterId] = useState(null);
   const [monsters, setMonsters] = useState([]); 
   const API_URL = process.env.REACT_APP_API_URL;
   const { token } = useAuth();
@@ -27,21 +27,19 @@ function MyPage() {
       const monsterIds = Array.isArray(data) ? data : [];  
       setMonsters(monsterIds);     
       console.log(monsterIds)
-      setMonsterId(0);             
     } catch (error) {
       console.error("커켓몬 로딩에 실패했습니다.", error.message);
     }
   };
   useEffect(() => {
-    loadCukemon();
-    const retryTimeout = setTimeout(() => {
-      if (!monsters || monsters.length === 0) {
-        console.log("몬스터가 비어 있어 재시도합니다.");
-        loadCukemon();
-      }
-    }, 500); 
-    return () => clearTimeout(retryTimeout); 
+    loadCukemon(); //최초 1회 실행 코드 (5/7수정)
   }, []);
+
+  useEffect(() => {
+    if (monsters.length > 0 && monsterId === null) {
+      setMonsterId(0); //loadcukemon에서 배열 받받아왔으면 인덱스를 0으로 설정하게 (5/7수정)
+    }
+  }, [monsters]);
 
   /*먹이, 장난감 기저 상태 불러오기*/
   const loadTrainerData = async () => {
@@ -103,6 +101,7 @@ function MyPage() {
   /*데이터 업뎃*/
   const fetchData = async () => {
     if (isLoadingRef.current) return;  
+    if (!monsters.length || monsterId === undefined) return;
     isLoadingRef.current = true;  
     try {
       setLoading(true);
@@ -176,10 +175,10 @@ function MyPage() {
       const data = await res.json();
       const parsedId = parseInt(data?.id);
       return {
-        img: data?.image ? data.image : '', //이미지 URL로 받게 (수정)
+        img: data?.image ? data.image : '', 
         affinity: parseInt(data?.affinity) || 0,
         id: isNaN(parsedId) ? null : parsedId,
-        name: data?.name || "이름 없음",
+        name: data?.name || "로딩중..",
       };
     } catch (error) {
       console.error("커켓몬 데이터 로딩 실패:", error.message);
@@ -211,7 +210,7 @@ function MyPage() {
         {loading ? <p>로딩 중...</p> : <p>{cukemonData?.name || "이름 없음"}</p>}
         <div id='relevanceCount'>
           <img src='/MyPage/relevance.webp' alt="친밀도 아이콘" />
-          <span>{cukemonData?.affinity ?? "정보 없음"}</span>
+          <span>{cukemonData?.affinity ?? "로딩중.."}</span>
         </div>
       </div>
 
