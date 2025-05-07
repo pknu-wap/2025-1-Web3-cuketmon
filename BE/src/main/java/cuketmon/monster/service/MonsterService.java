@@ -1,5 +1,6 @@
 package cuketmon.monster.service;
 
+import static cuketmon.constant.message.ErrorMessages.MONSTER_INVALID_OWNER;
 import static cuketmon.constant.message.ErrorMessages.MONSTER_NOT_FOUND;
 import static cuketmon.constant.message.ErrorMessages.TRAINER_NOT_FOUND;
 import static cuketmon.monster.constant.MonsterConst.AFFINITY_PLUS;
@@ -98,9 +99,13 @@ public class MonsterService {
     }
 
     @Transactional
-    public void naming(Integer monsterId, String monsterName) {
+    public void naming(String trainerName, Integer monsterId, String monsterName) {
         Monster monster = monsterRepository.findById(monsterId)
                 .orElseThrow(() -> new IllegalArgumentException(MONSTER_NOT_FOUND));
+
+        if (!isYourMonster(trainerName, monster)) {
+            throw new IllegalArgumentException(MONSTER_INVALID_OWNER);
+        }
 
         monster.changeNameTo(monsterName);
         monsterRepository.save(monster);
@@ -108,9 +113,13 @@ public class MonsterService {
     }
 
     @Transactional
-    public void release(Integer monsterId) {
+    public void release(String trainerName, Integer monsterId) {
         Monster monster = monsterRepository.findById(monsterId)
                 .orElseThrow(() -> new IllegalArgumentException(MONSTER_NOT_FOUND));
+
+        if (!isYourMonster(trainerName, monster)) {
+            throw new IllegalArgumentException(MONSTER_INVALID_OWNER);
+        }
 
         monsterRepository.delete(monster);
         log.info("커켓몬 놓아주기 name={}", monster.getName());
@@ -122,6 +131,10 @@ public class MonsterService {
                 .orElseThrow(() -> new IllegalArgumentException(TRAINER_NOT_FOUND));
         Monster monster = monsterRepository.findById(monsterId)
                 .orElseThrow(() -> new IllegalArgumentException(MONSTER_NOT_FOUND));
+
+        if (!isYourMonster(trainerName, monster)) {
+            throw new IllegalArgumentException(MONSTER_INVALID_OWNER);
+        }
 
         try {
             trainer.getFeed().decrease(FEED_MINUS);
@@ -140,6 +153,10 @@ public class MonsterService {
                 .orElseThrow(() -> new IllegalArgumentException(TRAINER_NOT_FOUND));
         Monster monster = monsterRepository.findById(monsterId)
                 .orElseThrow(() -> new IllegalArgumentException(MONSTER_NOT_FOUND));
+
+        if (!isYourMonster(trainerName, monster)) {
+            throw new IllegalArgumentException(MONSTER_INVALID_OWNER);
+        }
 
         try {
             trainer.getToy().decrease(TOY_MINUS);
@@ -181,6 +198,13 @@ public class MonsterService {
                         skillService.convertSkill(monster.getSkillId3()),
                         skillService.convertSkill(monster.getSkillId4()))
         );
+    }
+
+    private boolean isYourMonster(String trainerName, Monster monster) {
+        Trainer trainer = trainerRepository.findById(trainerName)
+                .orElseThrow(() -> new IllegalArgumentException(TRAINER_NOT_FOUND));
+
+        return trainer.getMonsters().contains(monster);
     }
 
 }
