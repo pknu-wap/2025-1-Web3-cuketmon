@@ -36,7 +36,7 @@ public class TrainerController {
     public Integer getRemainingFeeds(@AuthenticationPrincipal String trainerName) {
         return trainerService.getRemainingFeeds(trainerName);
     }
-
+  
     // 랭킹 시스템
     //Dto trainer name 빼는 방향
     //전체 트레이너 랭킹
@@ -52,10 +52,9 @@ public class TrainerController {
     public ResponseEntity<?> getSingleRanking(@AuthenticationPrincipal String trainerName, @RequestBody TrainerDTO request){
     //public ResponseEntity<?> getSingleRanking(@RequestBody TrainerDTO request) {
         try {
-            //String trainerName = request.getTrainerName ();
-            //TrainerDTO dto = trainerService.getSingleRanking(trainerName);
-            return ResponseEntity.ok(trainerService.getSingleRanking(trainerName));
-        } catch (IllegalArgumentException e) {//catch (NoSuchElementException e) {
+            TrainerDTO dto = trainerService.getSingleRanking(trainerName);
+            return ResponseEntity.ok(dto);
+        } catch (IllegalArgumentException e) {
             return ResponseEntity.status(404).body(Map.of("[ERROR]", e.getMessage()));
         }
     }
