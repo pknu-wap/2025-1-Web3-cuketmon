@@ -37,17 +37,19 @@ public class TrainerController {
         return trainerService.getRemainingFeeds(trainerName);
     }
 
-    @PostMapping("/ranking/all")
+    // 모든 유저의 랭킹 보기
+    @GetMapping("/ranking/all")
     public ResponseEntity<List<TrainerDTO>> getAllRanking() {
         return ResponseEntity.ok(trainerService.getAllRanking());
     }
 
-    @PostMapping("/ranking/my")
+    // 나의 랭킹 보기
+    @GetMapping("/ranking")
     public ResponseEntity<?> getSingleRanking(@AuthenticationPrincipal String trainerName){
         try {
             TrainerDTO dto = trainerService.getSingleRanking(trainerName);
             return ResponseEntity.ok(dto);
-        } catch (IllegalArgumentException e) {//catch (NoSuchElementException e) {
+        } catch (IllegalArgumentException e) {
             return ResponseEntity.status(404).body(Map.of("[ERROR]", e.getMessage()));
         }
     }
