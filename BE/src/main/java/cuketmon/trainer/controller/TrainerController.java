@@ -36,16 +36,21 @@ public class TrainerController {
     public Integer getRemainingFeeds(@AuthenticationPrincipal String trainerName) {
         return trainerService.getRemainingFeeds(trainerName);
     }
+  
+    // 랭킹 시스템
+    //Dto trainer name 빼는 방향
+    //전체 트레이너 랭킹
 
-    // 모든 유저의 랭킹 보기
     @GetMapping("/ranking/all")
     public ResponseEntity<List<TrainerDTO>> getAllRanking() {
         return ResponseEntity.ok(trainerService.getAllRanking());
     }
 
-    // 나의 랭킹 보기
+    //개인 트레이너 개별 랭킹
+
     @GetMapping("/ranking")
-    public ResponseEntity<?> getSingleRanking(@AuthenticationPrincipal String trainerName){
+    public ResponseEntity<?> getSingleRanking(@AuthenticationPrincipal String trainerName, @RequestBody TrainerDTO request){
+    //public ResponseEntity<?> getSingleRanking(@RequestBody TrainerDTO request) {
         try {
             TrainerDTO dto = trainerService.getSingleRanking(trainerName);
             return ResponseEntity.ok(dto);
