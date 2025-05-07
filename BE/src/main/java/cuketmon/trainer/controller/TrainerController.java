@@ -37,25 +37,19 @@ public class TrainerController {
         return trainerService.getRemainingFeeds(trainerName);
     }
 
-    // 랭킹 시스템
-    //Dto trainer name 빼는 방향
-    //전체 트레이너 랭킹
-
-    @GetMapping("`${API_URL}/api/trainer/ranking/all")
+    // 모든 유저의 랭킹 보기
+    @GetMapping("/ranking/all")
     public ResponseEntity<List<TrainerDTO>> getAllRanking() {
         return ResponseEntity.ok(trainerService.getAllRanking());
     }
 
-    //개인 트레이너 개별 랭킹
-
-    @GetMapping("`${API_URL}/api/trainer/ranking")
-    public ResponseEntity<?> getSingleRanking(@AuthenticationPrincipal String trainerName, @RequestBody TrainerDTO request){
-    //public ResponseEntity<?> getSingleRanking(@RequestBody TrainerDTO request) {
+    // 나의 랭킹 보기
+    @GetMapping("/ranking")
+    public ResponseEntity<?> getSingleRanking(@AuthenticationPrincipal String trainerName){
         try {
-            //String trainerName = request.getTrainerName ();
-            //TrainerDTO dto = trainerService.getSingleRanking(trainerName);
-            return ResponseEntity.ok(trainerService.getSingleRanking(trainerName));
-        } catch (IllegalArgumentException e) {//catch (NoSuchElementException e) {
+            TrainerDTO dto = trainerService.getSingleRanking(trainerName);
+            return ResponseEntity.ok(dto);
+        } catch (IllegalArgumentException e) {
             return ResponseEntity.status(404).body(Map.of("[ERROR]", e.getMessage()));
         }
     }

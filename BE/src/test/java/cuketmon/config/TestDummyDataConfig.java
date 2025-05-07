@@ -28,20 +28,23 @@ public class TestDummyDataConfig {
 
     @PostConstruct
     public void initDummyData() {
-        trainerRepository.save(Trainer.builder()
+        Trainer trainer1 = Trainer.builder()
                 .name(TRAINER1)
                 .toy(new Toy())
                 .feed(new Feed())
                 .win(0)
                 .lose(0)
-                .build());
-        trainerRepository.save(Trainer.builder()
+                .build();
+        Trainer trainer2 = Trainer.builder()
                 .name(TRAINER2)
                 .toy(new Toy())
                 .feed(new Feed())
                 .win(0)
                 .lose(0)
-                .build());
+                .build();
+
+        trainerRepository.save(trainer1);
+        trainerRepository.save(trainer2);
 
         monsterRepository.save(Monster.builder()
                 .name(MONSTER1)
@@ -60,6 +63,7 @@ public class TestDummyDataConfig {
                 .skillId2(2)
                 .skillId3(3)
                 .skillId4(4)
+                .trainer(trainer1)
                 .build());
         monsterRepository.save(Monster.builder()
                 .name(MONSTER2)
@@ -78,6 +82,7 @@ public class TestDummyDataConfig {
                 .skillId2(2)
                 .skillId3(3)
                 .skillId4(4)
+                .trainer(trainer2)
                 .build());
     }
 
