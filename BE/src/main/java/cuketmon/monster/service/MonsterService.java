@@ -31,7 +31,7 @@ import cuketmon.skill.service.SkillService;
 import cuketmon.trainer.entity.Trainer;
 import cuketmon.trainer.repository.TrainerRepository;
 import cuketmon.util.CustomLogger;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,17 +68,14 @@ public class MonsterService {
             throw new IllegalArgumentException(MONSTER_LIMIT_EXCEEDED);
         }
 
-        // 일일 최대 커켓몬 생성 제한
-        Integer generateCount = trainer.addGenerateCount();
-        if (generateCount >= MAX_GENERATE_LIMIT) {
-            if (isOver24Hours(trainer.getLastGenerateTime())) {
-                trainer.initGenerateCount();
-            } else {
-                throw new IllegalArgumentException(GENERATE_LIMIT_EXCEEDED);
-            }
+        // 하루가 지났으면 초기화
+        if (!trainer.getLastGenerateDate().equals(LocalDate.now())) {
+            trainer.initGenerateCount();
+            trainer.setLastGenerateDate(LocalDate.now());
         }
-        if (generateCount == MAX_GENERATE_LIMIT - 1) {
-            trainer.setLastGenerateTime(LocalDateTime.now());
+        // 일일 최대 커켓몬 생성 제한
+        if (trainer.addGenerateCount() > MAX_GENERATE_LIMIT) {
+            throw new IllegalArgumentException(GENERATE_LIMIT_EXCEEDED);
         }
 
         Type type1 = Type.fromString(requestBody.getType1());
@@ -228,13 +225,6 @@ public class MonsterService {
                 .orElseThrow(() -> new IllegalArgumentException(TRAINER_NOT_FOUND));
 
         return trainer.getMonsters().contains(monster);
-    }
-
-    private boolean isOver24Hours(LocalDateTime last) {
-        if (last == null) {
-            return true;
-        }
-        return last.isBefore(LocalDateTime.now().minusHours(24));
     }
 
 }

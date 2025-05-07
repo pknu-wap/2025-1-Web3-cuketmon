@@ -12,7 +12,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -53,7 +53,7 @@ public class Trainer {
     private Integer generateCount = 0;
 
     @Column(nullable = false)
-    private LocalDateTime lastGenerateTime;
+    private LocalDate lastGenerateDate;
 
     @OneToMany(mappedBy = "trainer", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @Builder.Default
@@ -75,8 +75,8 @@ public class Trainer {
         return this.generateCount += 1;
     }
 
-    public LocalDateTime setLastGenerateTime(LocalDateTime lastGenerateTime) {
-        return this.lastGenerateTime = lastGenerateTime;
+    public LocalDate setLastGenerateDate(LocalDate lastGenerateDate) {
+        return this.lastGenerateDate = lastGenerateDate;
     }
 
     public void initGenerateCount() {
