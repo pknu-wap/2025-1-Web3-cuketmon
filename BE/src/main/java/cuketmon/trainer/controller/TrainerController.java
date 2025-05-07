@@ -37,36 +37,17 @@ public class TrainerController {
         return trainerService.getRemainingFeeds(trainerName);
     }
 
-    // 랭킹 시스템
-    // 전체 트레이너 랭킹
-    // @GetMapping("/ranking")
-    // public ResponseEntity<List<TrainerDTO>> getTrainerRanking() {
-    // return ResponseEntity.ok(trainerService.getTrainerRanking());
-    // }
-
-    @PostMapping("/ranking")
-    public ResponseEntity<List<TrainerDTO>> getTrainerRanking(@RequestBody TrainerDTO request) {
-        return ResponseEntity.ok(trainerService.getTrainerRanking());
+    @PostMapping("/ranking/all")
+    public ResponseEntity<List<TrainerDTO>> getAllRanking() {
+        return ResponseEntity.ok(trainerService.getAllRanking());
     }
 
-    //개인 트레이너 개별 랭킹
-    // @GetMapping("/raking/{trainerName}")
-    // public ResponseEntity<?> getSingleRanking(@PathVariable String trainerName) {
-    //    try{
-    //        TrainerDTO dto = trainerService.getSingleRanking(trainerName);
-    //        return ResponseEntity.ok(dto);
-    //    } catch (NoSuchElementException e) {
-    //        return ResponseEntity.status(404).body(Map.of("[ERROR]", e.getMessage()));
-    //    }
-    // }
-
-    @PostMapping("/ranking/{trainerName}")
-    public ResponseEntity<?> getSingleRanking(@RequestBody TrainerDTO request) {
+    @PostMapping("/ranking/my")
+    public ResponseEntity<?> getSingleRanking(@AuthenticationPrincipal String trainerName){
         try {
-            String trainerName = request.getTrainerName();
             TrainerDTO dto = trainerService.getSingleRanking(trainerName);
             return ResponseEntity.ok(dto);
-        } catch (NoSuchElementException e) {
+        } catch (IllegalArgumentException e) {//catch (NoSuchElementException e) {
             return ResponseEntity.status(404).body(Map.of("[ERROR]", e.getMessage()));
         }
     }
