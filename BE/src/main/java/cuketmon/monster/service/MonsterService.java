@@ -63,6 +63,7 @@ public class MonsterService {
         Trainer trainer = trainerRepository.findById(trainerName)
                 .orElseThrow(() -> new IllegalArgumentException(TRAINER_NOT_FOUND));
 
+        // TODO: 로직 분리
         // 최대 보유 커켓몬 제한
         if (trainer.getMonsters().size() >= MAX_MONSTER_LIMIT) {
             throw new IllegalArgumentException(MONSTER_LIMIT_EXCEEDED);
@@ -120,10 +121,12 @@ public class MonsterService {
 
     @Transactional
     public void naming(String trainerName, Integer monsterId, String monsterName) {
+        Trainer trainer = trainerRepository.findById(trainerName)
+                .orElseThrow(() -> new IllegalArgumentException(TRAINER_NOT_FOUND));
         Monster monster = monsterRepository.findById(monsterId)
                 .orElseThrow(() -> new IllegalArgumentException(MONSTER_NOT_FOUND));
 
-        if (!isYourMonster(trainerName, monster)) {
+        if (!isYourMonster(trainer, monster)) {
             throw new IllegalArgumentException(MONSTER_INVALID_OWNER);
         }
 
@@ -134,13 +137,16 @@ public class MonsterService {
 
     @Transactional
     public void release(String trainerName, Integer monsterId) {
+        Trainer trainer = trainerRepository.findById(trainerName)
+                .orElseThrow(() -> new IllegalArgumentException(TRAINER_NOT_FOUND));
         Monster monster = monsterRepository.findById(monsterId)
                 .orElseThrow(() -> new IllegalArgumentException(MONSTER_NOT_FOUND));
 
-        if (!isYourMonster(trainerName, monster)) {
+        if (!isYourMonster(trainer, monster)) {
             throw new IllegalArgumentException(MONSTER_INVALID_OWNER);
         }
 
+        trainer.getMonsters().remove(monster);
         monsterRepository.delete(monster);
         log.info("커켓몬 놓아주기 name={}", monster.getName());
     }
@@ -152,7 +158,7 @@ public class MonsterService {
         Monster monster = monsterRepository.findById(monsterId)
                 .orElseThrow(() -> new IllegalArgumentException(MONSTER_NOT_FOUND));
 
-        if (!isYourMonster(trainerName, monster)) {
+        if (!isYourMonster(trainer, monster)) {
             throw new IllegalArgumentException(MONSTER_INVALID_OWNER);
         }
 
@@ -174,7 +180,7 @@ public class MonsterService {
         Monster monster = monsterRepository.findById(monsterId)
                 .orElseThrow(() -> new IllegalArgumentException(MONSTER_NOT_FOUND));
 
-        if (!isYourMonster(trainerName, monster)) {
+        if (!isYourMonster(trainer, monster)) {
             throw new IllegalArgumentException(MONSTER_INVALID_OWNER);
         }
 
@@ -184,7 +190,6 @@ public class MonsterService {
             trainerRepository.save(trainer);
             monsterRepository.save(monster);
             log.info("커켓몬 놀아주기 trainer={}, monster={}", trainerName, monster.getName());
-
         } catch (Exception e) {
             throw new IllegalArgumentException(e.getMessage());
         }
@@ -220,10 +225,7 @@ public class MonsterService {
         );
     }
 
-    private boolean isYourMonster(String trainerName, Monster monster) {
-        Trainer trainer = trainerRepository.findById(trainerName)
-                .orElseThrow(() -> new IllegalArgumentException(TRAINER_NOT_FOUND));
-
+    private boolean isYourMonster(Trainer trainer, Monster monster) {
         return trainer.getMonsters().contains(monster);
     }
 

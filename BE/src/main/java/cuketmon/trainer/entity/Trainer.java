@@ -50,10 +50,12 @@ public class Trainer {
     private Integer lose;
 
     @Column(nullable = false)
+    @Builder.Default
     private Integer generateCount = 0;
 
     @Column(nullable = false)
-    private LocalDate lastGenerateDate;
+    @Builder.Default
+    private LocalDate lastGenerateDate = LocalDate.now();
 
     @OneToMany(mappedBy = "trainer", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @Builder.Default
