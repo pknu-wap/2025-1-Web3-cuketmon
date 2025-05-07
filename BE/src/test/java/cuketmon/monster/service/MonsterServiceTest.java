@@ -1,6 +1,9 @@
 package cuketmon.monster.service;
 
+import static cuketmon.constant.TestConfig.TRAINER1;
+import static cuketmon.constant.TestConfig.TRAINER2;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import cuketmon.config.TestDummyDataConfig;
 import cuketmon.config.TestSkillDataConfig;
@@ -32,23 +35,23 @@ class MonsterServiceTest {
 
     @Test
     void 먹이가_올바르게_차감되어_DB에_저장되고_조회된다() {
-        Trainer trainer = trainerRepository.findById("kng").get();
+        Trainer trainer = trainerRepository.findById(TRAINER1).get();
         int prevFeed = trainer.getFeed().getCount();
 
-        monsterService.feed("kng", 1);
+        monsterService.feed(TRAINER1, 1);
 
-        Trainer updatedTrainer = trainerRepository.findById("kng").get();
+        Trainer updatedTrainer = trainerRepository.findById(TRAINER1).get();
         assertEquals(prevFeed - 1, updatedTrainer.getFeed().getCount());
     }
 
     @Test
     void 장난감이_올바르게_차감되어_DB에_저장되고_조회된다() {
-        Trainer trainer = trainerRepository.findById("kng").get();
+        Trainer trainer = trainerRepository.findById(TRAINER1).get();
         int prevToy = trainer.getToy().getCount();
 
-        monsterService.play("kng", 1);
+        monsterService.play(TRAINER1, 1);
 
-        Trainer updatedTrainer = trainerRepository.findById("kng").get();
+        Trainer updatedTrainer = trainerRepository.findById(TRAINER1).get();
         assertEquals(prevToy - 1, updatedTrainer.getToy().getCount());
     }
 
@@ -57,10 +60,17 @@ class MonsterServiceTest {
         Monster monster = monsterRepository.findById(1).get();
         int prevAffinity = monster.getAffinity().getCount();
 
-        monsterService.play("kng", 1);
+        monsterService.play(TRAINER1, 1);
 
         Monster updatedMonster = monsterRepository.findById(1).get();
         assertEquals(prevAffinity + 1, updatedMonster.getAffinity().getCount());
+    }
+
+    @Test
+    void 자신의_커켓몬이_아닐경우_오류를_발생시킨다() {
+        assertThrows(IllegalArgumentException.class, () -> monsterService.play(TRAINER2, 1));
+        assertThrows(IllegalArgumentException.class, () -> monsterService.feed(TRAINER2, 1));
+        assertThrows(IllegalArgumentException.class, () -> monsterService.naming(TRAINER2, 1, "temp"));
     }
 
 }

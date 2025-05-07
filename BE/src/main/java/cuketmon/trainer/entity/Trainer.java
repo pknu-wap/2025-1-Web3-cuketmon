@@ -41,7 +41,7 @@ public class Trainer {
     })
     private Feed feed;
 
-    //랭킹 시스템
+    // 랭킹 시스템
     @Column(nullable = false)
     private Integer win;
 

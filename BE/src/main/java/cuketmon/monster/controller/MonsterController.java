@@ -1,5 +1,10 @@
 package cuketmon.monster.controller;
 
+import static cuketmon.constant.message.InfoMessages.FEED_SUCCESS;
+import static cuketmon.constant.message.InfoMessages.NAME_CHANGE_SUCCESS;
+import static cuketmon.constant.message.InfoMessages.PLAY_SUCCESS;
+import static cuketmon.constant.message.InfoMessages.RELEASE_SUCCESS;
+
 import cuketmon.monster.dto.GenerateApiRequestBody;
 import cuketmon.monster.dto.NamingDTO;
 import cuketmon.monster.service.MonsterService;
@@ -39,11 +44,12 @@ public class MonsterController {
 
     // 커켓몬 이름 지정
     @PatchMapping("/{monsterId}/name")
-    public ResponseEntity<String> namingMonster(@PathVariable Integer monsterId,
+    public ResponseEntity<String> namingMonster(@AuthenticationPrincipal String trainerName,
+                                                @PathVariable Integer monsterId,
                                                 @Validated @RequestBody NamingDTO monsterName) {
         try {
-            monsterService.naming(monsterId, monsterName.getName());
-            return ResponseEntity.ok("커켓몬 이름 변경 성공!");
+            monsterService.naming(trainerName, monsterId, monsterName.getName());
+            return ResponseEntity.ok(NAME_CHANGE_SUCCESS);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
@@ -51,10 +57,11 @@ public class MonsterController {
 
     // 커켓몬 놓아주기
     @DeleteMapping("/{monsterId}/release")
-    public ResponseEntity<String> releaseMonster(@PathVariable Integer monsterId) {
+    public ResponseEntity<String> releaseMonster(@AuthenticationPrincipal String trainerName,
+                                                 @PathVariable Integer monsterId) {
         try {
-            monsterService.release(monsterId);
-            return ResponseEntity.ok("커켓몬 놓아주기 성공!");
+            monsterService.release(trainerName, monsterId);
+            return ResponseEntity.ok(RELEASE_SUCCESS);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
@@ -66,7 +73,7 @@ public class MonsterController {
                                               @PathVariable Integer monsterId) {
         try {
             monsterService.feed(trainerName, monsterId);
-            return ResponseEntity.ok("먹이를 주었습니다.");
+            return ResponseEntity.ok(FEED_SUCCESS);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
@@ -78,7 +85,7 @@ public class MonsterController {
                                                   @PathVariable Integer monsterId) {
         try {
             monsterService.play(trainerName, monsterId);
-            return ResponseEntity.ok("놀아주었습니다.");
+            return ResponseEntity.ok(PLAY_SUCCESS);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
