@@ -34,7 +34,8 @@ public class MonsterController {
         this.monsterService = monsterService;
     }
 
-    // 몬스터 생성 기능
+    // TODO: response 이상함 고치기 우선순위는 낮음
+    // 몬스터 생성
     @PostMapping("/generate")
     public ResponseEntity<Map<String, Integer>> generateMonster(@AuthenticationPrincipal String trainerName,
                                                                 @Validated @RequestBody GenerateApiRequestBody requestBody) {

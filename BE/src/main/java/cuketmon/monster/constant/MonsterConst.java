@@ -2,6 +2,7 @@ package cuketmon.monster.constant;
 
 public class MonsterConst {
 
+    public static final int MAX_GENERATE_LIMIT = 10;
     public static final int MAX_MONSTER_LIMIT = 5;
 
     public static final int MIN_BASE = 60;

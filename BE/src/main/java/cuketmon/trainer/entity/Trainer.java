@@ -12,6 +12,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -48,6 +49,14 @@ public class Trainer {
     @Column(nullable = false)
     private Integer lose;
 
+    @Column(nullable = false)
+    @Builder.Default
+    private Integer generateCount = 0;
+
+    @Column(nullable = false)
+    @Builder.Default
+    private LocalDate lastGenerateDate = LocalDate.now();
+
     @OneToMany(mappedBy = "trainer", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @Builder.Default
     private List<Monster> monsters = new ArrayList<>();
@@ -62,6 +71,18 @@ public class Trainer {
 
     public Integer getAllBattles() {
         return this.win + this.lose;
+    }
+
+    public Integer addGenerateCount() {
+        return this.generateCount += 1;
+    }
+
+    public LocalDate setLastGenerateDate(LocalDate lastGenerateDate) {
+        return this.lastGenerateDate = lastGenerateDate;
+    }
+
+    public void initGenerateCount() {
+        this.generateCount = 0;
     }
 
     public void addMonster(Monster monster) {

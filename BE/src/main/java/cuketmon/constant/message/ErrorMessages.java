@@ -7,6 +7,7 @@ public class ErrorMessages {
     public static final String SKILL_NOT_FOUND = "[ERROR] 해당 ID의 스킬이 없습니다.";
 
     public static final String MONSTER_LIMIT_EXCEEDED = "[ERROR] 커켓몬은 최대 5마리까지 지닐 수 있습니다.";
+    public static final String GENERATE_LIMIT_EXCEEDED = "[ERROR] 일일 최대 생성횟수를 초과했습니다.";
 
     public static final String FEED_INVALID_AMOUNT = "[ERROR] 남은 먹이가 부족합니다.";
     public static final String TOY_INVALID_AMOUNT = "[ERROR] 남은 장난감이 부족합니다.";
