@@ -1,12 +1,14 @@
 package cuketmon.monster.service;
 
 import static cuketmon.constant.message.ErrorMessages.MONSTER_INVALID_OWNER;
+import static cuketmon.constant.message.ErrorMessages.MONSTER_LIMIT_EXCEEDED;
 import static cuketmon.constant.message.ErrorMessages.MONSTER_NOT_FOUND;
 import static cuketmon.constant.message.ErrorMessages.TRAINER_NOT_FOUND;
 import static cuketmon.monster.constant.MonsterConst.AFFINITY_PLUS;
 import static cuketmon.monster.constant.MonsterConst.FEED_MINUS;
 import static cuketmon.monster.constant.MonsterConst.MAX_BASE;
 import static cuketmon.monster.constant.MonsterConst.MAX_DAMAGE;
+import static cuketmon.monster.constant.MonsterConst.MAX_MONSTER_LIMIT;
 import static cuketmon.monster.constant.MonsterConst.MID_DAMAGE;
 import static cuketmon.monster.constant.MonsterConst.MIN_BASE;
 import static cuketmon.monster.constant.MonsterConst.MIN_DAMAGE;
@@ -57,6 +59,10 @@ public class MonsterService {
     public Integer generate(String trainerName, GenerateApiRequestBody requestBody) {
         Trainer trainer = trainerRepository.findById(trainerName)
                 .orElseThrow(() -> new IllegalArgumentException(TRAINER_NOT_FOUND));
+
+        if (trainer.getMonsters().size() >= MAX_MONSTER_LIMIT) {
+            throw new IllegalArgumentException(MONSTER_LIMIT_EXCEEDED);
+        }
 
         Type type1 = Type.fromString(requestBody.getType1());
         Type type2 = Type.fromString(requestBody.getType2()); // nullable 값

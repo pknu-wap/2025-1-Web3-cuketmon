@@ -38,8 +38,12 @@ public class MonsterController {
     @PostMapping("/generate")
     public ResponseEntity<Map<String, Integer>> generateMonster(@AuthenticationPrincipal String trainerName,
                                                                 @Validated @RequestBody GenerateApiRequestBody requestBody) {
-        Integer monsterId = monsterService.generate(trainerName, requestBody);
-        return ResponseEntity.ok(Map.of("monsterId", monsterId));
+        try {
+            Integer monsterId = monsterService.generate(trainerName, requestBody);
+            return ResponseEntity.ok(Map.of("monsterId", monsterId));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(Map.of(e.getMessage(), 400));
+        }
     }
 
     // 커켓몬 이름 지정
