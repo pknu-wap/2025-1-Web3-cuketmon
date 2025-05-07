@@ -1,22 +1,32 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from .config import DB_HOST, DB_USER, DB_PASS, DB_NAME, DB_PORT
+from sshtunnel import SSHTunnelForwarder
+from .config import SSH_HOST, SSH_USER, SSH_KEY_PATH, DB_HOST, DB_USER, DB_PASS, DB_NAME
 
+tunnel = None
 engine = None
 SessionLocal = None
 
 def connect_db():
-    global engine, SessionLocal
+    global tunnel, engine, SessionLocal
 
-    DATABASE_URL = f"mysql+pymysql://{DB_USER}:{DB_PASS}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
+    tunnel = SSHTunnelForwarder(
+        (SSH_HOST, 22),
+        ssh_username=SSH_USER,
+        ssh_private_key=SSH_KEY_PATH,
+        remote_bind_address=(DB_HOST, 3306),
+        local_bind_address=('127.0.0.1', 3307)
+    )
+    tunnel.start()
+
+    DATABASE_URL = f"mysql+pymysql://{DB_USER}:{DB_PASS}@127.0.0.1:3307/{DB_NAME}"
     engine = create_engine(DATABASE_URL)
     SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-    print("[INFO] DB has been connected...")
-    
+
 def disconnect_db():
-    global engine
-    if engine:
-        engine.dispose()
+    global tunnel
+    if tunnel:
+        tunnel.stop()
 
 def get_db():
     db = SessionLocal()

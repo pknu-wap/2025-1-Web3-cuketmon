@@ -17,25 +17,7 @@ pipeline = AutoPipelineForText2Image.from_pretrained(
 pipeline.load_lora_weights(f'{MODEL_PATH}/checkpoint-{CHECKPOINT}')
 print("Model loaded.")
 
-def model_inference(monster_id: int, monster_description: str):
-    prompt = f"a poketmon, {monster_description}, no background"
+def model_inference(prompt: str):
+    prompt = f"a poketmon, {prompt}, no background"
     image = pipeline(prompt).images[0]
     return image
-
-
-def save_image(image: Image.Image, monster_id: int, monster, db: Session):
-    resized_image = image.resize((81, 81))
-    save_path = Path(f"results/{monster_id}-org.png")
-    resized_image.save(save_path)
-
-    output = remove(resized_image)
-
-    save_path = Path(f"results/{monster_id}.png")
-    output.save(save_path)
-
-    buffered = BytesIO()
-    output.save(buffered, format="PNG")
-    buffered.seek(0)
-
-    encoded_string = base64.b64encode(buffered.read()).decode('utf-8')
-    monster.image = encoded_string
