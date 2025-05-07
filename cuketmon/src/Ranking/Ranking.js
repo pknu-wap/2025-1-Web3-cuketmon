@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import MenuBar from "../Menubar/Menubar.js";
 import './Ranking.css';
+import { useAuth } from '../AuthContext';
 
 function Ranking() {
   const [rank, setRank] = useState(0); 
@@ -11,8 +12,8 @@ function Ranking() {
   const [monsters, setMonsters] = useState([]);  
   const [monsterImages, setMonsterImages] = useState([]);
   const API_URL = process.env.REACT_APP_API_URL;
-  const token = localStorage.getItem('token'); 
-
+  const { token: contextToken } = useAuth();
+  const token = contextToken || localStorage.getItem('jwt');
 
   /*유저 소유 커켓몬 id 배열로 받기 */
   const loadCukemon = async () => {
