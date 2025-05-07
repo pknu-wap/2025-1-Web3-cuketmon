@@ -38,11 +38,11 @@ public class TrainerController {
     }
 
     // 랭킹 시스템
-    //전체 트레이너 랭킹
-//    @GetMapping("/ranking")
-//    public ResponseEntity<List<TrainerDTO>> getTrainerRanking() {
-//        return ResponseEntity.ok(trainerService.getTrainerRanking());
-//    }
+    // 전체 트레이너 랭킹
+    // @GetMapping("/ranking")
+    // public ResponseEntity<List<TrainerDTO>> getTrainerRanking() {
+    // return ResponseEntity.ok(trainerService.getTrainerRanking());
+    // }
 
     @PostMapping("/ranking")
     public ResponseEntity<List<TrainerDTO>> getTrainerRanking(@RequestBody TrainerDTO request) {
@@ -50,15 +50,15 @@ public class TrainerController {
     }
 
     //개인 트레이너 개별 랭킹
-//    @GetMapping("/raking/{trainerName}")
-//    public ResponseEntity<?> getSingleRanking(@PathVariable String trainerName) {
-//        try{
-//            TrainerDTO dto = trainerService.getSingleRanking(trainerName);
-//            return ResponseEntity.ok(dto);
-//        } catch (NoSuchElementException e) {
-//            return ResponseEntity.status(404).body(Map.of("[ERROR]", e.getMessage()));
-//        }
-//    }
+    // @GetMapping("/raking/{trainerName}")
+    // public ResponseEntity<?> getSingleRanking(@PathVariable String trainerName) {
+    //    try{
+    //        TrainerDTO dto = trainerService.getSingleRanking(trainerName);
+    //        return ResponseEntity.ok(dto);
+    //    } catch (NoSuchElementException e) {
+    //        return ResponseEntity.status(404).body(Map.of("[ERROR]", e.getMessage()));
+    //    }
+    // }
 
     @PostMapping("/ranking/{trainerName}")
     public ResponseEntity<?> getSingleRanking(@RequestBody TrainerDTO request) {
