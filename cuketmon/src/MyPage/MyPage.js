@@ -13,7 +13,8 @@ function MyPage() {
   const [monsterId, setMonsterId] = useState(null);
   const [monsters, setMonsters] = useState([]); 
   const API_URL = process.env.REACT_APP_API_URL;
-  const { token } = useAuth();
+  const { token: contextToken } = useAuth();
+  const token = contextToken || localStorage.getItem('token');
   const isLoadingRef = useRef(false);
 
   /*유저 소유 커켓몬 조회하기 */
