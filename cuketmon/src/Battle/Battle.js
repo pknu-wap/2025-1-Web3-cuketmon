@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import './Battle.css';
-import { useNavigate } from 'react-router-dom';
 
 function Battle() {
   const [myCuketmonHP, setMyCuketmonHP] = useState(100);
   const [enemyCuketmonHP, setEnemyCuketmonHP] = useState(100);
   const [myPP, setMyPP] = useState(15);
   const [cuketmonImages, setCuketmonImages] = useState({
-    myCuketmon: '/BattlePage/cuketmonEx.png',
+    myCuketmon: '',
     enemyCuketmon: '/BattlePage/cuketmonEx.png',
   });
   const [techs, setTechs] = useState([]);
@@ -24,6 +24,9 @@ function Battle() {
   const [isBattleEnded, setIsBattleEnded] = useState(false);
   const [winner, setWinner] = useState(null);
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const { selectedCuketmon } = location.state || {};
 
   const animationMap = {
     fire: {
@@ -101,11 +104,18 @@ function Battle() {
   };
 
   const getHpColor = (hp) => {
-    const hue = hp * 1.2; // 120 (초록)에서 0 (빨강)으로 점진적 변화
+    const hue = hp * 1.2;
     return `hsl(${hue}, 100%, 50%)`;
   };
 
   useEffect(() => {
+    if (selectedCuketmon) {
+      setCuketmonImages((prev) => ({
+        ...prev,
+        myCuketmon: selectedCuketmon.image,
+      }));
+    }
+
     const mockWebSocket = {
       send: (data) => console.log('Mock WebSocket send:', data),
       close: () => console.log('Mock WebSocket closed'),
@@ -116,14 +126,10 @@ function Battle() {
       setLoading(false);
       setIsMatched(true);
       setMyTurn(true);
-      setCuketmonImages({
-        myCuketmon: '/BattlePage/cuketmonEx.png',
-        enemyCuketmon: '/BattlePage/cuketmonEx.png',
-      });
     }, 3000);
 
     return () => mockWebSocket.close();
-  }, []);
+  }, [selectedCuketmon]);
 
   useEffect(() => {
     if (isMatched) {
@@ -154,7 +160,7 @@ function Battle() {
       setSelectedTech(tech.id);
       const damage = tech.damage;
       setMyPP((prev) => Math.max(prev - 1, 0));
-      setBattleMessage(`커켓몬1이 ${tech.description}을 사용했다!`);
+      setBattleMessage(`${selectedCuketmon.name}이 ${tech.description}을 사용했다!`);
       setCurrentAnimation(tech.animationUrl);
       setIsFighting(true);
 
@@ -164,7 +170,6 @@ function Battle() {
         setBattleMessage('');
         setSelectedTech(null);
         setCurrentAnimation(null);
-        /*setMyTurn(false);*/
         const newEnemyHP = Math.max(enemyCuketmonHP - damage, 0);
         setEnemyCuketmonHP(newEnemyHP);
 
@@ -188,17 +193,13 @@ function Battle() {
       </div>
     );
   }
-  
+
   if (isBattleEnded) {
-      const winnerImage = winner === 'player' ? cuketmonImages.myCuketmon : cuketmonImages.enemyCuketmon;
-      return (
-        <div className="resultScreen">
-          <h1>{winner === 'player' ? '승리!' : '패배...'}</h1>
-          <img
-            src={winnerImage}
-            className="winnerCuketmonImage"
-            alt="승리자"
-          />
+    const winnerImage = winner === 'player' ? cuketmonImages.myCuketmon : cuketmonImages.enemyCuketmon;
+    return (
+      <div className="resultScreen">
+        <h1>{winner === 'player' ? '승리!' : '패배...'}</h1>
+        <img src={winnerImage} className="winnerCuketmonImage" alt="승리자" />
         <button className="endBattle" onClick={() => navigate('/mypage')}>전투종료</button>
       </div>
     );
@@ -210,14 +211,12 @@ function Battle() {
         <div className="battleContainer">
           <div className="mySection">
             <div className="hpBackground">
-              <p>커켓몬1</p>
+              <p>{selectedCuketmon.name}</p>
               <img src="/BattlePage/hpBar.png" className="myHpImage" alt="체력바" />
               <div className="myHpBar">
-              <div className="myHpFill" style={{ width: `${myCuketmonHP}%`, backgroundColor: getHpColor(myCuketmonHP) }}></div>
+                <div className="myHpFill" style={{ width: `${myCuketmonHP}%`, backgroundColor: getHpColor(myCuketmonHP) }}></div>
+              </div>
             </div>
-            </div>
-            
-            
             <div className="cuketmon">
               <img
                 src={cuketmonImages.myCuketmon}
@@ -227,17 +226,14 @@ function Battle() {
               <img src="/BattlePage/stand.png" className="myStage" alt="전투무대" />
             </div>
           </div>
-
           <div className="enemySection">
             <div className="hpBackground">
               <p>커켓몬2</p>
               <img src="/BattlePage/hpBar.png" className="enemyHpImage" alt="체력바" />
               <div className="enemyHpBar">
-              <div className="enemyHpFill" style={{ width: `${enemyCuketmonHP}%`, backgroundColor: getHpColor(enemyCuketmonHP) }}></div>
+                <div className="enemyHpFill" style={{ width: `${enemyCuketmonHP}%`, backgroundColor: getHpColor(enemyCuketmonHP) }}></div>
+              </div>
             </div>
-            </div>
-            
-            
             <div className="cuketmon">
               <img
                 src={cuketmonImages.enemyCuketmon}
@@ -248,7 +244,6 @@ function Battle() {
             </div>
           </div>
         </div>
-
         <div className="techSection">
           {!isFighting && (
             <div className="techButtons">
@@ -267,18 +262,12 @@ function Battle() {
           )}
           {isFighting && (
             <div className="battleAnimationOverlay">
-              <img
-                src={currentAnimation}
-                className="techAnimation"
-                alt="기술 애니메이션"
-              />
+              <img src={currentAnimation} className="techAnimation" alt="기술 애니메이션" />
               <div className="battleMessage">{battleMessage}</div>
             </div>
           )}
           <span className="ppInfo">PP {myPP}/15</span>
-          <span className="cuketmonType">
-            TYPE/{techs.length > 0 ? techs[0].type : '없음'}
-          </span>
+          <span className="cuketmonType">TYPE/{techs.length > 0 ? techs[0].type : '없음'}</span>
           <span className="turnInfo">{myTurn ? '내 턴' : '상대 턴'}</span>
         </div>
       </div>
