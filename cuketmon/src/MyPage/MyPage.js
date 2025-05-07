@@ -64,6 +64,7 @@ function MyPage() {
     if (!monsterId || monsters.length === 0) return;
     try {
       const currentMonsterId = monsters[monsterId]; 
+      console.log(currentMonsterId);
       await fetch(`${API_URL}/api/monster/${currentMonsterId}/feed`, {
         method: "POST",
         headers: { 'Authorization': `Bearer ${token}` },
@@ -85,6 +86,7 @@ function MyPage() {
     if (!monsterId || monsters.length === 0) return;
     try {
       const currentMonsterId = monsters[monsterId]; 
+      console.log(currentMonsterId);
       await fetch(`${API_URL}/api/monster/${currentMonsterId}/play`, {
         method: "POST",
         headers: { 'Authorization': `Bearer ${token}` },
