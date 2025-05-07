@@ -13,8 +13,8 @@ root.render(
   <React.StrictMode>
     <AuthProvider> 
       <BrowserRouter>
+      <TokenInitializer /> 
         <MainRoutes />
-        <TokenInitializer /> 
       </BrowserRouter>
     </AuthProvider>
   </React.StrictMode>
