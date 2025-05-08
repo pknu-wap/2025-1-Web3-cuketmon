@@ -24,7 +24,7 @@ function Battle() {
   const [myTurn, setMyTurn] = useState(false);
   const [battleId, setBattleId] = useState('');
   const [winner, setWinner] = useState(null);
-  const [trainerName, setTrainerName] = useState(''); // 서버에서 가져올 예정
+  const [trainerName, setTrainerName] = useState('');
   const [isBattleEnded, setIsBattleEnded] = useState(false);
   const stompClientRef = useRef(null);
   const navigate = useNavigate();
@@ -209,12 +209,15 @@ function Battle() {
         });
 
         
-        if (trainerName && stompClientRef.current && stompClientRef.current.connected) {
+        const monsterId = selectedCuketmon?.id;
+        if (trainerName && monsterId && stompClientRef.current && stompClientRef.current.connected) {
           client.publish({
-            destination: '/app/findBattle',
-            body: JSON.stringify({ trainerName }),
+            destination: '/api/app/findBattle',
+            body: JSON.stringify({ trainerName, monsterId }),
           });
-          console.log('Battle find request sent:', { trainerName });
+          console.log('Battle find request sent:', { trainerName, monsterId });
+        } else {
+          console.error('Cannot send findBattle request: Missing trainerName or monsterId');
         }
       },
       onStompError: (frame) => {
