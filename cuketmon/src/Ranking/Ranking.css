@@ -95,6 +95,9 @@
     width: 100vw;
     left: 0vw;
   }
+  .cukemonImageContainer img {
+    width: 14vw;
+  }
 
   .historyBoard {
     width: 70%;
