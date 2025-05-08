@@ -55,6 +55,8 @@ span {
   background-color: #d9d9d9;
   margin-bottom: 3%;
   padding-bottom: 0.5%;
+  padding-top: 1%;
+  font-family: "NeoDunggeunmo";
 }
 
 .cucketmonProfile img {
@@ -90,7 +92,7 @@ span {
 
 #buttonText1 {
   position: absolute;
-  top: 54.3%;
+  top: 55.3%;
   left: 75.5vw;
   font-size: 18px;
   color: white;
@@ -101,7 +103,7 @@ span {
   position: absolute;
   pointer-events: none;
   font-size: 18px;
-  top: 54.3%;
+  top: 55.3%;
   left: 88vw;
 }
 
