@@ -24,11 +24,12 @@ function Battle() {
   const [myTurn, setMyTurn] = useState(false);
   const [battleId, setBattleId] = useState('');
   const [winner, setWinner] = useState(null);
-  const [trainerName, setTrainerName] = useState(''); // 나중에 AuthContext에서 가져올 수 있음
+  const [trainerName, setTrainerName] = useState(''); // 서버에서 가져올 예정
   const [isBattleEnded, setIsBattleEnded] = useState(false);
   const stompClientRef = useRef(null);
   const navigate = useNavigate();
   const location = useLocation();
+  const API_URL = process.env.REACT_APP_API_URL;
 
   const { selectedCuketmon } = location.state || {};
 
@@ -111,7 +112,7 @@ function Battle() {
     const hue = hp * 1.2;
     return `hsl(${hue}, 100%, 50%)`;
   };
-  
+
   const handleSelect = (tech) => {
     if (myPP > 0 && myTurn) {
       setSelectedTech(tech.id);
@@ -123,7 +124,6 @@ function Battle() {
       setSelectedTech(tech.id);
       setCurrentAnimation(tech.animationUrl);
       setIsFighting(true);
-      // 실제 전투 로직은 다음 단계에서 WebSocket으로 구현
       setTimeout(() => {
         setIsFighting(false);
         setSelectedTech(null);
@@ -131,6 +131,33 @@ function Battle() {
       }, 1000);
     }
   };
+
+  // trainerName을 /trainer/myName에서 가져오기
+  useEffect(() => {
+    const fetchTrainerName = async () => {
+      try {
+        const token = localStorage.getItem('jwt'); // 토큰을 localStorage에서 가져옴
+        if (!token) {
+          console.error('No token available');
+          return;
+        }
+        const res = await fetch(`${API_URL}/trainer/myName`, {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+          },
+        });
+        if (!res.ok) {
+          throw new Error(`HTTP error! status: ${res.status}`);
+        }
+        const data = await res.json();
+        setTrainerName(data.trainerName); // 응답에서 trainerName 설정
+      } catch (error) {
+        console.error('Failed to fetch trainer name:', error.message);
+      }
+    };
+
+    fetchTrainerName();
+  }, [API_URL]);
 
   // 커켓몬 선택 기억
   useEffect(() => {
@@ -140,13 +167,12 @@ function Battle() {
         myCuketmon: selectedCuketmon.image,
       }));
     } else {
-      navigate('/pick'); // 선택된 커켓몬이 없으면 Pick 화면으로
+      console.log('Error: No selected Cuketmon');
     }
   }, [selectedCuketmon, navigate]);
 
-  // WebSocket 연결 설정
+  // WebSocket 연결 설정 및 배틀 찾기 요청
   useEffect(() => {
-    const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:8080';
     const socket = new SockJS(`${API_URL}/ws`);
     const client = new Client({
       webSocketFactory: () => socket,
@@ -155,11 +181,11 @@ function Battle() {
         stompClientRef.current = client;
 
         // 매칭 알림 구독
-        client.subscribe(`${API_URL}/topic/match/*`, (message) => {
+        client.subscribe('/topic MATCH/*', (message) => {
           const matchResponse = JSON.parse(message.body);
           console.log('Match response received:', matchResponse);
           setBattleId(matchResponse.battleId);
-          setTrainerName(matchResponse.trainerName || 'Player');
+          setTrainerName(matchResponse.trainerName || trainerName);
           setCuketmonImages({
             myCuketmon: matchResponse.myCuketmon.image || selectedCuketmon.image,
             enemyCuketmon: matchResponse.enemyCuketmon.image,
@@ -172,7 +198,7 @@ function Battle() {
               id: skill.id,
               name: skill.name,
               type: skill.type,
-              damage: skill.power, // power 필드로 대체
+              damage: skill.power,
               description: skill.name,
               animationUrl: animationMap[skill.type][skill.power >= 70 ? 'high' : 'normal'][0],
             }))
@@ -181,9 +207,19 @@ function Battle() {
           setIsMatched(true);
           setMyTurn(matchResponse.isMyTurn);
         });
+
+        
+        if (trainerName && stompClientRef.current && stompClientRef.current.connected) {
+          client.publish({
+            destination: '/app/findBattle',
+            body: JSON.stringify({ trainerName }),
+          });
+          console.log('Battle find request sent:', { trainerName });
+        }
       },
       onStompError: (frame) => {
         console.error('STOMP connection error:', frame);
+        setLoading(false);
       },
     });
     client.activate();
@@ -191,19 +227,7 @@ function Battle() {
     return () => {
       client.deactivate();
     };
-  }, [selectedCuketmon]);
-
-  // 배틀 찾기 요청
-  useEffect(() => {
-    const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:8080';
-    if (stompClientRef.current && stompClientRef.current.connected) {
-      stompClientRef.current.publish({
-        destination: `${API_URL}/app/findBattle`,
-        body: JSON.stringify({ trainerName: trainerName || 'Player' }),
-      });
-      console.log('Battle find request sent:', { trainerName });
-    }
-  }, []);
+  }, [selectedCuketmon, trainerName, API_URL]);
 
   if (loading) {
     return (
@@ -298,8 +322,6 @@ function Battle() {
       </div>
     </div>
   );
-
-  
 }
 
 export default Battle;
