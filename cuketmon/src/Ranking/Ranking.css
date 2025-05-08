@@ -92,7 +92,8 @@
 
   .cukemonImageContainer {
     white-space: nowrap;
-    left: 10vw;
+    width: 100vw;
+    left: 0vw;
   }
 
   .historyBoard {
