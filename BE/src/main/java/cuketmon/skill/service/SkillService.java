@@ -1,13 +1,20 @@
 package cuketmon.skill.service;
 
-import cuketmon.damageclass.DamageClass;
+import static cuketmon.constant.message.ErrorMessages.SKILL_NOT_FOUND;
+import static cuketmon.skill.constant.SkillConst.SKILL_API_URL;
+import static cuketmon.skill.constant.SkillConst.TOTAL_SKILL;
+
+import cuketmon.constant.damageclass.DamageClass;
+import cuketmon.constant.type.Type;
 import cuketmon.monster.dto.MonsterDTO;
 import cuketmon.skill.dto.SkillResponse;
 import cuketmon.skill.entity.Skill;
 import cuketmon.skill.repository.SkillRepository;
-import cuketmon.type.Type;
+import cuketmon.util.CustomLogger;
+import cuketmon.util.Random;
+import java.util.Collections;
 import java.util.List;
-import java.util.Random;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,8 +23,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 @Service
 public class SkillService {
 
-    private static final int TOTAL_SKILL = 919;
-    private static final String SKILL_API_URL = "https://pokeapi.co/api/v2/move";
+    private static final Logger log = CustomLogger.getLogger(SkillService.class);
 
     private final SkillRepository skillRepository;
     private final WebClient skillWebClient;
@@ -28,32 +34,26 @@ public class SkillService {
         this.skillWebClient = skillWebClient;
     }
 
-    // TODO: 이 클래스 중복되는 부분이 너무 많음...
-    // skillId로 Skill 객체 조회
-    @Transactional
-    public Skill getSkillById(Integer skillId) {
-        return skillRepository.findById(skillId)
-                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당 ID의 스킬이 없습니다."));
-    }
-
+    // TODO: 앞서 분배한 스킬과 겹치는 스킬을 주는 오류도 있을듯
+    //  스킬을 List로 만들어서 중복검사 하면 깔끔 할 듯
     // 스킬 분배 로직
     @Transactional
     public Integer getSkillId(Type type, DamageClass damageClass, int minDamage, int maxDamage) {
         List<Skill> skills
                 = skillRepository.findAllByTypeAndDamageClassAndPowerBetween(type, damageClass, minDamage, maxDamage)
-                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 조건을 만족하는 스킬이 없습니다."));
+                .orElse(Collections.emptyList());
 
+        // 줄 스킬이 없다면 모든 스킬 중 랜덤으로 하나 주기
         if (skills.isEmpty()) {
-            throw new IllegalArgumentException("[ERROR] 조건을 만족하는 스킬이 없습니다.");
+            return skillRepository.findAnyRandomSkill().getId();
         }
-
         // 찾은 스킬들 중 랜덤으로 하나 선택
-        return skills.get(new Random().nextInt(skills.size())).getId();
+        return skills.get(Random.getRandomInRange(0, skills.size() - 1)).getId();
     }
 
     public MonsterDTO.MonsterBattleInfo.Skill convertSkill(Integer skillId) {
         Skill skill = skillRepository.findById(skillId)
-                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당 ID의 스킬이 없습니다."));
+                .orElseThrow(() -> new IllegalArgumentException(SKILL_NOT_FOUND));
 
         return new MonsterDTO.MonsterBattleInfo.Skill(
                 skill.getType(),
@@ -65,6 +65,7 @@ public class SkillService {
         );
     }
 
+    // ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
     // 전체 스킬 저장 (919개)
     public void fetchAndSaveAllSkills() {
         skillRepository.deleteAll();
@@ -85,7 +86,7 @@ public class SkillService {
                 saveSkill(skillResponse);
             }
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            log.info("{}", e.getMessage());
         }
     }
 
@@ -102,11 +103,11 @@ public class SkillService {
         );
 
         if (skill.getPower() == null) {
-            throw new IllegalArgumentException("[ERROR] power가 null인 스킬은 받지 않습니다.");
+            throw new IllegalArgumentException("power가 null인 스킬은 받지 않습니다.");
         }
-        skillRepository.save(skill);
 
-        System.out.println("Skill 저장완료. Id: " + skillResponse.getId());
+        skillRepository.save(skill);
+        log.info("{}번 Skill 저장완료.", skillResponse.getId());
     }
 
 }

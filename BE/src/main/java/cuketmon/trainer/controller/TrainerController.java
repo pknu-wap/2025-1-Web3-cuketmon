@@ -1,17 +1,16 @@
 package cuketmon.trainer.controller;
 
 import cuketmon.trainer.dto.TrainerDTO;
-import cuketmon.trainer.entity.Trainer;
 import cuketmon.trainer.service.TrainerService;
 import java.util.List;
 import java.util.Map;
-import java.util.NoSuchElementException;
-
-import jakarta.persistence.PostRemove;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/trainer")
@@ -22,18 +21,6 @@ public class TrainerController {
     @Autowired
     public TrainerController(TrainerService trainerService) {
         this.trainerService = trainerService;
-    }
-
-    // 남은 장난감의 개수를 확인
-    @GetMapping("/{trainerName}/toys")
-    public Integer getRemainingToys_(@PathVariable String trainerName) {
-        return trainerService.getRemainingToys(trainerName);
-    }
-
-    // 남은 먹이의 개수를 확인
-    @GetMapping("/{trainerName}/feeds")
-    public Integer getRemainingFeeds_(@PathVariable String trainerName) {
-        return trainerService.getRemainingFeeds(trainerName);
     }
 
     // 남은 장난감의 개수를 확인
@@ -58,6 +45,12 @@ public class TrainerController {
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(404).body(Map.of("[ERROR]", e.getMessage()));
         }
+    }
+
+    // 자신의 커켓몬 보기
+    @GetMapping("/monsters")
+    public ResponseEntity<List<Integer>> getMyMonsterIds(@AuthenticationPrincipal String trainerName) {
+        return ResponseEntity.ok(trainerService.getMonsterIds(trainerName));
     }
 
 }

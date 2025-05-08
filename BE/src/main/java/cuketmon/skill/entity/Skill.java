@@ -1,7 +1,7 @@
 package cuketmon.skill.entity;
 
-import cuketmon.damageclass.DamageClass;
-import cuketmon.type.Type;
+import cuketmon.constant.damageclass.DamageClass;
+import cuketmon.constant.type.Type;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;

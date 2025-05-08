@@ -1,11 +1,17 @@
 package cuketmon.monster.controller;
 
+import static cuketmon.constant.message.InfoMessages.FEED_SUCCESS;
+import static cuketmon.constant.message.InfoMessages.NAME_CHANGE_SUCCESS;
+import static cuketmon.constant.message.InfoMessages.PLAY_SUCCESS;
+import static cuketmon.constant.message.InfoMessages.RELEASE_SUCCESS;
+
 import cuketmon.monster.dto.GenerateApiRequestBody;
 import cuketmon.monster.dto.NamingDTO;
 import cuketmon.monster.service.MonsterService;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,32 +34,39 @@ public class MonsterController {
         this.monsterService = monsterService;
     }
 
-    // 몬스터 생성 기능
+    // TODO: response 이상함 고치기 우선순위는 낮음
+    // 몬스터 생성
     @PostMapping("/generate")
-    public ResponseEntity<Map<String, Integer>> generateMonster(
-            @Validated @RequestBody GenerateApiRequestBody requestBody) {
-        System.out.println("generate 진입");
-        Integer monsterId = monsterService.generate(requestBody);
-        return ResponseEntity.ok(Map.of("monsterId", monsterId));
+    public ResponseEntity<Map<String, Integer>> generateMonster(@AuthenticationPrincipal String trainerName,
+                                                                @Validated @RequestBody GenerateApiRequestBody requestBody) {
+        try {
+            Integer monsterId = monsterService.generate(trainerName, requestBody);
+            return ResponseEntity.ok(Map.of("monsterId", monsterId));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(Map.of(e.getMessage(), 400));
+        }
     }
 
     // 커켓몬 이름 지정
     @PatchMapping("/{monsterId}/name")
-    public ResponseEntity<String> namingMonster(@PathVariable Integer monsterId,
+    public ResponseEntity<String> namingMonster(@AuthenticationPrincipal String trainerName,
+                                                @PathVariable Integer monsterId,
                                                 @Validated @RequestBody NamingDTO monsterName) {
         try {
-            monsterService.naming(monsterId, monsterName.getName());
-            return ResponseEntity.ok("커켓몬 이름 변경 성공!");
+            monsterService.naming(trainerName, monsterId, monsterName.getName());
+            return ResponseEntity.ok(NAME_CHANGE_SUCCESS);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
+    // 커켓몬 놓아주기
     @DeleteMapping("/{monsterId}/release")
-    public ResponseEntity<String> releaseMonster(@PathVariable Integer monsterId) {
+    public ResponseEntity<String> releaseMonster(@AuthenticationPrincipal String trainerName,
+                                                 @PathVariable Integer monsterId) {
         try {
-            monsterService.release(monsterId);
-            return ResponseEntity.ok("커켓몬 놓아주기 성공!");
+            monsterService.release(trainerName, monsterId);
+            return ResponseEntity.ok(RELEASE_SUCCESS);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
@@ -61,10 +74,11 @@ public class MonsterController {
 
     // 먹이 주기
     @PostMapping("/{monsterId}/feed")
-    public ResponseEntity<String> feedMonster(@PathVariable Integer monsterId) {
+    public ResponseEntity<String> feedMonster(@AuthenticationPrincipal String trainerName,
+                                              @PathVariable Integer monsterId) {
         try {
-            monsterService.feed(monsterId);
-            return ResponseEntity.ok("먹이를 주었습니다.");
+            monsterService.feed(trainerName, monsterId);
+            return ResponseEntity.ok(FEED_SUCCESS);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
@@ -72,10 +86,11 @@ public class MonsterController {
 
     // 놀아 주기
     @PostMapping("/{monsterId}/play")
-    public ResponseEntity<String> playWithMonster(@PathVariable Integer monsterId) {
+    public ResponseEntity<String> playWithMonster(@AuthenticationPrincipal String trainerName,
+                                                  @PathVariable Integer monsterId) {
         try {
-            monsterService.play(monsterId);
-            return ResponseEntity.ok("놀아주었습니다.");
+            monsterService.play(trainerName, monsterId);
+            return ResponseEntity.ok(PLAY_SUCCESS);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

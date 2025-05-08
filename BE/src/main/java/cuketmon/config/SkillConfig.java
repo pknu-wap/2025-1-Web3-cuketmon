@@ -1,4 +1,4 @@
-package cuketmon.skill;
+package cuketmon.config;
 
 import cuketmon.skill.service.SkillService;
 import jakarta.annotation.PostConstruct;

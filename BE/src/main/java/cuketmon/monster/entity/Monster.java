@@ -1,14 +1,21 @@
 package cuketmon.monster.entity;
 
-import cuketmon.damageclass.DamageClass;
-import cuketmon.type.Type;
+import cuketmon.constant.type.Type;
+import cuketmon.monster.embeddable.Affinity;
+import cuketmon.trainer.entity.Trainer;
+import jakarta.persistence.AttributeOverride;
+import jakarta.persistence.AttributeOverrides;
 import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -33,12 +40,14 @@ public class Monster {
     @Column(nullable = true, columnDefinition = "TEXT")
     private String image;
 
-    @Column(length = 75)
+    @Column
     private String description;
 
-    // TODO: 최대값, 종족값 늘려주는 등의 행위 논의 필요
-    @Column(nullable = false)
-    private Integer affinity;
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "count", column = @Column(name = "affinity", nullable = false))
+    })
+    private Affinity affinity;
 
     // 종족값 (6개)
     @Column(nullable = false)
@@ -59,7 +68,7 @@ public class Monster {
     @Column(nullable = false)
     private Integer specialDefence;
 
-    // 타입 (1~2개)
+    // 타입
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Type type1;
@@ -68,7 +77,7 @@ public class Monster {
     @Column(nullable = true)
     private Type type2;
 
-    // 스킬 (4개)
+    // 스킬
     @Column(nullable = false)
     private Integer skillId1;
 
@@ -81,16 +90,16 @@ public class Monster {
     @Column(nullable = true)
     private Integer skillId4;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "trainer_name")
+    private Trainer trainer;
+
     public void changeNameTo(String name) {
         this.name = name;
     }
 
-    public void increaseAffinity(int plus) {
-        affinity = affinity + plus;
-    }
-
-    public DamageClass getDamageClass() {
-        return (attack >= specialAttack) ? DamageClass.PHYSICAL : DamageClass.SPECIAL;
+    public void increaseSpeed(int amount) {
+        this.speed += amount;
     }
 
 }

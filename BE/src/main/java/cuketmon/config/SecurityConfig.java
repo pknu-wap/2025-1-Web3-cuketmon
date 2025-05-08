@@ -1,4 +1,4 @@
-package cuketmon;
+package cuketmon.config;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
@@ -57,7 +57,7 @@ public class SecurityConfig {
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowedOrigins(List.of(
                 "http://localhost:3000",
-                "http://localhost:8000",
+                "http://localhost:8080",
                 clientUrl
         ));
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
