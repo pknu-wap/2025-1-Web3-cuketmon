@@ -128,7 +128,7 @@ function Battle() {
     return `hsl(${hue}, 100%, 50%)`;
   };
 
-  // 커켓몬 선택 기억
+  /*
   useEffect(() => {
     if (selectedCuketmon) {
       setCuketmonImages((prev) => ({
@@ -139,7 +139,7 @@ function Battle() {
       navigate('/pick');
     }
   }, [selectedCuketmon, navigate]);
-
+*/
   // WebSocket 연결 설정
   useEffect(() => {
     const API_URL = process.env.REACT_APP_API_URL;
