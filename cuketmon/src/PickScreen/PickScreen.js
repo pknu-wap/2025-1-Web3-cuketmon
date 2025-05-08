@@ -5,11 +5,12 @@ import './PickScreen.css';
 
 const PickScreen = () => {
   const [cuketmons, setCuketmons] = useState([]);
-  const [monsterIdList, setMonsterIdList] = useState([]); // monsterIds를 monsterIdList로 변경
+  const [monsterIdList, setMonsterIdList] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
-  const { token } = useAuth();
+  const { token: contextToken } = useAuth();
+  const token = contextToken || localStorage.getItem('jwt');
   const API_URL = process.env.REACT_APP_API_URL;
 
   // 유저 소유 커켓몬 ID 목록 조회
