@@ -149,8 +149,8 @@ function Battle() {
         if (!res.ok) {
           throw new Error(`HTTP error! status: ${res.status}`);
         }
-        const data = await res.json();
-        setTrainerName(data.trainerName); // 응답에서 trainerName 설정
+        const trainerName = await res.text();
+        setTrainerName(trainerName); 
       } catch (error) {
         console.error('Failed to fetch trainer name:', error.message);
       }
@@ -181,7 +181,7 @@ function Battle() {
         stompClientRef.current = client;
 
         // 매칭 알림 구독
-        client.subscribe('/topic MATCH/*', (message) => {
+        client.subscribe('/topic/match/*', (message) => {
           const matchResponse = JSON.parse(message.body);
           console.log('Match response received:', matchResponse);
           setBattleId(matchResponse.battleId);
