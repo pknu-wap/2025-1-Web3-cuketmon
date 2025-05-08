@@ -143,13 +143,23 @@ function Battle() {
   // WebSocket 연결 설정
   useEffect(() => {
     const API_URL = process.env.REACT_APP_API_URL;
-    const socket = new SockJS(`${API_URL}/ws`);
+    const socket = new SockJS('wss://www.cukemon.shop/ws');
     const client = new Client({
       webSocketFactory: () => socket,
       onConnect: () => {
         console.log('Connected to WebSocket');
         stompClientRef.current = client;
-
+      },
+      onStompError: (frame) => {
+        console.error('STOMP connection error:', frame);
+      },
+    });
+    client.activate();
+  
+    return () => {
+      client.deactivate();
+    };
+  }, []);
         // 매칭 알림 구독
         client.subscribe(`${API_URL}/topic/match/*`, (message) => {
           const matchResponse = JSON.parse(message.body);
