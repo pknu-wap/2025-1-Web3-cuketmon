@@ -81,6 +81,7 @@ function Make() {
         </div>
 
         <select id="S1" value={type1} onChange={(e) => setType1(e.target.value)} style={{ color: type1 ? typeData[Object.keys(typeData).find(key => typeData[key].korean === type1)]?.color : 'black' }}>
+        <option value=""></option>
        {Object.values(typeData).map((type) => (
        <option key={type.korean} value={type.korean}  style={{ color: type.color }} >
        {type.korean}
@@ -89,7 +90,7 @@ function Make() {
         </select>
         <br />
 
-       <select id="S2" value={type2} onChange={(e) => setType2(e.target.value)}style={{ color: type1 ? typeData[Object.keys(typeData).find(key => typeData[key].korean === type2)]?.color : 'black' }}>
+       <select id="S2" value={type2} onChange={(e) => setType2(e.target.value)}style={{ color: type2 ? typeData[Object.keys(typeData).find(key => typeData[key].korean === type2)]?.color : 'black' }}>
        <option value=""></option>
        {Object.values(typeData).map((type) => (
        <option key={type.korean} value={type.korean}style={{ color: type.color }} >
