@@ -6,16 +6,14 @@ from . import database, models, crud, schemas
 from .inference import model_inference
 import time
 from sqlalchemy.orm import Session
-from .crud import get_null_images, update_image_to_base64  # 필요한 함수들 import
-from .inference import model_inference, save_image
-from pathlib import Path
+from .crud import get_all_data, update_image_to_GCS, delete_prompt_entries
+from .utils import save_image
 app = FastAPI()
 
-# DB 연결 설정
 @app.on_event("startup")
 def startup():
     database.connect_db()
-    start_background_task()  # 백그라운드 작업 시작
+    start_background_task()
 
 @app.on_event("shutdown")
 def shutdown():
@@ -23,20 +21,21 @@ def shutdown():
 
 def process_images():
     while True:
-        db = database.SessionLocal()  # 매번 새로 DB 연결
+        db = database.SessionLocal()
         try:
-            null_images = get_null_images(db)
+            null_images = get_all_data(db)
             if null_images:
                 batch_size = 4
                 for i in range(0, len(null_images), batch_size):
                     batch = null_images[i:i+batch_size]
                     for monster in batch:
                         monster_id = monster.id
-                        monster_description = monster.description
+                        prompt = monster.description
 
-                        image = model_inference(monster_id, monster_description)
-                        save_image(image, monster_id, monster, db)
-
+                        image = model_inference(prompt)
+                        gcs_url = save_image(image, monster_id)
+                        update_image_to_GCS(monster_id, gcs_url, db)
+                        delete_prompt_entries(monster_id, db)
                         db.commit()
         except Exception as e:
             print(f"Error in process_images: {e}")
@@ -46,14 +45,12 @@ def process_images():
         time.sleep(1)
 
 def start_background_task():
-    thread = Thread(target=process_images)  # <-- () 쓰지 말고, 인자도 넘기지 말기
+    thread = Thread(target=process_images)
     thread.daemon = True
     thread.start()
 
 
-@app.get("/null_images")
-def read_null_images(db: Session = Depends(database.get_db)):
-    return crud.get_null_images(db)
+# ============== FOR TEST =============
 
 @app.get("/get_all_data")
 def read_all_data(db: Session = Depends(database.get_db)):
@@ -68,8 +65,3 @@ def create_monster(monster: schemas.MonsterCreate, db: Session = Depends(databas
 def remove_monster(monster_id: int, db: Session = Depends(database.get_db)):
     crud.delete_monster(monster_id, db)
     return {"message": f"✅ id {monster_id} 포켓몬 삭제 완료"}
-
-@app.post("/update_image_to_base64/{monster_id}")
-def modify_monster_image(monster_id: int, db: Session = Depends(database.get_db)):
-    crud.update_image_to_base64(monster_id, db)
-    return {"message": f"✅ id {monster_id} 포켓몬의 이미지가 업데이트 완료"}
