@@ -233,7 +233,7 @@ textarea {
 
   /* 제출 버튼 */
   .submitButton {
-    left: 35%;
+    left: 35vw;
   }
 
   #submit {
@@ -241,11 +241,12 @@ textarea {
     background-image: url("/public/button.png");
     background-size: cover;
     border: none;
-    width: 33vw;
+    width: 35vw;
     height: 15vw;
   }
 
   .submitButton p {
     font-size: 15px;
+    top: 6vw;
   }
 }
