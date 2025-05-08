@@ -103,7 +103,8 @@ const PickScreen = () => {
 
   const handleSelect = (cuketmon) => {
     if (cuketmon) {
-      navigate('/battle', { state: { selectedCuketmon: cuketmon } });
+      localStorage.setItem('selectedMonsterId', cuketmon.id);
+      navigate('/battle', { state: { selectedCuketmon: cuketmon, selectedMonsterId: cuketmon.id } });
     } else {
       console.error('선택된 커켓몬이 없습니다.');
     }
