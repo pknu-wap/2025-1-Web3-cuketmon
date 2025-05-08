@@ -23,7 +23,9 @@ function Battle() {
   const [isEnemyHit, setIsEnemyHit] = useState(false);
   const [myTurn, setMyTurn] = useState(false);
   const [battleId, setBattleId] = useState('');
-  const [trainerName, setTrainerName] = useState('');
+  const [winner, setWinner] = useState(null);
+  const [trainerName, setTrainerName] = useState(''); // 나중에 AuthContext에서 가져올 수 있음
+  const [isBattleEnded, setIsBattleEnded] = useState(false);
   const stompClientRef = useRef(null);
   const navigate = useNavigate();
   const location = useLocation();
@@ -104,6 +106,12 @@ function Battle() {
       normal: ['/BattlePage/Animation/Ghost/normalDamage1.png'],
     },
   };
+
+  const getHpColor = (hp) => {
+    const hue = hp * 1.2;
+    return `hsl(${hue}, 100%, 50%)`;
+  };
+  
   const handleSelect = (tech) => {
     if (myPP > 0 && myTurn) {
       setSelectedTech(tech.id);
@@ -115,6 +123,7 @@ function Battle() {
       setSelectedTech(tech.id);
       setCurrentAnimation(tech.animationUrl);
       setIsFighting(true);
+      // 실제 전투 로직은 다음 단계에서 WebSocket으로 구현
       setTimeout(() => {
         setIsFighting(false);
         setSelectedTech(null);
@@ -122,13 +131,8 @@ function Battle() {
       }, 1000);
     }
   };
-  
-  const getHpColor = (hp) => {
-    const hue = hp * 1.2;
-    return `hsl(${hue}, 100%, 50%)`;
-  };
 
-  /*
+  // 커켓몬 선택 기억
   useEffect(() => {
     if (selectedCuketmon) {
       setCuketmonImages((prev) => ({
@@ -136,30 +140,20 @@ function Battle() {
         myCuketmon: selectedCuketmon.image,
       }));
     } else {
-      navigate('/pick');
+      navigate('/pick'); // 선택된 커켓몬이 없으면 Pick 화면으로
     }
   }, [selectedCuketmon, navigate]);
-*/
+
   // WebSocket 연결 설정
   useEffect(() => {
-    const API_URL = process.env.REACT_APP_API_URL;
-    const socket = new SockJS('wss://www.cukemon.shop/ws');
+    const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:8080';
+    const socket = new SockJS(`${API_URL}/ws`);
     const client = new Client({
       webSocketFactory: () => socket,
       onConnect: () => {
         console.log('Connected to WebSocket');
         stompClientRef.current = client;
-      },
-      onStompError: (frame) => {
-        console.error('STOMP connection error:', frame);
-      },
-    });
-    client.activate();
-  
-    return () => {
-      client.deactivate();
-    };
-  }, []);
+
         // 매칭 알림 구독
         client.subscribe(`${API_URL}/topic/match/*`, (message) => {
           const matchResponse = JSON.parse(message.body);
@@ -201,7 +195,7 @@ function Battle() {
 
   // 배틀 찾기 요청
   useEffect(() => {
-    const API_URL = process.env.REACT_APP_API_URL;
+    const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:8080';
     if (stompClientRef.current && stompClientRef.current.connected) {
       stompClientRef.current.publish({
         destination: `${API_URL}/app/findBattle`,
@@ -219,7 +213,7 @@ function Battle() {
       </div>
     );
   }
-  /*
+
   if (isBattleEnded) {
     const winnerImage = winner === 'player' ? cuketmonImages.myCuketmon : cuketmonImages.enemyCuketmon;
     return (
@@ -230,7 +224,7 @@ function Battle() {
       </div>
     );
   }
-    */
+
   return (
     <div className="Battle">
       <div className="content">
@@ -305,7 +299,7 @@ function Battle() {
     </div>
   );
 
-
+  
 }
 
 export default Battle;
