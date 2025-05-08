@@ -81,7 +81,7 @@ public class BattleMatchService {
     //  matchService에는 match만 관리하도록!
     @Transactional
     public void useSkill(Integer battleId, SkillRequest skillRequest) {
-        String turnDestination = "/topic/turn/" + battleId;
+        String turnDestination = "/topic/skill/" + battleId;
 
         // 1. 배틀 확인
         BattleDTO battle = activeBattles.get(battleId);

@@ -24,15 +24,15 @@ public class BattleWebSocketController {
         battleMatchService.findBattle(request);
     }
 
+    // 사실 이건 필요 없음
     // 배틀 종료
     @MessageMapping("/endBattle/{battleId}")
     public void endBattle(@DestinationVariable Integer battleId) {
         battleMatchService.endBattle(battleId);
     }
 
-    // TODO: response 변경하기
     // 기술 사용
-    @MessageMapping("/skill/{battleId}")
+    @MessageMapping("/battle/{battleId}")
     public void useSkill(@DestinationVariable Integer battleId, SkillRequest skill) {
         battleMatchService.useSkill(battleId, skill);
     }
