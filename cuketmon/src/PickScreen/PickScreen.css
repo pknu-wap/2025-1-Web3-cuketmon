@@ -1,4 +1,4 @@
-.pick-screen {
+.pickScreen {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -7,23 +7,23 @@
     background-color: #c6d4e1;
   }
   
-  .pick-title {
+  .pickTitle {
     font-size: 2rem;
     font-weight: bold;
     margin-bottom: 2rem;
     color: #333;
   }
   
-  .pick-content {
+  .pickContent {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 2rem;
-    width:  50vw;
-    height: 50vh;
+    width:  80vw;
+    height: 70vh;
   }
   
-  .arrow-button {
+  .arrowButton {
     background-color: black;
     color: white;
     border: none;
@@ -34,11 +34,11 @@
     transition: background-color 0.2s;
   }
   
-  .arrow-button:hover {
+  .arrowButton:hover {
     background-color: gold;
   }
   
-  .cuketmon-card {
+  .cuketmonCard {
     text-align: center;
     background-color: #ffffff;
     border: 2px solid #333;
@@ -49,24 +49,19 @@
     height: 100%;
   }
   
-  .cuketmon-image {
-    width: 70%;
+  .cuketmonImage {
+    width: 50%;
     height: auto;
   }
   
-  .cuketmon-name {
+  .cuketmonName {
     font-size: 1.25rem;
     font-weight: bold;
     margin-bottom: 0.5rem;
   }
   
-  .cuketmon-hp {
-    font-size: 1rem;
-    margin-bottom: 1rem;
-  }
-  
-  .select-button {
-    background-color: #22c55e;
+  .selectButton {
+    background-color: black;
     color: white;
     border: none;
     padding: 0.5rem 1rem;
@@ -74,13 +69,14 @@
     border-radius: 0.25rem;
     cursor: pointer;
     transition: background-color 0.2s;
+    margin-top: 5%;
   }
   
-  .select-button:hover {
+  .selectButton:hover {
     background-color: #16a34a;
   }
   
-  .loading, .no-data {
+  .loading, .noData {
     font-size: 1.5rem;
     color: #666;
   }

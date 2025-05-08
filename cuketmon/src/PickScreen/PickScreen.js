@@ -15,8 +15,7 @@ const PickScreen = () => {
   // 유저 소유 커켓몬 ID 목록 조회
   const loadCukemonIds = async () => {
     if (!token) {
-      console.error('토큰이 없습니다. 로그인 페이지로 이동합니다.');
-      navigate('/login');
+      console.error('토큰이 없습니다.');
       return;
     }
     try {
@@ -110,42 +109,42 @@ const PickScreen = () => {
   };
 
   if (loading) {
-    return <div className="pick-screen loading">로딩 중...</div>;
+    return <div className="pickScreenLoading">로딩 중...</div>;
   }
 
   if (cuketmons.length === 0) {
-    return <div className="pick-screen no-data">보유한 커켓몬이 없습니다.</div>;
+    return <div className="pickScreen NoData">보유한 커켓몬이 없습니다.</div>;
   }
 
   const currentCuketmon = cuketmons[currentIndex];
 
   return (
-    <div className="pick-screen">
-      <h1 className="pick-title">커켓몬 선택</h1>
-      <div className="pick-content">
-        <button onClick={handlePrev} className="arrow-button arrow-left" disabled={cuketmons.length <= 1}>
+    <div className="pickScreen">
+      <h1 className="pickTitle">커켓몬 선택</h1>
+      <div className="pickContent">
+        <button onClick={handlePrev} className="arrowButton arrowLeft" disabled={cuketmons.length <= 1}>
           ◀
         </button>
-        <div className="cuketmon-card">
+        <div className="cuketmonCard">
           <img
             src={currentCuketmon.image}
             alt={currentCuketmon.name}
-            className="cuketmon-image"
+            className="cuketmonImage"
           />
-          <p className="cuketmon-name">{currentCuketmon.name}</p>
-          <p className="cuketmon-type">
+          <p className="cuketmonName">{currentCuketmon.name}</p>
+          <p className="cuketmonType">
             타입: {currentCuketmon.type1}
             {currentCuketmon.type2 && ` / ${currentCuketmon.type2}`}
           </p>
           <button
             onClick={() => handleSelect(currentCuketmon)}
-            className="select-button"
+            className="selectButton"
             disabled={!currentCuketmon}
           >
             선택
           </button>
         </div>
-        <button onClick={handleNext} className="arrow-button arrow-right" disabled={cuketmons.length <= 1}>
+        <button onClick={handleNext} className="arrowButton arrowRight" disabled={cuketmons.length <= 1}>
           ▶
         </button>
       </div>
