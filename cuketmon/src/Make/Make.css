@@ -24,13 +24,13 @@
 
 .Q1 h2 {
   font-size: 20px;
-  margin-top: 2.5%;
+  margin-top: 2.5vh;
 }
 
 #typeicon {
   position: absolute;
-  width: 15%;
-  top: 8%;
+  width: 15vw;
+  top: 8vh;
   left: 75%;
 }
 
@@ -38,7 +38,7 @@
 #S2 {
   margin-left: 3%;
   background-image: url("/public/MakePage/selectBackground.webp");
-  width: 17%;
+  width: 17vw;
   height: 50px;
   font-size: 17px;
   background-repeat: no-repeat;
@@ -47,11 +47,11 @@
 
 #S1 {
   position: absolute;
-  top: 10%;
+  top: 10vh;
 }
 #S2 {
   position: absolute;
-  top: 20%;
+  top: 20vh;
 }
 
 #S1 option,
@@ -76,13 +76,14 @@
 
 .Q2 h2 {
   font-size: 20px;
+  margin-top: 1.5vh;
 }
 
 .make .cukemonFeature {
   display: flex;
   position: absolute;
   margin-left: 3%;
-  top: 50%;
+  top: 50vh;
   height: 50vh;
 }
 
@@ -93,7 +94,7 @@ textarea {
 .make .cukemonFeature .textBack {
   border: none;
   height: 12vh;
-  width: 35vw;
+  width: 34vw;
   background-repeat: no-repeat;
   background-size: cover;
   overflow: hidden;
@@ -103,8 +104,8 @@ textarea {
 .make .cukemonFeature textarea {
   margin-left: 5%;
   margin-top: 3%;
-  width: 80%;
-  height: 70%;
+  width: 30vw;
+  height: 70vh;
   border: none;
   outline: none;
   background: none;
@@ -121,8 +122,8 @@ textarea {
 .submitButton {
   position: absolute;
   text-align: center;
-  top: 70%;
-  left: 44%;
+  top: 70vh;
+  left: 44vw;
 }
 
 #submit {
@@ -136,13 +137,13 @@ textarea {
 
 #submit:hover {
   background-image: url("/public/button-hover.png");
-  top: 80%;
-  left: 30%;
+  top: 80vh;
+  left: 30vw;
 }
 
 .submitButton p {
   position: absolute;
-  top: 32%;
+  top: 40%;
   left: 44%;
   color: white;
   pointer-events: none;
@@ -150,7 +151,7 @@ textarea {
 }
 
 .submitButton #submitButton {
-  width: 43%;
+  width: 43vw;
 }
 
 /*모바일 반응형*/
