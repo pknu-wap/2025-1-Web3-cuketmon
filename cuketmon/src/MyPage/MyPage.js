@@ -35,12 +35,12 @@ function MyPage() {
     }
   };
   useEffect(() => {
-    loadCukemon(); //최초 1회 실행 코드 (5/7수정)
+    loadCukemon(); 
   }, []);
 
   useEffect(() => {
     if (monsters.length > 0 && monsterId === null) {
-      setMonsterId(0); //loadcukemon에서 배열 받받아왔으면 인덱스를 0으로 설정하게 (5/7수정)
+      setMonsterId(0);
     }
   }, [monsters]);
 
@@ -190,6 +190,46 @@ function MyPage() {
       return null;
     }
   };
+
+
+  /*모바일- 스와이프로 마이페이지 커켓몬 조회(5/8) */
+  useEffect(() => {
+    let touchStartX = 0;
+    let touchEndX = 0;
+  
+    const handleTouchStart = (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+    };
+  
+    const handleTouchEnd = (e) => {
+      touchEndX = e.changedTouches[0].screenX;
+      handleSwipeGesture();
+    };
+  
+    const handleSwipeGesture = () => {
+      const swipeThreshold = 30; 
+      if (touchEndX < touchStartX - swipeThreshold) {
+        setMonsterId((prevIndex) =>
+          prevIndex < monsters.length - 1 ? prevIndex + 1 : 0
+        );
+      }
+      if (touchEndX > touchStartX + swipeThreshold) {
+        setMonsterId((prevIndex) =>
+          prevIndex > 0 ? prevIndex - 1 : monsters.length - 1
+        );
+      }
+    };
+  
+    window.addEventListener("touchstart", handleTouchStart);
+    window.addEventListener("touchend", handleTouchEnd);
+  
+    return () => {
+      window.removeEventListener("touchstart", handleTouchStart);
+      window.removeEventListener("touchend", handleTouchEnd);
+    };
+  }, [monsters]);
+  
+
 
 
   return (
