@@ -13,46 +13,45 @@ function MakeResult() {
   const API_URL = process.env.REACT_APP_API_URL;
   const token = localStorage.getItem("jwt");
 
+  const fetchCukemon = async () => {
+    try {
+      const response = await fetch(`${API_URL}/api/monster/${monsterId}/info`, {
+        method: "GET",
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      const data = await response.json();
+
+      if (data.image) {
+        setCukemonImage(data.image);
+        setMentText("처음보는 포켓몬이 나타났다!");
+
+        navigate(`/NamePage`, {
+          state: {
+            monsterId: monsterId,
+            image: data.image,
+          },
+        });
+      }
+    } catch (err) {
+      console.error("이미지 로드 실패:", err);
+    }
+  };
+
   useEffect(() => {
     if (eta == null || !token) return;
 
-    const fetchCukemon = async () => {
-      try {
-        const response = await fetch(`${API_URL}/api/monster/${monsterId}/info`, {
-          method: "GET",
-          headers: { Authorization: `Bearer ${token}` },
-        });
-
-        const data = await response.json();
-
-        if (data.image) {
-          setCukemonImage(data.image);
-          setMentText("처음보는 포켓몬이 나타났다!");
-          navigate(`/NamePage`, {
-            state: {
-              monsterId: monsterId,
-              image: data.image,
-            },
-          });
-        }
-      } catch (err) {
-        console.error("이미지 로드 실패:", err);
-      }
-    };
-
     if (eta <= 5) {
-      setMentText("어라...?");
-          setMentText(`대기시간: ${eta}초`); //임시코드
-      fetchCukemon();
+      setMentText(`대기시간: ${eta}초`);
+         setCountdown(eta);
     } else {
       setMentText(`대기시간: ${eta}초`);
       setCountdown(eta);
     }
   }, [eta, monsterId, token, API_URL, navigate]);
 
-  // 시간 감소 로직
   useEffect(() => {
-    if (countdown == null || countdown <= 0) return;
+    if (countdown === null || countdown <= 0) return;
 
     const timer = setTimeout(() => {
       const next = countdown - 1;
@@ -63,41 +62,11 @@ function MakeResult() {
     return () => clearTimeout(timer);
   }, [countdown]);
 
-useEffect(() => {
-  if (countdown === 0) {
-    const fetchFinal = async () => {
-      try {
-        const response = await fetch(`${API_URL}/api/monster/${monsterId}/info`, {
-          method: "GET",
-          headers: { Authorization: `Bearer ${token}` },
-        });
-
-        if (response.ok) {
-          const data = await response.json();
-
-          if (data.image) {
-            setCukemonImage(data.image); 
-            setMentText("처음보는 포켓몬이 나타났다!");
-            navigate(`/NamePage`, {
-              state: {
-                monsterId: monsterId,
-                image: data.image,
-              },
-            });
-          } else {
-            throw new Error("이미지 없음");
-          }
-        } else {
-          console.error("정보를 가져오는 데 실패했습니다.");
-        }
-      } catch (error) {
-        console.error("최종 이미지 로드 실패:", error);
-      }
-    };
-
-    fetchFinal(); 
-  }
-}, [countdown, monsterId, token, API_URL, navigate]);
+  useEffect(() => {
+    if (countdown === 0) {
+      fetchCukemon();
+    }
+  }, [countdown, monsterId, token, API_URL, navigate]);
 
   return (
     <div className="resultPage">
