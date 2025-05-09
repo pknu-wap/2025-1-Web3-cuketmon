@@ -18,12 +18,21 @@ function NamePage() {
 
 //뒤로가기 막기 (5/9)
 useEffect(() => {
+  let isHandlingBack = false;
+
   const preventGoBack = (event) => {
     if (event.type === "popstate") {
-      window.history.go(1);
+      if (isHandlingBack) return; 
+      isHandlingBack = true;
+
       alert("커켓몬을 두고 떠나지마요 ㅠㅠㅠ");
+      window.history.go(1);
+      setTimeout(() => {
+        isHandlingBack = false;
+      }, 500); 
     }
   };
+
   window.history.pushState(null, "", window.location.href);
   window.addEventListener("popstate", preventGoBack);
 
