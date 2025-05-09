@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useRef,useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../AuthContext";
 import "./NamePage.css";
@@ -17,19 +17,19 @@ function NamePage() {
   const cukemonResultImage = location.state?.image; 
 
 //뒤로가기 막기 (5/9)
+ const backBlockRef = useRef(false); 
 useEffect(() => {
-  let isHandlingBack = false;
-
   const preventGoBack = (event) => {
     if (event.type === "popstate") {
-      if (isHandlingBack) return; 
-      isHandlingBack = true;
+      if (backBlockRef.current) return;
+      backBlockRef.current = true;
 
       alert("커켓몬을 두고 떠나지마요 ㅠㅠㅠ");
       window.history.go(1);
+
       setTimeout(() => {
-        isHandlingBack = false;
-      }, 500); 
+        backBlockRef.current = false;
+      }, 500);
     }
   };
 
@@ -40,6 +40,7 @@ useEffect(() => {
     window.removeEventListener("popstate", preventGoBack);
   };
 }, []);
+
 
   useEffect(() => {
     if (cukemonResultImage) {
