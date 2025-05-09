@@ -31,7 +31,7 @@ function Battle() {
   const location = useLocation();
   const API_URL = process.env.REACT_APP_API_URL;
 
-  const { selectedCuketmon } = location.state || {};
+  const { selectedCuketmon , monsterId} = location.state || {}; 
 
   const animationMap = {
     fire: {
@@ -209,7 +209,6 @@ function Battle() {
         });
 
         
-        const monsterId = selectedCuketmon?.id;
         if (trainerName && monsterId && stompClientRef.current && stompClientRef.current.connected) {
           client.publish({
             destination: '/app/findBattle',
