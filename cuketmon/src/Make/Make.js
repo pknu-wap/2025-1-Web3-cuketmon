@@ -9,14 +9,11 @@ function Make() {
   const [type1, setType1] = useState("");
   const [type2, setType2] = useState("");
   const [description, setDescription] = useState("");
-  
-  // const [eta,setEta]=useState("")
+  const [eta,setEta]=useState("")
   const navigate = useNavigate();
   const { setToken } = useAuth();
   const API_URL = process.env.REACT_APP_API_URL;
 
-
-  
 
   useEffect(() => {
     const token = localStorage.getItem("jwt"); 
@@ -59,9 +56,9 @@ function Make() {
       if (response.ok) {
         const data = await response.json();
         const monsterId = data.monsterId;
-        // const setEta=data.eta;
+
         localStorage.setItem('monsterId', monsterId);
-        navigate("/MakeResult", { state: { monsterId } }); //eta 추가? -> 차후에 대기시간 넣는다면 추가할 것
+        navigate("/MakeResult", { state: { monsterId,eta } }); 
       } else {
         alert("데이터 전송에 실패했습니다.");
       }
@@ -70,7 +67,30 @@ function Make() {
       alert("서버와의 통신 중 오류가 발생했습니다.");
     }
   };
-  
+
+  /*eta */
+  useEffect(() => {
+  const fetchEta = async () => {
+    try {
+      const token = localStorage.getItem("jwt");
+      const response = await fetch(`${API_URL}/api/monster/eta`, {
+        method: "GET",
+        headers: {
+          "Authorization": `Bearer ${token}`
+        }
+      });
+      if (!response.ok) throw new Error("ETA 불러오기 실패");
+
+      const data = await response.json(); 
+      setEta(parseInt(data.eta)); 
+      console.log(eta) //eta 확인용 코드
+    } catch (err) {
+      console.error("ETA 요청 에러:", err);
+    }
+  };
+
+  fetchEta();
+}, []);
 
   return (
     <div className="makeBackGround">
