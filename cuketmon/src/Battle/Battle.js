@@ -141,7 +141,7 @@ function Battle() {
           console.error('No token available');
           return;
         }
-        const res = await fetch(`${API_URL}/trainer/myName`, {
+        const res = await fetch(`${API_URL}/api/trainer/myName`, {
           headers: {
             'Authorization': `Bearer ${token}`,
           },
@@ -212,7 +212,7 @@ function Battle() {
         const monsterId = selectedCuketmon?.id;
         if (trainerName && monsterId && stompClientRef.current && stompClientRef.current.connected) {
           client.publish({
-            destination: '/api/app/findBattle',
+            destination: '/app/findBattle',
             body: JSON.stringify({ trainerName, monsterId }),
           });
           console.log('Battle find request sent:', { trainerName, monsterId });
