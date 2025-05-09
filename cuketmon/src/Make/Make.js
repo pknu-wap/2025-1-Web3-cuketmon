@@ -66,6 +66,7 @@ function Make() {
         if (etaResponse.ok) {
           const etaData = await etaResponse.text();
           const etaNumber = Number(etaData);
+          console.log(etaNumber);
 
           if (!isNaN(etaNumber)) {
             setEta(etaNumber); 
