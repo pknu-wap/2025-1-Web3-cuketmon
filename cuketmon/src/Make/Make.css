@@ -31,7 +31,7 @@
   position: absolute;
   width: 15vw;
   top: 8vh;
-  left: 75%;
+  left: 75vw;
 }
 
 #S1,
@@ -104,7 +104,7 @@ textarea {
 .make .cukemonFeature textarea {
   margin-left: 5%;
   margin-top: 3%;
-  width: 30vw;
+  width: 80%;
   height: 70vh;
   border: none;
   outline: none;
@@ -184,7 +184,7 @@ textarea {
 
   .Q1 h2,
   .Q2 h2 {
-    font-size: 16px;
+    font-size: 4vw;
   }
 
   #S1 {
@@ -221,11 +221,11 @@ textarea {
     width: 95vw;
   }
 
-  .cukemonFeature textarea {
-    margin-right: 0;
-    width: 300px;
-    height: 40px;
-    font-size: 12px !important;
+  textarea {
+    margin: 0;
+    width: 100%;
+    height: 2vh;
+    font-size: 4vw !important;
   }
 
   .make .cukemonFeature p {
