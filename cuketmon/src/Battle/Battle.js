@@ -30,7 +30,7 @@ function Battle() {
   const location = useLocation();
   const API_URL = process.env.REACT_APP_API_URL;
 
-  const { selectedCuketmon } = location.state || {};
+  const { selectedCuketmon , monsterId} = location.state || {}; 
 
   const animationMap = {
     fire: {
