@@ -47,11 +47,11 @@ span {
   background-image: url("/public/MyPage/cukemonProfile.webp");
   background-size: 100% 110%;
   border: 2px solid #bab8b8;
-  width: 22%;
+  width: 22vw;
   text-align: center;
   position: relative;
-  top: 37%;
-  left: 72%;
+  top: 37vh;
+  left: 72vw;
   background-color: #d9d9d9;
   margin-bottom: 3%;
   padding-bottom: 0.5%;
@@ -91,28 +91,27 @@ span {
 }
 
 #buttonText1 {
-  position: absolute;
-  top: 55.3%;
-  left: 75.5vw;
-  font-size: 18px;
+  position: relative;
+  left: 75.8vw;
+  top: 29vh;
+  font-size: 1.2vw;
   color: white;
 }
 
 #buttonText2 {
   color: white;
-  position: absolute;
+  position: relative;
   pointer-events: none;
-  font-size: 18px;
-  top: 55.3%;
-  left: 88vw;
+  font-size: 1.2vw;
+  left: 83.5vw;
+  top: 29vh;
 }
 
 #releaseButton {
   width: 4%;
-  margin-bottom: 1%;
-  margin-left: 1%;
-  position: relative;
-  top: 50vh;
+  position: absolute;
+  top: 73vh;
+  left: 1vw;
 }
 
 #releaseButton:hover {
@@ -228,7 +227,7 @@ span {
   #buttonText2 {
     font-size: 12.5px;
     top: 74.3vh;
-    left: 65vw;
+    left: 52vw;
   }
   #playButton {
     position: absolute;
