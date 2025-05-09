@@ -23,7 +23,7 @@ function MakeResult() {
       const data = await response.json();
 
       if (data.image) {
-        setCukemonImage(data.image); // 이미지 로드 후 상태 업데이트
+        setCukemonImage(data.image);
         setMentText("처음보는 포켓몬이 나타났다!");
       }
     } catch (err) {
@@ -31,19 +31,15 @@ function MakeResult() {
     }
   };
 
- useEffect(() => {
+  useEffect(() => {
     if (eta == null || !token) return;
+    fetchCukemon();
+    setMentText(`대기시간: ${eta}초`);
+    setCountdown(eta);
 
-    if (eta <= 5) {
-      setMentText(`대기시간: ${eta}초`);
-         setCountdown(eta);
-    } else {
-      setMentText(`대기시간: ${eta}초`);
-      setCountdown(eta);
-    }
-  }, [eta, monsterId, token, API_URL, navigate]);
+  
+  }, [eta, monsterId, token, API_URL]);
 
-  // 타이머
   useEffect(() => {
     if (countdown <= 0) return;
 
@@ -66,13 +62,6 @@ function MakeResult() {
       });
     }
   }, [cukemonImage, monsterId, navigate]);
-
-  useEffect(() => {
-    // countdown이 0이 되면 fetchCukemon 호출
-    if (countdown === 0) {
-      fetchCukemon();
-    }
-  }, [countdown, monsterId, token, API_URL, navigate]);
 
   return (
     <div className="resultPage">
