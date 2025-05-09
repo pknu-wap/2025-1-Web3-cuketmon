@@ -196,7 +196,6 @@ function Battle() {
           setIsMatched(true);
         });
 
-        const monsterId = selectedCuketmon?.id;
         if (trainerName && monsterId && stompClientRef.current && stompClientRef.current.connected){
           client.publish({
             destination: '/app/findBattle',
