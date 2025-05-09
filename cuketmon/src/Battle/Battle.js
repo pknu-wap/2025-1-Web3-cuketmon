@@ -1,5 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { Client } from '@stomp/stompjs';
+import SockJS from 'sockjs-client';
 import './Battle.css';
 
 function Battle() {
@@ -20,13 +22,16 @@ function Battle() {
   const [isPlayerHit, setIsPlayerHit] = useState(false);
   const [isEnemyHit, setIsEnemyHit] = useState(false);
   const [myTurn, setMyTurn] = useState(false);
-  const [ws, setWs] = useState(null);
-  const [isBattleEnded, setIsBattleEnded] = useState(false);
+  const [battleId, setBattleId] = useState('');
   const [winner, setWinner] = useState(null);
+  const [trainerName, setTrainerName] = useState('');
+  const [isBattleEnded, setIsBattleEnded] = useState(false);
+  const stompClientRef = useRef(null);
   const navigate = useNavigate();
   const location = useLocation();
+  const API_URL = process.env.REACT_APP_API_URL;
 
-  const { selectedCuketmon } = location.state || {};
+  const { selectedCuketmon , monsterId} = location.state || {}; 
 
   const animationMap = {
     fire: {
@@ -108,47 +113,6 @@ function Battle() {
     return `hsl(${hue}, 100%, 50%)`;
   };
 
-  useEffect(() => {
-    if (selectedCuketmon) {
-      setCuketmonImages((prev) => ({
-        ...prev,
-        myCuketmon: selectedCuketmon.image,
-      }));
-    }
-
-    const mockWebSocket = {
-      send: (data) => console.log('Mock WebSocket send:', data),
-      close: () => console.log('Mock WebSocket closed'),
-    };
-    setWs(mockWebSocket);
-
-    setTimeout(() => {
-      setLoading(false);
-      setIsMatched(true);
-      setMyTurn(true);
-    }, 3000);
-
-    return () => mockWebSocket.close();
-  }, [selectedCuketmon]);
-
-  useEffect(() => {
-    if (isMatched) {
-      const mockData = [
-        { id: 1, name: '잎날가르기', type: 'grass', damage: 10, description: '잎날가르기' },
-        { id: 2, name: '불 퉤퉤', type: 'fire', damage: 80, description: '불퉤퉤' },
-        { id: 3, name: '불 퉤에에에', type: 'fire', damage: 20, description: '불퉤퉤' },
-        { id: 4, name: '새싹빔', type: 'grass', damage: 70, description: '새싹빔' },
-      ];
-      const updatedTechs = mockData.map((tech) => {
-        const damageLevel = tech.damage >= 70 ? 'high' : 'normal';
-        const animations = animationMap[tech.type][damageLevel];
-        const randomIndex = Math.floor(Math.random() * animations.length);
-        return { ...tech, animationUrl: animations[randomIndex] };
-      });
-      setTechs(updatedTechs);
-    }
-  }, [isMatched]);
-
   const handleSelect = (tech) => {
     if (myPP > 0 && myTurn) {
       setSelectedTech(tech.id);
@@ -156,40 +120,122 @@ function Battle() {
   };
 
   const handleFight = (tech) => {
-    if (myPP > 0 && myTurn && ws) {
+    if (myPP > 0 && myTurn && stompClientRef.current && stompClientRef.current.connected) {
       setSelectedTech(tech.id);
-      const damage = tech.damage;
-      setMyPP((prev) => Math.max(prev - 1, 0));
-      setBattleMessage(`${selectedCuketmon.name}이 ${tech.description}을 사용했다!`);
       setCurrentAnimation(tech.animationUrl);
       setIsFighting(true);
-
       setTimeout(() => {
         setIsFighting(false);
-        setIsEnemyHit(true);
-        setBattleMessage('');
         setSelectedTech(null);
         setCurrentAnimation(null);
-        const newEnemyHP = Math.max(enemyCuketmonHP - damage, 0);
-        setEnemyCuketmonHP(newEnemyHP);
-
-        if (newEnemyHP <= 0) {
-          setIsBattleEnded(true);
-          setWinner('player');
-        }
-
-        setTimeout(() => {
-          setIsEnemyHit(false);
-        }, 500);
       }, 1000);
     }
   };
 
+  // trainerName을 /trainer/myName에서 가져오기
+  useEffect(() => {
+    const fetchTrainerName = async () => {
+      try {
+        const token = localStorage.getItem('jwt'); // 토큰을 localStorage에서 가져옴
+        if (!token) {
+          console.error('No token available');
+          return;
+        }
+        const res = await fetch(`${API_URL}/api/trainer/myName`, {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+          },
+        });
+        if (!res.ok) {
+          throw new Error(`HTTP error! status: ${res.status}`);
+        }
+        const trainerName = await res.text();
+        setTrainerName(trainerName); 
+      } catch (error) {
+        console.error('Failed to fetch trainer name:', error.message);
+      }
+    };
+
+    fetchTrainerName();
+  }, [API_URL]);
+
+  // 커켓몬 선택 기억
+  useEffect(() => {
+    if (selectedCuketmon) {
+      setCuketmonImages((prev) => ({
+        ...prev,
+        myCuketmon: selectedCuketmon.image,
+      }));
+    } else {
+      console.log('Error: No selected Cuketmon');
+    }
+  }, [selectedCuketmon, navigate]);
+
+  // WebSocket 연결 설정 및 배틀 찾기 요청
+  useEffect(() => {
+    const socket = new SockJS(`${API_URL}/ws`);
+    const client = new Client({
+      webSocketFactory: () => socket,
+      onConnect: () => {
+        console.log('Connected to WebSocket');
+        stompClientRef.current = client;
+
+        // 매칭 알림 구독
+        client.subscribe('/topic/match/*', (message) => {
+          const matchResponse = JSON.parse(message.body);
+          console.log('Match response received:', matchResponse);
+          setBattleId(matchResponse.battleId);
+          setTrainerName(matchResponse.trainerName || trainerName);
+          setCuketmonImages({
+            myCuketmon: matchResponse.myCuketmon.image || selectedCuketmon.image,
+            enemyCuketmon: matchResponse.enemyCuketmon.image,
+          });
+          setMyCuketmonHP(matchResponse.myCuketmon.hp);
+          setEnemyCuketmonHP(matchResponse.enemyCuketmon.hp);
+          setMyPP(matchResponse.myCuketmon.pp);
+          setTechs(
+            matchResponse.myCuketmon.skills.map((skill) => ({
+              id: skill.id,
+              name: skill.name,
+              type: skill.type,
+              damage: skill.power,
+              description: skill.name,
+              animationUrl: animationMap[skill.type][skill.power >= 70 ? 'high' : 'normal'][0],
+            }))
+          );
+          setLoading(false);
+          setIsMatched(true);
+          setMyTurn(matchResponse.isMyTurn);
+        });
+
+        
+        if (trainerName && monsterId && stompClientRef.current && stompClientRef.current.connected) {
+          client.publish({
+            destination: '/app/findBattle',
+            body: JSON.stringify({ trainerName, monsterId }),
+          });
+          console.log('Battle find request sent:', { trainerName, monsterId });
+        } else {
+          console.error('Cannot send findBattle request: Missing trainerName or monsterId');
+        }
+      },
+      onStompError: (frame) => {
+        console.error('STOMP connection error:', frame);
+        setLoading(false);
+      },
+    });
+    client.activate();
+
+    return () => {
+      client.deactivate();
+    };
+  }, [selectedCuketmon, trainerName, API_URL]);
+
   if (loading) {
     return (
       <div className="loadingScreen">
-        <img src="/BattlePage/loadingcircle.png" className="loadingSpinner" alt="로딩 중" />
-        <p>매칭 중...</p>
+        <img src="/BattlePage/loadingcircle.png" className="loadingSpinner" alt="Loading" />
+        <p>Matching...</p>
       </div>
     );
   }
@@ -198,9 +244,9 @@ function Battle() {
     const winnerImage = winner === 'player' ? cuketmonImages.myCuketmon : cuketmonImages.enemyCuketmon;
     return (
       <div className="resultScreen">
-        <h1>{winner === 'player' ? '승리!' : '패배...'}</h1>
-        <img src={winnerImage} className="winnerCuketmonImage" alt="승리자" />
-        <button className="endBattle" onClick={() => navigate('/mypage')}>전투종료</button>
+        <h1>{winner === 'player' ? 'Victory!' : 'Defeat...'}</h1>
+        <img src={winnerImage} className="winnerCuketmonImage" alt="Winner" />
+        <button className="endBattle" onClick={() => navigate('/mypage')}>End Battle</button>
       </div>
     );
   }
@@ -212,35 +258,41 @@ function Battle() {
           <div className="mySection">
             <div className="hpBackground">
               <p>{selectedCuketmon.name}</p>
-              <img src="/BattlePage/hpBar.png" className="myHpImage" alt="체력바" />
+              <img src="/BattlePage/hpBar.png" className="myHpImage" alt="HP Bar" />
               <div className="myHpBar">
-                <div className="myHpFill" style={{ width: `${myCuketmonHP}%`, backgroundColor: getHpColor(myCuketmonHP) }}></div>
+                <div
+                  className="myHpFill"
+                  style={{ width: `${myCuketmonHP}%`, backgroundColor: getHpColor(myCuketmonHP) }}
+                ></div>
               </div>
             </div>
             <div className="cuketmon">
               <img
                 src={cuketmonImages.myCuketmon}
                 className={`myCuketmonImage ${isPlayerHit ? 'hitEffect' : ''}`}
-                alt="내 커켓몬"
+                alt="My Cuketmon"
               />
-              <img src="/BattlePage/stand.png" className="myStage" alt="전투무대" />
+              <img src="/BattlePage/stand.png" className="myStage" alt="Stage" />
             </div>
           </div>
           <div className="enemySection">
             <div className="hpBackground">
-              <p>커켓몬2</p>
-              <img src="/BattlePage/hpBar.png" className="enemyHpImage" alt="체력바" />
+              <p>Enemy Cuketmon</p>
+              <img src="/BattlePage/hpBar.png" className="enemyHpImage" alt="HP Bar" />
               <div className="enemyHpBar">
-                <div className="enemyHpFill" style={{ width: `${enemyCuketmonHP}%`, backgroundColor: getHpColor(enemyCuketmonHP) }}></div>
+                <div
+                  className="enemyHpFill"
+                  style={{ width: `${enemyCuketmonHP}%`, backgroundColor: getHpColor(enemyCuketmonHP) }}
+                ></div>
               </div>
             </div>
             <div className="cuketmon">
               <img
                 src={cuketmonImages.enemyCuketmon}
                 className={`enemyCuketmonImage ${isEnemyHit ? 'hitEffect' : ''}`}
-                alt="적 커켓몬"
+                alt="Enemy Cuketmon"
               />
-              <img src="/BattlePage/stand.png" className="enemyStage" alt="전투무대" />
+              <img src="/BattlePage/stand.png" className="enemyStage" alt="Stage" />
             </div>
           </div>
         </div>
@@ -252,7 +304,6 @@ function Battle() {
                   key={tech.id}
                   className={`techButton ${selectedTech === tech.id ? 'selected' : ''}`}
                   onClick={() => handleSelect(tech)}
-                  onDoubleClick={() => handleFight(tech)}
                   disabled={myPP <= 0 || !myTurn}
                 >
                   {tech.name}
@@ -262,13 +313,13 @@ function Battle() {
           )}
           {isFighting && (
             <div className="battleAnimationOverlay">
-              <img src={currentAnimation} className="techAnimation" alt="기술 애니메이션" />
+              <img src={currentAnimation} className="techAnimation" alt="Tech Animation" />
               <div className="battleMessage">{battleMessage}</div>
             </div>
           )}
           <span className="ppInfo">PP {myPP}/15</span>
-          <span className="cuketmonType">TYPE/{techs.length > 0 ? techs[0].type : '없음'}</span>
-          <span className="turnInfo">{myTurn ? '내 턴' : '상대 턴'}</span>
+          <span className="cuketmonType">TYPE/{techs.length > 0 ? techs[0].type : 'None'}</span>
+          <span className="turnInfo">{myTurn ? 'My Turn' : 'Enemy Turn'}</span>
         </div>
       </div>
     </div>

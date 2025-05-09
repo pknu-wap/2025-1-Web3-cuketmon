@@ -9,14 +9,26 @@ function NamePage() {
   const navigate = useNavigate();
   const { token: contextToken } = useAuth();
   const token = contextToken || localStorage.getItem('jwt');
-  const location = useLocation();
+  const location = useLocation(); 
   const maxLength = 12;
   const API_URL = process.env.REACT_APP_API_URL;
-
   const monsterId = location.state?.monsterId; 
   console.log(monsterId);
   const cukemonResultImage = location.state?.image; 
-  console.log(cukemonResultImage); //혹시나 url 확인용! 추후 뺌
+
+//뒤로가기 막기 (5/9)
+ useEffect(() => {
+  const preventGoBack = () => {
+    window.history.go(1); 
+    alert("커켓몬을 두고 떠나지마요 ㅠㅠㅠ");
+  };
+  window.history.pushState(null, "", window.location.href);
+  window.addEventListener("popstate", preventGoBack);
+
+  return () => {
+    window.removeEventListener("popstate", preventGoBack);
+  };
+}, []);
 
   useEffect(() => {
     if (cukemonResultImage) {
@@ -56,9 +68,16 @@ function NamePage() {
     }
   };
 
+
   const handleGoTOMakePage = async()=>{
-    navigate(`/make`)
-  }
+        const res = await fetch(`${API_URL}/api/monster/${monsterId}/release`, {
+          method: "DELETE",
+          headers: { 'Authorization': `Bearer ${token}` },
+        });
+        if (!res.ok) throw new Error(`오류발생`);
+        navigate(`/make`)
+    }
+  
 
   return (
     <div className="namePage">

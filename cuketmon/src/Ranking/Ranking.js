@@ -79,13 +79,13 @@ function Ranking() {
         });
         const data = await response.json();
         console.log(data)
-        setRank(data.rank);
+        setRank(parseInt(data.rank));
         setTrainerName(data.trainerName);
-        setWinCount(data.win);
-        setLoseCount(data.lose);
-        setBattleCount(data.allBattles);
+        setWinCount(parseInt(data.win));
+        setLoseCount(parseInt(data.lose));
+        setBattleCount(parseInt(data.allBattles));
       } catch (error) {
-        console.error('Error fetching ranking data:', error);
+        console.error('랭킹 불러오기 실패', error);
       }
     };
     fetchRankingData();

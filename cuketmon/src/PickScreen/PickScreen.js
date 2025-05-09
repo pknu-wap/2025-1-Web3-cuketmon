@@ -5,11 +5,13 @@ import './PickScreen.css';
 
 const PickScreen = () => {
   const [cuketmons, setCuketmons] = useState([]);
-  const [monsterIdList, setMonsterIdList] = useState([]); // monsterIds를 monsterIdList로 변경
+  const [monsterIdList, setMonsterIdList] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [monsterId, setMonsterId] = useState([]);
   const navigate = useNavigate();
-  const { token } = useAuth();
+  const { token: contextToken } = useAuth();
+  const token = contextToken || localStorage.getItem('jwt');
   const API_URL = process.env.REACT_APP_API_URL;
 
   // 유저 소유 커켓몬 ID 목록 조회
@@ -54,8 +56,8 @@ const PickScreen = () => {
         id: data?.id || null,
         name: data?.name || '이름 없음',
         image: data?.image || '',
-        type1: data?.type1 || '타입 없음',
-        type2: data?.type2 || '타입 없음',
+        type1: data?.type1 || null,
+        type2: data?.type2 || null,
       };
     } catch (error) {
       console.error(`커켓몬 ${monsterId} 데이터 로딩 실패:`, error.message);
@@ -84,7 +86,6 @@ const PickScreen = () => {
 
     const retryTimeout = setTimeout(() => {
       if (!cuketmons || cuketmons.length === 0) {
-        console.log('커켓몬 데이터가 비어 있어 재시도합니다.');
         fetchCuketmons();
       }
     }, 500);
@@ -102,7 +103,8 @@ const PickScreen = () => {
 
   const handleSelect = (cuketmon) => {
     if (cuketmon) {
-      navigate('/battle', { state: { selectedCuketmon: cuketmon } });
+      localStorage.setItem('monsterId', monsterIdList[currentIndex]);
+      navigate('/battle', { state: { selectedCuketmon: cuketmon, monsterId: monsterIdList[currentIndex] } });
     } else {
       console.error('선택된 커켓몬이 없습니다.');
     }
@@ -134,7 +136,7 @@ const PickScreen = () => {
           <p className="cuketmonName">{currentCuketmon.name}</p>
           <p className="cuketmonType">
             타입: {currentCuketmon.type1}
-            {currentCuketmon.type2 && ` / ${currentCuketmon.type2}`}
+            / {currentCuketmon.type2 || '없음'}
           </p>
           <button
             onClick={() => handleSelect(currentCuketmon)}
