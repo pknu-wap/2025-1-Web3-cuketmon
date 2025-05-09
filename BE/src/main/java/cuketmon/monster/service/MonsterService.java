@@ -95,7 +95,7 @@ public class MonsterService {
         Monster monster = Monster.builder()
                 .name("")
                 .image(null)
-                .description(requestBody.getDescription())
+                .description(requestBody.getDescription().strip())
                 .affinity(new Affinity())
                 .hp(getRandomInRange(MIN_BASE, MAX_BASE))
                 .speed(getRandomInRange(MIN_BASE, MAX_BASE))
@@ -114,7 +114,7 @@ public class MonsterService {
 
         trainer.addMonster(monster);
         monsterRepository.save(monster);
-        promptService.save(monster.getId(), type1, type2, requestBody.getDescription());
+        promptService.save(monster.getId(), type1, type2, requestBody.getDescription().strip());
 
         return monster.getId();
     }
