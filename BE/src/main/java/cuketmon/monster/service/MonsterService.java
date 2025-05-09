@@ -57,6 +57,11 @@ public class MonsterService {
         this.promptService = promptService;
     }
 
+    @Transactional
+    public Integer getETA() {
+        return promptService.makeEta();
+    }
+
     // 포켓몬 생성 함수
     @Transactional
     public Integer generate(String trainerName, GenerateApiRequestBody requestBody) {
@@ -217,7 +222,8 @@ public class MonsterService {
                 monster.getHp(), monster.getSpeed(),
                 monster.getAttack(), monster.getDefence(),
                 monster.getSpecialAttack(), monster.getSpecialDefence(),
-                monster.getType1().getEnglishName(), monster.getType2().getEnglishName(),
+                monster.getType1().getEnglishName(),
+                monster.getType2() == null ? null : monster.getType2().getEnglishName(),
                 List.of(skillService.convertSkill(monster.getSkillId1()),
                         skillService.convertSkill(monster.getSkillId2()),
                         skillService.convertSkill(monster.getSkillId3()),

@@ -29,6 +29,7 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
         // JWT 생성
         String accessToken = jwtUtil.createToken(trainerName);
 
+        // TODO: 이거 안됨 ;
         // 로컬/배포 환경에 맞춰 redirect 가능
         String state = request.getParameter("state");
 

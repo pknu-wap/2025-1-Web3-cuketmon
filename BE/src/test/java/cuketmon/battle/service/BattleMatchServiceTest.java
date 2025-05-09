@@ -72,7 +72,7 @@ class BattleMatchServiceTest {
         int battleId = captor.getValue().getBattleId();
         battleMatchService.useSkill(battleId, new SkillRequest(1, TRAINER1));
 
-        verify(messagingTemplate, times(1)).convertAndSend(startsWith("/topic/turn/"), any(TurnResponse.class));
+        verify(messagingTemplate, times(1)).convertAndSend(startsWith("/topic/skill/"), any(TurnResponse.class));
     }
 
     @TestConfiguration

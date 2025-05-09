@@ -34,6 +34,11 @@ public class MonsterController {
         this.monsterService = monsterService;
     }
 
+    @GetMapping("/eta")
+    public Integer getETA() {
+        return monsterService.getETA();
+    }
+
     // TODO: response 이상함 고치기 우선순위는 낮음
     // 몬스터 생성
     @PostMapping("/generate")
