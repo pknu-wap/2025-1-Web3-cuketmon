@@ -9,11 +9,10 @@ function Make() {
   const [type1, setType1] = useState("");
   const [type2, setType2] = useState("");
   const [description, setDescription] = useState("");
-  const [eta,setEta]=useState("")
+  const [eta, setEta] = useState(""); // eta 상태 유지
   const navigate = useNavigate();
   const { setToken } = useAuth();
   const API_URL = process.env.REACT_APP_API_URL;
-
 
   useEffect(() => {
     const token = localStorage.getItem("jwt"); 
@@ -23,6 +22,30 @@ function Make() {
       console.warn("토큰이 없습니다.");
     }
   }, [setToken]);
+
+  // ETA 값 받아오기
+  useEffect(() => {
+    const fetchEta = async () => {
+      try {
+        const token = localStorage.getItem("jwt");
+        const etaResponse = await fetch(`${API_URL}/api/monster/eta`, {
+          method: "GET",
+          headers: {
+            "Authorization": `Bearer ${token}`
+          }
+        });
+        if (!etaResponse.ok) throw new Error("ETA 불러오기 실패");
+
+        const etaData = await etaResponse.text();
+        setEta(Number(etaData.eta)); 
+        console.log(eta); 
+      } catch (err) {
+        console.error("ETA 요청 에러:", err);
+      }
+    };
+
+    fetchEta();
+  }, []);
 
   const handleSubmit = async () => {
     const token = localStorage.getItem("jwt"); 
@@ -56,9 +79,7 @@ function Make() {
       if (response.ok) {
         const data = await response.json();
         const monsterId = data.monsterId;
-
-        localStorage.setItem('monsterId', monsterId);
-        navigate("/MakeResult", { state: { monsterId,eta } }); 
+        navigate("/MakeResult", { state: { monsterId, eta } }); 
       } else {
         alert("데이터 전송에 실패했습니다.");
       }
@@ -67,30 +88,6 @@ function Make() {
       alert("서버와의 통신 중 오류가 발생했습니다.");
     }
   };
-
-  /*eta */
-  useEffect(() => {
-  const fetchEta = async () => {
-    try {
-      const token = localStorage.getItem("jwt");
-      const response = await fetch(`${API_URL}/api/monster/eta`, {
-        method: "GET",
-        headers: {
-          "Authorization": `Bearer ${token}`
-        }
-      });
-      if (!response.ok) throw new Error("ETA 불러오기 실패");
-
-      const data = await response.json(); 
-      setEta(parseInt(data.eta)); 
-      console.log(eta) //eta 확인용 코드
-    } catch (err) {
-      console.error("ETA 요청 에러:", err);
-    }
-  };
-
-  fetchEta();
-}, []);
 
   return (
     <div className="makeBackGround">
@@ -101,22 +98,22 @@ function Make() {
         </div>
 
         <select id="S1" value={type1} onChange={(e) => setType1(e.target.value)} style={{ color: type1 ? typeData[Object.keys(typeData).find(key => typeData[key].korean === type1)]?.color : 'black' }}>
-        <option value=""></option>
-       {Object.values(typeData).map((type) => (
-       <option key={type.korean} value={type.korean}  style={{ color: type.color }} >
-       {type.korean}
-       </option>
-      ))}
+          <option value=""></option>
+          {Object.values(typeData).map((type) => (
+            <option key={type.korean} value={type.korean} style={{ color: type.color }}>
+              {type.korean}
+            </option>
+          ))}
         </select>
         <br />
 
-       <select id="S2" value={type2} onChange={(e) => setType2(e.target.value)}style={{ color: type2 ? typeData[Object.keys(typeData).find(key => typeData[key].korean === type2)]?.color : 'black' }}>
-       <option value=""></option>
-       {Object.values(typeData).map((type) => (
-       <option key={type.korean} value={type.korean}style={{ color: type.color }} >
-       {type.korean}
-       </option>
-      ))}
+        <select id="S2" value={type2} onChange={(e) => setType2(e.target.value)} style={{ color: type2 ? typeData[Object.keys(typeData).find(key => typeData[key].korean === type2)]?.color : 'black' }}>
+          <option value=""></option>
+          {Object.values(typeData).map((type) => (
+            <option key={type.korean} value={type.korean} style={{ color: type.color }}>
+              {type.korean}
+            </option>
+          ))}
         </select>
         <img src="/MakePage/type.webp" id="typeicon" alt="포켓몬 타입 이미지" />
 
