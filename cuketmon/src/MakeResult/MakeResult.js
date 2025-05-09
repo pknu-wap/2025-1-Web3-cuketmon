@@ -4,7 +4,7 @@ import "./MakeResult.css";
 
 function MakeResult() {
   const [cukemonImage, setCukemonImage] = useState("/MakeResultPage/movingEgg.gif");
-  const [mentText, setMentText] = useState("어라...?");
+  const [mentText, setMentText] = useState("어라...?"); 
   const [countdown, setCountdown] = useState(null);
   const eggRef = useRef(null);
   const navigate = useNavigate();
@@ -23,22 +23,15 @@ function MakeResult() {
       const data = await response.json();
 
       if (data.image) {
-        setCukemonImage(data.image);
+        setCukemonImage(data.image); // 이미지 로드 후 상태 업데이트
         setMentText("처음보는 포켓몬이 나타났다!");
-
-        navigate(`/NamePage`, {
-          state: {
-            monsterId: monsterId,
-            image: data.image,
-          },
-        });
       }
     } catch (err) {
       console.error("이미지 로드 실패:", err);
     }
   };
 
-  useEffect(() => {
+ useEffect(() => {
     if (eta == null || !token) return;
 
     if (eta <= 5) {
@@ -50,8 +43,9 @@ function MakeResult() {
     }
   }, [eta, monsterId, token, API_URL, navigate]);
 
+  // 타이머
   useEffect(() => {
-    if (countdown === null || countdown <= 0) return;
+    if (countdown <= 0) return;
 
     const timer = setTimeout(() => {
       const next = countdown - 1;
@@ -63,6 +57,18 @@ function MakeResult() {
   }, [countdown]);
 
   useEffect(() => {
+    if (cukemonImage !== "/MakeResultPage/movingEgg.gif") {
+      navigate(`/NamePage`, {
+        state: {
+          monsterId: monsterId,
+          image: cukemonImage,
+        },
+      });
+    }
+  }, [cukemonImage, monsterId, navigate]);
+
+  useEffect(() => {
+    // countdown이 0이 되면 fetchCukemon 호출
     if (countdown === 0) {
       fetchCukemon();
     }
