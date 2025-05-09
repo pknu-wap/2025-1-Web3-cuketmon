@@ -17,10 +17,12 @@ function NamePage() {
   const cukemonResultImage = location.state?.image; 
 
 //뒤로가기 막기 (5/9)
- useEffect(() => {
-  const preventGoBack = () => {
-    window.history.go(1); 
-    alert("커켓몬을 두고 떠나지마요 ㅠㅠㅠ");
+useEffect(() => {
+  const preventGoBack = (event) => {
+    if (event.type === "popstate") {
+      window.history.go(1);
+      alert("커켓몬을 두고 떠나지마요 ㅠㅠㅠ");
+    }
   };
   window.history.pushState(null, "", window.location.href);
   window.addEventListener("popstate", preventGoBack);
