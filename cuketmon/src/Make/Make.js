@@ -37,7 +37,7 @@ function Make() {
         if (!etaResponse.ok) throw new Error("ETA 불러오기 실패");
 
         const etaData = await etaResponse.text();
-        setEta(Number(etaData.eta)); 
+        setEta(Number(etaData)); 
         console.log(eta); 
       } catch (err) {
         console.error("ETA 요청 에러:", err);
