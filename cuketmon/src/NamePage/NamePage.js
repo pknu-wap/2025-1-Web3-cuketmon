@@ -9,14 +9,12 @@ function NamePage() {
   const navigate = useNavigate();
   const { token: contextToken } = useAuth();
   const token = contextToken || localStorage.getItem('jwt');
-  const location = useLocation();
+  const location = useLocation(); 
   const maxLength = 12;
   const API_URL = process.env.REACT_APP_API_URL;
-
   const monsterId = location.state?.monsterId; 
   console.log(monsterId);
   const cukemonResultImage = location.state?.image; 
-  console.log(cukemonResultImage); //혹시나 url 확인용! 추후 뺌
 
   useEffect(() => {
     if (cukemonResultImage) {
@@ -56,9 +54,16 @@ function NamePage() {
     }
   };
 
+
   const handleGoTOMakePage = async()=>{
-    navigate(`/make`)
-  }
+        const res = await fetch(`${API_URL}/api/monster/${monsterId}/release`, {
+          method: "DELETE",
+          headers: { 'Authorization': `Bearer ${token}` },
+        });
+        if (!res.ok) throw new Error(`오류발생`);
+        navigate(`/make`)
+    }
+  
 
   return (
     <div className="namePage">
