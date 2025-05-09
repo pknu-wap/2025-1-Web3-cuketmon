@@ -3,14 +3,20 @@ import { useNavigate } from "react-router-dom";
 import "./Make.css";
 import MenuBar from "../Menubar/Menubar.js";
 import { useAuth } from "../AuthContext";
+import typeData from './../Type';
 
 function Make() {
   const [type1, setType1] = useState("");
   const [type2, setType2] = useState("");
   const [description, setDescription] = useState("");
+  
+  // const [eta,setEta]=useState("")
   const navigate = useNavigate();
   const { setToken } = useAuth();
   const API_URL = process.env.REACT_APP_API_URL;
+
+
+  
 
   useEffect(() => {
     const token = localStorage.getItem("jwt"); 
@@ -53,8 +59,9 @@ function Make() {
       if (response.ok) {
         const data = await response.json();
         const monsterId = data.monsterId;
+        // const setEta=data.eta;
         localStorage.setItem('monsterId', monsterId);
-        navigate("/MakeResult", { state: { monsterId } });
+        navigate("/MakeResult", { state: { monsterId } }); //eta 추가? -> 차후에 대기시간 넣는다면 추가할 것
       } else {
         alert("데이터 전송에 실패했습니다.");
       }
@@ -63,11 +70,7 @@ function Make() {
       alert("서버와의 통신 중 오류가 발생했습니다.");
     }
   };
-
-  const types = [
-    "불꽃", "풀", "전기", "에스퍼", "얼음", "드래곤", "악", "페어리",
-    "격투", "비행", "고스트", "땅", "독", "바위", "강철", "벌레", "노말",
-  ];
+  
 
   return (
     <div className="makeBackGround">
@@ -77,19 +80,23 @@ function Make() {
           <h2>원하시는 포켓몬의 타입을 선택해 주세요.</h2>
         </div>
 
-        <select id="S1" value={type1} onChange={(e) => setType1(e.target.value)}>
-          <option value=""></option>
-          {types.map((type) => (
-            <option key={type} value={type}>{type}</option>
-          ))}
+        <select id="S1" value={type1} onChange={(e) => setType1(e.target.value)} style={{ color: type1 ? typeData[Object.keys(typeData).find(key => typeData[key].korean === type1)]?.color : 'black' }}>
+        <option value=""></option>
+       {Object.values(typeData).map((type) => (
+       <option key={type.korean} value={type.korean}  style={{ color: type.color }} >
+       {type.korean}
+       </option>
+      ))}
         </select>
         <br />
 
-        <select id="S2" value={type2} onChange={(e) => setType2(e.target.value)}>
-          <option value=""></option>
-          {types.map((type) => (
-            <option key={type} value={type}>{type}</option>
-          ))}
+       <select id="S2" value={type2} onChange={(e) => setType2(e.target.value)}style={{ color: type2 ? typeData[Object.keys(typeData).find(key => typeData[key].korean === type2)]?.color : 'black' }}>
+       <option value=""></option>
+       {Object.values(typeData).map((type) => (
+       <option key={type.korean} value={type.korean}style={{ color: type.color }} >
+       {type.korean}
+       </option>
+      ))}
         </select>
         <img src="/MakePage/type.webp" id="typeicon" alt="포켓몬 타입 이미지" />
 

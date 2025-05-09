@@ -182,14 +182,14 @@ span {
 
   #cuketmonImage {
     position: absolute;
-    top: 41%;
+    top: 37%;
     width: 35%;
     left: 34%;
   }
 
   .cucketmonProfile {
     position: absolute;
-    top: 60%;
+    top: 57.5%;
     left: 34%;
     margin-left: 0;
     width: 35%;
@@ -210,30 +210,32 @@ span {
     width: 100%;
   }
 
-  #playButton {
-    position: absolute;
-    height: 50px;
-    width: 120px;
-    top: 72%;
-    left: 20%;
+  /*먹이주기*/
+  #buttonText1 {
+    font-size: 12.5px;
+    top: 74.3vh;
+    left: 33vw;
   }
   #feedButton {
     position: absolute;
-    top: 72%;
-    left: 52%;
+    top: 72vh;
+    left: 20vw;
     height: 50px;
     width: 120px;
   }
-  #buttonText1 {
-    font-size: 12.5px;
-    left: 33%;
-    top: 74.3%;
-  }
 
+  /*놀아주기*/
   #buttonText2 {
     font-size: 12.5px;
-    left: 65%;
-    top: 74.3%;
+    top: 74.3vh;
+    left: 65vw;
+  }
+  #playButton {
+    position: absolute;
+    top: 72vh;
+    left: 52vw;
+    height: 50px;
+    width: 120px;
   }
 
   #releaseButton {

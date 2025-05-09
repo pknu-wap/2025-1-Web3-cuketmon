@@ -16,7 +16,6 @@
 
 .cukemonImageContainer {
   width: 42%;
-
   position: relative;
   margin-top: 5%;
   left: 28%;
@@ -93,7 +92,11 @@
 
   .cukemonImageContainer {
     white-space: nowrap;
-    left: 18%;
+    width: 100vw;
+    left: 0vw;
+  }
+  .cukemonImageContainer img {
+    width: 14vw;
   }
 
   .historyBoard {
