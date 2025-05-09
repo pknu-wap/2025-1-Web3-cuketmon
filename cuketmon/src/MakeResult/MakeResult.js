@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import "./MakeResult.css";
 
@@ -42,16 +42,11 @@ function MakeResult() {
 
     if (eta <= 5) {
       setMentText("어라...?");
+          setMentText(`대기시간: ${eta}초`); //임시코드
       fetchCukemon();
     } else {
       setMentText(`대기시간: ${eta}초`);
       setCountdown(eta);
-
-      const polling = setInterval(() => {
-        fetchCukemon();
-      }, 1000); //1초마다 커켓몬 이미지 있는지 봄
-
-      return () => clearInterval(polling);
     }
   }, [eta, monsterId, token, API_URL, navigate]);
 
@@ -68,10 +63,8 @@ function MakeResult() {
     return () => clearTimeout(timer);
   }, [countdown]);
 
-
-  useEffect(() => {
-    if (countdown !== 0) return;
-
+useEffect(() => {
+  if (countdown === 0) {
     const fetchFinal = async () => {
       try {
         const response = await fetch(`${API_URL}/api/monster/${monsterId}/info`, {
@@ -79,29 +72,32 @@ function MakeResult() {
           headers: { Authorization: `Bearer ${token}` },
         });
 
-        const data = await response.json();
+        if (response.ok) {
+          const data = await response.json();
 
-        if (data.image) {
-          setCukemonImage(data.image);
-          setMentText("처음보는 포켓몬이 나타났다!");
-          navigate(`/NamePage`, {
-            state: {
-              monsterId: monsterId,
-              image: data.image,
-            },
-          });
+          if (data.image) {
+            setCukemonImage(data.image); 
+            setMentText("처음보는 포켓몬이 나타났다!");
+            navigate(`/NamePage`, {
+              state: {
+                monsterId: monsterId,
+                image: data.image,
+              },
+            });
+          } else {
+            throw new Error("이미지 없음");
+          }
         } else {
-          throw new Error("이미지 없음");
+          console.error("정보를 가져오는 데 실패했습니다.");
         }
       } catch (error) {
         console.error("최종 이미지 로드 실패:", error);
-        setMentText("커켓몬이 도망쳤다.");
-        navigate("/Make");
       }
     };
 
-    fetchFinal();
-  }, [countdown, monsterId, token, API_URL]);
+    fetchFinal(); 
+  }
+}, [countdown, monsterId, token, API_URL, navigate]);
 
   return (
     <div className="resultPage">
