@@ -188,7 +188,7 @@ function Battle() {
               damage: skill.power,
               pp: skill.pp || 15, // 기술별 PP 설정
               description: skill.name,
-              animationUrl: animationMap[skill.type.toLowerCase()]?.[skill.power >= 70 ? 'high' : 'normal']?.[0] || '/default.png',
+              animationUrl: animationMap[skill.type.toLowerCase()]?.[skill.power >= 70 ? 'high' : 'normal']?.[0],
             }))
           );
           setMyTurn(myTeamData?.turn || false);
@@ -196,7 +196,7 @@ function Battle() {
           setIsMatched(true);
         });
 
-        const monsterId = selectedCuketmon?.id;
+
         if (trainerName && monsterId && stompClientRef.current && stompClientRef.current.connected){
           client.publish({
             destination: '/app/findBattle',
