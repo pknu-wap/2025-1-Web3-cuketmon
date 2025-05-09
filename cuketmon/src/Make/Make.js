@@ -43,37 +43,54 @@ function Make() {
       description
     };
 
-   try {
-    const response = await fetch(`${API_URL}/api/monster/generate`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`
-      },
-      body: JSON.stringify(requestData)
-    });
-
-    if (response.ok) {
-      const data = await response.json();
-      const monsterId = data.monsterId;
-
-      //eta요청
-      const etaRes = await fetch(`${API_URL}/api/monster/eta`, {
-        headers: { Authorization: `Bearer ${token}` }
+    try {
+      const response = await fetch(`${API_URL}/api/monster/generate`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify(requestData)
       });
-      const etaData = await etaRes.json();
-      setEta(parseInt(etaData.eta));
 
-      navigate("/MakeResult", { state: { monsterId, eta: etaData.eta } });
-    } else {
-      alert("데이터 전송에 실패했습니다.");
+      if (response.ok) {
+        const data = await response.json();
+        const monsterId = data.monsterId;
+
+        localStorage.setItem('monsterId', monsterId);
+        navigate("/MakeResult", { state: { monsterId,eta } }); 
+      } else {
+        alert("데이터 전송에 실패했습니다.");
+      }
+    } catch (error) {
+      console.error("에러 발생:", error);
+      alert("서버와의 통신 중 오류가 발생했습니다.");
     }
-  } catch (error) {
-    console.error("에러 발생:", error);
-    alert("서버와의 통신 중 오류가 발생했습니다.");
-  }
-};
+  };
 
+  /*eta */
+  useEffect(() => {
+  const fetchEta = async () => {
+    try {
+      const token = localStorage.getItem("jwt");
+      const response = await fetch(`${API_URL}/api/monster/eta`, {
+        method: "GET",
+        headers: {
+          "Authorization": `Bearer ${token}`
+        }
+      });
+      if (!response.ok) throw new Error("ETA 불러오기 실패");
+
+      const data = await response.json(); 
+      setEta(parseInt(data.eta)); 
+      console.log(eta) //eta 확인용 코드
+    } catch (err) {
+      console.error("ETA 요청 에러:", err);
+    }
+  };
+
+  fetchEta();
+}, []);
 
   return (
     <div className="makeBackGround">
