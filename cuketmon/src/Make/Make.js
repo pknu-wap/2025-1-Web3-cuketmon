@@ -9,7 +9,7 @@ function Make() {
   const [type1, setType1] = useState("");
   const [type2, setType2] = useState("");
   const [description, setDescription] = useState("");
-  const [eta, setEta] = useState(""); // eta 상태 유지
+  const [eta, setEta] = useState(); // eta 상태 초기화
   const navigate = useNavigate();
   const { setToken } = useAuth();
   const API_URL = process.env.REACT_APP_API_URL;
@@ -23,32 +23,8 @@ function Make() {
     }
   }, [setToken]);
 
-  // ETA 값 받아오기
-  useEffect(() => {
-    const fetchEta = async () => {
-      try {
-        const token = localStorage.getItem("jwt");
-        const etaResponse = await fetch(`${API_URL}/api/monster/eta`, {
-          method: "GET",
-          headers: {
-            "Authorization": `Bearer ${token}`
-          }
-        });
-        if (!etaResponse.ok) throw new Error("ETA 불러오기 실패");
-
-        const etaData = await etaResponse.text();
-        setEta(Number(etaData)); 
-        console.log(eta); 
-      } catch (err) {
-        console.error("ETA 요청 에러:", err);
-      }
-    };
-
-    fetchEta();
-  }, []);
-
   const handleSubmit = async () => {
-    const token = localStorage.getItem("jwt"); 
+    const token = localStorage.getItem("jwt");
 
     if (!type1 && !type2) {
       alert("타입을 하나 이상 선택해야 합니다.");
@@ -79,7 +55,28 @@ function Make() {
       if (response.ok) {
         const data = await response.json();
         const monsterId = data.monsterId;
-        navigate("/MakeResult", { state: { monsterId, eta } }); 
+
+        const etaResponse = await fetch(`${API_URL}/api/monster/eta`, {
+          method: "GET",
+          headers: {
+            "Authorization": `Bearer ${token}`
+          }
+        });
+
+        if (etaResponse.ok) {
+          const etaData = await etaResponse.text();
+          const etaNumber = Number(etaData);
+
+          if (!isNaN(etaNumber)) {
+            setEta(etaNumber); 
+            navigate("/MakeResult", { state: { monsterId, eta: etaNumber } });
+          } else {
+            console.error("유효하지 않은 ETA 값:", etaData);
+            alert("잘못된 ETA 값이 서버에서 반환되었습니다.");
+          }
+        } else {
+          alert("ETA 값 가져오기 실패");
+        }
       } else {
         alert("데이터 전송에 실패했습니다.");
       }
