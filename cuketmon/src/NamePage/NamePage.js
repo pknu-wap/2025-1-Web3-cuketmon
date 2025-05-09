@@ -16,17 +16,17 @@ function NamePage() {
   console.log(monsterId);
   const cukemonResultImage = location.state?.image; 
 
-  //뒤로가기 막기 (5/9)
+//뒤로가기 막기 (5/9)
  useEffect(() => {
-  const handlePopState = () => {
-    window.history.pushState(null, "", window.location.href);
+  const preventGoBack = () => {
+    window.history.go(1); 
     alert("커켓몬을 두고 떠나지마요 ㅠㅠㅠ");
   };
   window.history.pushState(null, "", window.location.href);
-  window.addEventListener("popstate", handlePopState);
+  window.addEventListener("popstate", preventGoBack);
 
   return () => {
-    window.removeEventListener("popstate", handlePopState);
+    window.removeEventListener("popstate", preventGoBack);
   };
 }, []);
 
