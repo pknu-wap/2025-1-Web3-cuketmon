@@ -5,7 +5,6 @@ html, body {
   overflow: hidden;
 }
 
-
 .Battle {
   background-image: url('/public/BattlePage/background.png');
   background-size: cover;
@@ -24,7 +23,6 @@ html, body {
   width: 100%;
   height: 100%;
   position: relative;
-  
 }
 
 .battleContainer {
@@ -37,7 +35,7 @@ html, body {
   position: relative;
 }
 
-.mySection, .enemySection {
+.blueTeamSection, .redTeamSection {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -65,7 +63,7 @@ html, body {
 .myCuketmonImage, .enemyCuketmonImage {
   position: absolute;
   bottom: 10%;
-  width:  20%;
+  width: 20%;
   height: auto;
   z-index: 1;
 }
@@ -86,7 +84,7 @@ html, body {
   border-radius: 9px;
 }
 
-.hpBackground{
+.hpBackground {
   position: relative;
   top: 0%;
   width: 90%;
@@ -109,7 +107,6 @@ html, body {
   top: 50%;
   left: 25%;
   width: 3vw;
-  
 }
 
 .battleAnimationOverlay {
@@ -149,14 +146,14 @@ html, body {
 
 .techSection {
   width: 65vw;
-  height: 30vh; 
+  height: 30vh;
   position: relative;
   left: 17%;
   padding: 2%;
   background-image: url('/public/BattlePage/techselect.png');
   background-repeat: no-repeat;
   background-position: center;
-  background-size:100% 80%;
+  background-size: 100% 80%;
   z-index: 0;
 }
 
@@ -202,7 +199,7 @@ html, body {
 
 .ppInfo {
   position: absolute;
-  right: 8%; 
+  right: 8%;
   top: 29%;
   color: black;
   padding: 0.5% 1%;
@@ -212,7 +209,7 @@ html, body {
 
 .turnInfo {
   position: absolute;
-  top:20%;
+  top: 20%;
   font-size: 1.2rem;
   font-weight: bold;
   color: #333;
@@ -272,12 +269,13 @@ html, body {
   font-size: 2vw;
 }
 
-.resultScreen > h1{
+.resultScreen > h1 {
   margin: 0;
   padding: 0;
   position: absolute;
   top: 0;
 }
+
 .winnerCuketmonImage {
   position: absolute;
   bottom: 20%;
@@ -293,9 +291,8 @@ html, body {
   font-size: 2rem;
   border-radius: 0px;
   border: 4px solid black;
-  box-shadow: 
-  5px 5px 0 #000,
-  inset -2px -2px 0 rgba(0, 0, 0, 0.3),
-  inset 2px 2px 0 rgba(255, 255, 255, 0.3);
+  box-shadow:
+    5px 5px 0 #000,
+    inset -2px -2px 0 rgba(0, 0, 0, 0.3),
+    inset 2px 2px 0 rgba(255, 255, 255, 0.3);
 }
-

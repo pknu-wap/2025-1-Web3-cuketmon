@@ -165,35 +165,51 @@ function Battle() {
         stompClientRef.current = client;
 
         client.subscribe('/topic/match/*', (message) => {
+          console.log('수신된 메시지 원본:', message.body); // 디버깅용 로그
           const matchResponse = JSON.parse(message.body);
-          console.log('Match response received:', matchResponse);
-
-          setBattleId(matchResponse.battleId);
-          setBlueTeam(matchResponse.blue || { trainerName: 'Unknown', monster: { hp: 100, image: '/default.png', skills: [] } });
-          setRedTeam(matchResponse.red || { trainerName: 'Unknown', monster: { hp: 100, image: '/default.png', skills: [] } });
-
-          const isBlueTeam = matchResponse.blue?.trainerName === trainerName;
-          setMyTeam(isBlueTeam ? 'blue' : 'red');
-
-          const myTeamData = isBlueTeam ? matchResponse.blue : matchResponse.red;
-          const enemyTeamData = isBlueTeam ? matchResponse.red : matchResponse.blue;
-
-          setBlueCuketmonHP(matchResponse.blue?.monster.hp || 100);
-          setRedCuketmonHP(matchResponse.red?.monster.hp || 100);
+          console.log('파싱된 matchResponse:', matchResponse); // 파싱된 데이터 확인
+        
+          // 현재 사용자 팀 (trainerName)과 상대 팀 (opponent) 데이터 추출
+          const myTeamData = {
+            trainerName: matchResponse.trainerName.trainerName,
+            monster: matchResponse.trainerName.monster,
+            turn: matchResponse.trainerName.turn,
+          };
+        
+          const opponentTeamData = {
+            trainerName: matchResponse.opponent.trainerName,
+            monster: matchResponse.opponent.monster,
+            turn: matchResponse.opponent.turn,
+          };
+        
+          // blueTeam과 redTeam 설정 (trainerName과 비교해 동적 할당)
+          const isBlue = myTeamData.trainerName === trainerName; // 현재 사용자가 blue팀인지 확인
+          setBlueTeam(isBlue ? myTeamData : opponentTeamData);
+          setRedTeam(isBlue ? opponentTeamData : myTeamData);
+        
+          // 내 팀 설정
+          setMyTeam(isBlue ? 'blue' : 'red');
+        
+          // HP 및 기술 설정
+          setBlueCuketmonHP(isBlue ? myTeamData.monster.hp : opponentTeamData.monster.hp);
+          setRedCuketmonHP(isBlue ? opponentTeamData.monster.hp : myTeamData.monster.hp);
           setTechs(
-            (myTeamData?.monster.skills || []).map((skill) => ({
-              id: skill.id,
+            (isBlue ? myTeamData : opponentTeamData).monster.skills.map((skill) => ({
+              id: skill.name,
               name: skill.name,
               type: skill.type,
               damage: skill.power,
-              pp: skill.pp || 15, // 기술별 PP 설정
+              pp: skill.pp,
               description: skill.name,
-              animationUrl: animationMap[skill.type.toLowerCase()]?.[skill.power >= 70 ? 'high' : 'normal']?.[0],
+              animationUrl: animationMap[skill.type.toLowerCase()]?.[skill.power >= 70 ? 'high' : 'normal']?.[0] || '/default.png',
             }))
           );
-          setMyTurn(myTeamData?.turn || false);
+          setMyTurn(isBlue ? myTeamData.turn : opponentTeamData.turn);
+        
           setLoading(false);
           setIsMatched(true);
+        
+          console.log('설정된 팀 데이터:', { blueTeam: isBlue ? myTeamData : opponentTeamData, redTeam: isBlue ? opponentTeamData : myTeamData }); // 최종 상태 확인
         });
 
 
