@@ -5,27 +5,26 @@ import SockJS from 'sockjs-client';
 import './Battle.css';
 
 function Battle() {
-  const [myCuketmonHP, setMyCuketmonHP] = useState(100);
-  const [enemyCuketmonHP, setEnemyCuketmonHP] = useState(100);
-  const [myPP, setMyPP] = useState(15);
-  const [cuketmonImages, setCuketmonImages] = useState({
-    myCuketmon: '',
-    enemyCuketmon: '/BattlePage/cuketmonEx.png',
-  });
-  const [techs, setTechs] = useState([]);
+  const [blueCuketmonHP, setBlueCuketmonHP] = useState(100);
+  const [redCuketmonHP, setRedCuketmonHP] = useState(100);
+  const [techs, setTechs] = useState([]); // 기술별 PP 포함
   const [selectedTech, setSelectedTech] = useState(null);
   const [loading, setLoading] = useState(true);
   const [isMatched, setIsMatched] = useState(false);
   const [isFighting, setIsFighting] = useState(false);
   const [battleMessage, setBattleMessage] = useState('');
   const [currentAnimation, setCurrentAnimation] = useState(null);
-  const [isPlayerHit, setIsPlayerHit] = useState(false);
-  const [isEnemyHit, setIsEnemyHit] = useState(false);
+  const [isBlueHit, setIsBlueHit] = useState(false);
+  const [isRedHit, setIsRedHit] = useState(false);
   const [myTurn, setMyTurn] = useState(false);
   const [battleId, setBattleId] = useState('');
   const [winner, setWinner] = useState(null);
   const [trainerName, setTrainerName] = useState('');
   const [isBattleEnded, setIsBattleEnded] = useState(false);
+  const [myTeam, setMyTeam] = useState(null);
+  const [blueTeam, setBlueTeam] = useState(null);
+  const [redTeam, setRedTeam] = useState(null);
+  const [error, setError] = useState(null); // 에러 상태 추가
   const stompClientRef = useRef(null);
   const navigate = useNavigate();
   const location = useLocation();
@@ -114,16 +113,21 @@ function Battle() {
   };
 
   const handleSelect = (tech) => {
-    if (myPP > 0 && myTurn) {
+    if (tech.pp > 0 && myTurn) {
       setSelectedTech(tech.id);
     }
   };
 
   const handleFight = (tech) => {
-    if (myPP > 0 && myTurn && stompClientRef.current && stompClientRef.current.connected) {
+    if (tech.pp > 0 && myTurn && stompClientRef.current && stompClientRef.current.connected) {
       setSelectedTech(tech.id);
       setCurrentAnimation(tech.animationUrl);
       setIsFighting(true);
+      setTechs((prevTechs) =>
+        prevTechs.map((t) =>
+          t.id === tech.id ? { ...t, pp: t.pp - 1 } : t
+        )
+      ); // PP 감소
       setTimeout(() => {
         setIsFighting(false);
         setSelectedTech(null);
@@ -132,46 +136,26 @@ function Battle() {
     }
   };
 
-  // trainerName을 /trainer/myName에서 가져오기
   useEffect(() => {
     const fetchTrainerName = async () => {
       try {
-        const token = localStorage.getItem('jwt'); // 토큰을 localStorage에서 가져옴
-        if (!token) {
-          console.error('No token available');
-          return;
-        }
+        const token = localStorage.getItem('jwt');
+        if (!token) throw new Error('No token available');
         const res = await fetch(`${API_URL}/api/trainer/myName`, {
-          headers: {
-            'Authorization': `Bearer ${token}`,
-          },
+          headers: { 'Authorization': `Bearer ${token}` },
         });
-        if (!res.ok) {
-          throw new Error(`HTTP error! status: ${res.status}`);
-        }
+        if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
         const trainerName = await res.text();
-        setTrainerName(trainerName); 
+        setTrainerName(trainerName);
       } catch (error) {
         console.error('Failed to fetch trainer name:', error.message);
+        setError('트레이너 이름을 가져오지 못했습니다.');
       }
     };
 
     fetchTrainerName();
   }, [API_URL]);
 
-  // 커켓몬 선택 기억
-  useEffect(() => {
-    if (selectedCuketmon) {
-      setCuketmonImages((prev) => ({
-        ...prev,
-        myCuketmon: selectedCuketmon.image,
-      }));
-    } else {
-      console.log('Error: No selected Cuketmon');
-    }
-  }, [selectedCuketmon, navigate]);
-
-  // WebSocket 연결 설정 및 배틀 찾기 요청
   useEffect(() => {
     const socket = new SockJS(`${API_URL}/ws`);
     const client = new Client({
@@ -180,49 +164,51 @@ function Battle() {
         console.log('Connected to WebSocket');
         stompClientRef.current = client;
 
-        // 매칭 알림 구독
         client.subscribe('/topic/match/*', (message) => {
           const matchResponse = JSON.parse(message.body);
           console.log('Match response received:', matchResponse);
+
           setBattleId(matchResponse.battleId);
-          setTrainerName(matchResponse.trainerName || trainerName);
-          setCuketmonImages({
-            myCuketmon: matchResponse.myCuketmon.image || selectedCuketmon.image,
-            enemyCuketmon: matchResponse.enemyCuketmon.image,
-          });
-          setMyCuketmonHP(matchResponse.myCuketmon.hp);
-          setEnemyCuketmonHP(matchResponse.enemyCuketmon.hp);
-          setMyPP(matchResponse.myCuketmon.pp);
+          setBlueTeam(matchResponse.blue || { trainerName: 'Unknown', monster: { hp: 100, image: '/default.png', skills: [] } });
+          setRedTeam(matchResponse.red || { trainerName: 'Unknown', monster: { hp: 100, image: '/default.png', skills: [] } });
+
+          const isBlueTeam = matchResponse.blue?.trainerName === trainerName;
+          setMyTeam(isBlueTeam ? 'blue' : 'red');
+
+          const myTeamData = isBlueTeam ? matchResponse.blue : matchResponse.red;
+          const enemyTeamData = isBlueTeam ? matchResponse.red : matchResponse.blue;
+
+          setBlueCuketmonHP(matchResponse.blue?.monster.hp || 100);
+          setRedCuketmonHP(matchResponse.red?.monster.hp || 100);
           setTechs(
-            matchResponse.myCuketmon.skills.map((skill) => ({
+            (myTeamData?.monster.skills || []).map((skill) => ({
               id: skill.id,
               name: skill.name,
               type: skill.type,
               damage: skill.power,
+              pp: skill.pp || 15, // 기술별 PP 설정
               description: skill.name,
-              animationUrl: animationMap[skill.type][skill.power >= 70 ? 'high' : 'normal'][0],
+              animationUrl: animationMap[skill.type.toLowerCase()]?.[skill.power >= 70 ? 'high' : 'normal']?.[0] || '/default.png',
             }))
           );
+          setMyTurn(myTeamData?.turn || false);
           setLoading(false);
           setIsMatched(true);
-          setMyTurn(matchResponse.isMyTurn);
         });
 
-        
         const monsterId = selectedCuketmon?.id;
-        if (trainerName && monsterId && stompClientRef.current && stompClientRef.current.connected) {
+        if (trainerName && monsterId && stompClientRef.current?.connected) {
           client.publish({
             destination: '/app/findBattle',
             body: JSON.stringify({ trainerName, monsterId }),
           });
           console.log('Battle find request sent:', { trainerName, monsterId });
-        } else {
-          console.error('Cannot send findBattle request: Missing trainerName or monsterId');
         }
       },
       onStompError: (frame) => {
         console.error('STOMP connection error:', frame);
         setLoading(false);
+        setError('WebSocket 연결에 실패했습니다.');
       },
     });
     client.activate();
@@ -241,8 +227,17 @@ function Battle() {
     );
   }
 
+  if (error) {
+    return (
+      <div className="errorScreen">
+        <p>{error}</p>
+        <button onClick={() => navigate('/mypage')}>돌아가기</button>
+      </div>
+    );
+  }
+
   if (isBattleEnded) {
-    const winnerImage = winner === 'player' ? cuketmonImages.myCuketmon : cuketmonImages.enemyCuketmon;
+    const winnerImage = winner === 'player' ? (myTeam === 'blue' ? blueTeam.monster.image : redTeam.monster.image) : (myTeam === 'blue' ? redTeam.monster.image : blueTeam.monster.image);
     return (
       <div className="resultScreen">
         <h1>{winner === 'player' ? 'Victory!' : 'Defeat...'}</h1>
@@ -256,46 +251,50 @@ function Battle() {
     <div className="Battle">
       <div className="content">
         <div className="battleContainer">
-          <div className="mySection">
-            <div className="hpBackground">
-              <p>{selectedCuketmon.name}</p>
-              <img src="/BattlePage/hpBar.png" className="myHpImage" alt="HP Bar" />
-              <div className="myHpBar">
-                <div
-                  className="myHpFill"
-                  style={{ width: `${myCuketmonHP}%`, backgroundColor: getHpColor(myCuketmonHP) }}
-                ></div>
+          {blueTeam && (
+            <div className="blueTeamSection">
+              <div className="hpBackground">
+                <p>{blueTeam.trainerName}</p>
+                <img src="/BattlePage/hpBar.png" className={myTeam === 'blue' ? 'myHpImage' : 'enemyHpImage'} alt="HP Bar" />
+                <div className={myTeam === 'blue' ? 'myHpBar' : 'enemyHpBar'}>
+                  <div
+                    className={myTeam === 'blue' ? 'myHpFill' : 'enemyHpFill'}
+                    style={{ width: `${blueCuketmonHP}%`, backgroundColor: getHpColor(blueCuketmonHP) }}
+                  ></div>
+                </div>
+              </div>
+              <div className="cuketmon">
+                <img
+                  src={blueTeam.monster.image}
+                  className={myTeam === 'blue' ? `myCuketmonImage ${isBlueHit ? 'hitEffect' : ''}` : `enemyCuketmonImage ${isBlueHit ? 'hitEffect' : ''}`}
+                  alt="Blue Team Cuketmon"
+                />
+                <img src="/BattlePage/stand.png" className={myTeam === 'blue' ? 'myStage' : 'enemyStage'} alt="Stage" />
               </div>
             </div>
-            <div className="cuketmon">
-              <img
-                src={cuketmonImages.myCuketmon}
-                className={`myCuketmonImage ${isPlayerHit ? 'hitEffect' : ''}`}
-                alt="My Cuketmon"
-              />
-              <img src="/BattlePage/stand.png" className="myStage" alt="Stage" />
-            </div>
-          </div>
-          <div className="enemySection">
-            <div className="hpBackground">
-              <p>Enemy Cuketmon</p>
-              <img src="/BattlePage/hpBar.png" className="enemyHpImage" alt="HP Bar" />
-              <div className="enemyHpBar">
-                <div
-                  className="enemyHpFill"
-                  style={{ width: `${enemyCuketmonHP}%`, backgroundColor: getHpColor(enemyCuketmonHP) }}
-                ></div>
+          )}
+          {redTeam && (
+            <div className="redTeamSection">
+              <div className="hpBackground">
+                <p>{redTeam.trainerName}</p>
+                <img src="/BattlePage/hpBar.png" className={myTeam === 'red' ? 'myHpImage' : 'enemyHpImage'} alt="HP Bar" />
+                <div className={myTeam === 'red' ? 'myHpBar' : 'enemyHpBar'}>
+                  <div
+                    className={myTeam === 'red' ? 'myHpFill' : 'enemyHpFill'}
+                    style={{ width: `${redCuketmonHP}%`, backgroundColor: getHpColor(redCuketmonHP) }}
+                  ></div>
+                </div>
+              </div>
+              <div className="cuketmon">
+                <img
+                  src={redTeam.monster.image}
+                  className={myTeam === 'red' ? `myCuketmonImage ${isRedHit ? 'hitEffect' : ''}` : `enemyCuketmonImage ${isRedHit ? 'hitEffect' : ''}`}
+                  alt="Red Team Cuketmon"
+                />
+                <img src="/BattlePage/stand.png" className={myTeam === 'red' ? 'myStage' : 'enemyStage'} alt="Stage" />
               </div>
             </div>
-            <div className="cuketmon">
-              <img
-                src={cuketmonImages.enemyCuketmon}
-                className={`enemyCuketmonImage ${isEnemyHit ? 'hitEffect' : ''}`}
-                alt="Enemy Cuketmon"
-              />
-              <img src="/BattlePage/stand.png" className="enemyStage" alt="Stage" />
-            </div>
-          </div>
+          )}
         </div>
         <div className="techSection">
           {!isFighting && (
@@ -305,9 +304,9 @@ function Battle() {
                   key={tech.id}
                   className={`techButton ${selectedTech === tech.id ? 'selected' : ''}`}
                   onClick={() => handleSelect(tech)}
-                  disabled={myPP <= 0 || !myTurn}
+                  disabled={tech.pp <= 0 || !myTurn}
                 >
-                  {tech.name}
+                  {tech.name} (PP: {tech.pp})
                 </button>
               ))}
             </div>
@@ -318,8 +317,6 @@ function Battle() {
               <div className="battleMessage">{battleMessage}</div>
             </div>
           )}
-          <span className="ppInfo">PP {myPP}/15</span>
-          <span className="cuketmonType">TYPE/{techs.length > 0 ? techs[0].type : 'None'}</span>
           <span className="turnInfo">{myTurn ? 'My Turn' : 'Enemy Turn'}</span>
         </div>
       </div>
