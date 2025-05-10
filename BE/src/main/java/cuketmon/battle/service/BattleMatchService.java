@@ -9,7 +9,6 @@ import cuketmon.battle.dto.ErrorResponse;
 import cuketmon.battle.dto.MatchResponse;
 import cuketmon.battle.dto.SkillRequest;
 import cuketmon.battle.dto.TrainerRequest;
-import cuketmon.battle.dto.TurnResponse;
 import cuketmon.battle.util.TeamMaker;
 import cuketmon.monster.dto.MonsterDTO;
 import cuketmon.monster.dto.MonsterDTO.MonsterBattleInfo;
@@ -81,7 +80,7 @@ public class BattleMatchService {
     //  matchService에는 match만 관리하도록!
     @Transactional
     public void useSkill(Integer battleId, SkillRequest skillRequest) {
-        String turnDestination = "/topic/skill/" + battleId;
+        String turnDestination = "/topic/battle/" + battleId;
 
         // 1. 배틀 확인
         BattleDTO battle = activeBattles.get(battleId);
@@ -89,16 +88,18 @@ public class BattleMatchService {
             messagingTemplate.convertAndSend(turnDestination, new ErrorResponse("해당 배틀을 찾을 수 없습니다."));
             return;
         }
+        BattleDTO.Team red = battle.getRed();
+        BattleDTO.Team blue = battle.getBlue();
 
         // 2. 공격자 방어자 구분
         BattleDTO.Team attacker;
         BattleDTO.Team defender;
         if (battle.getRed().getTrainerName().equals(skillRequest.getTrainerName())) {
-            attacker = battle.getRed();
-            defender = battle.getBlue();
+            attacker = red;
+            defender = blue;
         } else if (battle.getBlue().getTrainerName().equals(skillRequest.getTrainerName())) {
-            attacker = battle.getBlue();
-            defender = battle.getRed();
+            attacker = blue;
+            defender = red;
         } else {
             messagingTemplate.convertAndSend(turnDestination, new ErrorResponse("트레이너를 찾을 수 없습니다."));
             return;
@@ -117,11 +118,11 @@ public class BattleMatchService {
         List<MonsterBattleInfo.Skill> skills = attacker.getMonster().getSkills();
 
         int skillNumber = skillRequest.getSkillId();
-        if (skillNumber < 1 || skillNumber > skills.size()) {
+        if (skillNumber < 0 || skillNumber >= skills.size()) {
             messagingTemplate.convertAndSend(turnDestination, new ErrorResponse("잘못된 스킬 번호입니다."));
             return;
         }
-        MonsterDTO.MonsterBattleInfo.Skill usedSkill = skills.get(skillNumber - 1);
+        MonsterDTO.MonsterBattleInfo.Skill usedSkill = skills.get(skillNumber);
 
         // 6. PP 확인 및 차감
         if (usedSkill.getPp() <= 0) {
@@ -137,7 +138,7 @@ public class BattleMatchService {
         defenderMonster.applyDamage(damage);
         if (defenderMonster.getHp() <= 0) {
             messagingTemplate.convertAndSend("/topic/battleEnd/" + battleId,
-                    new EndBattleResponse(battleId, BattleStatus.FINISHED.getName()));
+                    new MatchResponse(battleId, red, blue));
             trainerService.addWin(attacker.getTrainerName());
             activeBattles.remove(battleId);
             return;
@@ -147,7 +148,7 @@ public class BattleMatchService {
         attacker.changeTurn();
         defender.changeTurn();
 
-        messagingTemplate.convertAndSend(turnDestination, new TurnResponse(battleId, damage));
+        messagingTemplate.convertAndSend(turnDestination, new MatchResponse(battleId, red, blue));
     }
 
     private Integer generateBattleId() {
