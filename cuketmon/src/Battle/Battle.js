@@ -7,12 +7,12 @@ import './Battle.css';
 function Battle() {
   const [blueCuketmonHP, setBlueCuketmonHP] = useState(100);
   const [redCuketmonHP, setRedCuketmonHP] = useState(100);
-  const [techs, setTechs] = useState([]); // 기술별 PP 포함
+  const [techs, setTechs] = useState([]);
   const [selectedTech, setSelectedTech] = useState(null);
+  const [selectedTechType, setSelectedTechType] = useState('');
   const [loading, setLoading] = useState(true);
   const [isMatched, setIsMatched] = useState(false);
   const [isFighting, setIsFighting] = useState(false);
-  const [battleMessage, setBattleMessage] = useState('');
   const [currentAnimation, setCurrentAnimation] = useState(null);
   const [isBlueHit, setIsBlueHit] = useState(false);
   const [isRedHit, setIsRedHit] = useState(false);
@@ -24,13 +24,13 @@ function Battle() {
   const [myTeam, setMyTeam] = useState(null);
   const [blueTeam, setBlueTeam] = useState(null);
   const [redTeam, setRedTeam] = useState(null);
-  const [error, setError] = useState(null); // 에러 상태 추가
+  const [error, setError] = useState(null);
   const stompClientRef = useRef(null);
   const navigate = useNavigate();
   const location = useLocation();
   const API_URL = process.env.REACT_APP_API_URL;
 
-  const { selectedCuketmon , monsterId} = location.state || {}; 
+  const { selectedCuketmon, monsterId } = location.state || {};
 
   const animationMap = {
     fire: {
@@ -113,26 +113,41 @@ function Battle() {
   };
 
   const handleSelect = (tech) => {
-    if (tech.pp > 0 && myTurn) {
+    if (tech.currentPp > 0 && myTurn) {
       setSelectedTech(tech.id);
+      setSelectedTechType(tech.type);
     }
   };
 
   const handleFight = (tech) => {
-    if (tech.pp > 0 && myTurn && stompClientRef.current && stompClientRef.current.connected) {
+    if (tech.currentPp > 0 && myTurn && stompClientRef.current && stompClientRef.current.connected) {
       setSelectedTech(tech.id);
       setCurrentAnimation(tech.animationUrl);
       setIsFighting(true);
+
+      const ppCost = tech.ppCost || 20;
+      stompClientRef.current.publish({
+        destination: '/app/Skill',
+        body: JSON.stringify({
+          battleId: battleId,
+          techId: tech.id,
+          trainerName: trainerName,
+          ppCost: ppCost,
+        }),
+      });
+
       setTechs((prevTechs) =>
         prevTechs.map((t) =>
-          t.id === tech.id ? { ...t, pp: t.pp - 1 } : t
+          t.id === tech.id ? { ...t, currentPp: Math.max(0, t.currentPp - ppCost) } : t
         )
-      ); // PP 감소
+      );
+
       setTimeout(() => {
         setIsFighting(false);
         setSelectedTech(null);
         setCurrentAnimation(null);
-      }, 1000);
+        setSelectedTechType('');
+      }, 1500);
     }
   };
 
@@ -142,7 +157,7 @@ function Battle() {
         const token = localStorage.getItem('jwt');
         if (!token) throw new Error('No token available');
         const res = await fetch(`${API_URL}/api/trainer/myName`, {
-          headers: { 'Authorization': `Bearer ${token}` },
+          headers: { Authorization: `Bearer ${token}` },
         });
         if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
         const trainerName = await res.text();
@@ -165,32 +180,22 @@ function Battle() {
         stompClientRef.current = client;
 
         client.subscribe('/topic/match/*', (message) => {
-          console.log('수신된 메시지 원본:', message.body); // 디버깅용 로그
           const matchResponse = JSON.parse(message.body);
-          console.log('파싱된 matchResponse:', matchResponse); // 파싱된 데이터 확인
-        
-          // 현재 사용자 팀 (trainerName)과 상대 팀 (opponent) 데이터 추출
           const myTeamData = {
             trainerName: matchResponse.trainerName.trainerName,
             monster: matchResponse.trainerName.monster,
             turn: matchResponse.trainerName.turn,
           };
-        
           const opponentTeamData = {
             trainerName: matchResponse.opponent.trainerName,
             monster: matchResponse.opponent.monster,
             turn: matchResponse.opponent.turn,
           };
-        
-          // blueTeam과 redTeam 설정 (trainerName과 비교해 동적 할당)
-          const isBlue = myTeamData.trainerName === trainerName; // 현재 사용자가 blue팀인지 확인
+
+          const isBlue = myTeamData.trainerName === trainerName;
           setBlueTeam(isBlue ? myTeamData : opponentTeamData);
           setRedTeam(isBlue ? opponentTeamData : myTeamData);
-        
-          // 내 팀 설정
           setMyTeam(isBlue ? 'blue' : 'red');
-        
-          // HP 및 기술 설정
           setBlueCuketmonHP(isBlue ? myTeamData.monster.hp : opponentTeamData.monster.hp);
           setRedCuketmonHP(isBlue ? opponentTeamData.monster.hp : myTeamData.monster.hp);
           setTechs(
@@ -199,26 +204,35 @@ function Battle() {
               name: skill.name,
               type: skill.type,
               damage: skill.power,
-              pp: skill.pp,
+              ppCost: skill.ppCost || 20,
+              currentPp: 100,
+              maxPp: 100,
               description: skill.name,
-              animationUrl: animationMap[skill.type.toLowerCase()]?.[skill.power >= 70 ? 'high' : 'normal']?.[0] || '/default.png',
+              animationUrl: animationMap[skill.type.toLowerCase()]?.[skill.power >= 70 ? 'high' : 'normal']?.[0],
             }))
           );
           setMyTurn(isBlue ? myTeamData.turn : opponentTeamData.turn);
-        
           setLoading(false);
           setIsMatched(true);
-        
-          console.log('설정된 팀 데이터:', { blueTeam: isBlue ? myTeamData : opponentTeamData, redTeam: isBlue ? opponentTeamData : myTeamData }); // 최종 상태 확인
         });
 
+        client.subscribe('/app/skillResult', (message) => {
+          const response = JSON.parse(message.body);
+          setTechs((prevTechs) =>
+            prevTechs.map((t) => ({
+              ...t,
+              currentPp: response.currentPp[t.id] || t.currentPp,
+            }))
+          );
+          setBlueCuketmonHP(response.blueHP || blueCuketmonHP);
+          setRedCuketmonHP(response.redHP || redCuketmonHP);
+        });
 
-        if (trainerName && monsterId && stompClientRef.current && stompClientRef.current.connected){
+        if (trainerName && monsterId && stompClientRef.current && stompClientRef.current.connected) {
           client.publish({
             destination: '/app/findBattle',
             body: JSON.stringify({ trainerName, monsterId }),
           });
-          console.log('Battle find request sent:', { trainerName, monsterId });
         }
       },
       onStompError: (frame) => {
@@ -232,7 +246,7 @@ function Battle() {
     return () => {
       client.deactivate();
     };
-  }, [selectedCuketmon, trainerName, API_URL]);
+  }, [selectedCuketmon, trainerName, monsterId, API_URL]);
 
   if (loading) {
     return (
@@ -267,7 +281,7 @@ function Battle() {
     <div className="Battle">
       <div className="content">
         <div className="battleContainer">
-          {blueTeam && (
+          {blueTeam && blueTeam.trainerName && blueTeam.monster?.image && (
             <div className="blueTeamSection">
               <div className="hpBackground">
                 <p>{blueTeam.trainerName}</p>
@@ -289,7 +303,7 @@ function Battle() {
               </div>
             </div>
           )}
-          {redTeam && (
+          {redTeam && redTeam.trainerName && redTeam.monster?.image && (
             <div className="redTeamSection">
               <div className="hpBackground">
                 <p>{redTeam.trainerName}</p>
@@ -314,26 +328,32 @@ function Battle() {
         </div>
         <div className="techSection">
           {!isFighting && (
-            <div className="techButtons">
-              {techs.map((tech) => (
-                <button
-                  key={tech.id}
-                  className={`techButton ${selectedTech === tech.id ? 'selected' : ''}`}
-                  onClick={() => handleSelect(tech)}
-                  disabled={tech.pp <= 0 || !myTurn}
-                >
-                  {tech.name} (PP: {tech.pp})
-                </button>
-              ))}
-            </div>
+            <>
+              <div className="techButtons">
+                {techs.map((tech) => (
+                  <button
+                    key={tech.id}
+                    className={`techButton ${selectedTech === tech.id ? 'selected' : ''}`}
+                    onClick={() => handleSelect(tech)}
+                    onDoubleClick={() => handleFight(tech)}
+                    disabled={tech.currentPp <= 0 || !myTurn}
+                  >
+                    {tech.name}
+                  </button>
+                ))}
+              </div>
+              <div className="ppStatus">
+                <span>PP: {techs.find((t) => t.id === selectedTech)?.currentPp || techs[0]?.currentPp || 100}/100</span>
+              </div>
+            </>
           )}
           {isFighting && (
             <div className="battleAnimationOverlay">
               <img src={currentAnimation} className="techAnimation" alt="Tech Animation" />
-              <div className="battleMessage">{battleMessage}</div>
             </div>
           )}
           <span className="turnInfo">{myTurn ? 'My Turn' : 'Enemy Turn'}</span>
+          <span className="techType">{selectedTechType ? `TYPE: ${selectedTechType}` : 'TYPE: None'}</span>
         </div>
       </div>
     </div>

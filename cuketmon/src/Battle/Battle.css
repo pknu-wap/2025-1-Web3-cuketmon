@@ -189,7 +189,7 @@ html, body {
   cursor: not-allowed;
 }
 
-.techInfo {
+.techType {
   display: flex;
   justify-content: center;
   gap: 2%;
@@ -197,7 +197,7 @@ html, body {
   z-index: 1;
 }
 
-.ppInfo {
+.ppStatus {
   position: absolute;
   right: 8%;
   top: 29%;
