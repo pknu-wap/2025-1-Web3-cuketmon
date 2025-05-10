@@ -32,7 +32,7 @@ public class BattleWebSocketController {
     }
 
     // 기술 사용
-    @MessageMapping("/battle/{battleId}")
+    @MessageMapping("/skill/{battleId}")
     public void useSkill(@DestinationVariable Integer battleId, SkillRequest skill) {
         battleMatchService.useSkill(battleId, skill);
     }

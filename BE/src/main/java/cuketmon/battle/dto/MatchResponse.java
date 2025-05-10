@@ -8,7 +8,7 @@ import lombok.Getter;
 public class MatchResponse {
 
     private Integer battleId;
-    private BattleDTO.Team trainerName;
-    private BattleDTO.Team opponent;
+    private BattleDTO.Team red;
+    private BattleDTO.Team blue;
 
 }
