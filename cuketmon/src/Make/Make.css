@@ -148,6 +148,7 @@ textarea {
   color: white;
   pointer-events: none;
   font-size: 19px;
+  white-space: nowrap;
 }
 
 .submitButton #submitButton {
