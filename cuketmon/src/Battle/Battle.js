@@ -25,6 +25,8 @@ function Battle() {
   const [blueTeam, setBlueTeam] = useState(null);
   const [redTeam, setRedTeam] = useState(null);
   const [error, setError] = useState(null);
+  const [currentPp, setCurrentPp] = useState(100);
+  const [maxPp, setMaxPp] = useState(100);
   const stompClientRef = useRef(null);
   const navigate = useNavigate();
   const location = useLocation();
@@ -113,14 +115,14 @@ function Battle() {
   };
 
   const handleSelect = (tech) => {
-    if (tech.currentPp > 0 && myTurn) {
+    if (currentPp >= tech.ppCost && myTurn) {
       setSelectedTech(tech.id);
       setSelectedTechType(tech.type);
     }
   };
 
   const handleFight = (tech) => {
-    if (tech.currentPp > 0 && myTurn && stompClientRef.current && stompClientRef.current.connected) {
+    if (currentPp >= tech.ppCost && myTurn && stompClientRef.current && stompClientRef.current.connected) {
       setSelectedTech(tech.id);
       setCurrentAnimation(tech.animationUrl);
       setIsFighting(true);
@@ -136,11 +138,8 @@ function Battle() {
         }),
       });
 
-      setTechs((prevTechs) =>
-        prevTechs.map((t) =>
-          t.id === tech.id ? { ...t, currentPp: Math.max(0, t.currentPp - ppCost) } : t
-        )
-      );
+      setCurrentPp((prevPp) => Math.max(0, prevPp - ppCost));
+      setMyTurn(false);
 
       setTimeout(() => {
         setIsFighting(false);
@@ -205,27 +204,23 @@ function Battle() {
               type: skill.type,
               damage: skill.power,
               ppCost: skill.ppCost || 20,
-              currentPp: 100,
-              maxPp: 100,
               description: skill.name,
               animationUrl: animationMap[skill.type.toLowerCase()]?.[skill.power >= 70 ? 'high' : 'normal']?.[0],
             }))
           );
           setMyTurn(isBlue ? myTeamData.turn : opponentTeamData.turn);
+          setCurrentPp(100);
+          setMaxPp(100);
           setLoading(false);
           setIsMatched(true);
         });
 
         client.subscribe('/app/skillResult', (message) => {
           const response = JSON.parse(message.body);
-          setTechs((prevTechs) =>
-            prevTechs.map((t) => ({
-              ...t,
-              currentPp: response.currentPp[t.id] || t.currentPp,
-            }))
-          );
+          setCurrentPp(response.currentPp || currentPp);
           setBlueCuketmonHP(response.blueHP || blueCuketmonHP);
           setRedCuketmonHP(response.redHP || redCuketmonHP);
+          setMyTurn(response.myTurn || myTurn);
         });
 
         if (trainerName && monsterId && stompClientRef.current && stompClientRef.current.connected) {
@@ -336,14 +331,14 @@ function Battle() {
                     className={`techButton ${selectedTech === tech.id ? 'selected' : ''}`}
                     onClick={() => handleSelect(tech)}
                     onDoubleClick={() => handleFight(tech)}
-                    disabled={tech.currentPp <= 0 || !myTurn}
+                    disabled={currentPp < tech.ppCost || !myTurn}
                   >
                     {tech.name}
                   </button>
                 ))}
               </div>
               <div className="ppStatus">
-                <span>PP: {techs.find((t) => t.id === selectedTech)?.currentPp || techs[0]?.currentPp || 100}/100</span>
+                <span>PP: {currentPp}/{maxPp}</span>
               </div>
             </>
           )}
