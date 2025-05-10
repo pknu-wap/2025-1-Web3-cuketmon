@@ -44,6 +44,11 @@ public class BattleMatchService {
 
     @Transactional
     public void findBattle(TrainerRequest request) {
+        // 0. 이미 자신이 큐에 있을 때는 요청을 무시함
+        if (waitingQueue.stream().anyMatch(team -> team.getTrainerName().equals(request.getTrainerName()))) {
+            return;
+        }
+
         // 1. 큐 대기
         if (waitingQueue.isEmpty()) {
             waitingQueue.add(teamMaker.makeTeam(request));
