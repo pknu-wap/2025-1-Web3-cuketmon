@@ -10,16 +10,20 @@
   position: absolute;
   text-align: center;
   font-size: 17px;
-  width: 100%;
-  top: 10%;
+  width: 100vw;
+  top: 10vh;
 }
 
 .cukemonImageContainer {
-  width: 42%;
   position: relative;
   margin-top: 5%;
-  left: 28%;
+  left: -1vw;
   transition: transform 0.2s;
+}
+
+.cukemonImageContainer img {
+  width: 8vw;
+  height: 8vw;
 }
 
 .cukemonImage:hover {
@@ -97,6 +101,7 @@
   }
   .cukemonImageContainer img {
     width: 14vw;
+    height: 14vw;
   }
 
   .historyBoard {
