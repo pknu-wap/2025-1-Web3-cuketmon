@@ -115,22 +115,37 @@ html, body {
   height: 39vh;
   pointer-events: none;
   z-index: 2;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .techAnimation {
   position: absolute;
-  top: -60%;
+  top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%) scaleX(1); /* 기본 방향: 왼쪽 → 오른쪽 */
   width: 360px;
   height: 37px;
   background-repeat: no-repeat;
   animation: spriteAnimation 1s steps(6) forwards;
 }
 
+.blue-to-red .techAnimation {
+  transform: translate(-50%, -50%) scaleX(1); /* Blue → Red: 왼쪽 → 오른쪽 */
+  animation: spriteAnimation 1s steps(6) forwards;
+}
+
+.red-to-blue .techAnimation {
+  transform: translate(-50%, -50%) scaleX(-1); /* Red → Blue: 오른쪽 → 왼쪽 (반전) */
+  animation: spriteAnimation 1s steps(6) forwards;
+}
+
 @keyframes spriteAnimation {
-  from { transform: translate3d(-100%, 0, 0); }
-  to { transform: translate3d(17%, 0, 0); }
+  from { transform: translateX(-50%) translateX(0); }
+  to { transform: translateX(-50%) translateX(17%); }
 }
 
 .hitEffect {
@@ -143,7 +158,6 @@ html, body {
     filter: brightness(0.5) sepia(1) hue-rotate(-60deg) saturate(5);
   }
 }
-
 .techSection {
   width: 65vw;
   height: 30vh;
@@ -192,8 +206,8 @@ html, body {
 .techType {
   position: absolute;
   right:10%;
-  bottom: 10%;
-  font-size:1.5vw;
+  bottom: 20%;
+  font-size:2vw;
   display: flex;
   justify-content: center;
   gap: 2%;
@@ -208,7 +222,7 @@ html, body {
   color: black;
   padding: 0.5% 1%;
   border-radius: 5px;
-  font-size: 1.5vw;
+  font-size: 2vw;
 }
 
 .turnInfo {
