@@ -147,13 +147,14 @@ function Battle() {
     setIsBlueHit(myTeam === 'red');
     setIsRedHit(myTeam === 'blue');
 
-    stompClientRef.current.publish({
+    const publishResult = stompClientRef.current.publish({
       destination: '/app/findBattle',
       body: JSON.stringify({
         skillId: index,
         trainerName: trainerName,
       }),
     });
+    console.log('Publish result to /app/findBattle:', publishResult);
 
     setCurrentPp((prevPp) => Math.max(0, prevPp - ppCost));
     setMyTurn(false);
@@ -209,6 +210,7 @@ function Battle() {
         stompClientRef.current = client;
 
         client.subscribe('/topic/match/*', (message) => {
+          console.log('Received from /topic/match/*:', message.body);
           try {
             const matchResponse = JSON.parse(message.body || '{}');
             const myTeamData = matchResponse.red || {};
@@ -256,6 +258,7 @@ function Battle() {
         });
 
         client.subscribe(`/topic/battle/${battleId}/*`, (message) => {
+          console.log('Received from /topic/battle/{battleId}/*:', message.body);
           try {
             const response = JSON.parse(message.body || '{}');
             const myTeamData = response.red;
@@ -298,10 +301,11 @@ function Battle() {
           }
         });
 
-        client.publish({
+        const publishResult = client.publish({
           destination: '/app/findBattle',
           body: JSON.stringify({ trainerName, monsterId }),
         });
+        console.log('Publish result to /app/findBattle:', publishResult);
       },
       onStompError: (frame) => {
         console.error('STOMP connection error:', frame);
