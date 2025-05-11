@@ -148,6 +148,7 @@ public class BattleMatchService {
         if (defenderMonster.getHp() <= 0) {
             messagingTemplate.convertAndSend("/topic/battleEnd/" + battleId, new MatchResponse(battleId, red, blue));
             trainerService.addWin(attacker.getTrainerName());
+            trainerService.addLose(defender.getTrainerName());
             activeBattles.remove(battleId);
             return;
         }
