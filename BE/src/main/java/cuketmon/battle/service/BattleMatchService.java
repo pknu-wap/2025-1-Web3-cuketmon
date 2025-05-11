@@ -161,6 +161,12 @@ public class BattleMatchService {
         messagingTemplate.convertAndSend(turnDestination, new MatchResponse(battleId, red, blue));
     }
 
+    @Transactional
+    public void removeFromQueue(String trainerName) {
+        waitingQueue.removeIf(team -> team.getTrainerName().equals(trainerName));
+        log.info("큐 대기 취소: {}", trainerName);
+    }
+
     private Integer generateBattleId() {
         return Math.abs(UUID.randomUUID().hashCode()); // UUID 생성, hashCode()로 변환, Integer 사용
     }

@@ -1,5 +1,7 @@
 package cuketmon.config;
 
+import cuketmon.battle.config.WebSocketHandshakeInterceptor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
@@ -16,9 +18,17 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     @Value("${client.redirect-url}")
     private String CLIENT_URL;
 
+    private final WebSocketHandshakeInterceptor handshakeInterceptor;
+
+    @Autowired
+    public WebSocketConfig(WebSocketHandshakeInterceptor handshakeInterceptor) {
+        this.handshakeInterceptor = handshakeInterceptor;
+    }
+
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/ws")
+                .addInterceptors(handshakeInterceptor) // Interceptor 등록
                 .setAllowedOriginPatterns("chrome-extension://*", "http://localhost:3000", CLIENT_URL)
                 .withSockJS();
     }
