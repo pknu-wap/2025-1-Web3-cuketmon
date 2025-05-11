@@ -13,7 +13,6 @@ import static org.mockito.Mockito.verify;
 import cuketmon.battle.dto.MatchResponse;
 import cuketmon.battle.dto.SkillRequest;
 import cuketmon.battle.dto.TrainerRequest;
-import cuketmon.battle.dto.TurnResponse;
 import cuketmon.config.TestDummyDataConfig;
 import cuketmon.config.TestSkillDataConfig;
 import org.junit.jupiter.api.Test;
@@ -72,7 +71,7 @@ class BattleMatchServiceTest {
         int battleId = captor.getValue().getBattleId();
         battleMatchService.useSkill(battleId, new SkillRequest(1, TRAINER1));
 
-        verify(messagingTemplate, times(1)).convertAndSend(startsWith("/topic/skill/"), any(TurnResponse.class));
+        verify(messagingTemplate, times(1)).convertAndSend(startsWith("/topic/battle/"), any(MatchResponse.class));
     }
 
     @TestConfiguration

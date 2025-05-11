@@ -13,12 +13,14 @@ import cuketmon.battle.util.TeamMaker;
 import cuketmon.monster.dto.MonsterDTO;
 import cuketmon.monster.dto.MonsterDTO.MonsterBattleInfo;
 import cuketmon.trainer.service.TrainerService;
+import cuketmon.util.CustomLogger;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 import java.util.UUID;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
@@ -26,6 +28,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class BattleMatchService {
+
+    private static final Logger log = CustomLogger.getLogger(BattleMatchService.class);
 
     private final SimpMessagingTemplate messagingTemplate;
     private final TrainerService trainerService;
@@ -70,13 +74,16 @@ public class BattleMatchService {
         Integer battleId = generateBattleId();
         activeBattles.put(battleId, new BattleDTO(red, blue));
 
-        System.out.println("매칭된 배틀 생성: battleId=" + battleId + ", trainer1=" + blue + ", trainer2=" + red);
+        log.info("배틀 생성 battleId: {}, red: {}, blue: {}", battleId, red.getTrainerName(), blue.getTrainerName());
+        log.info("현재 대기 큐 상태: {}", waitingQueue.stream()
+                .map(BattleDTO.Team::getTrainerName)
+                .toList());
         messagingTemplate.convertAndSend("/topic/match/" + battleId, new MatchResponse(battleId, blue, red));
     }
 
     @Transactional
     public void endBattle(Integer battleId) {
-        System.out.println("배틀 종료 요청 수신: battleId = " + battleId);
+        log.info("배틀 종료 요청 battleId: {}", battleId);
         messagingTemplate.convertAndSend("/topic/battleEnd/" + battleId,
                 new EndBattleResponse(battleId, BattleStatus.FINISHED.getName()));
     }
@@ -142,9 +149,9 @@ public class BattleMatchService {
         // 8. 방어자 몬스터 HP 갱신
         defenderMonster.applyDamage(damage);
         if (defenderMonster.getHp() <= 0) {
-            messagingTemplate.convertAndSend("/topic/battleEnd/" + battleId,
-                    new MatchResponse(battleId, red, blue));
+            messagingTemplate.convertAndSend("/topic/battleEnd/" + battleId, new MatchResponse(battleId, red, blue));
             trainerService.addWin(attacker.getTrainerName());
+            trainerService.addLose(defender.getTrainerName());
             activeBattles.remove(battleId);
             return;
         }
@@ -153,7 +160,14 @@ public class BattleMatchService {
         attacker.changeTurn();
         defender.changeTurn();
 
+        log.info("스킬 사용 성공 battleId: {}", battleId);
         messagingTemplate.convertAndSend(turnDestination, new MatchResponse(battleId, red, blue));
+    }
+
+    @Transactional
+    public void removeFromQueue(String trainerName) {
+        waitingQueue.removeIf(team -> team.getTrainerName().equals(trainerName));
+        log.info("큐 대기 취소: {}", trainerName);
     }
 
     private Integer generateBattleId() {
