@@ -118,7 +118,7 @@ function Battle() {
   const handleSelect = (tech, index) => {
     if (currentPp >= (tech.ppCost || 0) && myTurn && !isFighting) {
       setSelectedTech(index);
-      setSelectedTechType(tech.type || 'Unknown');
+      setSelectedTechType(tech.type);
     }
   };
 
@@ -148,7 +148,7 @@ function Battle() {
     setIsRedHit(myTeam === 'blue');
 
     stompClientRef.current.publish({
-      destination: `/app/battle/${battleId}`,
+      destination: '/app/findBattle',
       body: JSON.stringify({
         skillId: index,
         trainerName: trainerName,
@@ -174,22 +174,22 @@ function Battle() {
       try {
         const token = localStorage.getItem('jwt');
         if (!token) {
-          throw new Error('인증 토큰이 없습니다.');
+          throw new Error('No authentication token found.');
         }
         const res = await fetch(`${API_URL}/api/trainer/myName`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         if (!res.ok) {
-          throw new Error(`서버 응답 오류: ${res.status}`);
+          throw new Error(`Server responded with status: ${res.status}`);
         }
         const name = await res.text();
         if (!name) {
-          throw new Error('트레이너 이름이 비어 있습니다.');
+          throw new Error('Trainer name is empty.');
         }
         setTrainerName(name);
       } catch (err) {
-        console.error('트레이너 이름 가져오기 실패:', err.message);
-        setError(`트레이너 정보를 불러오지 못했습니다: ${err.message}`);
+        console.error('Failed to fetch trainer name:', err.message);
+        setError(`Failed to load trainer information: ${err.message}`);
         setLoading(false);
       }
     };
@@ -205,39 +205,39 @@ function Battle() {
       webSocketFactory: () => socket,
       reconnectDelay: 5000,
       onConnect: () => {
-        console.log('WebSocket 연결 성공');
+        console.log('WebSocket connected successfully');
         stompClientRef.current = client;
 
         client.subscribe('/topic/match/*', (message) => {
           try {
             const matchResponse = JSON.parse(message.body || '{}');
-            const myTeamData = matchResponse.trainerName || {};
-            const opponentTeamData = matchResponse.opponent || {};
+            const myTeamData = matchResponse.red || {};
+            const opponentTeamData = matchResponse.blue || {};
 
             const isBlue = myTeamData.trainerName === trainerName;
             const blueData = isBlue ? myTeamData : opponentTeamData;
             const redData = isBlue ? opponentTeamData : myTeamData;
 
             setBlueTeam({
-              trainerName: blueData.trainerName || 'Unknown',
-              monster: blueData.monster || {},
+              trainerName: blueData.trainerName,
+              monster: blueData.monster,
               turn: blueData.turn || false,
             });
             setRedTeam({
-              trainerName: redData.trainerName || 'Unknown',
-              monster: redData.monster || {},
+              trainerName: redData.trainerName,
+              monster: redData.monster,
               turn: redData.turn || false,
             });
             setMyTeam(isBlue ? 'blue' : 'red');
-            setBlueCuketmonHP(blueData.monster?.hp);
-            setRedCuketmonHP(redData.monster?.hp);
+            setBlueCuketmonHP(blueData.monster?.hp || 100);
+            setRedCuketmonHP(redData.monster?.hp || 100);
             setTechs(
               (isBlue ? myTeamData : opponentTeamData).monster?.skills?.map((skill, index) => ({
                 id: index,
-                name: skill.name,
-                type: skill.type,
-                damage: skill.power,
-                ppCost: skill.ppCost,
+                name: skill.name || 'Unnamed',
+                type: skill.type || 'normal',
+                damage: skill.power || 0,
+                ppCost: skill.ppCost || 20,
                 animationUrl:
                   animationMap[skill.type?.toLowerCase()]?.[skill.power >= 70 ? 'high' : 'normal']?.[0] ||
                   animationMap.normal.normal[0],
@@ -250,16 +250,16 @@ function Battle() {
             setLoading(false);
             setIsMatched(true);
           } catch (err) {
-            console.error('매치 데이터 파싱 오류:', err);
-            setError('매치 데이터를 처리하지 못했습니다.');
+            console.error('Error parsing match data:', err);
+            setError('Failed to process match data.');
           }
         });
 
-        client.subscribe(`/app/battle/${battleId}`, (message) => {
+        client.subscribe(`/topic/battle/${battleId}/*`, (message) => {
           try {
             const response = JSON.parse(message.body || '{}');
-            const myTeamData = response.trainerName;
-            const opponentTeamData = response.opponent;
+            const myTeamData = response.red;
+            const opponentTeamData = response.blue;
 
             const isBlue = myTeamData.trainerName === trainerName;
             const blueData = isBlue ? myTeamData : opponentTeamData;
@@ -293,8 +293,8 @@ function Battle() {
               }
             }
           } catch (err) {
-            console.error('스킬 결과 처리 오류:', err);
-            setError('스킬 결과를 처리하지 못했습니다.');
+            console.error('Error processing skill result:', err);
+            setError('Failed to process skill result.');
           }
         });
 
@@ -304,12 +304,12 @@ function Battle() {
         });
       },
       onStompError: (frame) => {
-        console.error('WebSocket 연결 오류:', frame);
-        setError('WebSocket 연결에 실패했습니다. 다시 시도해주세요.');
+        console.error('STOMP connection error:', frame);
+        setError('WebSocket connection failed. Please try again.');
         setLoading(false);
       },
       onDisconnect: () => {
-        console.log('WebSocket 연결 해제');
+        console.log('WebSocket disconnected');
       },
     });
 
@@ -320,13 +320,13 @@ function Battle() {
         client.deactivate();
       }
     };
-  }, [trainerName, monsterId, API_URL]);
+  }, [trainerName, monsterId, API_URL, battleId]);
 
   if (loading) {
     return (
       <div className="loadingScreen">
-        <img src="/BattlePage/loadingcircle.png" className="loadingSpinner" alt="로딩 중" />
-        <p>매칭 중...</p>
+        <img src="/BattlePage/loadingcircle.png" className="loadingSpinner" alt="Loading..." />
+        <p>Matching...</p>
       </div>
     );
   }
@@ -335,7 +335,7 @@ function Battle() {
     return (
       <div className="errorScreen">
         <p>{error}</p>
-        <button onClick={() => navigate('/mypage')}>돌아가기</button>
+        <button onClick={() => navigate('/mypage')}>Return</button>
       </div>
     );
   }
@@ -351,10 +351,10 @@ function Battle() {
         : blueTeam?.monster?.image;
     return (
       <div className="resultScreen">
-        <h1>{winner === 'player' ? '승리!' : '패배...'}</h1>
-        {winnerImage && <img src={winnerImage} className="winnerCuketmonImage" alt="승자" />}
+        <h1>{winner === 'player' ? 'Victory!' : 'Defeat...'}</h1>
+        {winnerImage && <img src={winnerImage} className="winnerCuketmonImage" alt="Winner" />}
         <button className="endBattle" onClick={() => navigate('/mypage')}>
-          배틀 종료
+          End Battle
         </button>
       </div>
     );
@@ -371,7 +371,7 @@ function Battle() {
                 <img
                   src="/BattlePage/hpBar.png"
                   className={myTeam === 'blue' ? 'myHpImage' : 'enemyHpImage'}
-                  alt="HP 바"
+                  alt="HP Bar"
                 />
                 <div className={myTeam === 'blue' ? 'myHpBar' : 'enemyHpBar'}>
                   <div
@@ -388,12 +388,12 @@ function Battle() {
                       ? `myCuketmonImage ${isBlueHit ? 'hitEffect' : ''}`
                       : `enemyCuketmonImage ${isBlueHit ? 'hitEffect' : ''}`
                   }
-                  alt="블루 팀 몬스터"
+                  alt="Blue Team Monster"
                 />
                 <img
                   src="/BattlePage/stand.png"
                   className={myTeam === 'blue' ? 'myStage' : 'enemyStage'}
-                  alt="스테이지"
+                  alt="Stage"
                 />
               </div>
             </div>
@@ -405,7 +405,7 @@ function Battle() {
                 <img
                   src="/BattlePage/hpBar.png"
                   className={myTeam === 'red' ? 'myHpImage' : 'enemyHpImage'}
-                  alt="HP 바"
+                  alt="HP Bar"
                 />
                 <div className={myTeam === 'red' ? 'myHpBar' : 'enemyHpBar'}>
                   <div
@@ -422,12 +422,12 @@ function Battle() {
                       ? `myCuketmonImage ${isRedHit ? 'hitEffect' : ''}`
                       : `enemyCuketmonImage ${isRedHit ? 'hitEffect' : ''}`
                   }
-                  alt="레드 팀 몬스터"
+                  alt="Red Team Monster"
                 />
                 <img
                   src="/BattlePage/stand.png"
                   className={myTeam === 'red' ? 'myStage' : 'enemyStage'}
-                  alt="스테이지"
+                  alt="Stage"
                 />
               </div>
             </div>
@@ -450,19 +450,17 @@ function Battle() {
                 ))}
               </div>
               <div className="ppStatus">
-                <span>
-                  PP: {currentPp}/{maxPp}
-                </span>
+                <span>PP: {currentPp}/{maxPp}</span>
               </div>
             </>
           )}
           {isFighting && currentAnimation && (
             <div className={`battleAnimationOverlay ${animationDirection}`}>
-              <img src={currentAnimation} className="techAnimation" alt="기술 애니메이션" />
+              <img src={currentAnimation} className="techAnimation" alt="Tech Animation" />
             </div>
           )}
-          <span className="turnInfo">{myTurn ? '내 턴' : '상대 턴'}</span>
-          <span className="techType">{selectedTechType ? `타입: ${selectedTechType}` : '타입: 없음'}</span>
+          <span className="turnInfo">{myTurn ? 'My Turn' : 'Enemy Turn'}</span>
+          <span className="techType">{selectedTechType ? `Type: ${selectedTechType}` : 'Type: None'}</span>
         </div>
       </div>
     </div>
