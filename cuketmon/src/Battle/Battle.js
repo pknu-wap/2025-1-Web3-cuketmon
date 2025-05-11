@@ -112,14 +112,13 @@ function Battle() {
   }, [API_URL]);
 
   useEffect(() => {
-    if (!trainerName || !monsterId) {
-      if (!trainerName && !monsterId) {
-        setError('Missing trainer name and monster ID.');
-      } else if (!trainerName) {
-        setError('Missing trainer name.');
-      } else {
-        setError('Missing monster ID.');
-      }
+    console.log('Second useEffect - trainerName:', trainerName, 'monsterId:', monsterId);
+    if (!trainerName) {
+      return;
+    }
+
+    if (!monsterId) {
+      setError('Missing monster ID.');
       setLoading(false);
       return;
     }
