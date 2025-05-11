@@ -135,8 +135,9 @@ function Battle() {
         client.subscribe('/topic/match/*', (message) => {
           const matchResponse = JSON.parse(message.body || '{}');
           console.log('Received matchResponse:', matchResponse);
-          const myTeamData = matchResponse.red || {};
-          const opponentTeamData = matchResponse.blue || {};
+          
+          const myTeamData = matchResponse.red;
+          const opponentTeamData = matchResponse.blue;
 
           const isBlue = myTeamData.trainerName === trainerName;
           const blueData = isBlue ? myTeamData : opponentTeamData;
@@ -174,10 +175,11 @@ function Battle() {
           setIsMatched(true);
 
           client.subscribe(`/topic/battle/${battleId}/*`, (skillMessage) => {
-            const response = JSON.parse(skillMessage.body || '{}');
+            
+            const matchResponse = JSON.parse(skillMessage.body || '{}');
             console.log('Received battle matchResponse:', matchResponse);
-            const myTeamData = response.red;
-            const opponentTeamData = response.blue;
+            const myTeamData = matchResponse.red;
+            const opponentTeamData = matchResponse.blue;
 
             const isBlue = myTeamData.trainerName === trainerName;
             const blueData = isBlue ? myTeamData : opponentTeamData;
@@ -188,13 +190,13 @@ function Battle() {
             setCurrentPp(blueData.monster?.pp ?? currentPp);
             setMyTurn(isBlue ? blueData.turn : redData.turn);
 
-            if (response.winner) {
-              setWinner(response.winner);
+            if (matchResponse.winner) {
+              setWinner(matchResponse.winner);
               setIsBattleEnded(true);
             }
 
-            if (response.usedTechId !== undefined && response.attacker !== trainerName) {
-              const tech = techs.find((t) => t.id === response.usedTechId);
+            if (matchResponse.usedTechId !== undefined && matchResponse.attacker !== trainerName) {
+              const tech = techs.find((t) => t.id === matchResponse.usedTechId);
               if (tech) {
                 setCurrentAnimation(tech.animationUrl);
                 setIsFighting(true);
@@ -222,7 +224,7 @@ function Battle() {
           destination: '/app/findBattle',
           body: JSON.stringify({ trainerName, monsterId }),
         });
-        console.log('Battle request sent');
+        console.log('Battle request sent:' ,{trainerName, monsterId});
       },
       onStompError: (frame) => {
         setError('WebSocket connection failed. Please try again.');
