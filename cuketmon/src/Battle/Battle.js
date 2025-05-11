@@ -61,7 +61,7 @@ function Battle() {
       return;
     }
 
-    const ppCost = tech.ppCost || 20;
+    const ppCost = tech.ppCost;
     const animationUrl = tech.animationUrl;
 
     setSelectedTech(index);
@@ -77,6 +77,7 @@ function Battle() {
         trainerName: trainerName,
       }),
     });
+    console.log('Skill used:', trainerName, index);
 
     setCurrentPp((prevPp) => Math.max(0, prevPp - ppCost));
     setMyTurn(false);
@@ -102,6 +103,7 @@ function Battle() {
         const name = await res.text();
         if (!name) throw new Error('Trainer name is empty.');
         setTrainerName(name);
+        console.log('Trainer name fetched:', name);
       } catch (err) {
         setError(`Failed to load trainer information: ${err.message}`);
         setLoading(false);
@@ -132,6 +134,7 @@ function Battle() {
 
         client.subscribe('/topic/match/*', (message) => {
           const matchResponse = JSON.parse(message.body || '{}');
+          console.log('Received matchResponse:', matchResponse);
           const myTeamData = matchResponse.red || {};
           const opponentTeamData = matchResponse.blue || {};
 
@@ -155,12 +158,12 @@ function Battle() {
           setTechs(
             (isBlue ? myTeamData : opponentTeamData).monster?.skills?.map((skill, index) => ({
               id: index,
-              name: skill.name || 'Unnamed',
-              type: skill.type || 'normal',
-              damage: skill.power || 0,
-              ppCost: skill.ppCost || 20,
+              name: skill.name,
+              type: skill.type,
+              damage: skill.power,
+              ppCost: skill.ppCost,
               animationUrl:
-                animationMap[skill.type?.toLowerCase()]?.[skill.power >= 70 ? 'high' : 'normal']?.[0] ||
+                animationMap[skill.type?.toLowerCase()]?.[skill.power >= 50 ? 'high' : 'normal']?.[0] ||
                 animationMap.normal.normal[0],
             })) || []
           );
@@ -172,6 +175,7 @@ function Battle() {
 
           client.subscribe(`/topic/battle/${battleId}/*`, (skillMessage) => {
             const response = JSON.parse(skillMessage.body || '{}');
+            console.log('Received battle matchResponse:', matchResponse);
             const myTeamData = response.red;
             const opponentTeamData = response.blue;
 
@@ -208,6 +212,7 @@ function Battle() {
 
           client.subscribe(`/topic/battleEnd/${battleId}/*`, (endMessage) => {
             const response = JSON.parse(endMessage.body || '{}');
+            console.log('Received End Response:', matchResponse);
             setWinner(response.winner);
             setIsBattleEnded(true);
           });
@@ -217,6 +222,7 @@ function Battle() {
           destination: '/app/findBattle',
           body: JSON.stringify({ trainerName, monsterId }),
         });
+        console.log('Battle request sent');
       },
       onStompError: (frame) => {
         setError('WebSocket connection failed. Please try again.');
