@@ -32,7 +32,8 @@ function Battle() {
   const location = useLocation();
   const API_URL = process.env.REACT_APP_API_URL;
 
-  const { monsterId } = location.state || {};
+
+  const monsterId = location.state?.monsterId;
 
   const getHpColor = (hp) => {
     const hue = Math.max(0, Math.min(120, hp * 1.2));
@@ -112,7 +113,13 @@ function Battle() {
 
   useEffect(() => {
     if (!trainerName || !monsterId) {
-      setError('Missing trainer name or monster ID.');
+      if (!trainerName && !monsterId) {
+        setError('Missing trainer name and monster ID.');
+      } else if (!trainerName) {
+        setError('Missing trainer name.');
+      } else {
+        setError('Missing monster ID.');
+      }
       setLoading(false);
       return;
     }
