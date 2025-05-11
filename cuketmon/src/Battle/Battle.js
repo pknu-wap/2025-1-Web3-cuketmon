@@ -135,6 +135,7 @@ function Battle() {
         client.subscribe('/topic/match/*', (message) => {
           const matchResponse = JSON.parse(message.body || '{}');
           console.log('Received matchResponse:', matchResponse);
+          
           const myTeamData = matchResponse.red;
           const opponentTeamData = matchResponse.blue;
 
@@ -174,6 +175,7 @@ function Battle() {
           setIsMatched(true);
 
           client.subscribe(`/topic/battle/${battleId}/*`, (skillMessage) => {
+            
             const matchResponse = JSON.parse(skillMessage.body || '{}');
             console.log('Received battle matchResponse:', matchResponse);
             const myTeamData = matchResponse.red;
