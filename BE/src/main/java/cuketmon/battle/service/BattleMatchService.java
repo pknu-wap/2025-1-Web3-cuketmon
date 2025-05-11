@@ -74,7 +74,7 @@ public class BattleMatchService {
         Integer battleId = generateBattleId();
         activeBattles.put(battleId, new BattleDTO(red, blue));
 
-        log.info("배틀 생성 battleId: {}, red: {}, blue{}", battleId, red.getTrainerName(), blue.getTrainerName());
+        log.info("배틀 생성 battleId: {}, red: {}, blue: {}", battleId, red.getTrainerName(), blue.getTrainerName());
         messagingTemplate.convertAndSend("/topic/match/" + battleId, new MatchResponse(battleId, blue, red));
     }
 

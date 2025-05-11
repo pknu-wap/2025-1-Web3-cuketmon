@@ -29,8 +29,11 @@ public class Damage {
 
         Type skillType = skill.getType();
         double typeBonus = getTypeBonus(attacker, skillType.getEnglishName());
-        double typeAdvantage1 = getDamageMultiplier(Type.fromString(defender.getType1()), skillType);
-        double typeAdvantage2 = getDamageMultiplier(Type.fromString(defender.getType2()), skillType);
+
+        Type defenderType1 = Type.fromString(defender.getType1());
+        Type defenderType2 = Type.fromString(defender.getType2());
+        double typeAdvantage1 = getDamageMultiplier(defenderType1, skillType);
+        double typeAdvantage2 = (defenderType2 != null) ? getDamageMultiplier(defenderType2, skillType) : 1.0;
 
         double damage = (power * attack * (affinity * 2.0 / 5 + 2) / defence / 50 * critical + 2)
                 * typeBonus * typeAdvantage1 * typeAdvantage2 * randomInt / 255;
