@@ -2,8 +2,10 @@ import React, { useState, useEffect } from 'react';
 import MenuBar from "../Menubar/Menubar.js";
 import './Ranking.css';
 import { useAuth } from '../AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 function Ranking() {
+  const navigate = useNavigate();
   const [rank, setRank] = useState(0); 
   const [trainerName, setTrainerName] = useState(''); 
   const [winCount, setWinCount] = useState(0);
@@ -17,15 +19,18 @@ function Ranking() {
 
   /*유저 소유 커켓몬 id 배열로 받기 */
   const loadCukemon = async () => {
-    if (!token) return;
+    if (!token){
+     navigate(`/login`); //token이 없는 경우 로그인화면으로 이동하게 함
+      return;
+    } 
+    
     try {
       const res = await fetch(`${API_URL}/api/trainer/monsters`, {
         headers: { 'Authorization': `Bearer ${token}` },
       });
       const data = await res.json();
       const monsterIds = Array.isArray(data) ? data : [];  
-      setMonsters(monsterIds);     
-      console.log(monsterIds)            
+      setMonsters(monsterIds);            
     } catch (error) {
       console.error("커켓몬 로딩에 실패했습니다.", error.message);
     }
@@ -47,7 +52,7 @@ function Ranking() {
     }
   }, [monsters]);
 
-  /*커켓몬몬 이미지 */
+  /*커켓몬 이미지 */
   const loadCukemonImages = async (monsterIds) => {
     try {
       const imagePromises = monsterIds.map(async (monsterId) => {
@@ -57,16 +62,13 @@ function Ranking() {
         const data = await res.json();
         return data?.image ? data.image : ''; 
       });
-      
       const images = await Promise.all(imagePromises); 
       setMonsterImages(images); 
     } catch (error) {
       console.error("커켓몬 이미지 로딩에 실패했습니다.", error.message);
     }
   };
-
-
-
+  
   /*랭킹 */
   useEffect(() => {
     const fetchRankingData = async () => {
@@ -78,7 +80,6 @@ function Ranking() {
           }
         });
         const data = await response.json();
-        console.log(data)
         setRank(parseInt(data.rank));
         setTrainerName(data.trainerName);
         setWinCount(parseInt(data.win));
@@ -89,7 +90,7 @@ function Ranking() {
       }
     };
     fetchRankingData();
-  }, [API_URL, token]);
+  }, [token]);
 
 
 
