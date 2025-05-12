@@ -6,7 +6,7 @@ import './Battle.css';
 import { animationMap } from './AnimationMap';
 
 function Battle() {
-  const MAX_PP = 100; // 최대 PP 값
+  
   const [redTeam, setRedTeam] = useState(null); // 레드 팀 정보
   const [blueTeam, setBlueTeam] = useState(null); // 블루 팀 정보
   const [myTeam, setMyTeam] = useState(null); // 내 팀 (레드 또는 블루)
@@ -14,9 +14,10 @@ function Battle() {
   const [blueCuketmonHP, setBlueCuketmonHP] = useState(100); // 블루 팀 몬스터 HP
   const [techs, setTechs] = useState([]); // 내 몬스터의 기술 목록
   const [selectedTech, setSelectedTech] = useState(null); // 선택된 기술 인덱스
-  const [currentPp, setCurrentPp] = useState(MAX_PP); // 현재 PP
+  const [currentPp, setCurrentPp] = useState(0); // 현재 PP
   const [myTurn, setMyTurn] = useState(false); // 내 턴 여부
-  const [prevMyTurn, setPrevMyTurn] = useState(false); // 이전 턴 상태 추적
+  const [redCuketmonPP, setRedCuketmonPP] = useState(0); // 레드 팀 몬스터 PP
+  const [blueCuketmonPP, setBlueCuketmonPP] = useState(0); // 블루 팀 몬스터 PP
   const [isFighting, setIsFighting] = useState(false); // 전투 중 여부 (애니메이션 재생 중)
   const [currentAnimation, setCurrentAnimation] = useState(null); // 현재 재생 중인 애니메이션 URL
   const [isRedHit, setIsRedHit] = useState(false); // 레드 팀 피격 여부
@@ -33,8 +34,8 @@ function Battle() {
   const navigate = useNavigate(); // 페이지 이동을 위한 네비게이션 훅
   const location = useLocation(); // 현재 경로 정보
   const API_URL = process.env.REACT_APP_API_URL; // API URL 환경 변수
-  const monsterId = location.state?.monsterId; // 몬스터 ID (라우터 상태에서 가져옴)
-
+  const monsterId = location.state.monsterId; // 몬스터 ID (라우터 상태에서 가져옴)
+  
   // 트레이너 이름 가져오기
   useEffect(() => {
     const fetchTrainerName = async () => {
@@ -54,12 +55,12 @@ function Battle() {
       }
     };
     fetchTrainerName();
-  }, [API_URL]);
+  }, []); //이 의존성 배열은 없어도 될거같음
 
 
   // WebSocket 연결 및 배틀 로직
   useEffect(() => {
-    if (!trainerName || !monsterId) return;
+    if (!trainerName) return; //!monsterId 없앰
   
     const socket = new SockJS(`${API_URL}/ws`);
     const client = new Client({
@@ -72,10 +73,11 @@ function Battle() {
         const matchSubscription = client.subscribe('/topic/match/*', (message) => {
           const matchResponse = JSON.parse(message.body || '{}');
           console.log('매치 응답 수신:', matchResponse);
-          const { red, blue, battleId } = matchResponse;
+          const { red, blue, battleId } = matchResponse; //굳이 이렇게 안해도됌
+          setBattleId(battleId); //팀 정하기전에 배틀 ID 설정, 순서상 이러면 스킬이 잘 안나감
   
           // 자신의 trainerName이 포함되면 구독 취소
-          if (red?.trainerName === trainerName || blue?.trainerName === trainerName) {
+          if (red.trainerName === trainerName || blue.trainerName === trainerName) {
             matchSubscription.unsubscribe();
             console.log('매칭 완료, 구독 취소됨');
           }
@@ -83,8 +85,10 @@ function Battle() {
           setRedTeam(red);
           setBlueTeam(blue);
           setMyTeam(red.trainerName === trainerName ? 'red' : 'blue');
-          setRedCuketmonHP(red.monster?.hp);
-          setBlueCuketmonHP(blue.monster?.hp);
+          setRedCuketmonHP(red.monster.hp);
+          setBlueCuketmonHP(blue.monster.hp);
+          setRedCuketmonPP(red.monster.pp);
+          setBlueCuketmonPP(blue.monster.pp);
           setTechs(
             (red.trainerName === trainerName ? red : blue).monster?.skills?.map((skill, index) => ({
               id: index,
@@ -98,37 +102,36 @@ function Battle() {
             })) || []
           );
           setMyTurn(red.trainerName === trainerName ? red.turn : blue.turn);
-          setPrevMyTurn(red.trainerName === trainerName ? red.turn : blue.turn);
-          setCurrentPp(MAX_PP);
-          setBattleId(battleId);
+
+          setCurrentPp(red.trainerName === trainerName ? red.monster.pp : blue.moster.pp);
+          
           setLoading(false);
         });
   
         // 배틀 업데이트 구독
         client.subscribe(`/topic/battle/${battleId}/*`, (skillMessage) => {
-          const matchResponse = JSON.parse(skillMessage.body || '{}');
+          const matchResponse = JSON.parse(skillMessage.body);
           console.log('배틀 응답 수신:', matchResponse);
-          const { red, blue, animationUrl, winner } = matchResponse;
+          const { red, blue } = matchResponse; //red blue 만 받아오장
   
-          setRedTeam(red);
-          setBlueTeam(blue);
-          setRedCuketmonHP(red.monster?.hp ?? redCuketmonHP);
-          setBlueCuketmonHP(blue.monster?.hp ?? blueCuketmonHP);
-          const newMyTurn = myTeam === 'red' ? red.turn : blue.turn;
-          setMyTurn(newMyTurn);
+          setRedCuketmonHP(red.monster.hp ?? redCuketmonHP);
+          setBlueCuketmonHP(blue.monster.hp ?? blueCuketmonHP); //? 다빼자 ㅜ
+          setMyTurn(red.trainerName === trainerName ? red.turn : blue.turn);
+          setRedCuketmonPP(red.monster.pp);
+          setBlueCuketmonPP(blue.monster.pp);
   
           if (winner) {
             setWinner(winner);
             setIsBattleEnded(true);
           }
   
-          if (prevMyTurn && !newMyTurn) {
+          if (myTurn === true) {
             setCurrentAnimation(techs[selectedTech]?.animationUrl);
             setIsFighting(true);
             setIsBlueHit(myTeam === 'red');
             setIsRedHit(myTeam === 'blue');
-          } else if (!prevMyTurn && newMyTurn && animationUrl) {
-            setCurrentAnimation(animationUrl);
+          } else if (myTurn === false) {
+            //setCurrentAnimation(animationUrl);
             setIsFighting(true);
             setIsBlueHit(myTeam === 'red');
             setIsRedHit(myTeam === 'blue');
@@ -142,8 +145,6 @@ function Battle() {
               setIsRedHit(false);
             }, 1500);
           }
-  
-          setPrevMyTurn(newMyTurn);
         });
   
         // 배틀 요청 전송
@@ -162,7 +163,7 @@ function Battle() {
   
     client.activate();
     return () => client.deactivate();
-  }, [trainerName, monsterId, API_URL]);
+  }, []); //의존성 배열 먼지 알았다
 
   // 기술 선택 및 사용
   const handleSelect = (index) => {
@@ -196,7 +197,6 @@ function Battle() {
     });
     setSelectedTech(index);
     setIsFighting(true);
-    setCurrentPp((prev) => Math.max(0, prev - tech.ppCost));
   };
 
   // HP 바 색상 계산
@@ -301,7 +301,7 @@ function Battle() {
                 ))}
               </div>
               <div className="ppStatus">
-                <span>PP: {currentPp}/{MAX_PP}</span>
+                <span>PP: {currentPp}</span>
               </div>
             </>
           )}
