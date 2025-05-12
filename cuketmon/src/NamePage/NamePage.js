@@ -12,9 +12,8 @@ function NamePage() {
   const location = useLocation(); 
   const maxLength = 12;
   const API_URL = process.env.REACT_APP_API_URL;
-  const monsterId = location.state?.monsterId; 
-  console.log(monsterId);
   const cukemonResultImage = location.state?.image; 
+
 
 //뒤로가기 막기 (5/9)
  const backBlockRef = useRef(false); 
@@ -59,7 +58,7 @@ useEffect(() => {
       alert("이름을 입력해주세요.");
       return;
     }
-
+   const monsterId = localStorage.getItem("makeResultMonsterId");
     try {
       const response = await fetch(`${API_URL}/api/monster/${monsterId}/name`, {
         method: "PATCH",
@@ -69,9 +68,7 @@ useEffect(() => {
         },
         body: JSON.stringify({ name }),
       });
-
       if (!response.ok) throw new Error("이름 저장 실패");
-
       alert("커켓몬이 생성되었습니다.");
       navigate(`/mypage`);
     } catch (err) {
@@ -82,6 +79,7 @@ useEffect(() => {
 
 
   const handleGoTOMakePage = async()=>{
+        const monsterId = localStorage.getItem("makeResultMonsterId");
         const res = await fetch(`${API_URL}/api/monster/${monsterId}/release`, {
           method: "DELETE",
           headers: { 'Authorization': `Bearer ${token}` },
@@ -89,7 +87,8 @@ useEffect(() => {
         if (!res.ok) throw new Error(`오류발생`);
         navigate(`/make`)
     }
-  
+
+
 
   return (
     <div className="namePage">

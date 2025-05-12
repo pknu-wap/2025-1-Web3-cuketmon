@@ -26,7 +26,6 @@ function MakeResult() {
           });
 
           const data = await response.json();
-          console.log(data.image);
 
           if (data.image) {
             setCukemonImage(data.image);     
@@ -49,7 +48,7 @@ function MakeResult() {
     };
 
     delayAndFetch();
-  }, [monsterId, API_URL, token, navigate]);
+  }, [ token, navigate]);
 
 
   return (

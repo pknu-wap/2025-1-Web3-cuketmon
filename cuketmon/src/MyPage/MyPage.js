@@ -2,12 +2,12 @@ import React, {  useRef, useEffect, useState } from 'react';
 import MenuBar from "../Menubar/Menubar.js";
 import './MyPage.css';
 import { useAuth } from '../AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 function MyPage() {
+  const navigate = useNavigate();
   const [toyCount, setToyCount] = useState();
   const [feedCount, setFeedCount] = useState();
-  const [isFed,setIsFed] = useState(false);
-  const [isPlayed, setIsPlayed] = useState(false);
   const [loading, setLoading] = useState(true);
   const [cukemonData, setCukemonData] = useState(null);
   const [monsterId, setMonsterId] = useState(null);
@@ -17,11 +17,13 @@ function MyPage() {
   const token = contextToken || localStorage.getItem('jwt');
   const isLoadingRef = useRef(false);
 
-  
 
   /*유저 소유 커켓몬 조회하기 */
   const loadCukemon = async () => {
-    if (!token) return;
+        if (!token){
+     navigate(`/login`); //token이 없는 경우 로그인화면으로 이동하게 함
+      return;
+    } 
     try {
       const res = await fetch(`${API_URL}/api/trainer/monsters`, {
         headers: { 'Authorization': `Bearer ${token}` },
@@ -29,7 +31,6 @@ function MyPage() {
       const data = await res.json();
       const monsterIds = Array.isArray(data) ? data : [];  
       setMonsters(monsterIds);     
-      console.log(monsterIds)
     } catch (error) {
       console.error("커켓몬 로딩에 실패했습니다.", error.message);
     }
@@ -43,6 +44,7 @@ function MyPage() {
       setMonsterId(0);
     }
   }, [monsters]);
+  
 
   /*먹이, 장난감 기저 상태 불러오기*/
   const loadTrainerData = async () => {
@@ -64,7 +66,6 @@ function MyPage() {
     if (monsterId == null  || monsters.length === 0) return;
     try {
       const currentMonsterId = monsters[monsterId]; 
-      console.log(currentMonsterId);
       await fetch(`${API_URL}/api/monster/${currentMonsterId}/feed`, {
         method: "POST",
         headers: { 'Authorization': `Bearer ${token}` },
@@ -86,7 +87,6 @@ function MyPage() {
     if (monsterId == null  || monsters.length === 0) return;
     try {
       const currentMonsterId = monsters[monsterId]; 
-      console.log(currentMonsterId);
       await fetch(`${API_URL}/api/monster/${currentMonsterId}/play`, {
         method: "POST",
         headers: { 'Authorization': `Bearer ${token}` },
@@ -126,14 +126,6 @@ function MyPage() {
       fetchData();
   }, [monsterId])
   
-
-  /*먹이,놀아 주기 애니메이션*/
-  const handleActionClick = async (actionFn, setActionState) => {
-    setActionState(true);
-    await actionFn();
-    setTimeout(() => setActionState(false), 1000);
-  };
-
   /*방출 */
   const releaseCukemon = async () => {
     if (monsterId == null  || monsters.length === 0) return;
@@ -171,8 +163,6 @@ function MyPage() {
   /*커켓몬 정보 불러오기 */ 
   const loadCukemonData = async () => {
     const currentMonsterId = monsters[monsterId];
-    console.log("현재 monsterId:", currentMonsterId);
-    console.log("monsters 배열:", monsters);
     try {
       const res = await fetch(`${API_URL}/api/monster/${currentMonsterId}/info`, {
         headers: { 'Authorization': `Bearer ${token}` },
@@ -260,8 +250,8 @@ function MyPage() {
       </div>
 
       <div className="buttons">
-        <button id="feedButton" onClick={() => handleActionClick(feedCukemon, setIsFed)} />
-        <button id="playButton" onClick={() => handleActionClick(playCukemon, setIsPlayed)} />
+        <button id="feedButton" onClick={feedCukemon} />
+        <button id="playButton" onClick={playCukemon} />
       </div>
       <span id="buttonText1">먹이주기</span>
       <span id="buttonText2">놀아주기</span>
