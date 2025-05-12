@@ -27,7 +27,7 @@ function Battle() {
   const [trainerName, setTrainerName] = useState(''); // 내 트레이너 이름
   const [loading, setLoading] = useState(true); // 로딩 상태
   const [error, setError] = useState(null); // 에러 메시지
-  const [isMatched, setIsMatched] = useState(false); // 매칭 여부
+
 
   const stompClientRef = useRef(null); // WebSocket 클라이언트 참조
   const navigate = useNavigate(); // 페이지 이동을 위한 네비게이션 훅
@@ -56,6 +56,7 @@ function Battle() {
     fetchTrainerName();
   }, [API_URL]);
 
+
   // WebSocket 연결 및 배틀 로직
   useEffect(() => {
     if (!trainerName || !monsterId) return;
@@ -68,14 +69,15 @@ function Battle() {
         stompClientRef.current = client;
   
         // 매치 업데이트 구독
-        client.subscribe('/topic/match/*', (message) => {
+        const matchSubscription = client.subscribe('/topic/match/*', (message) => {
           const matchResponse = JSON.parse(message.body || '{}');
           console.log('매치 응답 수신:', matchResponse);
           const { red, blue, battleId } = matchResponse;
   
-          //수정: 매칭 완료 시 isMatched를 true로 설정
+          // 자신의 trainerName이 포함되면 구독 취소
           if (red?.trainerName === trainerName || blue?.trainerName === trainerName) {
-            setIsMatched(true);
+            matchSubscription.unsubscribe();
+            console.log('매칭 완료, 구독 취소됨');
           }
   
           setRedTeam(red);
@@ -144,15 +146,13 @@ function Battle() {
           setPrevMyTurn(newMyTurn);
         });
   
-
-        if (!isMatched) {
-          const requestData = { trainerName, monsterId };
-          console.log('배틀 요청 전송:', requestData);
-          client.publish({
-            destination: '/app/findBattle',
-            body: JSON.stringify(requestData),
-          });
-        }
+        // 배틀 요청 전송
+        const requestData = { trainerName, monsterId };
+        console.log('배틀 요청 전송:', requestData);
+        client.publish({
+          destination: '/app/findBattle',
+          body: JSON.stringify(requestData),
+        });
       },
       onStompError: (frame) => {
         setError('WebSocket 연결에 실패했습니다. 다시 시도해 주세요.');
@@ -162,7 +162,7 @@ function Battle() {
   
     client.activate();
     return () => client.deactivate();
-  }, [trainerName, monsterId, API_URL, isMatched]);
+  }, [trainerName, monsterId, API_URL]);
 
   // 기술 선택 및 사용
   const handleSelect = (index) => {
