@@ -55,7 +55,8 @@ function Battle() {
       }
     };
     fetchTrainerName();
-  }, []); //이 의존성 배열은 없어도 될거같음
+
+  }, [monsterId]); //이 의존성 배열은 없어도 될거같음
 
 
   // WebSocket 연결 및 배틀 로직
@@ -117,9 +118,10 @@ function Battle() {
           setRedCuketmonHP(red.monster.hp ?? redCuketmonHP);
           setBlueCuketmonHP(blue.monster.hp ?? blueCuketmonHP); //? 다빼자 ㅜ
           setMyTurn(red.trainerName === trainerName ? red.turn : blue.turn);
-          setRedCuketmonPP(red.monster.pp);
-          setBlueCuketmonPP(blue.monster.pp);
-  
+
+          setRedCuketmonPP(red.monster.pp ?? redCuketmonPP);
+          setBlueCuketmonPP(blue.monster.pp ?? blueCuketmonPP);
+
           if (winner) {
             setWinner(winner);
             setIsBattleEnded(true);
@@ -163,7 +165,9 @@ function Battle() {
   
     client.activate();
     return () => client.deactivate();
-  }, []); //의존성 배열 먼지 알았다
+
+  }, [[trainerName]]); //의존성 배열 먼지 알았다
+
 
   // 기술 선택 및 사용
   const handleSelect = (index) => {
