@@ -203,7 +203,7 @@ function Battle() {
   // 로딩 및 에러 상태
   if (loading) return (
     <div className="loadingScreen">
-      <img src="/BattlePage/loadingcircle.png" alt="로딩 중..." />
+      <img src="/BattlePage/loadingcircle.png" className="loadingSpinner" alt="로딩 중..." />
     </div>
   );
   if (error) return <div className="errorScreen">{error}<button onClick={() => navigate('/mypage')}>돌아가기</button></div>;
