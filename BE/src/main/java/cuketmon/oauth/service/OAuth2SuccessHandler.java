@@ -26,19 +26,16 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
         CustomOAuth2User oAuth2User = (CustomOAuth2User) authentication.getPrincipal();
         String trainerName = oAuth2User.getName();
 
-        // JWT 생성
+        // JWT 발급
         String accessToken = jwtUtil.createToken(trainerName);
+        String redirectUri = (String) request.getSession().getAttribute("redirect_uri");
 
-        // TODO: 이거 안됨 ;
-        // 로컬/배포 환경에 맞춰 redirect 가능
-        String state = request.getParameter("state");
-
-        // JWT를 프론트에 리다이렉트하며 전달
-        if ("local".equals(state)) {
-            response.sendRedirect("http://localhost:3000/make/?token=" + accessToken);
-        } else {
-            response.sendRedirect(CLIENT_URL + "/make/?token=" + accessToken);
+        if (redirectUri == null || redirectUri.isBlank()) {
+            redirectUri = CLIENT_URL + "/make"; // fallback
         }
+
+        String finalRedirect = redirectUri + (redirectUri.contains("?") ? "&" : "?") + "token=" + accessToken;
+        response.sendRedirect(finalRedirect);
     }
 
 }
