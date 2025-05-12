@@ -27,6 +27,7 @@ function Battle() {
   const [trainerName, setTrainerName] = useState(''); // 내 트레이너 이름
   const [loading, setLoading] = useState(true); // 로딩 상태
   const [error, setError] = useState(null); // 에러 메시지
+  const [isMatched, setIsMatched] = useState(false); // 매칭 여부
 
   const stompClientRef = useRef(null); // WebSocket 클라이언트 참조
   const navigate = useNavigate(); // 페이지 이동을 위한 네비게이션 훅
@@ -58,20 +59,25 @@ function Battle() {
   // WebSocket 연결 및 배틀 로직
   useEffect(() => {
     if (!trainerName || !monsterId) return;
-
+  
     const socket = new SockJS(`${API_URL}/ws`);
     const client = new Client({
       webSocketFactory: () => socket,
       reconnectDelay: 5000,
       onConnect: () => {
         stompClientRef.current = client;
-
+  
         // 매치 업데이트 구독
         client.subscribe('/topic/match/*', (message) => {
           const matchResponse = JSON.parse(message.body || '{}');
-          console.log('매치 응답 수신:', matchResponse); // 응답 데이터 로그
+          console.log('매치 응답 수신:', matchResponse);
           const { red, blue, battleId } = matchResponse;
-
+  
+          //수정: 매칭 완료 시 isMatched를 true로 설정
+          if (red?.trainerName === trainerName || blue?.trainerName === trainerName) {
+            setIsMatched(true);
+          }
+  
           setRedTeam(red);
           setBlueTeam(blue);
           setMyTeam(red.trainerName === trainerName ? 'red' : 'blue');
@@ -95,40 +101,37 @@ function Battle() {
           setBattleId(battleId);
           setLoading(false);
         });
-
+  
         // 배틀 업데이트 구독
         client.subscribe(`/topic/battle/${battleId}/*`, (skillMessage) => {
           const matchResponse = JSON.parse(skillMessage.body || '{}');
-          console.log('배틀 응답 수신:', matchResponse); // 응답 데이터 로그
+          console.log('배틀 응답 수신:', matchResponse);
           const { red, blue, animationUrl, winner } = matchResponse;
-
+  
           setRedTeam(red);
           setBlueTeam(blue);
           setRedCuketmonHP(red.monster?.hp ?? redCuketmonHP);
           setBlueCuketmonHP(blue.monster?.hp ?? blueCuketmonHP);
-          const newMyTurn = myTeam === 'red' ? red.turn : blue.turn; // myTeam 이 'red' 이면 red.turn 사용, 아니면 blue.turn 사용
+          const newMyTurn = myTeam === 'red' ? red.turn : blue.turn;
           setMyTurn(newMyTurn);
-
+  
           if (winner) {
             setWinner(winner);
             setIsBattleEnded(true);
           }
-
-          // 턴 변화를 기반으로 공격자 판단
+  
           if (prevMyTurn && !newMyTurn) {
-            // 내가 공격함 (myTurn: true -> false)
             setCurrentAnimation(techs[selectedTech]?.animationUrl);
             setIsFighting(true);
             setIsBlueHit(myTeam === 'red');
             setIsRedHit(myTeam === 'blue');
           } else if (!prevMyTurn && newMyTurn && animationUrl) {
-            // 상대가 공격함 (myTurn: false -> true)
             setCurrentAnimation(animationUrl);
             setIsFighting(true);
             setIsBlueHit(myTeam === 'red');
             setIsRedHit(myTeam === 'blue');
           }
-
+  
           if (isFighting) {
             setTimeout(() => {
               setIsFighting(false);
@@ -137,27 +140,29 @@ function Battle() {
               setIsRedHit(false);
             }, 1500);
           }
-
+  
           setPrevMyTurn(newMyTurn);
         });
+  
 
-        // 배틀 요청 전송
-        const requestData = { trainerName, monsterId };
-        console.log('배틀 요청 전송:', requestData); // 요청 데이터 로그
-        client.publish({
-          destination: '/app/findBattle',
-          body: JSON.stringify(requestData),
-        });
+        if (!isMatched) {
+          const requestData = { trainerName, monsterId };
+          console.log('배틀 요청 전송:', requestData);
+          client.publish({
+            destination: '/app/findBattle',
+            body: JSON.stringify(requestData),
+          });
+        }
       },
       onStompError: (frame) => {
         setError('WebSocket 연결에 실패했습니다. 다시 시도해 주세요.');
         setLoading(false);
       },
     });
-
+  
     client.activate();
     return () => client.deactivate();
-  }, [trainerName, monsterId, API_URL, battleId, myTeam, prevMyTurn, selectedTech, techs]);
+  }, [trainerName, monsterId, API_URL, isMatched]);
 
   // 기술 선택 및 사용
   const handleSelect = (index) => {
