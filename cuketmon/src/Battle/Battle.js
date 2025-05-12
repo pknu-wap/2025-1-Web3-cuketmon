@@ -6,34 +6,35 @@ import './Battle.css';
 import { animationMap } from './AnimationMap';
 
 function Battle() {
-  const MAX_PP = 100;
-  const [redTeam, setRedTeam] = useState(null);
-  const [blueTeam, setBlueTeam] = useState(null);
-  const [myTeam, setMyTeam] = useState(null);
-  const [redCuketmonHP, setRedCuketmonHP] = useState(100);
-  const [blueCuketmonHP, setBlueCuketmonHP] = useState(100);
-  const [techs, setTechs] = useState([]);
-  const [selectedTech, setSelectedTech] = useState(null);
-  const [currentPp, setCurrentPp] = useState(MAX_PP);
-  const [myTurn, setMyTurn] = useState(false);
-  const [isFighting, setIsFighting] = useState(false);
-  const [currentAnimation, setCurrentAnimation] = useState(null);
-  const [isRedHit, setIsRedHit] = useState(false);
-  const [isBlueHit, setIsBlueHit] = useState(false);
-  const [battleId, setBattleId] = useState('');
-  const [winner, setWinner] = useState(null);
-  const [isBattleEnded, setIsBattleEnded] = useState(false);
-  const [trainerName, setTrainerName] = useState('');
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const MAX_PP = 100; // 최대 PP 값
+  const [redTeam, setRedTeam] = useState(null); // 레드 팀 정보
+  const [blueTeam, setBlueTeam] = useState(null); // 블루 팀 정보
+  const [myTeam, setMyTeam] = useState(null); // 내 팀 (레드 또는 블루)
+  const [redCuketmonHP, setRedCuketmonHP] = useState(100); // 레드 팀 몬스터 HP
+  const [blueCuketmonHP, setBlueCuketmonHP] = useState(100); // 블루 팀 몬스터 HP
+  const [techs, setTechs] = useState([]); // 내 몬스터의 기술 목록
+  const [selectedTech, setSelectedTech] = useState(null); // 선택된 기술 인덱스
+  const [currentPp, setCurrentPp] = useState(MAX_PP); // 현재 PP
+  const [myTurn, setMyTurn] = useState(false); // 내 턴 여부
+  const [prevMyTurn, setPrevMyTurn] = useState(false); // 이전 턴 상태 추적
+  const [isFighting, setIsFighting] = useState(false); // 전투 중 여부 (애니메이션 재생 중)
+  const [currentAnimation, setCurrentAnimation] = useState(null); // 현재 재생 중인 애니메이션 URL
+  const [isRedHit, setIsRedHit] = useState(false); // 레드 팀 피격 여부
+  const [isBlueHit, setIsBlueHit] = useState(false); // 블루 팀 피격 여부
+  const [battleId, setBattleId] = useState(''); // 배틀 ID
+  const [winner, setWinner] = useState(null); // 승자 이름
+  const [isBattleEnded, setIsBattleEnded] = useState(false); // 배틀 종료 여부
+  const [trainerName, setTrainerName] = useState(''); // 내 트레이너 이름
+  const [loading, setLoading] = useState(true); // 로딩 상태
+  const [error, setError] = useState(null); // 에러 메시지
 
-  const stompClientRef = useRef(null);
-  const navigate = useNavigate();
-  const location = useLocation();
-  const API_URL = process.env.REACT_APP_API_URL;
-  const monsterId = location.state?.monsterId;
+  const stompClientRef = useRef(null); // WebSocket 클라이언트 참조
+  const navigate = useNavigate(); // 페이지 이동을 위한 네비게이션 훅
+  const location = useLocation(); // 현재 경로 정보
+  const API_URL = process.env.REACT_APP_API_URL; // API URL 환경 변수
+  const monsterId = location.state?.monsterId; // 몬스터 ID (라우터 상태에서 가져옴)
 
-  // 컴포넌트가 마운트될 때 트레이너 이름을 가져옴
+  // 트레이너 이름 가져오기
   useEffect(() => {
     const fetchTrainerName = async () => {
       try {
@@ -65,72 +66,87 @@ function Battle() {
       onConnect: () => {
         stompClientRef.current = client;
 
-        // 매치 업데이트를 구독
+        // 매치 업데이트 구독
         client.subscribe('/topic/match/*', (message) => {
           const matchResponse = JSON.parse(message.body || '{}');
+          console.log('매치 응답 수신:', matchResponse); // 응답 데이터 로그
           const { red, blue, battleId } = matchResponse;
 
           setRedTeam(red);
           setBlueTeam(blue);
           setMyTeam(red.trainerName === trainerName ? 'red' : 'blue');
-          setRedCuketmonHP(red.monster?.hp || 100);
-          setBlueCuketmonHP(blue.monster?.hp || 100);
+          setRedCuketmonHP(red.monster?.hp);
+          setBlueCuketmonHP(blue.monster?.hp);
           setTechs(
             (red.trainerName === trainerName ? red : blue).monster?.skills?.map((skill, index) => ({
               id: index,
               name: skill.name,
               type: skill.type,
               damage: skill.power,
-              ppCost: skill.ppCost,
+              ppCost: skill.pp,
               animationUrl:
                 animationMap[skill.type?.toLowerCase()]?.[skill.power >= 50 ? 'high' : 'normal']?.[0] ||
                 animationMap.normal.normal[0],
             })) || []
           );
           setMyTurn(red.trainerName === trainerName ? red.turn : blue.turn);
-          setCurrentPp((red.trainerName === trainerName ? red : blue).monster?.pp || MAX_PP);
+          setPrevMyTurn(red.trainerName === trainerName ? red.turn : blue.turn);
+          setCurrentPp(MAX_PP);
           setBattleId(battleId);
           setLoading(false);
         });
 
-        // 배틀 업데이트를 구독 (스킬 사용, HP, 턴 변경)
+        // 배틀 업데이트 구독
         client.subscribe(`/topic/battle/${battleId}/*`, (skillMessage) => {
-          const matchResponse = JSON.parse(skillMessage.body);
-          const { red, blue, attackerTeam, usedTechId, winner } = matchResponse;
+          const matchResponse = JSON.parse(skillMessage.body || '{}');
+          console.log('배틀 응답 수신:', matchResponse); // 응답 데이터 로그
+          const { red, blue, animationUrl, winner } = matchResponse;
 
           setRedTeam(red);
           setBlueTeam(blue);
           setRedCuketmonHP(red.monster?.hp ?? redCuketmonHP);
           setBlueCuketmonHP(blue.monster?.hp ?? blueCuketmonHP);
-          setCurrentPp((myTeam === 'red' ? red : blue).monster?.pp ?? currentPp);
-          setMyTurn(myTeam === 'red' ? red.turn : blue.turn);
+          const newMyTurn = myTeam === 'red' ? red.turn : blue.turn; // myTeam 이 'red' 이면 red.turn 사용, 아니면 blue.turn 사용
+          setMyTurn(newMyTurn);
 
           if (winner) {
             setWinner(winner);
             setIsBattleEnded(true);
           }
 
-          if (attackerTeam && usedTechId !== undefined) {
-            const tech = techs.find((t) => t.id === usedTechId);
-            if (tech) {
-              setCurrentAnimation(tech.animationUrl);
-              setIsFighting(true);
-              setIsBlueHit(attackerTeam === 'red');
-              setIsRedHit(attackerTeam === 'blue');
-              setTimeout(() => {
-                setIsFighting(false);
-                setCurrentAnimation(null);
-                setIsBlueHit(false);
-                setIsRedHit(false);
-              }, 1500);
-            }
+          // 턴 변화를 기반으로 공격자 판단
+          if (prevMyTurn && !newMyTurn) {
+            // 내가 공격함 (myTurn: true -> false)
+            setCurrentAnimation(techs[selectedTech]?.animationUrl);
+            setIsFighting(true);
+            setIsBlueHit(myTeam === 'red');
+            setIsRedHit(myTeam === 'blue');
+          } else if (!prevMyTurn && newMyTurn && animationUrl) {
+            // 상대가 공격함 (myTurn: false -> true)
+            setCurrentAnimation(animationUrl);
+            setIsFighting(true);
+            setIsBlueHit(myTeam === 'red');
+            setIsRedHit(myTeam === 'blue');
           }
+
+          if (isFighting) {
+            setTimeout(() => {
+              setIsFighting(false);
+              setCurrentAnimation(null);
+              setIsBlueHit(false);
+              setIsRedHit(false);
+            }, 1500);
+          }
+
+          setPrevMyTurn(newMyTurn);
         });
 
         // 배틀 요청 전송
+        const requestData = { trainerName, monsterId };
+        console.log('배틀 요청 전송:', requestData); // 요청 데이터 로그
         client.publish({
           destination: '/app/findBattle',
-          body: JSON.stringify({ trainerName, monsterId }),
+          body: JSON.stringify(requestData),
         });
       },
       onStompError: (frame) => {
@@ -141,9 +157,9 @@ function Battle() {
 
     client.activate();
     return () => client.deactivate();
-  }, [trainerName, monsterId, API_URL, battleId]);
+  }, [trainerName, monsterId, API_URL, battleId, myTeam, prevMyTurn, selectedTech, techs]);
 
-  // 스킬 선택 및 사용
+  // 기술 선택 및 사용
   const handleSelect = (index) => {
     if (currentPp >= (techs[index]?.ppCost || 0) && myTurn && !isFighting) {
       setSelectedTech(index);
@@ -163,27 +179,36 @@ function Battle() {
       return;
     }
 
+    const skillData = {
+      skillId: index,
+      trainerName: trainerName,
+      animationUrl: tech.animationUrl, // 서버로 애니메이션 URL 전송
+    };
+    console.log('스킬 사용 요청 전송:', skillData); // 요청 데이터 로그
     stompClientRef.current.publish({
       destination: `/app/skill/${battleId}`,
-      body: JSON.stringify({
-        skillId: index,
-        trainerName: trainerName,
-      }),
+      body: JSON.stringify(skillData),
     });
     setSelectedTech(index);
     setIsFighting(true);
+    setCurrentPp((prev) => Math.max(0, prev - tech.ppCost));
   };
 
+  // HP 바 색상 계산
   const getHpColor = (hp) => {
     const hue = Math.max(0, Math.min(120, hp * 1.2));
     return `hsl(${hue}, 100%, 50%)`;
   };
 
-
-  if (loading) return <div className="loadingScreen">매칭 중...</div>;
+  // 로딩 및 에러 상태
+  if (loading) return (
+    <div className="loadingScreen">
+      <img src="/BattlePage/loadingcircle.png" alt="로딩 중..." />
+    </div>
+  );
   if (error) return <div className="errorScreen">{error}<button onClick={() => navigate('/mypage')}>돌아가기</button></div>;
 
-  
+  // 배틀 종료 화면
   if (isBattleEnded) {
     const winnerImage = winner === trainerName ? (myTeam === 'red' ? redTeam?.monster?.image : blueTeam?.monster?.image) : (myTeam === 'red' ? blueTeam?.monster?.image : redTeam?.monster?.image);
     return (
@@ -195,12 +220,12 @@ function Battle() {
     );
   }
 
-  
+  // 메인 배틀 UI
   return (
     <div className="Battle">
       <div className="content">
         <div className="battleContainer">
-          {/* 왼쪽: 레드 팀 섹션 */}
+          {/* 레드 팀 섹션 */}
           <div className="redTeamSection">
             {redTeam?.trainerName && redTeam.monster?.image && (
               <>
@@ -226,7 +251,7 @@ function Battle() {
             )}
           </div>
 
-          {/* 오른쪽: 블루 팀 섹션 */}
+          {/* 블루 팀 섹션 */}
           <div className="blueTeamSection">
             {blueTeam?.trainerName && blueTeam.monster?.image && (
               <>
@@ -282,7 +307,7 @@ function Battle() {
           )}
           <span className="turnInfo">{myTurn ? '내 턴' : '상대 턴'}</span>
           <span className="techType">
-            {selectedTech !== null ? `타입: ${techs[selectedTech]?.type || '없음'}` : '타입: 없음'}
+            {selectedTech !== null ? `타입: ${techs[selectedTech]?.type || ''}` : '타입: 없음'}
           </span>
         </div>
       </div>
