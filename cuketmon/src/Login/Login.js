@@ -15,7 +15,6 @@ function Login() {
   useEffect(() => {
     const queryParams = new URLSearchParams(window.location.search);
     const token = queryParams.get('token'); 
-    console.log('카카오 로그인 후 받은 토큰:', token);
 
     if (token) {
       localStorage.setItem('accessToken', token); 
@@ -25,7 +24,7 @@ function Login() {
     } else {
       console.error('Token 값이 존재하지 않습니다.');
     }
-  }, [navigate, API_URL, setToken]);
+  }, [navigate, setToken]);
 
   return (
     <div className="login">

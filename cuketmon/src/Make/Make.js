@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useRef,useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Make.css";
 import MenuBar from "../Menubar/Menubar.js";
 import { useAuth } from "../AuthContext";
 import typeData from './../Type';
+
 
 function Make() {
   const [type1, setType1] = useState("");
@@ -14,14 +15,13 @@ function Make() {
   const API_URL = process.env.REACT_APP_API_URL;
 
 
-  
-
   useEffect(() => {
     const token = localStorage.getItem("jwt"); 
     if (token) {
       setToken(token);
     } else {
       console.warn("토큰이 없습니다.");
+      navigate(`/login`); 
     }
   }, [setToken]);
 
@@ -57,7 +57,7 @@ function Make() {
       if (response.ok) {
         const data = await response.json();
         const monsterId = data.monsterId;
-        localStorage.setItem('monsterId', monsterId);
+        localStorage.setItem('makeResultMonsterId', monsterId);
         navigate("/MakeResult", { state: { monsterId } }); 
       } else {
         alert("데이터 전송에 실패했습니다.");
