@@ -135,8 +135,8 @@ span {
 
   .cucketmonProfile {
     position: absolute;
-    top: 51.5%;
-    left: 25%;
+    top: 53vh;
+    left: 25vw;
     margin-left: 0;
     width: 50%;
     margin-top: 5%;
@@ -150,6 +150,7 @@ span {
   .cucketmonProfile span {
     width: 10px;
     height: 10px;
+    font-size: 14px;
   }
 
   .buttons {
@@ -165,7 +166,7 @@ span {
   }
   #feedButton {
     position: absolute;
-    top: 72vh;
+    top: 69vh;
     left: 16vw;
     height: 5vh;
     width: 36vw;
@@ -179,7 +180,7 @@ span {
   }
   #playButton {
     position: absolute;
-    top: 72vh;
+    top: 69vh;
     left: 54vw;
     height: 5vh;
     width: 36vw;
