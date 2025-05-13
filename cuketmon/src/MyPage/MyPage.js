@@ -2,10 +2,9 @@ import React, {  useRef, useEffect, useState } from 'react';
 import MenuBar from "../Menubar/Menubar.js";
 import './MyPage.css';
 import { useAuth } from '../AuthContext';
-import { useNavigate } from 'react-router-dom';
-
+import TextBox from '../common/TextBox/TextBox.js';
+import PokeStyleButton from '../common/PokeStyleButton/PokeStyleButton.js'
 function MyPage() {
-  const navigate = useNavigate();
   const [toyCount, setToyCount] = useState();
   const [feedCount, setFeedCount] = useState();
   const [loading, setLoading] = useState(true);
@@ -20,10 +19,10 @@ function MyPage() {
 
   /*유저 소유 커켓몬 조회하기 */
   const loadCukemon = async () => {
-        if (!token){
-     navigate(`/login`); //token이 없는 경우 로그인화면으로 이동하게 함
-      return;
-    } 
+    //     if (!token){
+    //  navigate(`/login`); //token이 없는 경우 로그인화면으로 이동하게 함
+    //   return;
+    // } 
     try {
       const res = await fetch(`${API_URL}/api/trainer/monsters`, {
         headers: { 'Authorization': `Bearer ${token}` },
@@ -242,19 +241,26 @@ function MyPage() {
       </div>
 
       <div className='cucketmonProfile'>
-        {loading ? <p>로딩 중...</p> : <p>{cukemonData?.name || "이름 없음"}</p>}
-        <div id='relevanceCount'>
-          <img src='/MyPage/relevance.webp' alt="친밀도 아이콘" />
-          <span>{cukemonData?.affinity ?? "로딩중.."}</span>
+        <TextBox>
+          {loading ? <p>로딩 중...</p> : <p>{cukemonData?.name || "이름 없음"}</p>}
+          <div id='relevanceCount'>
+            <img src='/MyPage/relevance.webp' alt="친밀도 아이콘" />
+            <span>{cukemonData?.affinity ?? "로딩중.."}</span>
+          </div>
+        </ TextBox>
+      </div>
+      
+      <div className="buttons">
+        <div id="feedButton">
+          <PokeStyleButton label={"먹이주기"} onClick={feedCukemon}/>
+        </div>
+        <div id="playButton">
+
+        <PokeStyleButton label={"놀아주기"} onClick={feedCukemon}/>
         </div>
       </div>
-
-      <div className="buttons">
-        <button id="feedButton" onClick={feedCukemon} />
-        <button id="playButton" onClick={playCukemon} />
-      </div>
-      <span id="buttonText1">먹이주기</span>
-      <span id="buttonText2">놀아주기</span>
+      <span id="buttonText1"></span>
+      <span id="buttonText2"></span>
 
       <img src='/MyPage/releaseButton.webp' id="releaseButton" onClick={releaseCukemon} />
       <MenuBar />
