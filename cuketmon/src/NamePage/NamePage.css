@@ -78,33 +78,12 @@
 
 .choiceButtons {
   position: absolute;
+  display: flex;
   color: white;
   font-size: clamp(3px, 1.5vw, 15px);
-  top: 60%;
-  left: 48%;
-}
-
-#remake,
-#bringToMypage {
-  width: 33%;
-  margin-right: 3%;
-}
-
-.choiceButtons #buttonText1 {
-  position: absolute;
-  left: 14%;
-  top: 38%;
-}
-
-.choiceButtons #buttonText2 {
-  position: absolute;
-  left: 49%;
-  top: 38%;
-}
-
-#remake:hover,
-#bringToMypage:hover {
-  content: url("/public/button-hover.png");
+  top: 20vh;
+  left: 28vw;
+  gap: 0.8vw;
 }
 
 /*모바일 반응형*/
@@ -126,17 +105,19 @@
     left: 43%;
   }
 
-  .choiceButtons #buttonText1,
-  .choiceButtons #buttonText2 {
-    font-size: 7px;
-  }
-
   .nameInput input {
     width: 24.5vw;
   }
-
   #remainWord {
-    top: 0.5vh;
+    top: 0.9vh;
     left: 28vw;
+  }
+
+  .choiceButtons {
+    top: 5.8vh;
+    left: 26.3vw;
+    transform: scale(0.4);
+    font-size: 4vw;
+    gap: 1.8vw;
   }
 }

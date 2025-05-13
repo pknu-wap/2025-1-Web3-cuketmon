@@ -2,7 +2,7 @@ import React, { useRef,useState, useEffect } from "react";
 import { useNavigate} from "react-router-dom";
 import { useAuth } from "../AuthContext";
 import "./NamePage.css";
-
+import PokeStyleButton from '../common/PokeStyleButton/PokeStyleButton.js'
 function NamePage() {
   const [name, setName] = useState("");
   const navigate = useNavigate();
@@ -93,10 +93,13 @@ useEffect(() => {
         </div>
 
         <div className="choiceButtons">
-          <img src="/button.png" id="remake"  onClick={handleGoTOMakePage}/>
-          <img src="/button.png" id="bringToMypage" onClick={handleGoToMypage} />
-          <span id="buttonText1">재부화</span>
-          <span id="buttonText2">데려가기</span>
+          <div className="remakeButton">
+          <PokeStyleButton  label={"재부화"} onClick={handleGoTOMakePage}/>
+          </div>
+
+          <div className="bringButton">
+          <PokeStyleButton  label={"데려가기"} onClick={handleGoToMypage} />
+          </div>
         </div>
       </div>
     </div>
