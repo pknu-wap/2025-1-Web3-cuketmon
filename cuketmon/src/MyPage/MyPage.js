@@ -251,7 +251,6 @@ function MyPage() {
           <PokeStyleButton label={"먹이주기"} onClick={feedCukemon}/>
         </div>
         <div id="playButton">
-
         <PokeStyleButton label={"놀아주기"} onClick={feedCukemon}/>
         </div>
       </div>
