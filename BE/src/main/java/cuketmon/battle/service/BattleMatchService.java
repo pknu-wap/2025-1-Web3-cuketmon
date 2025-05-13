@@ -23,13 +23,12 @@ public class BattleMatchService {
 
     private final SimpMessagingTemplate messagingTemplate;
     private final TeamMaker teamMaker;
-
     private final WaitingQueue waitingQueue;
     private final ActiveBattles activeBattles;
 
     @Autowired
-    public BattleMatchService(SimpMessagingTemplate messagingTemplate,
-                              TeamMaker teamMaker, WaitingQueue waitingQueue, ActiveBattles activeBattles) {
+    public BattleMatchService(SimpMessagingTemplate messagingTemplate, TeamMaker teamMaker,
+                              WaitingQueue waitingQueue, ActiveBattles activeBattles) {
         this.messagingTemplate = messagingTemplate;
         this.teamMaker = teamMaker;
         this.waitingQueue = waitingQueue;
@@ -77,7 +76,7 @@ public class BattleMatchService {
     }
 
     @Transactional
-    public void removeFromQueue(String trainerName) {
+    public void cancelBattle(String trainerName) {
         waitingQueue.remove(trainerName);
         log.info("큐 대기 취소: {}", trainerName);
     }
