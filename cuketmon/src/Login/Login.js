@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';  
 import './Login.css';
 import { useAuth } from '../AuthContext';
+import PokeStyleButton from '../common/PokeStyleButton/PokeStyleButton.js'
 
 function Login() {
   const navigate = useNavigate();
@@ -29,8 +30,9 @@ function Login() {
   return (
     <div className="login">
       <img src="../LoginPage/logo.webp" id="webLogo" alt="웹 로고" />
-      <button className="kakaoButton" onClick={handleLogin} />
-      <span id='loginStart'>카카오 로그인으로 시작</span> 
+      <div className='loginButton'>
+      <PokeStyleButton label={"카카오 로그인으로 시작"} onClick={handleLogin}/>
+      </div>
     </div>
   );
 }
