@@ -28,7 +28,7 @@ function Make() {
   }, [setToken]);
 
   const handleSubmit = async () => {
-    const token = localStorage.getItem("jwt"); 
+    const token = localStorage.getItem("accessToken"); 
 
     if (!type1 && !type2) {
       alert("타입을 하나 이상 선택해야 합니다.");
