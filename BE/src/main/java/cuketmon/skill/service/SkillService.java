@@ -59,7 +59,7 @@ public class SkillService {
                 skill.getType(),
                 skill.getDamageClass().toString(),
                 skill.getAccuracy(),
-                skill.getName(),
+                skill.getKoreanName(),
                 skill.getPower(),
                 skill.getPp()
         );
@@ -92,15 +92,17 @@ public class SkillService {
 
     // DB에 저장
     private void saveSkill(SkillResponse skillResponse) {
-        Skill skill = new Skill(
-                skillResponse.getId(),
-                Type.fromString(skillResponse.getType().getName()),
-                DamageClass.fromString(skillResponse.getDamageClass().getName()),
-                skillResponse.getAccuracy(),
-                skillResponse.getName(),
-                skillResponse.getPower(),
-                skillResponse.getPp()
-        );
+        Skill skill = Skill.builder()
+                .id(skillResponse.getId())
+                .type(Type.fromString(skillResponse.getType().getName()))
+                .damageClass(DamageClass.fromString(skillResponse.getDamageClass().getName()))
+                .accuracy(skillResponse.getAccuracy())
+                .englishName(skillResponse.getName())
+                .koreanName(skillResponse.getKoreanName())
+                .power(skillResponse.getPower())
+                .pp(skillResponse.getPp())
+                .priority(skillResponse.getPriority())
+                .build();
 
         if (skill.getPower() == null) {
             throw new IllegalArgumentException("power가 null인 스킬은 받지 않습니다.");

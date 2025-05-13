@@ -8,12 +8,12 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Getter
-@Setter
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -27,19 +27,25 @@ public class Skill {
     private Type type;
 
     @Enumerated(EnumType.STRING)
-    @Column
+    @Column(nullable = false)
     private DamageClass damageClass;
 
     @Column(nullable = true)
     private Integer accuracy;
 
     @Column(nullable = false)
-    private String name;
+    private String englishName;
+
+    @Column(nullable = false)
+    private String koreanName;
 
     @Column(nullable = true)
     private Integer power;
 
     @Column(nullable = false)
     private Integer pp;
+
+    @Column(nullable = false)
+    private Integer priority;
 
 }
