@@ -44,15 +44,11 @@ span {
 }
 
 .cucketmonProfile {
-  background-image: url("/public/MyPage/cukemonProfile.webp");
-  background-size: 100% 110%;
-  border: 2px solid #bab8b8;
   width: 22vw;
   text-align: center;
   position: relative;
   top: 37vh;
   left: 72vw;
-  background-color: #d9d9d9;
   margin-bottom: 3%;
   padding-bottom: 0.5%;
   padding-top: 1%;
@@ -189,9 +185,9 @@ span {
   .cucketmonProfile {
     position: absolute;
     top: 57.5%;
-    left: 34%;
+    left: 25%;
     margin-left: 0;
-    width: 35%;
+    width: 50%;
     margin-top: 5%;
   }
 

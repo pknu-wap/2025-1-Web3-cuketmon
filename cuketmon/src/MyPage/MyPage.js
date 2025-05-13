@@ -3,6 +3,7 @@ import MenuBar from "../Menubar/Menubar.js";
 import './MyPage.css';
 import { useAuth } from '../AuthContext';
 import { useNavigate } from 'react-router-dom';
+import TextBox from '../common/TextBox/TextBox.js';
 
 function MyPage() {
   const navigate = useNavigate();
@@ -20,10 +21,10 @@ function MyPage() {
 
   /*유저 소유 커켓몬 조회하기 */
   const loadCukemon = async () => {
-        if (!token){
-     navigate(`/login`); //token이 없는 경우 로그인화면으로 이동하게 함
-      return;
-    } 
+    //     if (!token){
+    //  navigate(`/login`); //token이 없는 경우 로그인화면으로 이동하게 함
+    //   return;
+    // } 
     try {
       const res = await fetch(`${API_URL}/api/trainer/monsters`, {
         headers: { 'Authorization': `Bearer ${token}` },
@@ -242,13 +243,15 @@ function MyPage() {
       </div>
 
       <div className='cucketmonProfile'>
-        {loading ? <p>로딩 중...</p> : <p>{cukemonData?.name || "이름 없음"}</p>}
-        <div id='relevanceCount'>
-          <img src='/MyPage/relevance.webp' alt="친밀도 아이콘" />
-          <span>{cukemonData?.affinity ?? "로딩중.."}</span>
-        </div>
+        <TextBox>
+          {loading ? <p>로딩 중...</p> : <p>{cukemonData?.name || "이름 없음"}</p>}
+          <div id='relevanceCount'>
+            <img src='/MyPage/relevance.webp' alt="친밀도 아이콘" />
+            <span>{cukemonData?.affinity ?? "로딩중.."}</span>
+          </div>
+        </ TextBox>
       </div>
-
+      
       <div className="buttons">
         <button id="feedButton" onClick={feedCukemon} />
         <button id="playButton" onClick={playCukemon} />

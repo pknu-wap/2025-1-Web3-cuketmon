@@ -1,0 +1,83 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+.textbox {
+  display: flex;
+  align-items: stretch;
+  border: 2px solid #333;
+  background-color: #f0f0f0;
+  max-width: 600px;
+  min-height: 80px;
+  position: relative;
+}
+
+.side-pattern {
+    width: 16px;
+    background-color: #777;
+    background-image: 
+      linear-gradient(45deg, #666 25%, transparent 25%),
+      linear-gradient(-45deg, #666 25%, transparent 25%),
+      linear-gradient(45deg, transparent 75%, #999 75%),
+      linear-gradient(-45deg, transparent 75%, #999 75%);
+    background-size: 8px 8px;
+    background-repeat: repeat;
+  }
+  
+.left {
+  border-right: 2px solid #333;
+}
+
+.right {
+  border-left: 2px solid #333;
+}
+
+.textbox-content {
+  flex: 1;
+  padding: 12px;
+  position: relative;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 12px;
+  color: #000;
+}
+
+.text {
+  margin: 0;
+  white-space: pre-wrap;
+}
+
+.blink-indicator {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  font-size: 12px;
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0%, 50%, 100% { opacity: 1; }
+  25%, 75% { opacity: 0; }
+}
+
+/* ✅ 반응형 스타일 */
+@media (max-width: 767px) {
+    .textbox {
+      max-width: 100%;
+      min-height: 60px;
+    }
+  
+    .side-pattern {
+      width: 12px;
+      background-size: 6px 6px;
+    }
+  
+    .textbox-content {
+      padding: 8px;
+      font-size: 10px;
+    }
+  
+    .blink-indicator {
+      bottom: 6px;
+      right: 6px;
+      font-size: 10px;
+    }
+  }
+  
