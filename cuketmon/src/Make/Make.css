@@ -88,32 +88,6 @@ textarea:focus {
   left: 44vw;
 }
 
-#submit {
-  background: none;
-  background-image: url("/public/button.png");
-  background-size: cover;
-  border: none;
-  width: 12vw;
-  height: 5vw;
-}
-
-#submit:hover {
-  background-image: url("/public/button-hover.png");
-  top: 80vh;
-  left: 30vw;
-}
-
-.submitButton p {
-  position: absolute;
-  top: 40%;
-  left: 44%;
-  color: white;
-  pointer-events: none;
-  font-size: 19px;
-  white-space: nowrap;
-}
-
-
 
 /* 모바일 반응형 */
 @media (max-width: 767px) {

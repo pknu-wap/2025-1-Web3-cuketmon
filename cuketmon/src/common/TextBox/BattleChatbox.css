@@ -1,4 +1,4 @@
-.battle-chatbox {
+.battleChatbox {
     display: flex;
     background-color: #222;
     color: white;
@@ -10,7 +10,7 @@
     overflow: hidden;
   }
   
-  .left-panel {
+  .leftPanel {
     width: 60%;
     display: flex;
     flex-wrap: wrap;
@@ -19,7 +19,7 @@
     box-sizing: border-box;
   }
   
-  .move-button {
+  .moveButton {
     width: 50%;
     padding: 8px;
     margin: 2px 0;
@@ -30,12 +30,12 @@
     text-align: center;
   }
   
-  .move-button.selected {
+  .moveButton.selected {
     background-color: #666;
     font-weight: bold;
   }
   
-  .right-panel {
+  .rightPanel {
     width: 40%;
     padding: 10px;
     background-color: #333;
@@ -43,13 +43,13 @@
     box-sizing: border-box;
   }
   
-  .desc-title {
+  .descTitle {
     font-size: 1.2em;
     margin-bottom: 5px;
     font-weight: bold;
   }
   
-  .skill-detail div {
+  .skillDetail div {
     margin-bottom: 4px;
   }
   

@@ -5,9 +5,7 @@ import MenuBar from "../Menubar/Menubar.js";
 import { useAuth } from "../AuthContext";
 import typeData from './../Type';
 import TextBox from '../common/TextBox/TextBox.js';
-import BattleChatbox from '../common/TextBox/BattleChatbox.js';
-
-
+import PokeStyleButton from '../common/PokeStyleButton/PokeStyleButton.js';
 
 
 function Make() {
@@ -78,7 +76,7 @@ function Make() {
       <div className="make">
         <div className="Q1">
           <img src="/Menubar/mypageicon.webp" alt="포켓몬 아이콘" />
-          <h2>원하시는 포켓몬의 타입을 선택해 주세요.</h2>
+          <h2>원하는 포켓몬의 타입을 선택해 주세요.</h2>
         </div>
 
         <select id="S1" value={type1} onChange={(e) => setType1(e.target.value)} style={{ color: type1 ? typeData[Object.keys(typeData).find(key => typeData[key].korean === type1)]?.color : 'black' }}>
@@ -117,10 +115,8 @@ function Make() {
           <p>{description.length} / 44 자</p>
           </TextBox>
         </div>
-
         <div className="submitButton">
-          <button id='submit' onClick={handleSubmit} />
-          <p>제출하기</p>
+          <PokeStyleButton label={"제출하기"} onClick={handleSubmit}/>
         </div>
         <MenuBar />
       </div>

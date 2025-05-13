@@ -4,12 +4,12 @@ import './TextBox.css';
 export default function Textbox({ children }) {
   return (
     <div className="textbox">
-      <div className="side-pattern left" />
-      <div className="textbox-content">
+      <div className="sidePattern left" />
+      <div className="textboxContent">
         {children}
-        <div className="blink-indicator">▼</div>
+        <div className="blinkIndicator">▼</div>
       </div>
-      <div className="side-pattern right" />
+      <div className="sidePattern right" />
     </div>
   );
 }
