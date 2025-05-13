@@ -61,7 +61,8 @@ public class SkillService {
                 skill.getAccuracy(),
                 skill.getKoreanName(),
                 skill.getPower(),
-                skill.getPp()
+                skill.getPp(),
+                skill.getPriority()
         );
     }
 

@@ -56,6 +56,7 @@ public class MonsterDTO {
             private String name;
             private Integer power;
             private Integer pp;
+            private Integer priority;
 
             public void usePp(int amount) {
                 this.pp -= amount;
