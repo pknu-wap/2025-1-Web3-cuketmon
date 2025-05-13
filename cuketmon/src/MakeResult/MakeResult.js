@@ -32,7 +32,7 @@ function MakeResult() {
 
           if (data.image) {
             setCukemonImage(data.image);     
-            localStorage.setItem("cukemonImage", data.image);  // 이미지 표시 방법 변경(로컬스토리지에서 꺼내쓰게 함) (5/13수정)
+            localStorage.setItem("cukemonMakeResultImage", data.image);  // 이미지 표시 방법 변경(로컬스토리지에서 꺼내쓰게 함) (5/13수정)
             setMentText("처음보는 포켓몬이 나타났다!");
             navigate(`/NamePage`);
           } else {
