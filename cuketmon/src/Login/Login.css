@@ -16,34 +16,10 @@
   width: 30vw;
 }
 
-.kakaoButton {
+.loginButton {
   position: relative;
-  width: 21vw;
-  height: 8vw;
-  margin: 5vh auto;
-  margin-top: 60vh;
-  background: none;
-  background-image: url("/public/button.png");
-  background-size: cover;
-  background-position: center;
-  border: none;
-  cursor: pointer;
-  font-weight: bold;
-  color: white;
-  text-align: right;
-  transition: background-image 0.3s ease;
-}
-
-#loginStart {
-  color: white;
-  position: absolute;
-  top: 76.5%;
-  left: 47.5%;
-  font-size: 1vw;
-}
-
-.kakaoButton:hover {
-  background-image: url("/public/button-hover.png");
+  top: 30vh;
+  width: 20vw;
 }
 
 /* 반응형 */
@@ -63,20 +39,7 @@
     top: 10vh;
   }
 
-  .kakaoButton {
-    width: 50vw;
-    height: 20vw;
-    margin-top: 70vh;
-    font-size: 4vw;
-  }
-
-  .kakaoButton:hover {
-    font-size: 5vw;
-  }
-
-  #loginStart {
-    font-size: 10px;
-    top: 82vh;
-    left: 44vw;
+  .loginButton {
+    width: 70%;
   }
 }
