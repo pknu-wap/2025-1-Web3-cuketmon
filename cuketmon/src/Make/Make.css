@@ -18,7 +18,7 @@
   max-width: 800px;
   display: flex;
   flex-direction: column;
-  align-items:start;
+  align-items: start;
 }
 
 .Q1,
@@ -88,17 +88,21 @@ textarea:focus {
   left: 44vw;
 }
 
-
 /* 모바일 반응형 */
 @media (max-width: 767px) {
   .makeBackGround {
     background-image: url("/public/MakePage/backgroundMobile.webp");
-    padding-top: 3vh;
+  }
+
+  .Q1,
+  .Q2 {
+    padding-top: 2vh;
   }
 
   .Q1 h2,
   .Q2 h2 {
-    font-size: 4vw;
+    font-size: 3.5vw;
+    white-space: nowrap;
   }
 
   #S1,
@@ -118,7 +122,7 @@ textarea:focus {
   }
 
   .submitButton {
-    left: 35vw;
+    left: 33vw;
   }
 
   #submit {

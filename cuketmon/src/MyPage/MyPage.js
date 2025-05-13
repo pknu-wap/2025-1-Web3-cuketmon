@@ -19,10 +19,6 @@ function MyPage() {
 
   /*유저 소유 커켓몬 조회하기 */
   const loadCukemon = async () => {
-    //     if (!token){
-    //  navigate(`/login`); //token이 없는 경우 로그인화면으로 이동하게 함
-    //   return;
-    // } 
     try {
       const res = await fetch(`${API_URL}/api/trainer/monsters`, {
         headers: { 'Authorization': `Bearer ${token}` },
