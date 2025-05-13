@@ -1,6 +1,5 @@
 package cuketmon.battle.service;
 
-import cuketmon.battle.constant.BattleStatus;
 import cuketmon.battle.dto.BattleDTO;
 import cuketmon.battle.dto.EndBattleResponse;
 import cuketmon.battle.dto.MatchResponse;
@@ -62,11 +61,12 @@ public class BattleMatchService {
         messagingTemplate.convertAndSend("/topic/match/" + battleId, new MatchResponse(battleId, blue, red, false));
     }
 
+    // TODO: 이거 쓰려면 EndBattleResponse 수정해야함
     @Transactional
     public void endBattle(Integer battleId) {
         log.info("배틀 종료 요청 battleId: {}", battleId);
         messagingTemplate.convertAndSend("/topic/battleEnd/" + battleId,
-                new EndBattleResponse(battleId, BattleStatus.FINISHED.getName()));
+                new EndBattleResponse("Escape"));
     }
 
     @Transactional

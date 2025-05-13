@@ -7,7 +7,6 @@ import lombok.Getter;
 @AllArgsConstructor
 public class EndBattleResponse {
 
-    private Integer battleId;
-    private String result;
+    private String winner;
 
 }

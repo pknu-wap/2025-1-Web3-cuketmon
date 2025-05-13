@@ -27,7 +27,7 @@ public class BattleWebSocketController {
         battleMatchService.findBattle(request);
     }
 
-    // 사실 이건 필요 없음
+    // 사실 이건 필요 없음 혹시나 도망치는 기능이 필요할지도 모르니 남겨놓음
     // 배틀 종료
     @MessageMapping("/endBattle/{battleId}")
     public void endBattle(@DestinationVariable Integer battleId) {

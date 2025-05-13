@@ -5,6 +5,7 @@ import static cuketmon.battle.constant.BattleConst.SKILL_INDEX_RED;
 import static cuketmon.util.Damage.makeDamage;
 
 import cuketmon.battle.dto.BattleDTO;
+import cuketmon.battle.dto.EndBattleResponse;
 import cuketmon.battle.dto.MatchResponse;
 import cuketmon.battle.dto.SkillRequest;
 import cuketmon.battle.repository.ActiveBattles;
@@ -101,7 +102,7 @@ public class BattleSkillService {
 
         if (defender.getMonster().getHp() <= 0) {
             messagingTemplate.convertAndSend("/topic/battleEnd/" + battleId,
-                    new MatchResponse(battleId, attacker, defender, false));
+                    new EndBattleResponse(attacker.getTrainerName()));
             trainerService.addWin(attacker.getTrainerName());
             trainerService.addLose(defender.getTrainerName());
             activeBattles.remove(battleId);
