@@ -98,6 +98,11 @@ textarea:focus {
   .Q2 {
     padding-top: 2vh;
   }
+  .Q1 img,
+  .Q2 img {
+    width: 20px;
+    height: 20px;
+  }
 
   .Q1 h2,
   .Q2 h2 {
