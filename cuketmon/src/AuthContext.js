@@ -7,11 +7,11 @@ export const AuthProvider = ({ children }) => {
 
   const setToken = (newToken) => {
     setTokenState(newToken);
-    localStorage.setItem('jwt', newToken);
+    localStorage.setItem('accesToken', newToken);
   };
 
   useEffect(() => {
-    const stored = localStorage.getItem('jwt');
+    const stored = localStorage.getItem('accessToken');
     if (stored) {
       setTokenState(stored);
     }

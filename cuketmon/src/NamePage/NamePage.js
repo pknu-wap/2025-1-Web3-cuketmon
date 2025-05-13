@@ -7,7 +7,7 @@ function NamePage() {
   const [name, setName] = useState("");
   const navigate = useNavigate();
   const { token: contextToken } = useAuth();
-  const token = contextToken || localStorage.getItem('jwt');
+  const token = contextToken || localStorage.getItem('accessToken');
   const API_URL = process.env.REACT_APP_API_URL;
   const cukemonResultImage = localStorage.getItem('cukemonMakeResultImage')
   const monsterId = localStorage.getItem("makeResultMonsterId");
