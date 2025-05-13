@@ -25,7 +25,7 @@ function Login() {
     } else {
       console.error('Token 값이 존재하지 않습니다.');
     }
-  }, [navigate, setToken]);
+  }, [navigate, API_URL,setToken]);
 
   return (
     <div className="login">
