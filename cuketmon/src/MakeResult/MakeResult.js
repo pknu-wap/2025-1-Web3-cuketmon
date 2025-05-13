@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./MakeResult.css";
 
 function MakeResult() {
@@ -7,15 +7,18 @@ function MakeResult() {
   const [mentText, setMentText] = useState("어라...?");
   const eggRef = useRef(null);
   const navigate = useNavigate();
-  const location = useLocation();
-  const { monsterId } = location.state || {};
-  const API_URL = process.env.REACT_APP_API_URL;
   const token = localStorage.getItem("jwt");
+  const monsterId  = localStorage.getItem('makeResultMonsterId');
+  const API_URL = process.env.REACT_APP_API_URL;
+
 
   useEffect(() => {
     const delayAndFetch = () => {
       setTimeout(async () => {
-        if (!monsterId || !token) return;
+        if (monsterId==null){
+          console.alert("잘못된 접근입니다.");
+          navigate(`/make`);
+        }
 
         try{
           const response = await fetch(`${API_URL}/api/monster/${monsterId}/info`, {
@@ -29,13 +32,9 @@ function MakeResult() {
 
           if (data.image) {
             setCukemonImage(data.image);     
+            localStorage.setItem("cukemonMakeResultImage", data.image);  // 이미지 표시 방법 변경(로컬스토리지에서 꺼내쓰게 함) (5/13수정)
             setMentText("처음보는 포켓몬이 나타났다!");
-            navigate(`/NamePage`, {
-              state: {
-                monsterId: monsterId,
-                image: data.image,
-              },
-            });
+            navigate(`/NamePage`);
           } else {
             throw new Error("이미지 없음");
           }

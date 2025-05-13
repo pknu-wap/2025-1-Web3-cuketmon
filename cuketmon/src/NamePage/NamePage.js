@@ -1,64 +1,44 @@
 import React, { useRef,useState, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate} from "react-router-dom";
 import { useAuth } from "../AuthContext";
 import "./NamePage.css";
 
 function NamePage() {
   const [name, setName] = useState("");
-  const [cukemonImage, setCukemonImage] = useState("/Menubar/egg.png");
   const navigate = useNavigate();
   const { token: contextToken } = useAuth();
   const token = contextToken || localStorage.getItem('jwt');
-  const location = useLocation(); 
-  const maxLength = 12;
   const API_URL = process.env.REACT_APP_API_URL;
-  const cukemonResultImage = location.state?.image; 
+  const cukemonResultImage = localStorage.getItem('cukemonMakeResultImage')
+  const monsterId = localStorage.getItem("makeResultMonsterId");
 
-
-//뒤로가기 막기 (5/9)
+//뒤로가기 막기 
  const backBlockRef = useRef(false); 
 useEffect(() => {
   const preventGoBack = (event) => {
     if (event.type === "popstate") {
       if (backBlockRef.current) return;
       backBlockRef.current = true;
-
       alert("커켓몬을 두고 떠나지마요 ㅠㅠㅠ");
       window.history.go(1);
-
       setTimeout(() => {
         backBlockRef.current = false;
       }, 500);
     }
   };
-
   window.history.pushState(null, "", window.location.href);
   window.addEventListener("popstate", preventGoBack);
-
   return () => {
     window.removeEventListener("popstate", preventGoBack);
   };
 }, []);
 
-
-  useEffect(() => {
-    if (cukemonResultImage) {
-      setCukemonImage(cukemonResultImage);
-    }
-  }, [cukemonResultImage]);
-
-  const namingCukemon = (e) => {
-    if (e.target.value.length <= maxLength) {
-      setName(e.target.value);
-    }
-  };
-
+  /*데려가기*/
   const handleGoToMypage = async () => {
     if (!name.trim()) {
       alert("이름을 입력해주세요.");
       return;
     }
-   const monsterId = localStorage.getItem("makeResultMonsterId");
     try {
       const response = await fetch(`${API_URL}/api/monster/${monsterId}/name`, {
         method: "PATCH",
@@ -77,9 +57,8 @@ useEffect(() => {
     }
   };
 
-
+   /*재부화*/
   const handleGoTOMakePage = async()=>{
-        const monsterId = localStorage.getItem("makeResultMonsterId");
         const res = await fetch(`${API_URL}/api/monster/${monsterId}/release`, {
           method: "DELETE",
           headers: { 'Authorization': `Bearer ${token}` },
@@ -89,14 +68,13 @@ useEffect(() => {
     }
 
 
-
   return (
     <div className="namePage">
       <div className="nameInputBox">
         <p>Your name?</p>
-        {cukemonImage && (
+        {cukemonResultImage && ( //이미지가 있는 경우에만 렌더링 하도록 함 (5/13 수정)
           <img
-            src={cukemonImage}
+            src={cukemonResultImage}
             alt="커켓몬 이미지"
             className="cukemonImage"
           />
@@ -107,11 +85,11 @@ useEffect(() => {
           <input
             type="text"
             value={name}
-            onChange={namingCukemon}
+            onChange={(e) => setName(e.target.value)}  //이름 지정시 불필요한 코드 삭제 (5/13 수정)
             placeholder="커켓몬 이름 입력"
-            maxLength={maxLength}
+            maxLength={12}
           />
-          <div id="remainWord">{name.length}/{maxLength}자</div>
+          <div id="remainWord">{name.length}/12자</div>
         </div>
 
         <div className="choiceButtons">
