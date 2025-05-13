@@ -4,6 +4,10 @@ import "./Make.css";
 import MenuBar from "../Menubar/Menubar.js";
 import { useAuth } from "../AuthContext";
 import typeData from './../Type';
+import TextBox from '../common/TextBox/TextBox.js';
+import BattleChatbox from '../common/TextBox/BattleChatbox.js';
+
+
 
 
 function Make() {
@@ -95,32 +99,29 @@ function Make() {
        </option>
       ))}
         </select>
-        <img src="/MakePage/type.webp" id="typeicon" alt="포켓몬 타입 이미지" />
-
         <div className="Q2">
           <img src="/Menubar/mypageicon.webp" alt="포켓몬 아이콘" />
           <h2>커켓몬 특징을 나타내는 단어들을 적어주세요.</h2>
         </div>
 
         <div className="cukemonFeature">
-          <div className="textBack">
+        <TextBox>
             <textarea
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               maxLength={44}
-              rows={5}
-              cols={50}
+              rows={3}
+              cols={30}
               placeholder="영어로 기입해주세요. 예시) beige, normal/flying, sharp-beaked bird"
             />
-          </div>
           <p>{description.length} / 44 자</p>
+          </TextBox>
         </div>
 
         <div className="submitButton">
           <button id='submit' onClick={handleSubmit} />
           <p>제출하기</p>
         </div>
-
         <MenuBar />
       </div>
     </div>

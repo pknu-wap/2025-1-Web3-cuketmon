@@ -1,0 +1,55 @@
+.battle-chatbox {
+    display: flex;
+    background-color: #222;
+    color: white;
+    border: 2px solid #888;
+    border-radius: 10px;
+    width: 700px;
+    height: 100px;
+    font-family: 'Arial', sans-serif;
+    overflow: hidden;
+  }
+  
+  .left-panel {
+    width: 60%;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    padding: 10px;
+    box-sizing: border-box;
+  }
+  
+  .move-button {
+    width: 50%;
+    padding: 8px;
+    margin: 2px 0;
+    background-color: #444;
+    border: 1px solid #999;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+  }
+  
+  .move-button.selected {
+    background-color: #666;
+    font-weight: bold;
+  }
+  
+  .right-panel {
+    width: 40%;
+    padding: 10px;
+    background-color: #333;
+    border-left: 2px solid #999;
+    box-sizing: border-box;
+  }
+  
+  .desc-title {
+    font-size: 1.2em;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  
+  .skill-detail div {
+    margin-bottom: 4px;
+  }
+  
