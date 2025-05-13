@@ -7,8 +7,8 @@ const BattleChatbox = ({ skills }) => {
   const [selected, setSelected] = useState(0);
 
   return (
-    <div className="battle-chatbox">
-      <div className="left-panel">
+    <div className="battleChatbox">
+      <div className="leftPanel">
         {skills.map((skill, index) => (
           <SkillButton
             key={index}
@@ -18,7 +18,7 @@ const BattleChatbox = ({ skills }) => {
           />
         ))}
       </div>
-      <div className="right-panel">
+      <div className="rightPanel">
         <SkillDetail skill={skills[selected]} />
       </div>
     </div>

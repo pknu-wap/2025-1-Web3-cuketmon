@@ -10,7 +10,7 @@
   position: relative;
 }
 
-.side-pattern {
+.sidePattern {
     width: 16px;
     background-color: #777;
     background-image: 
@@ -30,7 +30,7 @@
   border-left: 2px solid #333;
 }
 
-.textbox-content {
+.textboxContent {
   flex: 1;
   padding: 12px;
   position: relative;
@@ -45,7 +45,7 @@
   white-space: pre-wrap;
 }
 
-.blink-indicator {
+.blinkIndicator {
   position: absolute;
   bottom: 8px;
   right: 8px;
@@ -65,17 +65,17 @@
       min-height: 60px;
     }
   
-    .side-pattern {
+    .sidePattern {
       width: 12px;
       background-size: 6px 6px;
     }
   
-    .textbox-content {
+    .textboxContent {
       padding: 8px;
       font-size: 10px;
     }
   
-    .blink-indicator {
+    .blinkIndicator {
       bottom: 6px;
       right: 6px;
       font-size: 10px;

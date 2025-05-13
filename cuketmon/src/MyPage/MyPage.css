@@ -62,28 +62,19 @@ span {
 
 .buttons {
   display: flex;
+  margin: 0 auto;
 }
 
 #feedButton,
 #playButton {
-  background: none;
-  background-image: url("/public/button.png");
-  background-size: cover;
   border: none;
   cursor: pointer;
   position: relative;
   left: 71vw;
   top: 35vh;
   display: inline-block;
-  width: 11vw;
-  height: 5vw;
+  width: 10vw;
   margin-right: 1.5%;
-}
-
-#feedButton:hover,
-#playButton:hover {
-  background-image: url("/public/button-hover.png");
-  background-size: cover;
 }
 
 #buttonText1 {

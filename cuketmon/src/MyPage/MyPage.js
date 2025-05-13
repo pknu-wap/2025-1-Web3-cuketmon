@@ -3,7 +3,7 @@ import MenuBar from "../Menubar/Menubar.js";
 import './MyPage.css';
 import { useAuth } from '../AuthContext';
 import TextBox from '../common/TextBox/TextBox.js';
-
+import PokeStyleButton from '../common/PokeStyleButton/PokeStyleButton.js'
 function MyPage() {
   const [toyCount, setToyCount] = useState();
   const [feedCount, setFeedCount] = useState();
@@ -251,11 +251,16 @@ function MyPage() {
       </div>
       
       <div className="buttons">
-        <button id="feedButton" onClick={feedCukemon} />
-        <button id="playButton" onClick={playCukemon} />
+        <div id="feedButton">
+          <PokeStyleButton label={"먹이주기"} onClick={feedCukemon}/>
+        </div>
+        <div id="playButton">
+
+        <PokeStyleButton label={"놀아주기"} onClick={feedCukemon}/>
+        </div>
       </div>
-      <span id="buttonText1">먹이주기</span>
-      <span id="buttonText2">놀아주기</span>
+      <span id="buttonText1"></span>
+      <span id="buttonText2"></span>
 
       <img src='/MyPage/releaseButton.webp' id="releaseButton" onClick={releaseCukemon} />
       <MenuBar />

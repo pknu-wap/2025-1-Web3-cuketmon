@@ -4,7 +4,7 @@ import './BattleChatbox.css';
 const SkillButton = ({ skill, selected, onClick }) => {
   return (
     <div
-      className={`move-button ${selected ? 'selected' : ''}`}
+      className={`moveButton ${selected ? 'selected' : ''}`}
       onClick={onClick}
     >
       {skill.name}
