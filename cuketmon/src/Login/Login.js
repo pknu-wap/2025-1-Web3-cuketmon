@@ -15,6 +15,7 @@ function Login() {
 
   useEffect(() => {
     const queryParams = new URLSearchParams(window.location.search);
+    console.log(queryParams);
     const token = queryParams.get('token'); 
     console.log(token)
     if (token) {
