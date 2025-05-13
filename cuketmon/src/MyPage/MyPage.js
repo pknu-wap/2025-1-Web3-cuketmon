@@ -2,11 +2,9 @@ import React, {  useRef, useEffect, useState } from 'react';
 import MenuBar from "../Menubar/Menubar.js";
 import './MyPage.css';
 import { useAuth } from '../AuthContext';
-import { useNavigate } from 'react-router-dom';
 import TextBox from '../common/TextBox/TextBox.js';
 
 function MyPage() {
-  const navigate = useNavigate();
   const [toyCount, setToyCount] = useState();
   const [feedCount, setFeedCount] = useState();
   const [loading, setLoading] = useState(true);
