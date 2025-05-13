@@ -16,6 +16,11 @@ public class BattleDTO {
     public static class Team {
         private String trainerName;
         private MonsterDTO.MonsterBattleInfo monster;
+        private String skillAnimation;
+
+        public void changeSkillAnimation(String newSkillAnimation) {
+            this.skillAnimation = newSkillAnimation;
+        }
     }
 
 }

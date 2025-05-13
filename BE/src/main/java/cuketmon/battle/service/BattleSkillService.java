@@ -89,7 +89,8 @@ public class BattleSkillService {
         log.info("HP 감소 완료 blue Temp HP: {}, damage: {}", blueMonster.getHp(), redDamage);
 
         // 4. 전송
-        messagingTemplate.convertAndSend("/topic/battle/" + battleId, new MatchResponse(battleId, red, blue));
+        messagingTemplate.convertAndSend("/topic/battle/" + battleId,
+                new MatchResponse(battleId, red, blue, isRedFirst));
         requestedSkills.remove(battleId);
     }
 
@@ -100,7 +101,7 @@ public class BattleSkillService {
 
         if (defender.getMonster().getHp() <= 0) {
             messagingTemplate.convertAndSend("/topic/battleEnd/" + battleId,
-                    new MatchResponse(battleId, attacker, defender));
+                    new MatchResponse(battleId, attacker, defender, false));
             trainerService.addWin(attacker.getTrainerName());
             trainerService.addLose(defender.getTrainerName());
             activeBattles.remove(battleId);
@@ -118,10 +119,15 @@ public class BattleSkillService {
     }
 
     private void setSkill(Integer battleId, SkillRequest skillRequest) {
-        if (activeBattles.get(battleId).getRed().getTrainerName().equals(skillRequest.getTrainerName())) {
+        BattleDTO.Team red = activeBattles.get(battleId).getRed();
+        BattleDTO.Team blue = activeBattles.get(battleId).getBlue();
+
+        if (red.getTrainerName().equals(skillRequest.getTrainerName())) {
             requestedSkills.get(battleId)[SKILL_INDEX_RED] = skillRequest.getSkillId();
+            red.changeSkillAnimation(skillRequest.getAnimationUrl());
         } else {
             requestedSkills.get(battleId)[SKILL_INDEX_BLUE] = skillRequest.getSkillId();
+            blue.changeSkillAnimation(skillRequest.getAnimationUrl());
         }
     }
 

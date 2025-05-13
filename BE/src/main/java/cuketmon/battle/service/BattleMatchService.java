@@ -59,7 +59,7 @@ public class BattleMatchService {
 
         log.info("배틀 생성 battleId: {}, red: {}, blue: {}", battleId, red.getTrainerName(), blue.getTrainerName());
         log.info("현재 대기 큐 상태  : {}", waitingQueue.getState());
-        messagingTemplate.convertAndSend("/topic/match/" + battleId, new MatchResponse(battleId, blue, red));
+        messagingTemplate.convertAndSend("/topic/match/" + battleId, new MatchResponse(battleId, blue, red, false));
     }
 
     @Transactional

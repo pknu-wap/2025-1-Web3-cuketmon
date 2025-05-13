@@ -20,7 +20,7 @@ public class TeamMaker {
         return new BattleDTO.Team(
                 request.getTrainerName(),
                 monsterService.getMonsterBattleInfo(request.getMonsterId()),
-                false
+                null
         );
     }
 
