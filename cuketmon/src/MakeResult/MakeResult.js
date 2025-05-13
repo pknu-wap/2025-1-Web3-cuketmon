@@ -7,7 +7,7 @@ function MakeResult() {
   const [mentText, setMentText] = useState("어라...?");
   const eggRef = useRef(null);
   const navigate = useNavigate();
-  const token = localStorage.getItem("jwt");
+  const token = localStorage.getItem('accessToken');
   const monsterId  = localStorage.getItem('makeResultMonsterId');
   const API_URL = process.env.REACT_APP_API_URL;
 

@@ -13,7 +13,7 @@ function MyPage() {
   const [monsters, setMonsters] = useState([]); 
   const API_URL = process.env.REACT_APP_API_URL;
   const { token: contextToken } = useAuth();
-  const token = contextToken || localStorage.getItem('jwt');
+  const token = contextToken || localStorage.getItem('accessToken');
   const isLoadingRef = useRef(false);
 
 
