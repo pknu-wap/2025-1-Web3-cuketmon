@@ -16,11 +16,6 @@ public class BattleDTO {
     public static class Team {
         private String trainerName;
         private MonsterDTO.MonsterBattleInfo monster;
-        private Boolean turn;
-
-        public void changeTurn() {
-            this.turn = !this.turn;
-        }
     }
 
 }

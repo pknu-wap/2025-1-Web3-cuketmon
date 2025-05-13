@@ -45,6 +45,7 @@ public class BattleMatchService {
         // 1. 큐 대기
         if (waitingQueue.isEmpty()) {
             waitingQueue.add(teamMaker.makeTeam(request));
+            log.info("현재 대기 큐 상태  : {}", waitingQueue.getState());
             return;
         }
 
@@ -52,19 +53,12 @@ public class BattleMatchService {
         BattleDTO.Team red = waitingQueue.poll();
         BattleDTO.Team blue = teamMaker.makeTeam(request);
 
-        // 3. 선공 설정
-        if (red.getMonster().getSpeed() > blue.getMonster().getSpeed()) {
-            red.changeTurn();
-        } else {
-            blue.changeTurn();
-        }
-
-        // 4. 배틀 생성
+        // 3. 배틀 생성
         Integer battleId = generateBattleId();
         activeBattles.add(battleId, red, blue);
 
         log.info("배틀 생성 battleId: {}, red: {}, blue: {}", battleId, red.getTrainerName(), blue.getTrainerName());
-        log.info("현재 대기 큐 상태: {}", waitingQueue.getState());
+        log.info("현재 대기 큐 상태  : {}", waitingQueue.getState());
         messagingTemplate.convertAndSend("/topic/match/" + battleId, new MatchResponse(battleId, blue, red));
     }
 
