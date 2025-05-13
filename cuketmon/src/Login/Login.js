@@ -16,10 +16,11 @@ function Login() {
   useEffect(() => {
     const queryParams = new URLSearchParams(window.location.search);
     const token = queryParams.get('token'); 
-
+    console.log(token)
     if (token) {
       localStorage.setItem('accessToken', token); 
       setToken(token); 
+        console.log(token)
       window.history.replaceState({}, document.title, "/make");
       navigate('/make', { replace: true });
     } else {
