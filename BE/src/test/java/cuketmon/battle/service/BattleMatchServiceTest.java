@@ -34,6 +34,9 @@ class BattleMatchServiceTest {
     private BattleMatchService battleMatchService;
 
     @Autowired
+    private BattleSkillService battleSkillService;
+
+    @Autowired
     private SimpMessagingTemplate messagingTemplate;
 
     @Test
@@ -69,7 +72,7 @@ class BattleMatchServiceTest {
         verify(messagingTemplate, times(1)).convertAndSend(startsWith("/topic/match/"), captor.capture());
 
         int battleId = captor.getValue().getBattleId();
-        battleMatchService.useSkill(battleId, new SkillRequest(1, TRAINER1));
+        battleSkillService.useSkill(battleId, new SkillRequest(1, TRAINER1));
 
         verify(messagingTemplate, times(1)).convertAndSend(startsWith("/topic/battle/"), any(MatchResponse.class));
     }
