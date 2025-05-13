@@ -105,46 +105,6 @@ span {
   filter: brightness(0.7);
 }
 
-/*밥주기 움직임*/
-.moveImage {
-  animation: moveUpDown 3s ease-in-out;
-}
-
-@keyframes moveUpDown {
-  0% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-20px);
-  }
-  100% {
-    transform: translateY(0);
-  }
-}
-
-/*놀아주기 움직임*/
-.shakeImage {
-  animation: shakeLeftRight 3s ease-in-out;
-}
-
-@keyframes shakeLeftRight {
-  0% {
-    transform: translateX(0) rotate(0deg);
-  }
-  25% {
-    transform: translateX(-10px) rotate(-10deg);
-  }
-  50% {
-    transform: translateX(10px) rotate(10deg);
-  }
-  75% {
-    transform: translateX(-10px) rotate(-10deg);
-  }
-  100% {
-    transform: translateX(0) rotate(0deg);
-  }
-}
-
 /*모바일 반응형*/
 @media (max-width: 767px) {
   #root,
@@ -175,7 +135,7 @@ span {
 
   .cucketmonProfile {
     position: absolute;
-    top: 57.5%;
+    top: 51.5%;
     left: 25%;
     margin-left: 0;
     width: 50%;
@@ -194,34 +154,35 @@ span {
 
   .buttons {
     width: 100%;
+    white-space: nowrap;
   }
 
   /*먹이주기*/
   #buttonText1 {
-    font-size: 12.5px;
-    top: 74.3vh;
+    font-size: 10px;
+    top: 75.3vh;
     left: 33vw;
   }
   #feedButton {
     position: absolute;
     top: 72vh;
-    left: 20vw;
-    height: 50px;
-    width: 120px;
+    left: 16vw;
+    height: 5vh;
+    width: 36vw;
   }
 
   /*놀아주기*/
   #buttonText2 {
-    font-size: 12.5px;
+    font-size: 10px;
     top: 74.3vh;
-    left: 52vw;
+    left: 54vw;
   }
   #playButton {
     position: absolute;
     top: 72vh;
-    left: 52vw;
-    height: 50px;
-    width: 120px;
+    left: 54vw;
+    height: 5vh;
+    width: 36vw;
   }
 
   #releaseButton {
