@@ -15,7 +15,7 @@ function Ranking() {
   const [monsterImages, setMonsterImages] = useState([]);
   const API_URL = process.env.REACT_APP_API_URL;
   const { token: contextToken } = useAuth();
-  const token = contextToken || localStorage.getItem('jwt');
+  const token = contextToken || localStorage.getItem('accessToken');
 
   /*유저 소유 커켓몬 id 배열로 받기 */
   const loadCukemon = async () => {
