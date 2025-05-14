@@ -19,6 +19,7 @@ function MyPage() {
 
   /*유저 소유 커켓몬 조회하기 */
   const loadCukemon = async () => {
+    const token=localStorage.getItem('accessToken');
     try {
       const res = await fetch(`${API_URL}/api/trainer/monsters`, {
         headers: { 'Authorization': `Bearer ${token}` },
