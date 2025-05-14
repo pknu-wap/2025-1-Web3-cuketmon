@@ -19,7 +19,6 @@ function MyPage() {
 
   /*유저 소유 커켓몬 조회하기 */
   const loadCukemon = async () => {
-    const token=localStorage.getItem('accessToken');
     try {
       const res = await fetch(`${API_URL}/api/trainer/monsters`, {
         headers: { 'Authorization': `Bearer ${token}` },
@@ -121,23 +120,25 @@ function MyPage() {
   useEffect(() => {
       fetchData();
   }, [monsterId])
-  
-  /*방출 */
-  const releaseCukemon = async () => {
-    if (monsterId == null  || monsters.length === 0) return;
-    try {
-      const currentMonsterId = monsters[monsterId]; 
-      const res = await fetch(`${API_URL}/api/monster/${currentMonsterId}/release`, {
-        method: "DELETE",
-        headers: { 'Authorization': `Bearer ${token}` },
-      });
-      if (!res.ok) throw new Error(`삭제 실패: ${res.status}`);
-      alert("커켓몬이 원래 있던곳으로 돌아갔습니다.");
-      loadCukemon();
-    } catch (err) {
-      alert("에러 발생: " + err.message);
-    }
-  };
+
+/*방출*/
+const releaseCukemon = async () => {
+  if (monsterId == null || monsters.length === 0) return;
+  const confirmRelease = window.confirm("해당 커켓몬을 정말로 놓아주실건가요?");
+  if (!confirmRelease) return;
+  try {
+    const currentMonsterId = monsters[monsterId];
+    const res = await fetch(`${API_URL}/api/monster/${currentMonsterId}/release`, {
+      method: "DELETE",
+      headers: { 'Authorization': `Bearer ${token}` },
+    });
+    if (!res.ok) throw new Error(`삭제 실패: ${res.status}`);
+    alert("커켓몬이 원래 있던 곳으로 돌아갔습니다.");
+    loadCukemon();
+  } catch (err) {
+    alert("에러 발생: " + err.message);
+  }
+};
 
   useEffect(() => {
     const handleKeyPress = (event) => {
