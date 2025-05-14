@@ -1,38 +1,35 @@
 from diffusers import AutoPipelineForText2Image
 import torch
-from .config import MODEL_PATH, CHECKPOINT
-from io import BytesIO
-import base64
-from rembg import remove
+from .config import INFERENCE_API_URL
+import requests
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from PIL import Image
-from pathlib import Path
-from sqlalchemy.orm import Session
+import io
 
-def model_inference(monster_id: int, monster_description: str):
-    print("runing")
-    checkpoint = CHECKPOINT
-    pipeline = AutoPipelineForText2Image.from_pretrained('stable-diffusion-v1-5/stable-diffusion-v1-5', torch_dtype=torch.float16).to('cuda')
-    pipeline.load_lora_weights(f'{MODEL_PATH}/checkpoint-{checkpoint}')
-    print("model loaded")
+INFERENCE_API_URL = INFERENCE_API_URL
+MAX_WORKERS = 8
 
-    image = pipeline(f"a poketmon, {monster_description}, no background").images[0]
-    return image
+import requests
 
-def save_image(image: Image.Image, monster_id: int, monster, db: Session):
-    resized_image = image.resize((81, 81))
-    save_path = Path(f"results/{monster_id}-org.png")
-    resized_image.save(save_path)
+def model_inference(prompts):
+    """
+    prompts: List[str]
+    return: List[(prompt, PIL.Image.Image)]
+    """
+    def _send(prompt):
+        resp = requests.post(INFERENCE_API_URL, json={"prompt": f"a pokemon, {prompt}, no background"}, stream=True)
+        if resp.status_code == 200 and resp.headers.get("Content-Type") == "image/png":
+            img_bytes = resp.content
+            img = Image.open(io.BytesIO(img_bytes)).convert("RGB")
+            return prompt, img
+        else:
+            return prompt, None
 
-    output = remove(resized_image)
+    results = []
+    with ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
+        futures = {executor.submit(_send, p): p for p in prompts}
+        for future in as_completed(futures):
+            prompt, img = future.result()
+            results.append((prompt, img))
 
-    save_path = Path(f"results/{monster_id}.png")
-    output.save(save_path)
-
-    buffered = BytesIO()
-    output.save(buffered, format="PNG")
-    buffered.seek(0)
-
-    encoded_string = base64.b64encode(buffered.read()).decode('utf-8')
-    monster.image = encoded_string
-
-    db.commit()
+    return results

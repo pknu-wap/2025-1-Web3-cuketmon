@@ -1,0 +1,246 @@
+span {
+  font-family: "NeoDunggeunmo";
+}
+
+.myPage {
+  overflow: hidden;
+  background-image: url("/public/MyPage/background.webp");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+}
+
+.item img {
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 25px;
+  height: 25px;
+  padding-right: 0;
+}
+
+.item span {
+  padding-right: 10px;
+}
+
+.item {
+  position: absolute;
+  color: #efc15c;
+  left: 1%;
+  top: 0%;
+  font-size: 20px;
+}
+
+.cukemonImg img {
+  position: absolute;
+  transition: transform 1s ease-in-out;
+  width: clamp(150px, 20%, 300px);
+  left: 40vw;
+  top: 24vh;
+}
+
+.cucketmonProfile {
+  background-image: url("/public/MyPage/cukemonProfile.webp");
+  background-size: 100% 110%;
+  border: 2px solid #bab8b8;
+  width: 22%;
+  text-align: center;
+  position: relative;
+  top: 37%;
+  left: 72%;
+  background-color: #d9d9d9;
+  margin-bottom: 3%;
+  padding-bottom: 0.5%;
+  padding-top: 1%;
+  font-family: "NeoDunggeunmo";
+}
+
+.cucketmonProfile img {
+  width: 25px;
+  height: 25px;
+}
+
+.buttons {
+  display: flex;
+}
+
+#feedButton,
+#playButton {
+  background: none;
+  background-image: url("/public/button.png");
+  background-size: cover;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  left: 71vw;
+  top: 35vh;
+  display: inline-block;
+  width: 11vw;
+  height: 5vw;
+  margin-right: 1.5%;
+}
+
+#feedButton:hover,
+#playButton:hover {
+  background-image: url("/public/button-hover.png");
+  background-size: cover;
+}
+
+#buttonText1 {
+  position: absolute;
+  top: 55.3%;
+  left: 75.5vw;
+  font-size: 18px;
+  color: white;
+}
+
+#buttonText2 {
+  color: white;
+  position: absolute;
+  pointer-events: none;
+  font-size: 18px;
+  top: 55.3%;
+  left: 88vw;
+}
+
+#releaseButton {
+  width: 4%;
+  margin-bottom: 1%;
+  margin-left: 1%;
+  position: relative;
+  top: 50vh;
+}
+
+#releaseButton:hover {
+  filter: brightness(0.7);
+}
+
+/*밥주기 움직임*/
+.moveImage {
+  animation: moveUpDown 3s ease-in-out;
+}
+
+@keyframes moveUpDown {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+/*놀아주기 움직임*/
+.shakeImage {
+  animation: shakeLeftRight 3s ease-in-out;
+}
+
+@keyframes shakeLeftRight {
+  0% {
+    transform: translateX(0) rotate(0deg);
+  }
+  25% {
+    transform: translateX(-10px) rotate(-10deg);
+  }
+  50% {
+    transform: translateX(10px) rotate(10deg);
+  }
+  75% {
+    transform: translateX(-10px) rotate(-10deg);
+  }
+  100% {
+    transform: translateX(0) rotate(0deg);
+  }
+}
+
+/*모바일 반응형*/
+@media (max-width: 767px) {
+  #root,
+  body {
+    height: 100%;
+    padding: 0;
+  }
+
+  .myPage {
+    background-image: url("/public/MyPage/backgroundMobile.webp");
+    flex-direction: column;
+    justify-content: center;
+    padding-top: 0%;
+    height: 100%;
+  }
+
+  .item {
+    padding-top: 3%;
+    margin-bottom: 145.5%;
+  }
+
+  #cuketmonImage {
+    position: absolute;
+    top: 37%;
+    width: 35%;
+    left: 34%;
+  }
+
+  .cucketmonProfile {
+    position: absolute;
+    top: 57.5%;
+    left: 34%;
+    margin-left: 0;
+    width: 35%;
+    margin-top: 5%;
+  }
+
+  .cucketmonProfile p {
+    font-size: 20px;
+  }
+
+  .cucketmonProfile img,
+  .cucketmonProfile span {
+    width: 10px;
+    height: 10px;
+  }
+
+  .buttons {
+    width: 100%;
+  }
+
+  /*먹이주기*/
+  #buttonText1 {
+    font-size: 12.5px;
+    top: 74.3vh;
+    left: 33vw;
+  }
+  #feedButton {
+    position: absolute;
+    top: 72vh;
+    left: 20vw;
+    height: 50px;
+    width: 120px;
+  }
+
+  /*놀아주기*/
+  #buttonText2 {
+    font-size: 12.5px;
+    top: 74.3vh;
+    left: 65vw;
+  }
+  #playButton {
+    position: absolute;
+    top: 72vh;
+    left: 52vw;
+    height: 50px;
+    width: 120px;
+  }
+
+  #releaseButton {
+    position: absolute;
+    top: 83%;
+    width: 12%;
+  }
+}

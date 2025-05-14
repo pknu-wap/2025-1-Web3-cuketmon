@@ -1,0 +1,301 @@
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+
+.Battle {
+  background-image: url('/public/BattlePage/background.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vh;
+  width: 100vw;
+  padding: 2%;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.content {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  
+}
+
+.battleContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 60%;
+  padding: 2vw;
+  position: relative;
+}
+
+.mySection, .enemySection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 45vw;
+  height: 100%;
+  position: relative;
+}
+
+.myStage, .enemyStage {
+  position: absolute;
+  bottom: 0;
+  width: 50%;
+  height: 30%;
+  z-index: 0;
+}
+
+.cuketmon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 40%;
+  height: 100%;
+}
+
+.myCuketmonImage, .enemyCuketmonImage {
+  position: absolute;
+  bottom: 10%;
+  width:  20%;
+  height: auto;
+  z-index: 1;
+}
+
+.myHpBar, .enemyHpBar {
+  top: 50%;
+  left: 31.5%;
+  width: 40%;
+  height: 2.5vh;
+  position: absolute;
+}
+
+.myHpFill, .enemyHpFill {
+  height: 100%;
+  background-color: hwb(141 24% 0%);
+  border: 3.7px solid #4c6458;
+  transition: width 0.3s;
+  border-radius: 9px;
+}
+
+.hpBackground{
+  position: relative;
+  top: 0%;
+  width: 90%;
+  height: 90%;
+  background-image: url('/public/BattlePage/HPbg.png');
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.hpBackground > p {
+  position: absolute;
+  top: 10%;
+  left: 25%;
+  font-size: 1.5vw;
+}
+
+.myHpImage, .enemyHpImage {
+  position: absolute;
+  top: 50%;
+  left: 25%;
+  width: 3vw;
+  
+}
+
+.battleAnimationOverlay {
+  position: absolute;
+  width: 100%;
+  height: 39vh;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.techAnimation {
+  position: absolute;
+  top: -60%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 360px;
+  height: 37px;
+  background-repeat: no-repeat;
+  animation: spriteAnimation 1s steps(6) forwards;
+}
+
+@keyframes spriteAnimation {
+  from { transform: translate3d(-100%, 0, 0); }
+  to { transform: translate3d(20%, 0, 0); }
+}
+
+.hitEffect {
+  animation: hitAnimation 0.5s ease forwards;
+}
+
+@keyframes hitAnimation {
+  100% {
+    transform: translateY(-50px);
+    filter: brightness(0.5) sepia(1) hue-rotate(-60deg) saturate(5);
+  }
+}
+
+.techSection {
+  width: 65vw;
+  height: 30vh; 
+  position: relative;
+  left: 17%;
+  padding: 2%;
+  background-image: url('/public/BattlePage/techselect.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size:100% 80%;
+  z-index: 0;
+}
+
+.techButtons {
+  position: absolute;
+  top: 50%;
+  left: 35%;
+  transform: translate(-50%, -50%);
+  width: 60%;
+  max-width: 600px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5%;
+  z-index: 1;
+}
+
+.techButton {
+  background-color: transparent;
+  padding: 2%;
+  color: black;
+  border: none;
+  font-size: 1.5vw;
+  box-sizing: border-box;
+  margin: 2%;
+}
+
+.techButton.selected {
+  color: gold;
+}
+
+.techButton:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.techInfo {
+  display: flex;
+  justify-content: center;
+  gap: 2%;
+  margin-top: 1%;
+  z-index: 1;
+}
+
+.ppInfo {
+  position: absolute;
+  right: 8%; 
+  top: 29%;
+  color: black;
+  padding: 0.5% 1%;
+  border-radius: 5px;
+  font-size: 3vw;
+}
+
+.turnInfo {
+  position: absolute;
+  top:20%;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #333;
+  text-align: center;
+}
+
+.cuketmonType {
+  position: absolute;
+  right: 5%;
+  bottom: 28%;
+  font-size: 3vw;
+}
+
+.battleMessage {
+  position: absolute;
+  right: 20%;
+  top: 25%;
+  width: 80%;
+  height: 10%;
+  color: black;
+  padding: 2%;
+  text-align: center;
+  font-size: 2rem;
+  z-index: 2;
+}
+
+.loadingScreen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100vw;
+  background-color: #f0f0f0;
+}
+
+.loadingSpinner {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.resultScreen {
+  background-image: url('/public/BattlePage/WinnerStage.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  color: white;
+  font-size: 2vw;
+}
+
+.resultScreen > h1{
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  top: 0;
+}
+.winnerCuketmonImage {
+  position: absolute;
+  bottom: 20%;
+  left: 42%;
+  width: 15%;
+}
+
+.endBattle {
+  position: absolute;
+  bottom: 5%;
+  width: 200px;
+  height: 70px;
+  font-size: 2rem;
+  border-radius: 0px;
+  border: 4px solid black;
+  box-shadow: 
+  5px 5px 0 #000,
+  inset -2px -2px 0 rgba(0, 0, 0, 0.3),
+  inset 2px 2px 0 rgba(255, 255, 255, 0.3);
+}
+
