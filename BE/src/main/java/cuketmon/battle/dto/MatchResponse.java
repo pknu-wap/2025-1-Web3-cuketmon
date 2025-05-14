@@ -10,5 +10,6 @@ public class MatchResponse {
     private Integer battleId;
     private BattleDTO.Team red;
     private BattleDTO.Team blue;
+    boolean isRedFirst;
 
 }

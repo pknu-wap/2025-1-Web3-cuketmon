@@ -21,7 +21,7 @@ public class WebSocketEventListener {
         String trainerName = (String) accessor.getSessionAttributes().get("trainerName");
 
         if (trainerName != null) {
-            battleMatchService.removeFromQueue(trainerName);
+            battleMatchService.cancelBattle(trainerName);
         }
     }
 }

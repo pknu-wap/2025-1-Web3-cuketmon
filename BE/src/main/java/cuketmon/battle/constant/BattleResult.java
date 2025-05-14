@@ -2,8 +2,8 @@ package cuketmon.battle.constant;
 
 public enum BattleResult {
 
-    TRAINER1_WIN,
-    TRAINER2_WIN,
+    RED_WIN,
+    BLUE_WIN,
     DRAW;
 
     public String getName() {

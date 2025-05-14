@@ -16,10 +16,10 @@ public class BattleDTO {
     public static class Team {
         private String trainerName;
         private MonsterDTO.MonsterBattleInfo monster;
-        private Boolean turn;
+        private String skillAnimation;
 
-        public void changeTurn() {
-            this.turn = !this.turn;
+        public void changeSkillAnimation(String newSkillAnimation) {
+            this.skillAnimation = newSkillAnimation;
         }
     }
 
