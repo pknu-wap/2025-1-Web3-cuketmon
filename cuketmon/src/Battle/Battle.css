@@ -122,7 +122,7 @@ html, body {
   align-items: center;
 }
 
-.techAnimation {
+.skillAnimation {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -133,12 +133,12 @@ html, body {
   animation: spriteAnimation 1s steps(6) forwards;
 }
 
-.blue-to-red .techAnimation {
+.blue-to-red .skillAnimation {
   transform: translate(-50%, -50%) scaleX(1); /* Blue → Red: 왼쪽 → 오른쪽 */
   animation: spriteAnimation 1s steps(6) forwards;
 }
 
-.red-to-blue .techAnimation {
+.red-to-blue .skillAnimation {
   transform: translate(-50%, -50%) scaleX(-1); /* Red → Blue: 오른쪽 → 왼쪽 (반전) */
   animation: spriteAnimation 1s steps(6) forwards;
 }
@@ -158,7 +158,8 @@ html, body {
     filter: brightness(0.5) sepia(1) hue-rotate(-60deg) saturate(5);
   }
 }
-.techSection {
+
+.skillSection {
   width: 65vw;
   height: 30vh;
   position: relative;
@@ -171,7 +172,7 @@ html, body {
   z-index: 0;
 }
 
-.techButtons {
+.skillButtons {
   position: absolute;
   top: 50%;
   left: 35%;
@@ -184,7 +185,7 @@ html, body {
   z-index: 1;
 }
 
-.techButton {
+.skillButton {
   background-color: transparent;
   padding: 2%;
   color: black;
@@ -194,16 +195,16 @@ html, body {
   margin: 2%;
 }
 
-.techButton.selected {
+.skillButton.selected {
   color: gold;
 }
 
-.techButton:disabled {
+.skillButton:disabled {
   background-color: #ccc;
   cursor: not-allowed;
 }
 
-.techType {
+.skillType {
   position: absolute;
   right:10%;
   bottom: 20%;
