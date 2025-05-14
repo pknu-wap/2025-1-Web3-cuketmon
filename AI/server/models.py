@@ -24,12 +24,3 @@ class MonsterTable(Base):
     speed = Column(Integer, nullable=True)
     type1 = Column(String, nullable=True)
     type2 = Column(String, nullable=True)
-
-
-class PromptTable(Base):
-    __tablename__ = "prompt"
-
-    id = Column(Integer, primary_key=True, index=True)  
-    description = Column(Text, nullable=True)
-    type1 = Column(String, nullable=True)
-    type2 = Column(String, nullable=True)

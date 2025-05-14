@@ -1,60 +1,59 @@
-import time
-from fastapi import FastAPI, Depends
+from fastapi import FastAPI, Depends, HTTPException, BackgroundTasks
 from sqlalchemy.orm import Session
+import time
 from threading import Thread
-from . import database, crud, schemas
+from . import database, models, crud, schemas
 from .inference import model_inference
-from .crud import get_all_data, update_image_to_GCS, delete_prompt_entries
-from .utils import save_image
-
+import time
+from sqlalchemy.orm import Session
+from .crud import get_null_images, update_image_to_base64  # 필요한 함수들 import
+from .inference import model_inference, save_image
+from pathlib import Path
 app = FastAPI()
 
+# DB 연결 설정
 @app.on_event("startup")
 def startup():
     database.connect_db()
-    start_background_task()
+    start_background_task()  # 백그라운드 작업 시작
 
 @app.on_event("shutdown")
 def shutdown():
     database.disconnect_db()
 
 def process_images():
-    batch_size = 8
-
     while True:
-        db = database.SessionLocal()
+        db = database.SessionLocal()  # 매번 새로 DB 연결
         try:
-            # DB에서 최대 8개 가져오기
-            monsters = get_all_data(db)[:batch_size]
-            if monsters:
-                prompts = [m.description for m in monsters]
-                inference_results = model_inference(prompts)
+            null_images = get_null_images(db)
+            if null_images:
+                batch_size = 4
+                for i in range(0, len(null_images), batch_size):
+                    batch = null_images[i:i+batch_size]
+                    for monster in batch:
+                        monster_id = monster.id
+                        monster_description = monster.description
 
-                for monster, (prompt, img_bytes) in zip(monsters, inference_results):
-                    if img_bytes:
-                        gcs_url = save_image(img_bytes, monster.id)
-                        update_image_to_GCS(monster.id, gcs_url, db)
-                        delete_prompt_entries(monster.id, db)
-                        db.commit()
-                    else:
-                        print(f"[{monster.id}] Failed to generate image for prompt: {prompt}")
-                        db.rollback()
+                        image = model_inference(monster_id, monster_description)
+                        save_image(image, monster_id, monster, db)
+
+            db.commit()  # 마지막에 commit 한 번 더 확실히
         except Exception as e:
             print(f"Error in process_images: {e}")
             db.rollback()
         finally:
-            db.close()
-
-        time.sleep(1)
-
+            db.close()  # 꼭 닫아줘야 함
+        time.sleep(1)  # 1초 대기
 
 def start_background_task():
-    thread = Thread(target=process_images)
+    thread = Thread(target=process_images)  # <-- () 쓰지 말고, 인자도 넘기지 말기
     thread.daemon = True
     thread.start()
 
 
-# ============== FOR TEST =============
+@app.get("/null_images")
+def read_null_images(db: Session = Depends(database.get_db)):
+    return crud.get_null_images(db)
 
 @app.get("/get_all_data")
 def read_all_data(db: Session = Depends(database.get_db)):
@@ -69,3 +68,8 @@ def create_monster(monster: schemas.MonsterCreate, db: Session = Depends(databas
 def remove_monster(monster_id: int, db: Session = Depends(database.get_db)):
     crud.delete_monster(monster_id, db)
     return {"message": f"✅ id {monster_id} 포켓몬 삭제 완료"}
+
+@app.post("/update_image_to_base64/{monster_id}")
+def modify_monster_image(monster_id: int, db: Session = Depends(database.get_db)):
+    crud.update_image_to_base64(monster_id, db)
+    return {"message": f"✅ id {monster_id} 포켓몬의 이미지가 업데이트 완료"}
