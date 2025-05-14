@@ -13,19 +13,14 @@ function Make() {
   const [type2, setType2] = useState("");
   const [description, setDescription] = useState("");
   const navigate = useNavigate();
-  const { setToken } = useAuth();
+  const { token: contextToken } = useAuth();
+  const token = contextToken || localStorage.getItem('accessToken');
   const API_URL = process.env.REACT_APP_API_URL;
 
 
-  useEffect(() => {
-    const token = localStorage.getItem("accessToken"); 
-    if (token){
-      setToken(token);
-    }
-  }, [setToken]);
+
 
   const handleSubmit = async () => {
-    const token = localStorage.getItem("accessToken"); 
 
     if (!type1 && !type2) {
       alert("타입을 하나 이상 선택해야 합니다.");
