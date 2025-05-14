@@ -12,9 +12,7 @@ const TokenInitializer = () => {
       setToken(token);
       const urlWithoutToken = window.location.href.split('?')[0]; 
       window.history.replaceState({}, document.title, urlWithoutToken);
-    } else {
-      console.warn('token이 null입니다.');
-    }
+    } 
   }, []);
 
   return null;
