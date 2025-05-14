@@ -9,7 +9,7 @@ from sqlalchemy.orm import Session
 from .config import GCS_KEY_PATH  # GCP 인증키 경로
 
 # GCP 설정
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = GCS_KEY_PATH
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = GCS_KEY_PATH  
 storage_client = storage.Client()
 bucket_name = list(storage_client.list_buckets())[0].name
 
