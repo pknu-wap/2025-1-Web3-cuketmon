@@ -18,8 +18,6 @@ function Make() {
   const API_URL = process.env.REACT_APP_API_URL;
 
 
-
-
   const handleSubmit = async () => {
 
     if (!type1 && !type2) {
@@ -47,10 +45,6 @@ function Make() {
         },
         body: JSON.stringify(requestData)
       });
-      if(!token){
-        console.warn("토큰이 없습니다.");
-        navigate(`/login`);
-        }
       if (response.ok) {
         const data = await response.json();
         const monsterId = data.monsterId;
