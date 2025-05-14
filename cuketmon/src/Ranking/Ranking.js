@@ -2,10 +2,9 @@ import React, { useState, useEffect } from 'react';
 import MenuBar from "../Menubar/Menubar.js";
 import './Ranking.css';
 import { useAuth } from '../AuthContext';
-import { useNavigate } from 'react-router-dom';
+
 
 function Ranking() {
-  const navigate = useNavigate();
   const [rank, setRank] = useState(0); 
   const [trainerName, setTrainerName] = useState(''); 
   const [winCount, setWinCount] = useState(0);
@@ -19,10 +18,6 @@ function Ranking() {
 
   /*유저 소유 커켓몬 id 배열로 받기 */
   const loadCukemon = async () => {
-    if (!token){
-     navigate(`/login`); //token이 없는 경우 로그인화면으로 이동하게 함
-      return;
-    } 
     
     try {
       const res = await fetch(`${API_URL}/api/trainer/monsters`, {
