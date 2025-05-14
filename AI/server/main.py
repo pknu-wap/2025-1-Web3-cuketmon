@@ -30,9 +30,11 @@ def process_images():
                     batch = null_images[i:i+batch_size]
                     for monster in batch:
                         monster_id = monster.id
-                        prompt = monster.description
+                        description = monster.description
+                        type1 = monster.type1
+                        type2 = monster.type2
 
-                        image = model_inference(prompt)
+                        image = model_inference(description, type1, type2)
                         gcs_url = save_image(image, monster_id)
                         update_image_to_GCS(monster_id, gcs_url, db)
                         delete_prompt_entries(monster_id, db)

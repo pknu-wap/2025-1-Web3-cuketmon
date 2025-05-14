@@ -1,9 +1,9 @@
 export MODEL_NAME="stable-diffusion-v1-5/stable-diffusion-v1-5"
-export CHECKPOINT="/mnt/nas-drive/pys/cuketmon/second/weight/checkpoint-13500"
-export OUTPUT_DIR="/mnt/nas-drive/pys/cuketmon/second/weight"
+export CHECKPOINT="/mnt/nas-drive/pys/cuketmon/third/weight/checkpoint-5000"
+export OUTPUT_DIR="/mnt/nas-drive/pys/cuketmon/third/weight"
 export DATASET_NAME="/mnt/nas-drive/pys/cuketmon/datasets/pokemon_images"
 
-accelerate launch train_text_to_image_lora.py \
+CUDA_VISIBLE_DEVICES=0 accelerate launch train_text_to_image_lora.py \
   --pretrained_model_name_or_path=$MODEL_NAME \
   --dataset_name=$DATASET_NAME \
   --dataloader_num_workers=0 \

@@ -1,13 +1,6 @@
 from diffusers import AutoPipelineForText2Image
 import torch
 from .config import MODEL_PATH, CHECKPOINT
-from io import BytesIO
-import base64
-from rembg import remove
-from PIL import Image
-from pathlib import Path
-from sqlalchemy.orm import Session
-
 
 print("Loading model...")
 pipeline = AutoPipelineForText2Image.from_pretrained(
@@ -17,7 +10,12 @@ pipeline = AutoPipelineForText2Image.from_pretrained(
 pipeline.load_lora_weights(f'{MODEL_PATH}/checkpoint-{CHECKPOINT}')
 print("Model loaded.")
 
-def model_inference(prompt: str):
-    prompt = f"a poketmon, {prompt}, no background"
-    image = pipeline(prompt).images[0]
+def model_inference(prompt: str, type1: str, type2: str = None):
+    if type2:
+        type_info = f"type is {type1.lower()}, {type2}"
+    else:
+        type_info = f"type is {type1.lower()}"
+    full_prompt = f"a poketmon, {type_info}, {prompt}, no background, centered"
+    print(full_prompt)
+    image = pipeline(full_prompt).images[0]
     return image
