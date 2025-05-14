@@ -19,11 +19,8 @@ function Make() {
 
   useEffect(() => {
     const token = localStorage.getItem("accessToken"); 
-    if (token) {
+    if (token){
       setToken(token);
-    } else {
-      console.warn("토큰이 없습니다.");
-      navigate(`/login`); 
     }
   }, [setToken]);
 
@@ -55,7 +52,10 @@ function Make() {
         },
         body: JSON.stringify(requestData)
       });
-
+      if(!token){
+        console.warn("토큰이 없습니다.");
+        navigate(`/login`);
+        }
       if (response.ok) {
         const data = await response.json();
         const monsterId = data.monsterId;

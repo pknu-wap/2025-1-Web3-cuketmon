@@ -21,7 +21,7 @@ function Login() {
     if (token) {
       localStorage.setItem('accessToken', token); 
       setToken(token); 
-        console.log(token)
+      console.log(token)
       window.history.replaceState({}, document.title, "/make");
       navigate('/make', { replace: true });
     } else {
