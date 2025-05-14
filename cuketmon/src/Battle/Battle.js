@@ -4,8 +4,8 @@ import { Client } from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
 import './Battle.css';
 import { animationMap } from './AnimationMap';
-import HpBar from '../common/HpBar';
-import BattleChatbox from '../common/TextBox/BattleChatbox';
+import HpBar from '../common/HpBar/HpBar.js';
+import BattleChatbox from '../common/TextBox/BattleChatbox.js';
 
 function Battle() {
   const [redTeam, setRedTeam] = useState(null);
