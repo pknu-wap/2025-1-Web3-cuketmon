@@ -39,6 +39,7 @@ function Battle() {
   useEffect(() => {
     const fetchTrainerName = async () => {
       try {
+        console.log('Fetching trainer name...'); // 요청 전 로그
         const token = localStorage.getItem('accessToken');
         if (!token) throw new Error('인증 토큰이 없습니다.');
         const res = await fetch(`${API_URL}/api/trainer/myName`, {
@@ -47,8 +48,10 @@ function Battle() {
         if (!res.ok) throw new Error(`서버 응답 상태: ${res.status}`);
         const name = await res.text();
         if (!name) throw new Error('트레이너 이름이 비어 있습니다.');
+        console.log('Trainer name received:', name); // 응답 후 로그
         setTrainerName(name);
       } catch (err) {
+        console.error('Error fetching trainer name:', err); // 에러 로그
         setError(`트레이너 정보를 불러오지 못했습니다: ${err.message}`);
         setLoading(false);
       }
@@ -62,9 +65,11 @@ function Battle() {
       webSocketFactory: () => socket,
       reconnectDelay: 5000,
       onConnect: () => {
+        console.log('WebSocket connected'); // WebSocket 연결 로그
         stompClientRef.current = client;
       },
       onStompError: (frame) => {
+        console.error('WebSocket error:', frame); // WebSocket 에러 로그
         setError('WebSocket 연결에 실패했습니다.');
         setLoading(false);
       },
@@ -76,7 +81,9 @@ function Battle() {
   useEffect(() => {
     if (!stompClientRef.current || !trainerName) return;
 
+    console.log('Subscribed to /topic/match/*'); // 구독 로그
     const matchSubscription = stompClientRef.current.subscribe('/topic/match/*', (message) => {
+      console.log('Received match message:', message.body); // 응답 메시지 로그
       const matchResponse = JSON.parse(message.body || '{}');
       const { red, blue, battleId: receivedBattleId, isRedFirst } = matchResponse;
 
@@ -104,6 +111,7 @@ function Battle() {
     });
 
     const requestData = { trainerName, monsterId };
+    console.log('Published to /app/findBattle:', requestData); // 요청 전 로그
     stompClientRef.current.publish({
       destination: '/app/findBattle',
       body: JSON.stringify(requestData),
@@ -115,7 +123,9 @@ function Battle() {
   useEffect(() => {
     if (!stompClientRef.current || !battleId || !myTeam) return;
 
+    console.log(`Subscribed to /topic/battle/${battleId}/*`); // 구독 로그
     const battleSubscription = stompClientRef.current.subscribe(`/topic/battle/${battleId}/*`, (skillMessage) => {
+      console.log('Received battle message:', skillMessage.body); // 응답 메시지 로그
       const matchResponse = JSON.parse(skillMessage.body);
       const { red, blue, skillAnimation, isRedFirst } = matchResponse;
 
@@ -131,7 +141,9 @@ function Battle() {
       }
     });
 
+    console.log(`Subscribed to /topic/battleEnd/${battleId}/*`); // 구독 로그
     const endSubscription = stompClientRef.current.subscribe(`/topic/battleEnd/${battleId}/*`, (endMessage) => {
+      console.log('Received battle end message:', endMessage.body); // 응답 메시지 로그
       const endBattleResponse = JSON.parse(endMessage.body);
       const { result } = endBattleResponse;
       setWinner(result);
@@ -193,6 +205,7 @@ function Battle() {
       !stompClientRef.current?.connected ||
       !battleId
     ) {
+      console.log('Cannot use skill:', { skill, currentPp: skill?.currentPp, isTurnInProgress, connected: stompClientRef.current?.connected, battleId }); // 실패 조건 로그
       return;
     }
   
@@ -201,6 +214,7 @@ function Battle() {
       trainerName: trainerName,
       animationUrl: skill.animationUrl,
     };
+    console.log('Sending skill data:', skillData); // 요청 전 로그
     stompClientRef.current.publish({
       destination: `/app/skill/${battleId}`,
       body: JSON.stringify(skillData),
