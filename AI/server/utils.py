@@ -17,19 +17,18 @@ def save_image(image: Image.Image, monster_id: int):
     save_dir = Path("results")
     save_dir.mkdir(parents=True, exist_ok=True)
 
-    resized = image.resize((81, 81))
     resized_path = save_dir / f"{monster_id}-org.png"
-    resized.save(resized_path)
+    image.save(resized_path)
 
-    output = remove(resized)
-    output_path = save_dir / f"{monster_id}.png"
-    output.save(output_path)
+    removed_image = remove(image)
+    removed_image_path = save_dir / f"{monster_id}.png"
+    removed_image.save(removed_image_path)
 
     # 4. GCP Storage에 업로드
     bucket = storage_client.bucket(bucket_name)
     blob = bucket.blob(f"{monster_id}.png")
-    blob.upload_from_filename(str(output_path))
-    print(f"Uploaded {monster_id}.png to GCP Storage!")
+    blob.upload_from_filename(str(removed_image_path))
+    print(f"Uploaded results/{monster_id}.png to GCP Storage!")
 
     gcs_url = f"https://storage.googleapis.com/cukemon/{monster_id}.png"
 

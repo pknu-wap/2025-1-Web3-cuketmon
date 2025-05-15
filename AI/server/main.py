@@ -27,7 +27,13 @@ def process_images():
             # DB에서 최대 8개 가져오기
             monsters = get_all_data(db)[:batch_size]
             if monsters:
-                prompts = [m.description for m in monsters]
+                prompts = []
+                for m in monsters:
+                    type_info = m.type1
+                    if m.type2 is not None:
+                        type_info += f", {m.type2}"
+                    prompt = f"{type_info}, {m.description}"
+                    prompts.append(prompt)
                 inference_results = model_inference(prompts)
 
                 for monster, (prompt, img_bytes) in zip(monsters, inference_results):
