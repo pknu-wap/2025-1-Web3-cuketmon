@@ -4,7 +4,7 @@ import { Client } from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
 import './Battle.css';
 import { animationMap } from './AnimationMap';
-import HpBar from '../common/HpBar.js';
+import HpBar from '../common/HpBar/HpBar.js';
 import BattleChatbox from '../common/TextBox/BattleChatbox.js';
 
 function Battle() {
