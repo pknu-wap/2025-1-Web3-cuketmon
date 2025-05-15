@@ -5,6 +5,13 @@ html, body {
   overflow: hidden;
 }
 
+body {
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .Battle {
   background-image: url('/public/BattlePage/background.png');
   background-size: cover;
@@ -256,8 +263,7 @@ html, body {
 }
 
 .loadingScreen {
-  position: fixed;
-  margin: 0 auto;
+  position: relative;
   height: 100px;
   width: 100px;
   background: linear-gradient(to bottom, rgb(254, 0, 1) 50%, white 50% );
