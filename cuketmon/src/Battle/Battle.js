@@ -29,6 +29,7 @@ function Battle() {
   const [error, setError] = useState(null);
   const [animationQueue, setAnimationQueue] = useState([]);
   const [isTurnInProgress, setIsTurnInProgress] = useState(false);
+  const [isConnected, setIsConnected] = useState(false);
 
   const stompClientRef = useRef(null);
   const navigate = useNavigate();
@@ -65,7 +66,8 @@ function Battle() {
       webSocketFactory: () => socket,
       reconnectDelay: 5000,
       onConnect: () => {
-        console.log('WebSocket connected'); // WebSocket 연결 로그
+        console.log('WebSocket connected'); // WebSocket 연결 로그\
+        setIsConnected(true);
         stompClientRef.current = client;
       },
       onStompError: (frame) => {
@@ -122,7 +124,7 @@ function Battle() {
     });
 
     return () => matchSubscription.unsubscribe();
-  }, [trainerName]);
+  }, [trainerName, isConnected, monsterId]);
 
   useEffect(() => {
     if (!stompClientRef.current || !battleId || !myTeam) return;
