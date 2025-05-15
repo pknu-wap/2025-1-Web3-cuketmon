@@ -1,0 +1,39 @@
+.typeTable {
+  position: fixed;
+  top: 0;
+  right: 5vw;
+  padding: 10px;
+  background: white; 
+  z-index: 1000; /* 다른 요소 위로 */
+}
+
+
+.typeImage {
+  height: 50vh;
+  margin-bottom: 2vh;
+}
+
+.defenseTitle {
+  margin-bottom: 10px;
+}
+
+.effectVeryStrong {
+  color: darkred;
+}
+
+.effectStrong {
+  color: red;
+}
+
+.effectWeak {
+  color: blue;
+}
+
+.effectNone {
+  color: black;
+}
+
+.attackTitle {
+  color: black !important ;
+}
+
