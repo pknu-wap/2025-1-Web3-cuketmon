@@ -128,25 +128,41 @@ function Battle() {
 
   useEffect(() => {
     if (!stompClientRef.current || !battleId || !myTeam) return;
-
+  
     console.log(`Subscribed to /topic/battle/${battleId}/*`); // 구독 로그
     const battleSubscription = stompClientRef.current.subscribe(`/topic/battle/${battleId}/*`, (skillMessage) => {
       console.log('Received battle message:', skillMessage.body); // 응답 메시지 로그
       const matchResponse = JSON.parse(skillMessage.body);
-      const { red, blue, skillAnimation, isRedFirst } = matchResponse;
-
-      if (skillAnimation) {
-        setAnimationQueue(prev => [...prev, {
-          animationUrl: skillAnimation,
-          isRedHit: !isRedFirst,
-          isBlueHit: isRedFirst,
-          redHp: red.monster.hp,
-          blueHp: blue.monster.hp,
-          skills: (myTeam === 'red' ? red : blue).monster.skills,
-        }]);
+      const { red, blue, isRedFirst } = matchResponse;
+  
+      const firstTeam = isRedFirst ? 'red' : 'blue'; // 선공 팀
+      const secondTeam = isRedFirst ? 'blue' : 'red'; // 후공 팀
+  
+      const firstAnimationUrl = matchResponse[firstTeam].skillAnimation;
+      const secondAnimationUrl = matchResponse[secondTeam].skillAnimation;
+  
+      if (firstAnimationUrl && secondAnimationUrl) { // null이 아닌지 확인
+        // 선공 애니메이션 정보
+        const firstAnimation = {
+          animationUrl: firstAnimationUrl,
+          isHit: secondTeam, // 피격 팀은 후공 팀
+          hp: matchResponse[secondTeam].monster.hp, // 피격 팀의 체력
+          skills: matchResponse[firstTeam].monster.skills, // 사용 팀의 스킬 정보
+        };
+  
+        // 후공 애니메이션 정보
+        const secondAnimation = {
+          animationUrl: secondAnimationUrl,
+          isHit: firstTeam, // 피격 팀은 선공 팀
+          hp: matchResponse[firstTeam].monster.hp, // 피격 팀의 체력
+          skills: matchResponse[secondTeam].monster.skills, // 사용 팀의 스킬 정보
+        };
+  
+        // 선공 -> 후공 순으로 큐에 추가
+        setAnimationQueue([firstAnimation, secondAnimation]);
       }
     });
-
+  
     console.log(`Subscribed to /topic/battleEnd/${battleId}/*`); // 구독 로그
     const endSubscription = stompClientRef.current.subscribe(`/topic/battleEnd/${battleId}/*`, (endMessage) => {
       console.log('Received battle end message:', endMessage.body); // 응답 메시지 로그
@@ -155,7 +171,7 @@ function Battle() {
       setWinner(result);
       setIsBattleEnded(true);
     });
-
+  
     return () => {
       battleSubscription.unsubscribe();
       endSubscription.unsubscribe();
@@ -167,21 +183,47 @@ function Battle() {
       const nextAnimation = animationQueue[0];
       setCurrentAnimation(nextAnimation.animationUrl);
       setIsFighting(true);
-      setIsRedHit(nextAnimation.isRedHit);
-      setIsBlueHit(nextAnimation.isBlueHit);
-
+  
+      // 피격 효과 설정
+      if (nextAnimation.isHit === 'red') {
+        setIsRedHit(true);
+      } else {
+        setIsBlueHit(true);
+      }
+  
+      // 애니메이션 재생 후 처리
       setTimeout(() => {
-        setRedCuketmonHP(nextAnimation.redHp);
-        setBlueCuketmonHP(nextAnimation.blueHp);
-        setSkills(nextAnimation.skills.map((skill, index) => ({
-          id: index,
-          name: skill.name,
-          type: skill.type,
-          damage: skill.power,
-          currentPp: skill.pp,
-          animationUrl: skill.skillAnimation ||
-            animationMap[skill.type?.toLowerCase()]?.[skill.power >= 50 ? 'high' : 'normal']?.[0],
-        })));
+        // 체력 업데이트
+        if (nextAnimation.isHit === 'red') {
+          setRedCuketmonHP(nextAnimation.hp);
+        } else {
+          setBlueCuketmonHP(nextAnimation.hp);
+        }
+  
+        // 내 팀의 스킬 정보 업데이트
+        if (myTeam === (isRedFirst ? 'red' : 'blue') && animationQueue.length === 2) {
+          setSkills(nextAnimation.skills.map((skill, index) => ({
+            id: index,
+            name: skill.name,
+            type: skill.type,
+            damage: skill.power,
+            currentPp: skill.pp,
+            animationUrl: skill.skillAnimation ||
+              animationMap[skill.type?.toLowerCase()]?.[skill.power >= 50 ? 'high' : 'normal']?.[0],
+          })));
+        } else if (myTeam === (isRedFirst ? 'blue' : 'red') && animationQueue.length === 1) {
+          setSkills(nextAnimation.skills.map((skill, index) => ({
+            id: index,
+            name: skill.name,
+            type: skill.type,
+            damage: skill.power,
+            currentPp: skill.pp,
+            animationUrl: skill.skillAnimation ||
+              animationMap[skill.type?.toLowerCase()]?.[skill.power >= 50 ? 'high' : 'normal']?.[0],
+          })));
+        }
+  
+        // 상태 초기화 및 큐 진행
         setIsFighting(false);
         setCurrentAnimation(null);
         setIsRedHit(false);
@@ -191,9 +233,9 @@ function Battle() {
           if (newQueue.length === 0) setIsTurnInProgress(false);
           return newQueue;
         });
-      }, 1500);
+      }, 1500); // 애니메이션 지속 시간
     }
-  }, [animationQueue, isFighting, myTeam]);
+  }, [animationQueue, isFighting, myTeam, isRedFirst]);
 
   const handleSelect = (index) => {
     if (!isTurnInProgress) {
@@ -297,7 +339,7 @@ function Battle() {
             <BattleChatbox 
             skills={skills} 
             onUse={handleFight} 
-            onSelect={handleSelect}
+            selected={handleSelect}
             isTurnInProgress={isTurnInProgress} 
           />
           )}
