@@ -1,20 +1,39 @@
-/* styles.css */
-table {
-    width: 50%;
-    border-collapse: collapse;
-    margin: 20px 0;
-  }
-  
-  table, th, td {
-    border: 1px solid #000;
-    padding: 1px;
-  }
+.typeTable {
+  position: fixed;
+  top: 0;
+  right: 5vw;
+  padding: 10px;
+  background: white; 
+  z-index: 1000; /* 다른 요소 위로 */
+}
 
-  img {
-    width: 100%;  /* 원본 너비의 100% */
-    height: 50%; /* 원본 높이의 50% */
-    object-fit: contain; /* 비율을 유지하며 셀 안에 이미지를 맞춤 */
-    display: block;  /* 이미지가 셀 안에서 중앙 정렬되도록 */
-    margin: 0;  /* 이미지가 중앙에 오도록 */
-  }
-  
+
+.typeImage {
+  height: 50vh;
+  margin-bottom: 2vh;
+}
+
+.defenseTitle {
+  margin-bottom: 10px;
+}
+
+.effectVeryStrong {
+  color: darkred;
+}
+
+.effectStrong {
+  color: red;
+}
+
+.effectWeak {
+  color: blue;
+}
+
+.effectNone {
+  color: black;
+}
+
+.attackTitle {
+  color: black !important ;
+}
+
