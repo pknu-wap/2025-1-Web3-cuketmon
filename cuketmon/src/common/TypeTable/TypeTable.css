@@ -1,15 +1,20 @@
 .typeTable {
   position: fixed;
-  top: 0;
+  top: 2.5vh;
   right: 5vw;
   padding: 10px;
-  background: white; 
+  background: white;
+  border-radius: 2%;
   z-index: 1000; /* 다른 요소 위로 */
 }
 
-
+.typeTable h1 {
+  font-size: 1.3vw;
+  padding-bottom: 1vh;
+  text-align: center;
+}
 .typeImage {
-  height: 50vh;
+  height: 40vh;
   margin-bottom: 2vh;
 }
 
@@ -37,3 +42,9 @@
   color: black !important ;
 }
 
+/*모바일 반응형*/
+@media (max-width: 767px) {
+  .typeTable {
+    display: none;
+  }
+}
