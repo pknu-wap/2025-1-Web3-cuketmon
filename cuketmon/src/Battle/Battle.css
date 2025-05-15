@@ -1,5 +1,8 @@
 html, body {
   height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
 }
 
 body {
@@ -273,7 +276,7 @@ body {
   content: '';
   position: absolute;
   height: 8px;
-  width: 100px;
+  width: 80px;
   background: black;
   top: 50px;
   transform: translatey(-50%);
