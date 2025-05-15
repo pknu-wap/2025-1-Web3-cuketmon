@@ -39,7 +39,7 @@ function Battle() {
   useEffect(() => {
     const fetchTrainerName = async () => {
       try {
-        const token = localStorage.getItem('jwt');
+        const token = localStorage.getItem('accessToken');
         if (!token) throw new Error('인증 토큰이 없습니다.');
         const res = await fetch(`${API_URL}/api/trainer/myName`, {
           headers: { Authorization: `Bearer ${token}` },
@@ -74,7 +74,7 @@ function Battle() {
   }, [API_URL]);
 
   useEffect(() => {
-    if (!stompClientRef.current || !trainerName || !monsterId) return;
+    if (!stompClientRef.current || !trainerName) return;
 
     const matchSubscription = stompClientRef.current.subscribe('/topic/match/*', (message) => {
       const matchResponse = JSON.parse(message.body || '{}');
