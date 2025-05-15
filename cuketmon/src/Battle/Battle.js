@@ -79,17 +79,19 @@ function Battle() {
   }, [API_URL]);
 
   useEffect(() => {
-    if (!stompClientRef.current || !trainerName) return;
+    console.log('useEffect triggered - monsterId:', monsterId, 'trainerName:', trainerName, 'stompClient:', !!stompClientRef.current);
+    if (!stompClientRef.current || !trainerName) {
+      console.log('Subscription skipped - stompClientRef:', !!stompClientRef.current, 'trainerName:', trainerName);
+      return;
+    }
 
     console.log('Subscribed to /topic/match/*'); // 구독 로그
     const matchSubscription = stompClientRef.current.subscribe('/topic/match/*', (message) => {
       console.log('Received match message:', message.body); // 응답 메시지 로그
       const matchResponse = JSON.parse(message.body || '{}');
-      const { red, blue, battleId: receivedBattleId, isRedFirst } = matchResponse;
+      const { red, blue, battleId, isRedFirst } = matchResponse;
 
-      if (red.trainerName !== trainerName && blue.trainerName !== trainerName) return;
-
-      setBattleId(receivedBattleId);
+      setBattleId(battleId);
       setRedTeam(red);
       setBlueTeam(blue);
       setMyTeam(red.trainerName === trainerName ? 'red' : 'blue');
@@ -108,6 +110,8 @@ function Battle() {
       );
       setIsRedFirst(isRedFirst);
       setLoading(false);
+
+      if (red.trainerName !== trainerName && blue.trainerName !== trainerName) return;
     });
 
     const requestData = { trainerName, monsterId };
@@ -118,7 +122,7 @@ function Battle() {
     });
 
     return () => matchSubscription.unsubscribe();
-  }, [trainerName, monsterId]);
+  }, [trainerName]);
 
   useEffect(() => {
     if (!stompClientRef.current || !battleId || !myTeam) return;
