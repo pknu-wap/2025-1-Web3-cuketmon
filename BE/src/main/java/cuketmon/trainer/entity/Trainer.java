@@ -1,5 +1,10 @@
 package cuketmon.trainer.entity;
 
+import static cuketmon.constant.message.ErrorMessages.GENERATE_LIMIT_EXCEEDED;
+import static cuketmon.constant.message.ErrorMessages.MONSTER_LIMIT_EXCEEDED;
+import static cuketmon.monster.constant.MonsterConst.MAX_GENERATE_LIMIT;
+import static cuketmon.monster.constant.MonsterConst.MAX_MONSTER_LIMIT;
+
 import cuketmon.monster.entity.Monster;
 import cuketmon.trainer.embeddable.Feed;
 import cuketmon.trainer.embeddable.Toy;
@@ -88,6 +93,22 @@ public class Trainer {
     public void addMonster(Monster monster) {
         monsters.add(monster);
         monster.setTrainer(this);
+    }
+
+    public void checkLimits() {
+        if (getMonsters().size() >= MAX_MONSTER_LIMIT) {
+            throw new IllegalArgumentException(MONSTER_LIMIT_EXCEEDED);
+        }
+
+        // 하루가 지났으면 초기화
+        if (!getLastGenerateDate().equals(LocalDate.now())) {
+            initGenerateCount();
+            setLastGenerateDate(LocalDate.now());
+        }
+        // 일일 최대 커켓몬 생성 제한
+        if (addGenerateCount() > MAX_GENERATE_LIMIT) {
+            throw new IllegalArgumentException(GENERATE_LIMIT_EXCEEDED);
+        }
     }
 
 }

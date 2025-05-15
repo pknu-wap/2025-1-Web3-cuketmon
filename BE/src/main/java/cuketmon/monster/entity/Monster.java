@@ -37,7 +37,7 @@ public class Monster {
     @Column(nullable = true)
     private String name;
 
-    @Column(nullable = true, columnDefinition = "TEXT")
+    @Column(nullable = true)
     private String image;
 
     @Column

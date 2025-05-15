@@ -42,13 +42,13 @@ public class MonsterController {
     // TODO: response 이상함 고치기 우선순위는 낮음
     // 몬스터 생성
     @PostMapping("/generate")
-    public ResponseEntity<Map<String, Integer>> generateMonster(@AuthenticationPrincipal String trainerName,
-                                                                @Validated @RequestBody GenerateApiRequestBody requestBody) {
+    public ResponseEntity<Map<String, Object>> generateMonster(@AuthenticationPrincipal String trainerName,
+                                                               @Validated @RequestBody GenerateApiRequestBody requestBody) {
         try {
             Integer monsterId = monsterService.generate(trainerName, requestBody);
             return ResponseEntity.ok(Map.of("monsterId", monsterId));
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(Map.of(e.getMessage(), 400));
+            return ResponseEntity.badRequest().body(Map.of("message", e.getMessage()));
         }
     }
 
