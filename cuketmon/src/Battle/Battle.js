@@ -61,7 +61,7 @@ function Battle() {
   }, [API_URL]);
 
   useEffect(() => {
-    const socket = new SockJS(`${API_URL}/ws`);
+    const socket = new SockJS(`${API_URL}/ws?trainerName=${trainerName}`);
     const client = new Client({
       webSocketFactory: () => socket,
       reconnectDelay: 5000,
@@ -129,8 +129,8 @@ function Battle() {
   useEffect(() => {
     if (!stompClientRef.current || !battleId || !myTeam) return;
   
-    console.log(`Subscribed to /topic/battle/${battleId}/*`); // 구독 로그
-    const battleSubscription = stompClientRef.current.subscribe(`/topic/battle/${battleId}/*`, (skillMessage) => {
+    console.log(`Subscribed to /topic/battle/${battleId}`); // 구독 로그
+    const battleSubscription = stompClientRef.current.subscribe(`/topic/battle/${battleId}`, (skillMessage) => {
       console.log('Received battle message:', skillMessage.body); // 응답 메시지 로그
       const matchResponse = JSON.parse(skillMessage.body);
       const { red, blue, isRedFirst } = matchResponse;
