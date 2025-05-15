@@ -1,21 +1,36 @@
 from diffusers import AutoPipelineForText2Image
 import torch
-from .config import MODEL_PATH, CHECKPOINT
+from .config import INFERENCE_API_URL
+import requests
+from concurrent.futures import ThreadPoolExecutor, as_completed
+from PIL import Image
+import io
 
-print("Loading model...")
-pipeline = AutoPipelineForText2Image.from_pretrained(
-    'stable-diffusion-v1-5/stable-diffusion-v1-5', 
-    torch_dtype=torch.float16
-).to('cuda')
-pipeline.load_lora_weights(f'{MODEL_PATH}/checkpoint-{CHECKPOINT}')
-print("Model loaded.")
+INFERENCE_API_URL = INFERENCE_API_URL
+MAX_WORKERS = 8
 
-def model_inference(prompt: str, type1: str, type2: str = None):
-    if type2:
-        type_info = f"type is {type1.lower()}, {type2}"
-    else:
-        type_info = f"type is {type1.lower()}"
-    full_prompt = f"a poketmon, {type_info}, {prompt}, no background, centered"
-    print(full_prompt)
-    image = pipeline(full_prompt).images[0]
-    return image
+import requests
+
+def model_inference(prompts):
+    """
+    prompts: List[str]
+    return: List[(prompt, PIL.Image.Image)]
+    """
+    def _send(prompt):
+        resp = requests.post(INFERENCE_API_URL, json={"prompt": f"a pokemon, type is {prompt.lower()}, no background"}, stream=True)
+        if resp.status_code == 200 and resp.headers.get("Content-Type") == "image/png":
+            img_bytes = resp.content
+            img = Image.open(io.BytesIO(img_bytes)).convert("RGB")
+            print(prompt.lower())
+            return prompt, img
+        else:
+            return prompt, None
+
+    results = []
+    with ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
+        futures = {executor.submit(_send, p): p for p in prompts}
+        for future in as_completed(futures):
+            prompt, img = future.result()
+            results.append((prompt, img))
+
+    return results
