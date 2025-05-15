@@ -59,7 +59,7 @@ public class Damage {
     }
 
     private static double getTypeBonus(MonsterBattleInfo monster, String type) {
-        if (monster.getType1().equals(type) || monster.getType2().equals(type)) {
+        if (monster.getType1().equals(type) || (monster.getType2() != null && monster.getType2().equals(type))) {
             return 1.5;
         }
         return 1.0;

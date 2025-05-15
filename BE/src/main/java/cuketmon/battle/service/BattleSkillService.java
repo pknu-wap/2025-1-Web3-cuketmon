@@ -85,13 +85,14 @@ public class BattleSkillService {
             }
         }
 
-        log.info("스킬 사용 성공    battleId: {}", battleId);
-        log.info("HP 감소 완료 red  Temp HP: {}, damage: {}", redMonster.getHp(), blueDamage);
-        log.info("HP 감소 완료 blue Temp HP: {}, damage: {}", blueMonster.getHp(), redDamage);
+        log.info("스킬 사용 성공     battleId: {}", battleId);
+        log.info("HP 감소 완료 red  Team HP: {}, damage: {}", redMonster.getHp(), blueDamage);
+        log.info("HP 감소 완료 blue Team HP: {}, damage: {}", blueMonster.getHp(), redDamage);
 
         // 4. 전송
         messagingTemplate.convertAndSend("/topic/battle/" + battleId,
                 new MatchResponse(battleId, red, blue, isRedFirst));
+        log.info("응답 전송 성공     battleId: {}", battleId);
         requestedSkills.remove(battleId);
     }
 
@@ -101,10 +102,15 @@ public class BattleSkillService {
         skill.usePp(1);
 
         if (defender.getMonster().getHp() <= 0) {
+            log.info("HP 감소 완료 defender Team HP: {}, damage: {}", defender.getMonster().getHp(), damage);
+            log.info("배틀 종료 battleId: {}", battleId);
             messagingTemplate.convertAndSend("/topic/battleEnd/" + battleId,
                     new EndBattleResponse(attacker.getTrainerName()));
+
             trainerService.addWin(attacker.getTrainerName());
             trainerService.addLose(defender.getTrainerName());
+
+            requestedSkills.remove(battleId);
             activeBattles.remove(battleId);
             return true;
         }

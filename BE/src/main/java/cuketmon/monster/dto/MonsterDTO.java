@@ -4,7 +4,9 @@ import cuketmon.constant.type.Type;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Setter;
 
+@Setter
 @Getter
 @AllArgsConstructor
 public class MonsterDTO {
@@ -20,6 +22,7 @@ public class MonsterDTO {
     }
 
     // for battle
+    @Setter
     @Getter
     @AllArgsConstructor
     public static class MonsterBattleInfo {
@@ -39,12 +42,8 @@ public class MonsterDTO {
 
         private List<Skill> skills;
 
-        public Integer applyDamage(int amount) {
-            this.hp -= amount;
-            if (this.hp < 0) {
-                this.hp = 0;
-            }
-            return this.hp;
+        public void applyDamage(int amount) {
+            this.hp = Math.max(0, this.hp - amount);
         }
 
         @Getter
