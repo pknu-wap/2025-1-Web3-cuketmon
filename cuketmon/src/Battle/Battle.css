@@ -5,6 +5,13 @@ html, body {
   overflow: hidden;
 }
 
+body {
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .Battle {
   background-image: url('/public/BattlePage/background.png');
   background-size: cover;
@@ -122,7 +129,7 @@ html, body {
   align-items: center;
 }
 
-.techAnimation {
+.skillAnimation {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -133,12 +140,12 @@ html, body {
   animation: spriteAnimation 1s steps(6) forwards;
 }
 
-.blue-to-red .techAnimation {
+.blue-to-red .skillAnimation {
   transform: translate(-50%, -50%) scaleX(1); /* Blue → Red: 왼쪽 → 오른쪽 */
   animation: spriteAnimation 1s steps(6) forwards;
 }
 
-.red-to-blue .techAnimation {
+.red-to-blue .skillAnimation {
   transform: translate(-50%, -50%) scaleX(-1); /* Red → Blue: 오른쪽 → 왼쪽 (반전) */
   animation: spriteAnimation 1s steps(6) forwards;
 }
@@ -158,7 +165,8 @@ html, body {
     filter: brightness(0.5) sepia(1) hue-rotate(-60deg) saturate(5);
   }
 }
-.techSection {
+
+.skillSection {
   width: 65vw;
   height: 30vh;
   position: relative;
@@ -171,7 +179,7 @@ html, body {
   z-index: 0;
 }
 
-.techButtons {
+.skillButtons {
   position: absolute;
   top: 50%;
   left: 35%;
@@ -184,7 +192,7 @@ html, body {
   z-index: 1;
 }
 
-.techButton {
+.skillButton {
   background-color: transparent;
   padding: 2%;
   color: black;
@@ -194,16 +202,16 @@ html, body {
   margin: 2%;
 }
 
-.techButton.selected {
+.skillButton.selected {
   color: gold;
 }
 
-.techButton:disabled {
+.skillButton:disabled {
   background-color: #ccc;
   cursor: not-allowed;
 }
 
-.techType {
+.skillType {
   position: absolute;
   right:10%;
   bottom: 20%;
@@ -255,17 +263,37 @@ html, body {
 }
 
 .loadingScreen {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  width: 100vw;
-  background-color: #f0f0f0;
+  position: relative;
+  height: 100px;
+  width: 100px;
+  background: linear-gradient(to bottom, rgb(254, 0, 1) 50%, white 50% );
+  border-radius: 50%;
+  border: 8px solid black;
+  animation: spin 1s linear infinite;
 }
 
-.loadingSpinner {
-  animation: spin 1s linear infinite;
+.loadingScreen::before {
+  content: '';
+  position: absolute;
+  height: 8px;
+  width: 100px;
+  background: black;
+  top: 50px;
+  transform: translatey(-50%);
+}
+
+.loadingScreen::after {
+  content: '';
+  position: absolute;
+  height: 38px;
+  width: 38px;
+  border-radius: 50%;
+  background: white;
+  top: 50px;
+  left: 50px;
+  transform: translate(-50%, -50%);
+  box-shadow: inset 0 0 0 8px black, inset 0 0 0 10px white, inset 0 0 0 12px black;
+
 }
 
 @keyframes spin {
