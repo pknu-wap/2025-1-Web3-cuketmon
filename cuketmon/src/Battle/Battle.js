@@ -93,6 +93,8 @@ function Battle() {
       const matchResponse = JSON.parse(message.body || '{}');
       const { red, blue, battleId, isRedFirst } = matchResponse;
 
+      if (red.trainerName !== trainerName && blue.trainerName !== trainerName) return;
+
       setBattleId(battleId);
       setRedTeam(red);
       setBlueTeam(blue);
@@ -112,8 +114,6 @@ function Battle() {
       );
       setIsRedFirst(isRedFirst);
       setLoading(false);
-
-      if (red.trainerName !== trainerName && blue.trainerName !== trainerName) return;
     });
 
     const requestData = { trainerName, monsterId };

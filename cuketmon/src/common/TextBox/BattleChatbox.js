@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import SkillButton from './SkillButton';
+import './BattleChatbox.css';
 
 const BattleChatbox = ({ skills, onUse, isTurnInProgress }) => {
   const [selected, setSelected] = useState(null);
