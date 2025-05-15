@@ -69,6 +69,11 @@ public class SkillService {
     // ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
     // 전체 스킬 저장 (919개)
     public void fetchAndSaveAllSkills() {
+        // 919번 스킬이 존재하면 전체 저장 생략
+        if (skillRepository.existsById(TOTAL_SKILL)) {
+            return;
+        }
+
         skillRepository.deleteAll();
         for (int i = 1; i <= TOTAL_SKILL; i++) {
             fetchAndSaveSkill(i);

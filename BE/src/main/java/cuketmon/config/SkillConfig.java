@@ -18,8 +18,8 @@ public class SkillConfig {
     // 모든 스킬을 DB에 저장
     @PostConstruct
     public void initSkills() {
-        // 서버 시작 최초 1회만 등록하면 됨!!!!
-        // skillService.fetchAndSaveAllSkills();
+        // 서버 시작 최초 1회만 등록
+        skillService.fetchAndSaveAllSkills();
     }
 
 }
