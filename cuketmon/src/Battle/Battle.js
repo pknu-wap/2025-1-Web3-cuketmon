@@ -184,58 +184,77 @@ function Battle() {
       setCurrentAnimation(nextAnimation.animationUrl);
       setIsFighting(true);
   
-      // 피격 효과 설정
-      if (nextAnimation.isHit === 'red') {
-        setIsRedHit(true);
-      } else {
-        setIsBlueHit(true);
-      }
-  
-      // 애니메이션 재생 후 처리
       setTimeout(() => {
-        // 체력 업데이트
+        // 애니메이션이 끝난 후 피격 효과 설정
         if (nextAnimation.isHit === 'red') {
-          setRedCuketmonHP(nextAnimation.hp);
+          setIsRedHit(true);
         } else {
-          setBlueCuketmonHP(nextAnimation.hp);
+          setIsBlueHit(true);
         }
   
-        // 내 팀의 스킬 정보 업데이트
-        if (myTeam === (isRedFirst ? 'red' : 'blue') && animationQueue.length === 2) {
-          setSkills(nextAnimation.skills.map((skill, index) => ({
-            id: index,
-            name: skill.name,
-            type: skill.type,
-            damage: skill.power,
-            currentPp: skill.pp,
-            animationUrl: skill.skillAnimation ||
-              animationMap[skill.type?.toLowerCase()]?.[skill.power >= 50 ? 'high' : 'normal']?.[0],
-          })));
-        } else if (myTeam === (isRedFirst ? 'blue' : 'red') && animationQueue.length === 1) {
-          setSkills(nextAnimation.skills.map((skill, index) => ({
-            id: index,
-            name: skill.name,
-            type: skill.type,
-            damage: skill.power,
-            currentPp: skill.pp,
-            animationUrl: skill.skillAnimation ||
-              animationMap[skill.type?.toLowerCase()]?.[skill.power >= 50 ? 'high' : 'normal']?.[0],
-          })));
-        }
+        setTimeout(() => {
+          // HP 업데이트
+          if (nextAnimation.isHit === 'red') {
+            setRedCuketmonHP(nextAnimation.hp);
+          } else {
+            setBlueCuketmonHP(nextAnimation.hp);
+          }
   
-        // 상태 초기화 및 큐 진행
-        setIsFighting(false);
-        setCurrentAnimation(null);
-        setIsRedHit(false);
-        setIsBlueHit(false);
-        setAnimationQueue(prev => {
-          const newQueue = prev.slice(1);
-          if (newQueue.length === 0) setIsTurnInProgress(false);
-          return newQueue;
-        });
-      }, 1500); // 애니메이션 지속 시간
+          // 스킬 정보 업데이트
+          if (myTeam === (isRedFirst ? 'red' : 'blue') && animationQueue.length === 2) {
+            setSkills(nextAnimation.skills.map((skill, index) => ({
+              id: index,
+              name: skill.name,
+              type: skill.type,
+              damage: skill.power,
+              currentPp: skill.pp,
+              animationUrl: skill.skillAnimation
+            })));
+          } else if (myTeam === (isRedFirst ? 'blue' : 'red') && animationQueue.length === 1) {
+            setSkills(nextAnimation.skills.map((skill, index) => ({
+              id: index,
+              name: skill.name,
+              type: skill.type,
+              damage: skill.power,
+              currentPp: skill.pp,
+              animationUrl: skill.skillAnimation
+            })));
+          }
+  
+          // 상태 정리
+          setIsFighting(false);
+          setCurrentAnimation(null);
+          setIsRedHit(false);
+          setIsBlueHit(false);
+          setAnimationQueue(prev => {
+            const newQueue = prev.slice(1);
+            if (newQueue.length === 0) {
+              setIsTurnInProgress(false);
+              // HP가 0 이하인지 확인하고 결과 전송
+              if (redCuketmonHP <= 0 || blueCuketmonHP <= 0) {
+                const winner = redCuketmonHP > 0 ? redTeam.trainerName : blueTeam.trainerName;
+                sendBattleResult(winner);
+              }
+            }
+            return newQueue;
+          });
+        }, 500); // 피격 효과 지속 시간 (500ms)
+      }, 1500); // 애니메이션 지속 시간 (1500ms)
     }
   }, [animationQueue, isFighting, myTeam, isRedFirst]);
+
+  const sendBattleResult = (winner) => {
+    const resultData = {
+      winner: winner,
+      battleId: battleId
+    };
+    console.log('Sending battle result:', resultData);
+    stompClientRef.current.publish({
+      destination: '/app/battleResult',
+      body: JSON.stringify(resultData),
+    });
+  };
+
 
   const handleSelect = (index) => {
     if (!isTurnInProgress) {
