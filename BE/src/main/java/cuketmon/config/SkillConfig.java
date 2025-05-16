@@ -19,7 +19,7 @@ public class SkillConfig {
     @PostConstruct
     public void initSkills() {
         // 서버 시작 최초 1회만 등록
-        skillService.fetchAndSaveAllSkills();
+        // skillService.fetchAndSaveAllSkills();
     }
 
 }
