@@ -131,7 +131,7 @@ body {
 
 .skillAnimation {
   position: absolute;
-  top: -20%;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%) scaleX(1); /* 기본 방향: 왼쪽 → 오른쪽 */
   width: 360px;
