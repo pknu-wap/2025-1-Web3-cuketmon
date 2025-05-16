@@ -1,12 +1,14 @@
 package cuketmon.battle.service;
 
 import cuketmon.battle.dto.BattleDTO;
+import cuketmon.battle.dto.EndBattleRequest;
 import cuketmon.battle.dto.EndBattleResponse;
 import cuketmon.battle.dto.MatchResponse;
 import cuketmon.battle.dto.TrainerRequest;
 import cuketmon.battle.repository.ActiveBattles;
 import cuketmon.battle.repository.WaitingQueue;
 import cuketmon.battle.util.TeamMaker;
+import cuketmon.trainer.service.TrainerService;
 import cuketmon.util.CustomLogger;
 import java.util.UUID;
 import org.apache.logging.log4j.Logger;
@@ -24,14 +26,16 @@ public class BattleMatchService {
     private final TeamMaker teamMaker;
     private final WaitingQueue waitingQueue;
     private final ActiveBattles activeBattles;
+    private final TrainerService trainerService;
 
     @Autowired
     public BattleMatchService(SimpMessagingTemplate messagingTemplate, TeamMaker teamMaker,
-                              WaitingQueue waitingQueue, ActiveBattles activeBattles) {
+                              WaitingQueue waitingQueue, ActiveBattles activeBattles, TrainerService trainerService) {
         this.messagingTemplate = messagingTemplate;
         this.teamMaker = teamMaker;
         this.waitingQueue = waitingQueue;
         this.activeBattles = activeBattles;
+        this.trainerService = trainerService;
     }
 
     @Transactional
@@ -61,18 +65,42 @@ public class BattleMatchService {
         messagingTemplate.convertAndSend("/topic/match/" + battleId, new MatchResponse(battleId, blue, red, false));
     }
 
-    // TODO: 이거 쓰려면 EndBattleResponse 수정해야함
     @Transactional
-    public void endBattle(Integer battleId) {
-        log.info("배틀 종료 요청 battleId: {}", battleId);
-        messagingTemplate.convertAndSend("/topic/battleEnd/" + battleId,
-                new EndBattleResponse("Escape"));
+    public void endBattle(Integer battleId, EndBattleRequest request) {
+        BattleDTO battle = activeBattles.get(battleId);
+
+        String winner = request.getWinnerName();
+        String loser = battle.getRed().getTrainerName().equals(winner) ?
+                battle.getBlue().getTrainerName() : battle.getRed().getTrainerName();
+
+        log.info("배틀 종료 요청 battleId: {}, 승자: {}", battleId, winner);
+        log.info("배틀 종료 요청 battleId: {}, 패자: {}", battleId, loser);
+        messagingTemplate.convertAndSend("/topic/battleEnd/" + battleId, new EndBattleResponse(winner));
+
+        trainerService.addWin(winner);
+        trainerService.addLose(loser);
+
+        activeBattles.remove(battleId);
     }
 
     @Transactional
     public void cancelBattle(String trainerName) {
-        waitingQueue.remove(trainerName);
+        // 1. 매칭 취소
         log.info("큐 대기 취소: {}", trainerName);
+        waitingQueue.remove(trainerName);
+
+        // 2. 배틀 취소
+        Integer battleId = activeBattles.getBattleIdByTrainer(trainerName);
+        if (battleId != null) {
+            log.info("탈주 감지 배틀 취소: {}", trainerName);
+            BattleDTO battle = activeBattles.get(battleId);
+
+            BattleDTO.Team red = battle.getRed();
+            BattleDTO.Team blue = battle.getBlue();
+
+            String winner = red.getTrainerName().equals(trainerName) ? blue.getTrainerName() : red.getTrainerName();
+            endBattle(battleId, new EndBattleRequest(winner));
+        }
     }
 
     private Integer generateBattleId() {

@@ -7,8 +7,8 @@ import lombok.Getter;
 @AllArgsConstructor
 public class SkillRequest {
 
-    Integer skillId;
-    String trainerName;
-    String animationUrl;
+    private Integer skillId;
+    private String trainerName;
+    private String animationUrl;
 
 }

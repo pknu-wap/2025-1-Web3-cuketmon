@@ -22,4 +22,16 @@ public class ActiveBattles {
         activeBattles.remove(battleId);
     }
 
+    public Integer getBattleIdByTrainer(String trainerName) {
+        return activeBattles.entrySet().stream()
+                .filter(e -> {
+                    BattleDTO.Team red = e.getValue().getRed();
+                    BattleDTO.Team blue = e.getValue().getBlue();
+                    return red.getTrainerName().equals(trainerName) || blue.getTrainerName().equals(trainerName);
+                })
+                .map(Map.Entry::getKey)
+                .findFirst()
+                .orElse(null);
+    }
+
 }
