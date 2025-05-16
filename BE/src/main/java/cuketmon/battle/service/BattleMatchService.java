@@ -76,6 +76,7 @@ public class BattleMatchService {
         log.info("배틀 종료 요청 battleId: {}, 승자: {}", battleId, winner);
         log.info("배틀 종료 요청 battleId: {}, 패자: {}", battleId, loser);
         messagingTemplate.convertAndSend("/topic/battleEnd/" + battleId, new EndBattleResponse(winner));
+
         trainerService.addWin(winner);
         trainerService.addLose(loser);
 
@@ -84,8 +85,22 @@ public class BattleMatchService {
 
     @Transactional
     public void cancelBattle(String trainerName) {
-        waitingQueue.remove(trainerName);
+        // 1. 매칭 취소
         log.info("큐 대기 취소: {}", trainerName);
+        waitingQueue.remove(trainerName);
+
+        // 2. 배틀 취소
+        Integer battleId = activeBattles.getBattleIdByTrainer(trainerName);
+        if (battleId != null) {
+            log.info("탈주 감지 배틀 취소: {}", trainerName);
+            BattleDTO battle = activeBattles.get(battleId);
+
+            BattleDTO.Team red = battle.getRed();
+            BattleDTO.Team blue = battle.getBlue();
+
+            String winner = red.getTrainerName().equals(trainerName) ? blue.getTrainerName() : red.getTrainerName();
+            endBattle(battleId, new EndBattleRequest(winner));
+        }
     }
 
     private Integer generateBattleId() {

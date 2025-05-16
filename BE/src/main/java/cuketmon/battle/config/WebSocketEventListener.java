@@ -24,4 +24,5 @@ public class WebSocketEventListener {
             battleMatchService.cancelBattle(trainerName);
         }
     }
+
 }
