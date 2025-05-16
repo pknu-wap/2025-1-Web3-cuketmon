@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import "./MakeResult.css";
+import TextBox from '../common/TextBox/TextBox.js';
+import Textbox from './../common/TextBox/TextBox';
 
 function MakeResult() {
   const [cukemonImage, setCukemonImage] = useState("/MakeResultPage/movingEgg.gif");
@@ -61,15 +63,17 @@ function MakeResult() {
           className="blinkEffect"
         />
       )}
-      <div className="chatBox">
-        <p
-          id="ment"
-          onClick={mentText.includes("도망") ? () => navigate("/Make") : undefined}
-          style={{ cursor: mentText.includes("도망") ? "pointer" : "default" }}
-        >
-          {mentText}
-        </p>
-      </div>
+ 
+ <div  className="chatBox">
+  <TextBox>
+  <textarea
+    id="ment"
+    readOnly
+    value={mentText}
+    onClick={mentText.includes("도망") ? () => navigate("/Make") : undefined}
+  />
+</TextBox>
+</div>
     </div>
   );
 }
