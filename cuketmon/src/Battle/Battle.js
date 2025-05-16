@@ -32,6 +32,7 @@ function Battle() {
   const [isConnected, setIsConnected] = useState(false);
 
   const stompClientRef = useRef(null);
+  const subscriptionsRef = useRef({});
   const navigate = useNavigate();
   const location = useLocation();
   const API_URL = process.env.REACT_APP_API_URL;
@@ -40,7 +41,7 @@ function Battle() {
   useEffect(() => {
     const fetchTrainerName = async () => {
       try {
-        console.log('Fetching trainer name...'); // 요청 전 로그
+        console.log('트레이너 이름을 가져오는 중...'); // 요청 전 로그
         const token = localStorage.getItem('accessToken');
         if (!token) throw new Error('인증 토큰이 없습니다.');
         const res = await fetch(`${API_URL}/api/trainer/myName`, {
@@ -49,10 +50,10 @@ function Battle() {
         if (!res.ok) throw new Error(`서버 응답 상태: ${res.status}`);
         const name = await res.text();
         if (!name) throw new Error('트레이너 이름이 비어 있습니다.');
-        console.log('Trainer name received:', name); // 응답 후 로그
+        console.log('트레이너 이름 수신:', name); // 응답 후 로그
         setTrainerName(name);
       } catch (err) {
-        console.error('Error fetching trainer name:', err); // 에러 로그
+        console.error('트레이너 이름 가져오기 오류:', err); // 에러 로그
         setError(`트레이너 정보를 불러오지 못했습니다: ${err.message}`);
         setLoading(false);
       }
@@ -66,117 +67,99 @@ function Battle() {
       webSocketFactory: () => socket,
       reconnectDelay: 5000,
       onConnect: () => {
-        console.log('WebSocket connected'); // WebSocket 연결 로그\
+        console.log('WebSocket 연결됨'); // WebSocket 연결 로그
         setIsConnected(true);
         stompClientRef.current = client;
+
+        // 매치 구독
+        subscriptionsRef.current.match = client.subscribe('/topic/match/*', (message) => {
+          console.log('매치 메시지 수신:', message.body); // 응답 메시지 로그
+          const matchResponse = JSON.parse(message.body || '{}');
+          const { red, blue, battleId, isRedFirst } = matchResponse;
+
+          if (red.trainerName !== trainerName && blue.trainerName !== trainerName) return;
+
+          console.log('빨간 팀 데이터:', red); // 팀 데이터 확인 로그
+          console.log('파란 팀 데이터:', blue); // 팀 데이터 확인 로그
+          setBattleId(battleId);
+          setRedTeam(red);
+          setBlueTeam(blue);
+          setMyTeam(red.trainerName === trainerName ? 'red' : 'blue');
+          setRedCuketmonHP(red.monster.hp);
+          setBlueCuketmonHP(blue.monster.hp);
+          setSkills(
+            (red.trainerName === trainerName ? red : blue).monster?.skills?.map((skill, index) => ({
+              id: index,
+              name: skill.name,
+              type: skill.type,
+              damage: skill.power,
+              currentPp: skill.pp,
+              animationUrl: skill.skillAnimation ||
+                animationMap[skill.type?.toLowerCase()]?.[skill.power >= 50 ? 'high' : 'normal']?.[0],
+            })) || []
+          );
+          setIsRedFirst(isRedFirst);
+          setLoading(false);
+
+          // 배틀 구독 (지속적으로 유지)
+          subscriptionsRef.current.battle = client.subscribe(`/topic/battle/${battleId}`, (skillMessage) => {
+            console.log('배틀 메시지 수신:', skillMessage.body); // 응답 메시지 로그
+            const matchResponse = JSON.parse(skillMessage.body);
+            const { red, blue, isRedFirst } = matchResponse;
+
+            const firstTeam = isRedFirst ? 'red' : 'blue';
+            const secondTeam = isRedFirst ? 'blue' : 'red';
+
+            const firstAnimationUrl = matchResponse[firstTeam].skillAnimation;
+            const secondAnimationUrl = matchResponse[secondTeam].skillAnimation;
+
+            if (firstAnimationUrl && secondAnimationUrl) {
+              const firstAnimation = {
+                animationUrl: firstAnimationUrl,
+                isHit: secondTeam,
+                hp: matchResponse[secondTeam].monster.hp,
+                skills: matchResponse[firstTeam].monster.skills,
+              };
+              const secondAnimation = {
+                animationUrl: secondAnimationUrl,
+                isHit: firstTeam,
+                hp: matchResponse[firstTeam].monster.hp,
+                skills: matchResponse[secondTeam].monster.skills,
+              };
+              setAnimationQueue([firstAnimation, secondAnimation]);
+            }
+          });
+
+          // 배틀 종료 구독
+          subscriptionsRef.current.battleEnd = client.subscribe(`/topic/battleEnd/${battleId}/*`, (endMessage) => {
+            console.log('배틀 종료 메시지 수신:', endMessage.body); // 응답 메시지 로그
+            const endBattleResponse = JSON.parse(endMessage.body);
+            const { result } = endBattleResponse;
+            setWinner(result);
+            setIsBattleEnded(true);
+          });
+        });
+
+        const requestData = { trainerName, monsterId };
+        console.log('/app/findBattle 에 게시함:', requestData); // 요청 전 로그
+        client.publish({
+          destination: '/app/findBattle',
+          body: JSON.stringify(requestData),
+        });
       },
       onStompError: (frame) => {
-        console.error('WebSocket error:', frame); // WebSocket 에러 로그
+        console.error('WebSocket 오류:', frame); // WebSocket 에러 로그
         setError('WebSocket 연결에 실패했습니다.');
         setLoading(false);
       },
     });
     client.activate();
-    return () => client.deactivate();
-  }, [API_URL]);
-
-  useEffect(() => {
-    console.log('useEffect triggered - monsterId:', monsterId, 'trainerName:', trainerName, 'stompClient:', !!stompClientRef.current);
-    if (!stompClientRef.current || !trainerName) {
-      console.log('Subscription skipped - stompClientRef:', !!stompClientRef.current, 'trainerName:', trainerName);
-      return;
-    }
-
-    console.log('Subscribed to /topic/match/*'); // 구독 로그
-    const matchSubscription = stompClientRef.current.subscribe('/topic/match/*', (message) => {
-      console.log('Received match message:', message.body); // 응답 메시지 로그
-      const matchResponse = JSON.parse(message.body || '{}');
-      const { red, blue, battleId, isRedFirst } = matchResponse;
-
-      if (red.trainerName !== trainerName && blue.trainerName !== trainerName) return;
-
-      setBattleId(battleId);
-      setRedTeam(red);
-      setBlueTeam(blue);
-      setMyTeam(red.trainerName === trainerName ? 'red' : 'blue');
-      setRedCuketmonHP(red.monster.hp);
-      setBlueCuketmonHP(blue.monster.hp);
-      setSkills(
-        (red.trainerName === trainerName ? red : blue).monster?.skills?.map((skill, index) => ({
-          id: index,
-          name: skill.name,
-          type: skill.type,
-          damage: skill.power,
-          currentPp: skill.pp,
-          animationUrl: skill.skillAnimation ||
-            animationMap[skill.type?.toLowerCase()]?.[skill.power >= 50 ? 'high' : 'normal']?.[0],
-        })) || []
-      );
-      setIsRedFirst(isRedFirst);
-      setLoading(false);
-    });
-
-    const requestData = { trainerName, monsterId };
-    console.log('Published to /app/findBattle:', requestData); // 요청 전 로그
-    stompClientRef.current.publish({
-      destination: '/app/findBattle',
-      body: JSON.stringify(requestData),
-    });
-
-    return () => matchSubscription.unsubscribe();
-  }, [trainerName, isConnected, monsterId]);
-
-  useEffect(() => {
-    if (!stompClientRef.current || !battleId || !myTeam) return;
-  
-    console.log(`Subscribed to /topic/battle/${battleId}`); // 구독 로그
-    const battleSubscription = stompClientRef.current.subscribe(`/topic/battle/${battleId}`, (skillMessage) => {
-      console.log('Received battle message:', skillMessage.body); // 응답 메시지 로그
-      const matchResponse = JSON.parse(skillMessage.body);
-      const { red, blue, isRedFirst } = matchResponse;
-  
-      const firstTeam = isRedFirst ? 'red' : 'blue'; // 선공 팀
-      const secondTeam = isRedFirst ? 'blue' : 'red'; // 후공 팀
-  
-      const firstAnimationUrl = matchResponse[firstTeam].skillAnimation;
-      const secondAnimationUrl = matchResponse[secondTeam].skillAnimation;
-  
-      if (firstAnimationUrl && secondAnimationUrl) { // null이 아닌지 확인
-        // 선공 애니메이션 정보
-        const firstAnimation = {
-          animationUrl: firstAnimationUrl,
-          isHit: secondTeam, // 피격 팀은 후공 팀
-          hp: matchResponse[secondTeam].monster.hp, // 피격 팀의 체력
-          skills: matchResponse[firstTeam].monster.skills, // 사용 팀의 스킬 정보
-        };
-  
-        // 후공 애니메이션 정보
-        const secondAnimation = {
-          animationUrl: secondAnimationUrl,
-          isHit: firstTeam, // 피격 팀은 선공 팀
-          hp: matchResponse[firstTeam].monster.hp, // 피격 팀의 체력
-          skills: matchResponse[secondTeam].monster.skills, // 사용 팀의 스킬 정보
-        };
-  
-        // 선공 -> 후공 순으로 큐에 추가
-        setAnimationQueue([firstAnimation, secondAnimation]);
-      }
-    });
-  
-    console.log(`Subscribed to /topic/battleEnd/${battleId}/*`); // 구독 로그
-    const endSubscription = stompClientRef.current.subscribe(`/topic/battleEnd/${battleId}/*`, (endMessage) => {
-      console.log('Received battle end message:', endMessage.body); // 응답 메시지 로그
-      const endBattleResponse = JSON.parse(endMessage.body);
-      const { result } = endBattleResponse;
-      setWinner(result);
-      setIsBattleEnded(true);
-    });
-  
     return () => {
-      battleSubscription.unsubscribe();
-      endSubscription.unsubscribe();
+      if (stompClientRef.current) {
+        stompClientRef.current.deactivate();
+      }
     };
-  }, [battleId, myTeam]);
+  }, [API_URL, trainerName, monsterId]);
 
   useEffect(() => {
     if (animationQueue.length > 0 && !isFighting) {
@@ -184,58 +167,79 @@ function Battle() {
       setCurrentAnimation(nextAnimation.animationUrl);
       setIsFighting(true);
   
-      // 피격 효과 설정
-      if (nextAnimation.isHit === 'red') {
-        setIsRedHit(true);
-      } else {
-        setIsBlueHit(true);
-      }
-  
-      // 애니메이션 재생 후 처리
       setTimeout(() => {
-        // 체력 업데이트
+        // 애니메이션이 끝난 후 피격 효과 설정
         if (nextAnimation.isHit === 'red') {
-          setRedCuketmonHP(nextAnimation.hp);
+          setIsRedHit(true);
         } else {
-          setBlueCuketmonHP(nextAnimation.hp);
+          setIsBlueHit(true);
         }
   
-        // 내 팀의 스킬 정보 업데이트
-        if (myTeam === (isRedFirst ? 'red' : 'blue') && animationQueue.length === 2) {
-          setSkills(nextAnimation.skills.map((skill, index) => ({
-            id: index,
-            name: skill.name,
-            type: skill.type,
-            damage: skill.power,
-            currentPp: skill.pp,
-            animationUrl: skill.skillAnimation ||
-              animationMap[skill.type?.toLowerCase()]?.[skill.power >= 50 ? 'high' : 'normal']?.[0],
-          })));
-        } else if (myTeam === (isRedFirst ? 'blue' : 'red') && animationQueue.length === 1) {
-          setSkills(nextAnimation.skills.map((skill, index) => ({
-            id: index,
-            name: skill.name,
-            type: skill.type,
-            damage: skill.power,
-            currentPp: skill.pp,
-            animationUrl: skill.skillAnimation ||
-              animationMap[skill.type?.toLowerCase()]?.[skill.power >= 50 ? 'high' : 'normal']?.[0],
-          })));
-        }
+        setTimeout(() => {
+          // HP 업데이트
+          if (nextAnimation.isHit === 'red') {
+            setRedCuketmonHP(nextAnimation.hp);
+          } else {
+            setBlueCuketmonHP(nextAnimation.hp);
+          }
   
-        // 상태 초기화 및 큐 진행
-        setIsFighting(false);
-        setCurrentAnimation(null);
-        setIsRedHit(false);
-        setIsBlueHit(false);
-        setAnimationQueue(prev => {
-          const newQueue = prev.slice(1);
-          if (newQueue.length === 0) setIsTurnInProgress(false);
-          return newQueue;
-        });
-      }, 1500); // 애니메이션 지속 시간
+          // 스킬 정보 업데이트
+          if (myTeam === (isRedFirst ? 'red' : 'blue') && animationQueue.length === 2) {
+            setSkills(nextAnimation.skills.map((skill, index) => ({
+              id: index,
+              name: skill.name,
+              type: skill.type,
+              damage: skill.power,
+              currentPp: skill.pp,
+              animationUrl: skill.skillAnimation
+            })));
+          } else if (myTeam === (isRedFirst ? 'blue' : 'red') && animationQueue.length === 1) {
+            setSkills(nextAnimation.skills.map((skill, index) => ({
+              id: index,
+              name: skill.name,
+              type: skill.type,
+              damage: skill.power,
+              currentPp: skill.pp,
+              animationUrl: skill.skillAnimation
+            })));
+          }
+  
+          // 상태 정리
+          setIsFighting(false);
+          setCurrentAnimation(null);
+          setIsRedHit(false);
+          setIsBlueHit(false);
+          setAnimationQueue(prev => {
+            const newQueue = prev.slice(1);
+            if (newQueue.length === 0) {
+              setIsTurnInProgress(false);
+              // HP가 0 이하인지 확인하고 결과 전송
+              if (redCuketmonHP <= 0 || blueCuketmonHP <= 0) {
+                const winner = redCuketmonHP > 0 ? redTeam.trainerName : blueTeam.trainerName;
+                const loser = redCuketmonHP <= 0 ? redTeam.trainerName : blueTeam.trainerName;
+                sendBattleResult(winner, loser);
+              }
+            }
+            return newQueue;
+          });
+        }, 500); // 피격 효과 지속 시간 (500ms)
+      }, 1500); // 애니메이션 지속 시간 (1500ms)
     }
-  }, [animationQueue, isFighting, myTeam, isRedFirst]);
+  }, [animationQueue, redCuketmonHP, blueCuketmonHP, redTeam, blueTeam]);
+
+  const sendBattleResult = (winner, loser) => {
+    const resultData = {
+      winner: winner,
+      loser: loser,
+      battleId: battleId
+    };
+    console.log('승자 패자 정보 전송 중. . .:', resultData);
+    stompClientRef.current.publish({
+      destination: '/app/battleResult',
+      body: JSON.stringify(resultData),
+    });
+  };
+
 
   const handleSelect = (index) => {
     if (!isTurnInProgress) {
@@ -253,16 +257,16 @@ function Battle() {
       !stompClientRef.current?.connected ||
       !battleId
     ) {
-      console.log('Cannot use skill:', { skill, currentPp: skill?.currentPp, isTurnInProgress, connected: stompClientRef.current?.connected, battleId }); // 실패 조건 로그
+      console.log('스킬을 사용할 수 없습니다:', { skill, currentPp: skill?.currentPp, isTurnInProgress, connected: stompClientRef.current?.connected, battleId }); // 실패 조건 로그
       return;
     }
-  
+
     const skillData = {
       skillId: index,
       trainerName: trainerName,
       animationUrl: skill.animationUrl,
     };
-    console.log('Sending skill data:', skillData); // 요청 전 로그
+    console.log('스킬 데이터 전송:', skillData); // 요청 전 로그
     stompClientRef.current.publish({
       destination: `/app/skill/${battleId}`,
       body: JSON.stringify(skillData),
@@ -337,11 +341,11 @@ function Battle() {
         <div className="skillSection">
           {!isTurnInProgress && (
             <BattleChatbox 
-            skills={skills} 
-            onUse={handleFight} 
-            selected={handleSelect}
-            isTurnInProgress={isTurnInProgress} 
-          />
+              skills={skills} 
+              onUse={handleFight} 
+              selected={handleSelect}
+              isTurnInProgress={isTurnInProgress} 
+            />
           )}
           {isFighting && currentAnimation && (
             <div className={`battleAnimationOverlay ${isBlueHit ? 'red-to-blue' : 'blue-to-red'}`}>
