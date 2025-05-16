@@ -1,5 +1,6 @@
 package cuketmon.battle.controller;
 
+import cuketmon.battle.dto.EndBattleRequest;
 import cuketmon.battle.dto.SkillRequest;
 import cuketmon.battle.dto.TrainerRequest;
 import cuketmon.battle.service.BattleMatchService;
@@ -27,17 +28,16 @@ public class BattleWebSocketController {
         battleMatchService.findBattle(request);
     }
 
-    // 사실 이건 필요 없음 혹시나 도망치는 기능이 필요할지도 모르니 남겨놓음
     // 배틀 종료
     @MessageMapping("/endBattle/{battleId}")
-    public void endBattle(@DestinationVariable Integer battleId) {
-        battleMatchService.endBattle(battleId);
+    public void endBattle(@DestinationVariable Integer battleId, EndBattleRequest request) {
+        battleMatchService.endBattle(battleId, request);
     }
 
     // 기술 사용
     @MessageMapping("/skill/{battleId}")
-    public void useSkill(@DestinationVariable Integer battleId, SkillRequest skill) {
-        battleSkillService.useSkill(battleId, skill);
+    public void useSkill(@DestinationVariable Integer battleId, SkillRequest request) {
+        battleSkillService.useSkill(battleId, request);
     }
 
 }
