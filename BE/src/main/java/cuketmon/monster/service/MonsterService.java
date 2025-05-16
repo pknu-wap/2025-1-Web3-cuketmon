@@ -97,7 +97,7 @@ public class MonsterService {
                 .skillId3(skillService.getSkillId(type2, damageClass, MIN_DAMAGE, MID_DAMAGE))
                 .skillId4(skillService.getSkillId(type2, altClass, MIN_DAMAGE, MID_DAMAGE))
                 .build();
-        log.info("커켓몬 생성, id={}, description={}", monster.getId(), monster.getDescription());
+        log.info("커켓몬 생성: id={}, description={}", monster.getId(), monster.getDescription());
 
         trainer.addMonster(monster);
         monsterRepository.save(monster);
@@ -119,7 +119,7 @@ public class MonsterService {
 
         monster.changeNameTo(monsterName);
         monsterRepository.save(monster);
-        log.info("커켓몬 이름 지정 name={}", monster.getName());
+        log.info("커켓몬 이름 지정: name={}", monster.getName());
     }
 
     @Transactional
@@ -135,7 +135,7 @@ public class MonsterService {
 
         trainer.getMonsters().remove(monster);
         monsterRepository.delete(monster);
-        log.info("커켓몬 놓아주기 name={}", monster.getName());
+        log.info("커켓몬 놓아주기: id={}", monsterId);
     }
 
     @Transactional
@@ -154,7 +154,7 @@ public class MonsterService {
             monster.increaseSpeed(monster.getAffinity().increase(AFFINITY_PLUS));
             trainerRepository.save(trainer);
             monsterRepository.save(monster);
-            log.info("커켓몬 먹이주기 trainer={}, monster={}", trainerName, monster.getName());
+            log.info("커켓몬 먹이주기: trainer={}, monster={}", trainerName, monster.getName());
         } catch (Exception e) {
             throw new IllegalArgumentException(e.getMessage());
         }
@@ -176,7 +176,7 @@ public class MonsterService {
             monster.increaseSpeed(monster.getAffinity().increase(AFFINITY_PLUS));
             trainerRepository.save(trainer);
             monsterRepository.save(monster);
-            log.info("커켓몬 놀아주기 trainer={}, monster={}", trainerName, monster.getName());
+            log.info("커켓몬 놀아주기: trainer={}, monster={}", trainerName, monster.getName());
         } catch (Exception e) {
             throw new IllegalArgumentException(e.getMessage());
         }

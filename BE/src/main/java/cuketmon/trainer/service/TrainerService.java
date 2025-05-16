@@ -28,28 +28,28 @@ public class TrainerService {
 
     @Transactional
     public Integer getRemainingToys(String name) {
-        log.info("잔여 장난감 조회 요청: {}", name);
         Trainer trainer = trainerRepository.findById(name)
                 .orElseThrow(() -> new IllegalArgumentException(TRAINER_NOT_FOUND));
 
+        log.info("장난감 조회: {}", name);
         return trainer.getToy().getCount();
     }
 
     @Transactional
     public Integer getRemainingFeeds(String name) {
-        log.info("잔여 먹이 조회 요청: {}", name);
         Trainer trainer = trainerRepository.findById(name)
                 .orElseThrow(() -> new IllegalArgumentException(TRAINER_NOT_FOUND));
 
+        log.info("먹이 조회 : {}", name);
         return trainer.getFeed().getCount();
     }
 
     @Transactional
     public void addWin(String name) {
-        log.info("승리 추가 요청: {}", name);
         Trainer trainer = trainerRepository.findById(name)
                 .orElseThrow(() -> new IllegalArgumentException(TRAINER_NOT_FOUND));
 
+        log.info("승리 추가: {}", name);
         trainer.addWin();
     }
 
@@ -58,6 +58,7 @@ public class TrainerService {
         Trainer trainer = trainerRepository.findById(name)
                 .orElseThrow(() -> new IllegalArgumentException(TRAINER_NOT_FOUND));
 
+        log.info("패배 추가: {}", name);
         trainer.addLose();
     }
 
