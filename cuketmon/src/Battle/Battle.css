@@ -133,26 +133,29 @@ body {
   position: absolute;
   top: -20%;
   left: 50%;
-  transform: translate(-50%, -50%) scaleX(1); /* 기본 방향: 왼쪽 → 오른쪽 */
   width: 360px;
   height: 37px;
   background-repeat: no-repeat;
-  animation: spriteAnimation 1s steps(6) forwards;
 }
 
 .blue-to-red .skillAnimation {
-  transform: translate(-50%, -50%) scaleX(1); /* Blue → Red: 왼쪽 → 오른쪽 */
-  animation: spriteAnimation 1s steps(6) forwards;
+  transform: translate(-50%, -50%) scaleX(1);
+  animation: spriteAnimationLeft 1s steps(6) forwards;
 }
 
 .red-to-blue .skillAnimation {
-  transform: translate(-50%, -50%) scaleX(-1); /* Red → Blue: 오른쪽 → 왼쪽 (반전) */
-  animation: spriteAnimation 1s steps(6) forwards;
+  transform: translate(-50%, -50%) scaleX(-1);
+  animation: spriteAnimationRight 1s steps(6) forwards;
 }
 
-@keyframes spriteAnimation {
+@keyframes spriteAnimationRight {
   from { transform: translateX(-50%) translateX(0); }
   to { transform: translateX(-50%) translateX(17%); }
+}
+
+@keyframes spriteAnimationLeft {
+  from { transform: translateX(-50%) translateX(0); }
+  to { transform: translateX(-50%) translateX(-17%); }
 }
 
 .hitEffect {
