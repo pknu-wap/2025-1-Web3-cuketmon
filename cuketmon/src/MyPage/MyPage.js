@@ -140,6 +140,7 @@ const releaseCukemon = async () => {
   }
 };
 
+/*desktop-커켓몬 조회 */
   useEffect(() => {
     const handleKeyPress = (event) => {
       if (event.key === 'ArrowLeft') {

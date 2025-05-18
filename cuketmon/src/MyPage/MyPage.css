@@ -122,8 +122,11 @@ span {
   }
 
   .item {
-    padding-top: 3%;
+    top: 2vh;
     margin-bottom: 145.5%;
+  }
+  .item img {
+    top: 2vh;
   }
 
   #cuketmonImage {
