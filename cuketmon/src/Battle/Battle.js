@@ -89,11 +89,12 @@ function Battle() {
 
     console.log('Subscribed to /topic/match/*'); // 구독 로그
     const matchSubscription = stompClientRef.current.subscribe('/topic/match/*', (message) => {
-      console.log('Received match message:', message.body); // 응답 메시지 로그
       const matchResponse = JSON.parse(message.body || '{}');
       const { red, blue, battleId, isRedFirst } = matchResponse;
 
       if (red.trainerName !== trainerName && blue.trainerName !== trainerName) return;
+
+      console.log('Received match message:', message.body); // 응답 메시지 로그
 
       setBattleId(battleId);
       setRedTeam(red);
@@ -234,6 +235,7 @@ function Battle() {
               if (redCuketmonHP <= 0 || blueCuketmonHP <= 0) {
                 const winner = redCuketmonHP > 0 ? redTeam.trainerName : blueTeam.trainerName;
                 sendBattleResult(winner);
+                setIsBattleEnded(true);
               }
             }
             return newQueue;
