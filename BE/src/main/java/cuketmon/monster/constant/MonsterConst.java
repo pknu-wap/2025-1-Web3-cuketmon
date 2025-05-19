@@ -14,7 +14,7 @@ public class MonsterConst {
 
     public static final int FEED_MINUS = 1;
     public static final int TOY_MINUS = 1;
-    public static final int AFFINITY_PLUS = 1;
+    public static final int AFFINITY_PLUS = 5;
 
     public static final int BOUND = 100;
 

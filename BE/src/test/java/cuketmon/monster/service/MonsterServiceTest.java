@@ -4,6 +4,7 @@ import static cuketmon.constant.TestConfig.TRAINER1;
 import static cuketmon.constant.TestConfig.TRAINER2;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import cuketmon.config.TestDummyDataConfig;
 import cuketmon.config.TestSkillDataConfig;
@@ -65,7 +66,9 @@ class MonsterServiceTest {
         monsterService.play(TRAINER1, 1);
 
         Monster updatedMonster = monsterRepository.findById(1).get();
-        assertEquals(prevAffinity + 1, updatedMonster.getAffinity().getCount());
+        
+        int diff = updatedMonster.getAffinity().getCount() - prevAffinity;
+        assertTrue(diff >= 3 && diff <= 5, "친밀도는 3~5 사이 증가해야 합니다. 증가량: " + diff);
     }
 
     @Test

@@ -23,6 +23,10 @@ public class Feed {
         return this.count -= amount;
     }
 
+    public void increase(int amount) {
+        this.count += amount;
+    }
+
     private boolean validate(int amount) {
         return this.count >= amount;
     }
