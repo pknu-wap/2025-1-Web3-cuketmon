@@ -1,6 +1,7 @@
 package cuketmon.trainer.service;
 
 import static cuketmon.constant.message.ErrorMessages.TRAINER_NOT_FOUND;
+import static cuketmon.util.Random.getRandomInRange;
 
 import cuketmon.monster.entity.Monster;
 import cuketmon.trainer.dto.TrainerDTO;
@@ -39,7 +40,7 @@ public class TrainerService {
         Trainer trainer = trainerRepository.findById(name)
                 .orElseThrow(() -> new IllegalArgumentException(TRAINER_NOT_FOUND));
 
-        log.info("먹이 조회 : {}", name);
+        log.info("먹이 조회  : {}", name);
         return trainer.getFeed().getCount();
     }
 
@@ -50,6 +51,8 @@ public class TrainerService {
 
         log.info("승리 추가: {}", name);
         trainer.addWin();
+        trainer.getFeed().increase(getRandomInRange(1, 3));
+        trainer.getToy().increase(getRandomInRange(1, 3));
     }
 
     @Transactional
