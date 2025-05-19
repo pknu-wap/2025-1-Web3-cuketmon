@@ -63,48 +63,28 @@ public class TrainerService {
     }
 
     // 랭킹 시스템
-    // 트레이너 전체 랭킹
-    @Transactional
-    public List<TrainerDTO> getAllRanking() {
-        List<Trainer> sorted = trainerRepository.findAllByOrderByWinDesc();
 
-        List<TrainerDTO> rankingList = new ArrayList<>();
 
-        int rank = 1;
-        for (Trainer trainer : sorted) {
-            rankingList.add(new TrainerDTO(
-                            rank++,
-                            trainer.getName(),
-                            trainer.getWin(),
-                            trainer.getLose(),
-                            trainer.getAllBattles()
-                    )
-            );
-        }
-        return rankingList;
-    }
-
-    // 트레이너 개인 랭킹
     @Transactional
     public TrainerDTO getSingleRanking(String trainerName) {
-        List<Trainer> sorted = trainerRepository.findAllByOrderByWinDesc();
+        // Optional 자체에서 null 또는 빈 값 처리 포함
+        Trainer trainer = trainerRepository.findByName(trainerName)
+                .filter(t -> !t.getName().isBlank())
+                .orElseThrow(() -> new IllegalArgumentException("트레이너를 찾을 수 없습니다: " + trainerName));
 
-        int rank = 1;
-        for (Trainer trainer : sorted) {
-            if (trainer.getName().equals(trainerName)) {
-                return new TrainerDTO(
-                        rank,
-                        trainer.getName(),
-                        trainer.getWin(),
-                        trainer.getLose(),
-                        trainer.getAllBattles()
-                );
-            }
-            rank++;
-        }
-        throw new IllegalArgumentException(TRAINER_NOT_FOUND);
+        int rank = trainerRepository.countByWinGreaterThan(trainer.getWin()) + 1;
+
+        return new TrainerDTO(
+                rank,
+                trainer.getName(),
+                trainer.getWin(),
+                trainer.getLose(),
+                trainer.getAllBattles()
+        );
     }
 
+
+    //
     public List<Integer> getMonsterIds(String trainerName) {
         Trainer trainer = trainerRepository.findById(trainerName)
                 .orElseThrow(() -> new IllegalArgumentException(TRAINER_NOT_FOUND));
