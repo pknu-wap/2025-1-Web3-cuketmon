@@ -300,18 +300,17 @@ function Battle() {
   );
 
   if (isBattleEnded) {
-    const winnerImage = winner === trainerName ? 
-      (myTeam === 'red' ? redTeam.monster.image : blueTeam.monster.image) : 
-      (myTeam === 'red' ? blueTeam.monster.image : redTeam.monster.image);
+    const myMonsterImage = myTeam === 'red' ? redTeam?.monster?.image : blueTeam?.monster?.image;
+    const message = winner === trainerName ? '승리!' : '패배...';
+    
     return (
       <div className="resultScreen">
-        <h1>{winner === trainerName ? '승리!' : '패배...'}</h1>
-        {winnerImage && <img src={winnerImage} alt="승자" />}
+        <h1>{message}</h1>
+        {myMonsterImage && <img src={myMonsterImage} alt="자기 몬스터" />}
         <button onClick={() => navigate('/mypage')}>배틀 종료</button>
       </div>
     );
   }
-
   return (
     <div className="Battle">
       <div className="content">

@@ -175,11 +175,6 @@ body {
   position: relative;
   left: 17%;
   padding: 2%;
-  background-image: url('/public/BattlePage/techselect.png');
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: 100% 80%;
-  z-index: 0;
 }
 
 .skillButtons {
