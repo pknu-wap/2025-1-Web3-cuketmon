@@ -151,7 +151,7 @@ public class MonsterService {
 
         try {
             trainer.getFeed().decrease(FEED_MINUS);
-            monster.increaseSpeed(monster.getAffinity().increase(AFFINITY_PLUS));
+            monster.increaseSpeed(monster.getAffinity().increase(getRandomInRange(3, AFFINITY_PLUS)));
             trainerRepository.save(trainer);
             monsterRepository.save(monster);
             log.info("커켓몬 먹이주기: trainer={}, monster={}", trainerName, monster.getName());
@@ -173,7 +173,7 @@ public class MonsterService {
 
         try {
             trainer.getToy().decrease(TOY_MINUS);
-            monster.increaseSpeed(monster.getAffinity().increase(AFFINITY_PLUS));
+            monster.increaseSpeed(monster.getAffinity().increase(getRandomInRange(3, AFFINITY_PLUS)));
             trainerRepository.save(trainer);
             monsterRepository.save(monster);
             log.info("커켓몬 놀아주기: trainer={}, monster={}", trainerName, monster.getName());
