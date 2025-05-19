@@ -18,6 +18,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -60,7 +61,7 @@ public class Trainer {
 
     @Column(nullable = false)
     @Builder.Default
-    private LocalDate lastGenerateDate = LocalDate.now();
+    private LocalDate lastGenerateDate = LocalDate.now(ZoneId.of("Asia/Seoul"));
 
     @OneToMany(mappedBy = "trainer", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @Builder.Default
@@ -101,9 +102,9 @@ public class Trainer {
         }
 
         // 하루가 지났으면 초기화
-        if (!getLastGenerateDate().equals(LocalDate.now())) {
+        if (!getLastGenerateDate().equals(LocalDate.now(ZoneId.of("Asia/Seoul")))) {
             initGenerateCount();
-            setLastGenerateDate(LocalDate.now());
+            setLastGenerateDate(LocalDate.now(ZoneId.of("Asia/Seoul")));
         }
         // 일일 최대 커켓몬 생성 제한
         if (addGenerateCount() > MAX_GENERATE_LIMIT) {
