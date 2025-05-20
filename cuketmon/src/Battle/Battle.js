@@ -204,7 +204,7 @@ function Battle() {
           } else {
             setBlueCuketmonHP(nextAnimation.hp);
           }
-  
+          
           // 스킬 정보 업데이트
           if (myTeam === (isRedFirst ? 'red' : 'blue') && animationQueue.length === 2) {
             setSkills(nextAnimation.skills.map((skill, index) => ({
@@ -225,7 +225,14 @@ function Battle() {
               animationUrl: skill.skillAnimation
             })));
           }
-  
+        
+          // HP가 0 이하인지 확인하고 결과 전송
+          if (redCuketmonHP <= 0 || blueCuketmonHP <= 0) {
+            const winner = redCuketmonHP > 0 ? redTeam.trainerName : blueTeam.trainerName;
+            sendBattleResult(winner);
+            setIsBattleEnded(true);
+          }
+
           // 상태 정리
           setIsFighting(false);
           setCurrentAnimation(null);
@@ -235,12 +242,6 @@ function Battle() {
             const newQueue = prev.slice(1);
             if (newQueue.length === 0) {
               setIsTurnInProgress(false);
-              // HP가 0 이하인지 확인하고 결과 전송
-              if (redCuketmonHP <= 0 || blueCuketmonHP <= 0) {
-                const winner = redCuketmonHP > 0 ? redTeam.trainerName : blueTeam.trainerName;
-                sendBattleResult(winner);
-                setIsBattleEnded(true);
-              }
             }
             return newQueue;
           });
