@@ -184,19 +184,19 @@ function Battle() {
     if (animationQueue.length > 0 && !isFighting) {
       const nextAnimation = animationQueue[0];
       setCurrentAnimation(nextAnimation.animationUrl);
-      const attackTeam = nextAnimation.isHit === 'red' ? 'blue' : 'red';
-      setBattleMessage(`${attackTeam.monster.name} 이 ${nextAnimation.skills[0].name} 을 사용했다!`);
+      //const attackTeam = nextAnimation.isHit === 'red' ? 'blue' : 'red';
+      //setBattleMessage(`${attackTeam.monster.name} 이 ${nextAnimation.skills[0].name} 을 사용했다!`);
       setIsFighting(true);
-      const damage = nextAnimation.isHit === 'red' ? redCuketmonHP - nextAnimation.hp : blueCuketmonHP - nextAnimation.hp;
+      //const damage = nextAnimation.isHit === 'red' ? redCuketmonHP - nextAnimation.hp : blueCuketmonHP - nextAnimation.hp;
   
       setTimeout(() => {
         // 애니메이션이 끝난 후 피격 효과 설정
         if (nextAnimation.isHit === 'red') {
           setIsRedHit(true);
-          setBattleMessage(damage > 50 ? '효과는 매우 대단했다!' : '효과는 별로였다.');
+          //setBattleMessage(damage > 50 ? '효과는 매우 대단했다!' : '효과는 별로였다.');
         } else {
           setIsBlueHit(true);
-          setBattleMessage(damage > 50 ? '효과는 매우 대단했다!' : '효과는 별로였다.');
+          //setBattleMessage(damage > 50 ? '효과는 매우 대단했다!' : '효과는 별로였다.');
         }
   
         setTimeout(() => {
@@ -258,7 +258,7 @@ function Battle() {
     };
     console.log('Sending battle result:', resultData);
     stompClientRef.current.publish({
-      destination: '/app/battleResult',
+      destination: `/app/endBattle/${battleId}`,
       body: JSON.stringify(resultData),
     });
   };
