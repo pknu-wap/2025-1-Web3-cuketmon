@@ -150,6 +150,7 @@ function Battle() {
           isHit: secondTeam, // 피격 팀은 후공 팀
           hp: matchResponse[secondTeam].monster.hp, // 피격 팀의 체력
           skills: matchResponse[firstTeam].monster.skills, // 사용 팀의 스킬 정보
+          skillName: matchResponse[firstTeam].skillName // 사용한 스킬 이름
         };
   
         // 후공 애니메이션 정보
@@ -160,6 +161,7 @@ function Battle() {
           isHit: firstTeam, // 피격 팀은 선공 팀
           hp: matchResponse[firstTeam].monster.hp, // 피격 팀의 체력
           skills: matchResponse[secondTeam].monster.skills, // 사용 팀의 스킬 정보
+          skillName: matchResponse[secondTeam].skillName // 사용한 스킬 이름
         };
   
         // 선공 -> 후공 순으로 큐에 추가
@@ -186,7 +188,7 @@ function Battle() {
     if (animationQueue.length > 0 && !isFighting) {
       const nextAnimation = animationQueue[0];
       setCurrentAnimation(nextAnimation.animationUrl);
-      setBattleMessage(`${nextAnimation.monster.name} 이 ${nextAnimation.skills[0].name} 을 사용했다!`);
+      setBattleMessage(`${nextAnimation.monster.name} 이 ${nextAnimation.skillName} 을 사용했다!`);
       setIsFighting(true);
       const damage = nextAnimation.isHit === 'red' ? redCuketmonHP - nextAnimation.hp : blueCuketmonHP - nextAnimation.hp;
   
@@ -288,6 +290,7 @@ function Battle() {
     const skillData = {
       skillId: index,
       trainerName: trainerName,
+      skillName: skills[index].name,
       animationUrl: animationMap[skill.type?.toLowerCase()]?.[skill.power >= 50 ? 'high' : 'normal']?.[0]
     };
     console.log('Sending skill data:', skillData); // 요청 전 로그
