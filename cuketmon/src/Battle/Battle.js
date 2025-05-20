@@ -144,6 +144,7 @@ function Battle() {
       if (firstAnimationUrl && secondAnimationUrl) { // null이 아닌지 확인
         // 선공 애니메이션 정보
         const firstAnimation = {
+          trainerName: matchResponse[firstTeam].trainerName,
           animationUrl: firstAnimationUrl,
           isHit: secondTeam, // 피격 팀은 후공 팀
           hp: matchResponse[secondTeam].monster.hp, // 피격 팀의 체력
@@ -152,6 +153,7 @@ function Battle() {
   
         // 후공 애니메이션 정보
         const secondAnimation = {
+          trainerName: matchResponse[secondTeam].trainerName,
           animationUrl: secondAnimationUrl,
           isHit: firstTeam, // 피격 팀은 선공 팀
           hp: matchResponse[firstTeam].monster.hp, // 피격 팀의 체력
@@ -204,7 +206,7 @@ function Battle() {
           } else {
             setBlueCuketmonHP(nextAnimation.hp);
           }
-          
+  
           // 스킬 정보 업데이트
           if (myTeam === (isRedFirst ? 'red' : 'blue') && animationQueue.length === 2) {
             setSkills(nextAnimation.skills.map((skill, index) => ({
@@ -225,14 +227,13 @@ function Battle() {
               animationUrl: skill.skillAnimation
             })));
           }
-        
-          // HP가 0 이하인지 확인하고 결과 전송
-          if (redCuketmonHP <= 0 || blueCuketmonHP <= 0) {
-            const winner = redCuketmonHP > 0 ? redTeam.trainerName : blueTeam.trainerName;
+
+          if (nextAnimation.hp <=0) {
+            const winner = nextAnimation.isHit === 'red' ? blueTeam.trainerName : redTeam.trainerName;
             sendBattleResult(winner);
             setIsBattleEnded(true);
           }
-
+  
           // 상태 정리
           setIsFighting(false);
           setCurrentAnimation(null);
@@ -242,6 +243,8 @@ function Battle() {
             const newQueue = prev.slice(1);
             if (newQueue.length === 0) {
               setIsTurnInProgress(false);
+              // HP가 0 이하인지 확인하고 결과 전송
+              
             }
             return newQueue;
           });
@@ -252,8 +255,7 @@ function Battle() {
 
   const sendBattleResult = (winner) => {
     const resultData = {
-      winner: winner,
-      battleId: battleId
+      winner: winner
     };
     console.log('Sending battle result:', resultData);
     stompClientRef.current.publish({
