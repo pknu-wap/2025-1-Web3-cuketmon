@@ -186,8 +186,7 @@ function Battle() {
     if (animationQueue.length > 0 && !isFighting) {
       const nextAnimation = animationQueue[0];
       setCurrentAnimation(nextAnimation.animationUrl);
-      const attackTeam = nextAnimation.isHit === 'red' ? 'blue' : 'red';
-      setBattleMessage(`${attackTeam.monster.name} 이 ${nextAnimation.skills[0].name} 을 사용했다!`);
+      setBattleMessage(`${nextAnimation.monster.name} 이 ${nextAnimation.skills[0].name} 을 사용했다!`);
       setIsFighting(true);
       const damage = nextAnimation.isHit === 'red' ? redCuketmonHP - nextAnimation.hp : blueCuketmonHP - nextAnimation.hp;
   
