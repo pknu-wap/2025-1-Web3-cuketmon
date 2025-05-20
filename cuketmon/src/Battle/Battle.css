@@ -131,7 +131,7 @@ body {
 
 .skillAnimation {
   position: absolute;
-  top: -20%;
+  top: -25%;
   left: 50%;
   width: 360px;
   height: 37px;
@@ -139,12 +139,12 @@ body {
 }
 
 .blue-to-red .skillAnimation {
-  transform: translate(-50%, -50%) scaleX(1);
+  transform: translate(-50%, -50%) scaleX(-1);
   animation: spriteAnimationLeft 1s steps(6) forwards;
 }
 
 .red-to-blue .skillAnimation {
-  transform: translate(-50%, -50%) scaleX(-1);
+  transform: translate(-50%, -50%) scaleX(1);
   animation: spriteAnimationRight 1s steps(6) forwards;
 }
 
