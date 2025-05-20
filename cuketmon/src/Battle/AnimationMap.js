@@ -27,9 +27,9 @@ export const animationMap = {
       high: ['/BattlePage/Animation/Rock/highDamage1.png'],
       normal: ['/BattlePage/Animation/Rock/normalDamage1.png'],
     },
-    iron: {
-      high: ['/BattlePage/Animation/Iron/highDamage1.png'],
-      normal: ['/BattlePage/Animation/Iron/normalDamage1.png'],
+    steel: {
+      high: ['/BattlePage/Animation/Steel/highDamage1.png'],
+      normal: ['/BattlePage/Animation/Steel/normalDamage1.png'],
     },
     ice: {
       high: ['/BattlePage/Animation/Ice/highDamage1.png'],
@@ -39,9 +39,9 @@ export const animationMap = {
       high: ['/BattlePage/Animation/Dragon/highDamage1.png'],
       normal: ['/BattlePage/Animation/Dragon/normalDamage1.png'],
     },
-    evil: {
-      high: ['/BattlePage/Animation/Evil/highDamage1.png'],
-      normal: ['/BattlePage/Animation/Evil/normalDamage1.png'],
+    dark: {
+      high: ['/BattlePage/Animation/Dark/highDamage1.png'],
+      normal: ['/BattlePage/Animation/Dark/normalDamage1.png'],
     },
     fairy: {
       high: ['/BattlePage/Animation/Fairy/highDamage1.png'],
@@ -63,9 +63,9 @@ export const animationMap = {
       high: ['/BattlePage/Animation/Fly/highDamage1.png'],
       normal: ['/BattlePage/Animation/Fly/normalDamage1.png'],
     },
-    fighter: {
-      high: ['/BattlePage/Animation/Fighter/highDamage1.png'],
-      normal: ['/BattlePage/Animation/Fighter/normalDamage1.png'],
+    fighting: {
+      high: ['/BattlePage/Animation/Fighting/highDamage1.png'],
+      normal: ['/BattlePage/Animation/Fighting/normalDamage1.png'],
     },
     ghost: {
       high: ['/BattlePage/Animation/Ghost/highDamage1.png'],
