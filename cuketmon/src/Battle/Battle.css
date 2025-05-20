@@ -255,6 +255,8 @@ html, body {
 
 .loadingScreen {
   position: relative;
+  top:50%;
+  left:50%;
   height: 200px;
   width: 200px;
   background: linear-gradient(to bottom, rgb(254, 0, 1) 50%, white 50% );
