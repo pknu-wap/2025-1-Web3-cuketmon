@@ -144,6 +144,7 @@ function Battle() {
       if (firstAnimationUrl && secondAnimationUrl) { // null이 아닌지 확인
         // 선공 애니메이션 정보
         const firstAnimation = {
+          monster: matchResponse[firstTeam].monster,
           trainerName: matchResponse[firstTeam].trainerName,
           animationUrl: firstAnimationUrl,
           isHit: secondTeam, // 피격 팀은 후공 팀
@@ -153,6 +154,7 @@ function Battle() {
   
         // 후공 애니메이션 정보
         const secondAnimation = {
+          monster: matchResponse[secondTeam].monster,
           trainerName: matchResponse[secondTeam].trainerName,
           animationUrl: secondAnimationUrl,
           isHit: firstTeam, // 피격 팀은 선공 팀
@@ -184,19 +186,19 @@ function Battle() {
     if (animationQueue.length > 0 && !isFighting) {
       const nextAnimation = animationQueue[0];
       setCurrentAnimation(nextAnimation.animationUrl);
-      //const attackTeam = nextAnimation.isHit === 'red' ? 'blue' : 'red';
-      //setBattleMessage(`${attackTeam.monster.name} 이 ${nextAnimation.skills[0].name} 을 사용했다!`);
+      const attackTeam = nextAnimation.isHit === 'red' ? 'blue' : 'red';
+      setBattleMessage(`${attackTeam.monster.name} 이 ${nextAnimation.skills[0].name} 을 사용했다!`);
       setIsFighting(true);
-      //const damage = nextAnimation.isHit === 'red' ? redCuketmonHP - nextAnimation.hp : blueCuketmonHP - nextAnimation.hp;
+      const damage = nextAnimation.isHit === 'red' ? redCuketmonHP - nextAnimation.hp : blueCuketmonHP - nextAnimation.hp;
   
       setTimeout(() => {
         // 애니메이션이 끝난 후 피격 효과 설정
         if (nextAnimation.isHit === 'red') {
           setIsRedHit(true);
-          //setBattleMessage(damage > 50 ? '효과는 매우 대단했다!' : '효과는 별로였다.');
+          setBattleMessage(damage > 50 ? '효과는 매우 대단했다!' : '효과는 별로였다.');
         } else {
           setIsBlueHit(true);
-          //setBattleMessage(damage > 50 ? '효과는 매우 대단했다!' : '효과는 별로였다.');
+          setBattleMessage(damage > 50 ? '효과는 매우 대단했다!' : '효과는 별로였다.');
         }
   
         setTimeout(() => {
@@ -231,6 +233,7 @@ function Battle() {
           if (nextAnimation.hp <=0) {
             const winner = nextAnimation.isHit === 'red' ? blueTeam.trainerName : redTeam.trainerName;
             sendBattleResult(winner);
+            setWinner(winner);
             setIsBattleEnded(true);
           }
   
@@ -243,19 +246,17 @@ function Battle() {
             const newQueue = prev.slice(1);
             if (newQueue.length === 0) {
               setIsTurnInProgress(false);
-              // HP가 0 이하인지 확인하고 결과 전송
-              
             }
             return newQueue;
           });
         }, 500); // 피격 효과 지속 시간 (500ms)
-      }, 1500); // 애니메이션 지속 시간 (1500ms)
+      }, 1000);
     }
   }, [animationQueue, isFighting, myTeam, isRedFirst]);
 
   const sendBattleResult = (winner) => {
     const resultData = {
-      winner: winner
+      winnerName: winner
     };
     console.log('Sending battle result:', resultData);
     stompClientRef.current.publish({
@@ -307,7 +308,7 @@ function Battle() {
   );
 
   if (isBattleEnded) {
-    const myMonsterImage = myTeam === 'red' ? redTeam?.monster?.image : blueTeam?.monster?.image;
+    const myMonsterImage = myTeam === 'red' ? redTeam.monster.image : blueTeam.monster.image;
     const message = winner === trainerName ? '승리!' : '패배...';
     
     return (
