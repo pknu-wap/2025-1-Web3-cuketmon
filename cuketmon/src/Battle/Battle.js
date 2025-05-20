@@ -109,8 +109,7 @@ function Battle() {
           name: skill.name,
           type: skill.type,
           damage: skill.power,
-          currentPp: skill.pp,
-          animationUrl: skill.skillAnimation
+          currentPp: skill.pp
         })) || []
       );
       setIsRedFirst(isRedFirst);
@@ -276,17 +275,17 @@ function Battle() {
       !skill ||
       skill.currentPp <= 0 ||
       isTurnInProgress ||
-      !stompClientRef.current?.connected ||
+      !stompClientRef.current.connected ||
       !battleId
     ) {
-      console.log('Cannot use skill:', { skill, currentPp: skill?.currentPp, isTurnInProgress, connected: stompClientRef.current?.connected, battleId }); // 실패 조건 로그
+      console.log('Cannot use skill:', { skill, currentPp: skill.currentPp, isTurnInProgress, connected: stompClientRef.current.connected, battleId }); // 실패 조건 로그
       return;
     }
   
     const skillData = {
       skillId: index,
       trainerName: trainerName,
-      animationUrl: skill.animationUrl,
+      animationUrl: animationMap[skill.type?.toLowerCase()]?.[skill.power >= 50 ? 'high' : 'normal']?.[0]
     };
     console.log('Sending skill data:', skillData); // 요청 전 로그
     stompClientRef.current.publish({
