@@ -36,7 +36,7 @@ function Battle() {
   const navigate = useNavigate();
   const location = useLocation();
   const API_URL = process.env.REACT_APP_API_URL;
-  const monsterId = location.state?.monsterId;
+  const monsterId = location.state.monsterId;
 
   useEffect(() => {
     const fetchTrainerName = async () => {
@@ -104,14 +104,13 @@ function Battle() {
       setRedCuketmonHP(red.monster.hp);
       setBlueCuketmonHP(blue.monster.hp);
       setSkills(
-        (red.trainerName === trainerName ? red : blue).monster?.skills?.map((skill, index) => ({
+        (red.trainerName === trainerName ? red : blue).monster.skills.map((skill, index) => ({
           id: index,
           name: skill.name,
           type: skill.type,
           damage: skill.power,
           currentPp: skill.pp,
-          animationUrl: skill.skillAnimation ||
-            animationMap[skill.type?.toLowerCase()]?.[skill.power >= 50 ? 'high' : 'normal']?.[0],
+          animationUrl: skill.skillAnimation
         })) || []
       );
       setIsRedFirst(isRedFirst);
