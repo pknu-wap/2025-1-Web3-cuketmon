@@ -11,14 +11,37 @@ public class JwtUtil {
 
     // 만약 실제로 release 한다면 보안 강도가 더 높은 키로 변경
     @Value("${jwt.secret.key}")
-    private String secretKey;
+    private String secretKey; //토큰 키
 
     // 24시간
-    private final long expirationMs = 1000 * 60 * 60 * 24;
+    private final long accessTokenexpirationMs = 1000 * 60 * 60 * 24;
+    //refreshToken 7일
+    private final long refreshTokenexpirationMs = 1000 * 60 * 60 * 24 * 7;
 
-    public String createToken(String trainerName) {
+    public String createAccessToken(String trainerName) {
+        return generateToken(trainerName, accessTokenexpirationMs);
+    }
+
+    public String createRefreshToken(String trainerName) {
+        return generateToken(trainerName, refreshTokenexpirationMs);
+    }
+
+    //토큰 키 생성
+//    public String createAccessToken(String trainerName) {
+//        Date now = new Date();
+//        Date expiry = new Date(now.getTime() + accessTokenexpirationMs);
+//
+//        return Jwts.builder()
+//                .setSubject(trainerName)
+//                .setIssuedAt(now)
+//                .setExpiration(expiry)
+//                .signWith(SignatureAlgorithm.HS256, secretKey)
+//                .compact();
+//    }
+
+    private String generateToken(String trainerName, long expirationTime){
         Date now = new Date();
-        Date expiry = new Date(now.getTime() + expirationMs);
+        Date expiry = new Date(now.getTime() + expirationTime);
 
         return Jwts.builder()
                 .setSubject(trainerName)
@@ -27,6 +50,7 @@ public class JwtUtil {
                 .signWith(SignatureAlgorithm.HS256, secretKey)
                 .compact();
     }
+
 
     public String getTrainerNameFromToken(String token) {
         return Jwts.parser()
