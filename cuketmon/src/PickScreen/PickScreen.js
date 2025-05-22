@@ -54,11 +54,17 @@ const PickScreen = () => {
       }
       const data = await res.json();
       return {
-        id: data?.id || null,
-        image: data?.image || '',
-        type1: data?.type1 || null,
-        type2: data?.type2 || null,
         id: data.id,
+        name: data.name,
+        image: data.image,
+        hp: data.hp,
+        attack: data.attack,
+        defense: data.defense,
+        specialAttack: data.specialAttack,
+        specialDefense: data.specialDefense,
+        speed: data.speed,
+        type1: data.type1,
+        type2: data.type2,
       };
     } catch (error) {
       console.error(`커켓몬 ${monsterId} 데이터 로딩 실패:`, error.message);
@@ -134,18 +140,16 @@ const PickScreen = () => {
             alt={currentCuketmon.name}
             className="cuketmonImage"
           />
-          <p className="cuketmonName">{currentCuketmon.name}</p>
-          <p className="cuketmonType">
-            타입: {currentCuketmon.type1}
-            / {currentCuketmon.type2 || '없음'}
-          </p>
-          <button
+          <p className="cuketmonName">{currentCuketmon.name} : {currentCuketmon.type1}|{currentCuketmon.type2}</p>
+          <p className="cuketmonStats">
+            HP: {currentCuketmon.hp} | 공격: {currentCuketmon.attack} | 방어: {currentCuketmon.defense} | 특수공격: {currentCuketmon.specialAttack} | 특수방어: {currentCuketmon.specialDefense} | 스피드: {currentCuketmon.speed}</p>
+          <PokeStyleButton
             onClick={() => handleSelect(currentCuketmon)}
             className="selectButton"
             disabled={!currentCuketmon}
           >
             선택
-          </button>
+          </PokeStyleButton>
         </div>
         <button onClick={handleNext} className="arrowButton arrowRight" disabled={cuketmons.length <= 1}>
           ▶
