@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../AuthContext';
 import './PickScreen.css';
+import PokeStyleButton from '../common/PokeStyleButton/PokeStyleButton.js';
 
 const PickScreen = () => {
   const [cuketmons, setCuketmons] = useState([]);
@@ -54,10 +55,10 @@ const PickScreen = () => {
       const data = await res.json();
       return {
         id: data?.id || null,
-        name: data?.name || '이름 없음',
         image: data?.image || '',
         type1: data?.type1 || null,
         type2: data?.type2 || null,
+        id: data.id,
       };
     } catch (error) {
       console.error(`커켓몬 ${monsterId} 데이터 로딩 실패:`, error.message);
