@@ -15,19 +15,27 @@ function MakeResult() {
   /*뒤로가기 시 커켓몬 삭제(커켓몬 생성 취소할 마지막 기회... (5/23 수정)) */
   useEffect(() => {
     window.history.pushState(null, "", window.location.pathname);
-    const handlePopState = async (event) => {
-      event.preventDefault();
-        await fetch(
-          `${API_URL}/api/monster/${monsterId}/release`,
-          {
-            method: "DELETE",
-            headers: { Authorization: `Bearer ${token}`}
-          }
-        );
-    };
-    window.addEventListener('popstate', handlePopState);
-  },[]);
+     const handlePopState = async () => {
+    try {
+      await fetch(
+        `${API_URL}/api/monster/${monsterId}/release`,
+        {
+          method: "DELETE",
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+    } catch (err) {
+      console.error(err);
+    }
+    window.history.back();
+    window.removeEventListener("popstate", handlePopState);
+  };
 
+  window.addEventListener("popstate", handlePopState);
+  return () => {
+    window.removeEventListener("popstate", handlePopState);
+  };
+}, [ monsterId, token]);
 
   useEffect(() => {
     const delayAndFetch = () => {
