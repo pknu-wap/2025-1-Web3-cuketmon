@@ -12,12 +12,10 @@ import java.util.Optional;
 public interface TrainerRepository extends JpaRepository<Trainer, String> {
 
     Optional<Trainer> findByName(String name);
+    Optional<String> findrefreshTokenByTrainerName(String name);
 
     int countByWinGreaterThan(int win);
 
     void save(String trainerName, String refreshToken);
-    Optional<String> findByTrainerName(String trainerName);
-    void delete(String trainerName);
-
 
 }

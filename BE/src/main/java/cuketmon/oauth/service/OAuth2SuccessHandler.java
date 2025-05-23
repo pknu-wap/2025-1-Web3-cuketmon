@@ -2,7 +2,6 @@ package cuketmon.oauth.service;
 
 import cuketmon.oauth.util.JwtUtil;
 import cuketmon.trainer.repository.TrainerRepository;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -26,7 +25,7 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request,
                                         HttpServletResponse response,
-                                        Authentication authentication) throws IOException, ServletException {
+                                        Authentication authentication) throws IOException {
 
         CustomOAuth2User oAuth2User = (CustomOAuth2User) authentication.getPrincipal();
         String trainerName = oAuth2User.getName();

@@ -66,6 +66,9 @@ public class Trainer {
     @Builder.Default
     private List<Monster> monsters = new ArrayList<>();
 
+    @Column(name = "refresh_token")
+    private String refreshToken;
+
     public void addWin() {
         this.win += 1;
     }
