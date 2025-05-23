@@ -2,7 +2,6 @@ import React, { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import "./MakeResult.css";
 import TextBox from '../common/TextBox/TextBox.js';
-import Textbox from './../common/TextBox/TextBox';
 
 function MakeResult() {
   const [cukemonImage, setCukemonImage] = useState("/MakeResultPage/movingEgg.gif");
@@ -12,6 +11,22 @@ function MakeResult() {
   const token = localStorage.getItem('accessToken');
   const monsterId  = localStorage.getItem('makeResultMonsterId');
   const API_URL = process.env.REACT_APP_API_URL;
+
+  /*뒤로가기 시 커켓몬 삭제(커켓몬 생성 취소할 마지막 기회... (5/23 수정)) */
+  useEffect(() => {
+    window.history.pushState(null, "", window.location.pathname);
+    const handlePopState = async (event) => {
+      event.preventDefault();
+        await fetch(
+          `${API_URL}/api/monster/${monsterId}/release`,
+          {
+            method: "DELETE",
+            headers: { Authorization: `Bearer ${token}`}
+          }
+        );
+    };
+    window.addEventListener('popstate', handlePopState);
+  },[]);
 
 
   useEffect(() => {
