@@ -51,6 +51,16 @@ public class JwtUtil {
                 .compact();
     }
 
+    //유효성
+    public boolean validateToken(String token) {
+        try {
+            Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
 
     public String getTrainerNameFromToken(String token) {
         return Jwts.parser()

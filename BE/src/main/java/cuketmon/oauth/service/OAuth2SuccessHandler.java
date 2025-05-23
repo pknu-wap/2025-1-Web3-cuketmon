@@ -1,6 +1,7 @@
 package cuketmon.oauth.service;
 
 import cuketmon.oauth.util.JwtUtil;
+import cuketmon.trainer.repository.TrainerRepository;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -20,6 +21,7 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
     @Value("${client.redirect-url}")
     private String CLIENT_URL;
     private final JwtUtil jwtUtil;
+    private final TrainerRepository trainerRepository;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request,
@@ -36,6 +38,7 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
         // TODO: 이거 안됨 ;
         // 로컬/배포 환경에 맞춰 redirect 가능
         String state = request.getParameter("state");
+        trainerRepository.save(trainerName, refreshToken);
 
         //쿠키 생성과 전달
         Cookie cookie = new Cookie("refresh_token", refreshToken);

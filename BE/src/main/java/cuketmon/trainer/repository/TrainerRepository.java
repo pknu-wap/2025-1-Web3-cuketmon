@@ -15,4 +15,9 @@ public interface TrainerRepository extends JpaRepository<Trainer, String> {
 
     int countByWinGreaterThan(int win);
 
+    void save(String trainerName, String refreshToken);
+    Optional<String> findByTrainerName(String trainerName);
+    void delete(String trainerName);
+
+
 }
