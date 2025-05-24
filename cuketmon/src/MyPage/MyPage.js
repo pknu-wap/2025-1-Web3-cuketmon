@@ -56,6 +56,20 @@ function MyPage() {
     return { toys: Number(toysOriginalData), feeds: Number(feedsOriginalData) };
   };
 
+/*초기 아이템 데이터 로딩 로직(5/24 수정)*/
+  useEffect(() => {
+  const fetchItems = async () => {
+    try {
+      const { toys, feeds } = await loadTrainerData();
+      setToyCount(toys);
+      setFeedCount(feeds);
+    } catch (e) {
+      console.error("아이템 로딩 실패:", e.message);
+    }
+  };
+  fetchItems();
+}, []);
+
   /*먹이주기*/
   const feedCukemon = async () => {
     if (monsterId == null  || monsters.length === 0) return;
@@ -71,7 +85,6 @@ function MyPage() {
       const newFeedData = await newFeedResponse.text();
       setFeedCount(Number(newFeedData));
       alert("커켓몬에게 먹이를 주었다!");
-      await fetchData(); 
     } catch (err) {
       alert("먹이 주기 실패: " + err.message);
     }
@@ -92,22 +105,18 @@ function MyPage() {
       const newToysData = await newToysResponse.text();
       setToyCount(Number(newToysData));
       alert("커켓몬과 놀아주었다!");
-      await fetchData(); 
     } catch (err) {
       alert("놀아주기 실패: " + err.message);
     }
   };
 
-  /*데이터 업뎃*/
-  const fetchData = async () => {
+  /*커켓몬 데이터 업뎃(5/24)*/
+  const fetchCukemonData = async () => {
     if (isLoadingRef.current) return;  
     if (!monsters.length || monsterId === undefined) return;
     isLoadingRef.current = true;  
     try {
       setLoading(true);
-      const trainerData = await loadTrainerData(); 
-      setToyCount(trainerData.toys);  
-      setFeedCount(trainerData.feeds);
       const cukemon = await loadCukemonData(); 
       setCukemonData(cukemon);
     } catch (error) {
@@ -118,9 +127,12 @@ function MyPage() {
     }
   };
   useEffect(() => {
-      fetchData();
-  }, [monsterId])
+      fetchCukemonData();
+  }, [monsterId,monsters])
 
+
+
+  
 /*방출*/
 const releaseCukemon = async () => {
   if (monsterId == null || monsters.length === 0) return;
