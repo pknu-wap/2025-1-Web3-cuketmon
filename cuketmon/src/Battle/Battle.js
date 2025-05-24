@@ -6,6 +6,7 @@ import './Battle.css';
 import { animationMap } from './AnimationMap';
 import HpBar from '../common/HpBar/HpBar.js';
 import BattleChatbox from '../common/TextBox/BattleChatbox.js';
+import PokeStyleButton from '../common/PokeStyleButton/PokeStyleButton.js';
 
 function Battle() {
   const [redTeam, setRedTeam] = useState(null);
@@ -317,7 +318,7 @@ function Battle() {
       <div className="resultScreen">
         <h1>{message}</h1>
         {myMonsterImage && <img src={myMonsterImage} alt="자기 몬스터" />}
-        <button onClick={() => navigate('/mypage')}>배틀 종료</button>
+        <PokeStyleButton onClick={() => navigate('/mypage')}>배틀 종료</PokeStyleButton>
       </div>
     );
   }
