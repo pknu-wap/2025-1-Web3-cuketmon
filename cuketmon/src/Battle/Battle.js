@@ -9,6 +9,8 @@ import BattleChatbox from '../common/TextBox/BattleChatbox.js';
 import PokeStyleButton from '../common/PokeStyleButton/PokeStyleButton.js';
 
 function Battle() {
+  const redCuketmonRef = useRef(null);
+  const blueCuketmonRef = useRef(null);
   const [redTeam, setRedTeam] = useState(null);
   const [blueTeam, setBlueTeam] = useState(null);
   const [myTeam, setMyTeam] = useState(null);
@@ -63,6 +65,7 @@ function Battle() {
   }, [API_URL]);
 
   useEffect(() => {
+    if (!trainerName) return;
     const socket = new SockJS(`${API_URL}/ws?trainerName=${trainerName}`);
     const client = new Client({
       webSocketFactory: () => socket,
@@ -80,7 +83,7 @@ function Battle() {
     });
     client.activate();
     return () => client.deactivate();
-  }, [API_URL]);
+  }, [trainerName, API_URL]);
 
   useEffect(() => {
     console.log('useEffect triggered - monsterId:', monsterId, 'trainerName:', trainerName, 'stompClient:', !!stompClientRef.current);
@@ -326,7 +329,7 @@ function Battle() {
     <div className="Battle">
       <div className="content">
         <div className="battleContainer">
-          <div className="redTeamSection">
+        <div className="redTeamSection" ref={redCuketmonRef}>
             {redTeam?.trainerName && redTeam.monster?.image && (
               <>
                 <HpBar
@@ -345,7 +348,7 @@ function Battle() {
             )}
           </div>
 
-          <div className="blueTeamSection">
+          <div className="blueTeamSection" ref={blueCuketmonRef}>
             {blueTeam?.trainerName && blueTeam.monster?.image && (
               <>
                 <HpBar
@@ -375,8 +378,22 @@ function Battle() {
           />
           )}
           {isFighting && currentAnimation && (
-            <div className={`battleAnimationOverlay ${isBlueHit ? 'red-to-blue' : 'blue-to-red'}`}>
-              <img src={currentAnimation} className="skillAnimation" alt="기술 애니메이션" />
+            <div className="battleAnimationOverlay">
+              <img
+                src={currentAnimation}
+                className="skillAnimation"
+                alt="기술 애니메이션"
+                style={{
+                  animation: 'spriteAnimation 1s steps(6) forwards',
+                  transform: isBlueHit ? 'scaleX(1)' : 'scaleX(-1)',
+                  '--startX': isBlueHit
+                    ? `${blueCuketmonRef.current?.offsetLeft}px`
+                    : `${redCuketmonRef.current?.offsetLeft}px`,
+                  '--endX': isBlueHit
+                    ? `${redCuketmonRef.current?.offsetLeft}px`
+                    : `${blueCuketmonRef.current?.offsetLeft}px`,
+                }}
+              />
               {battleMessage && <div className="battleMessage">{battleMessage}</div>}
             </div>
           )}
