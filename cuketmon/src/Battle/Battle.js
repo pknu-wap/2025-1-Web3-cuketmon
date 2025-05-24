@@ -34,6 +34,7 @@ function Battle() {
   const [animationQueue, setAnimationQueue] = useState([]);
   const [isTurnInProgress, setIsTurnInProgress] = useState(false);
   const [isConnected, setIsConnected] = useState(false);
+  const nextAnimation = animationQueue[0];
 
   const stompClientRef = useRef(null);
   const navigate = useNavigate();
@@ -190,7 +191,6 @@ function Battle() {
 
   useEffect(() => {
     if (animationQueue.length > 0 && !isFighting) {
-      const nextAnimation = animationQueue[0];
       setCurrentAnimation(nextAnimation.animationUrl);
       setBattleMessage(`${nextAnimation.monster.name} 이 ${nextAnimation.skillName} 을 사용했다!`);
       setIsFighting(true);
@@ -320,7 +320,7 @@ function Battle() {
     return (
       <div className="resultScreen">
         <h1>{message}</h1>
-        {myMonsterImage && <img src={myMonsterImage} alt="자기 몬스터" />}
+        {myMonsterImage && <img src={myMonsterImage} alt="자기 몬스터" className="winnerCuketmonImage"/>}
         <PokeStyleButton onClick={() => navigate('/mypage')}>배틀 종료</PokeStyleButton>
       </div>
     );
@@ -329,7 +329,7 @@ function Battle() {
     <div className="Battle">
       <div className="content">
         <div className="battleContainer">
-        <div className="redTeamSection" ref={redCuketmonRef}>
+        <div className="redTeamSection">
             {redTeam?.trainerName && redTeam.monster?.image && (
               <>
                 <HpBar
@@ -339,7 +339,7 @@ function Battle() {
                 />
                 <div className="cuketmon">
                   <img
-                    src={redTeam.monster.image}
+                    src={redTeam.monster.image} ref={redCuketmonRef}
                     className={myTeam === 'red' ? `myCuketmonImage ${isRedHit ? 'hitEffect' : ''}` : `enemyCuketmonImage ${isRedHit ? 'hitEffect' : ''}`}
                     alt="레드 팀 몬스터"
                   />
@@ -348,7 +348,7 @@ function Battle() {
             )}
           </div>
 
-          <div className="blueTeamSection" ref={blueCuketmonRef}>
+          <div className="blueTeamSection">
             {blueTeam?.trainerName && blueTeam.monster?.image && (
               <>
                 <HpBar
@@ -358,7 +358,7 @@ function Battle() {
                 />
                 <div className="cuketmon">
                   <img
-                    src={blueTeam.monster.image}
+                    src={blueTeam.monster.image} ref={blueCuketmonRef}
                     className={myTeam === 'blue' ? `myCuketmonImage ${isBlueHit ? 'hitEffect' : ''}` : `enemyCuketmonImage ${isBlueHit ? 'hitEffect' : ''}`}
                     alt="블루 팀 몬스터"
                   />
@@ -379,21 +379,21 @@ function Battle() {
           )}
           {isFighting && currentAnimation && (
             <div className="battleAnimationOverlay">
-              <img
-                src={currentAnimation}
-                className="skillAnimation"
-                alt="기술 애니메이션"
-                style={{
-                  animation: 'spriteAnimation 1s steps(6) forwards',
-                  transform: isRedFirst ? 'scaleX(1)' : 'scaleX(-1)',
-                  '--startX': isRedFirst
-                    ? `${blueCuketmonRef.current.offsetLeft}px`
-                    : `${redCuketmonRef.current.offsetLeft}px`,
-                  '--endX': isRedFirst
-                    ? `${redCuketmonRef.current.offsetLeft}px`
-                    : `${blueCuketmonRef.current.offsetLeft}px`,
-                }}
-              />
+            <img
+              src={currentAnimation}
+              className="skillAnimation"
+              alt="기술 애니메이션"
+              style={{
+                left: nextAnimation.isHit === 'blue'
+                  ? `${redCuketmonRef.current.offsetLeft}px`
+                  : `${blueCuketmonRef.current.offsetLeft}px`,
+                animation: 'spriteAnimation 1s steps(6) forwards',
+                transform: nextAnimation.isHit === 'blue' ? 'scaleX(1)' : 'scaleX(-1)',
+                '--endX': nextAnimation.isHit === 'blue'
+                  ? `${blueCuketmonRef.current.offsetLeft}px`
+                  : `${redCuketmonRef.current.offsetLeft}px`,
+              }}
+            />
               {battleMessage && <div className="battleMessage">{battleMessage}</div>}
             </div>
           )}
