@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../AuthContext';
 import './PickScreen.css';
 import PokeStyleButton from '../common/PokeStyleButton/PokeStyleButton.js';
+import typeData from '../Type.js';
 
 const PickScreen = () => {
   const [cuketmons, setCuketmons] = useState([]);
@@ -127,6 +128,9 @@ const PickScreen = () => {
 
   const currentCuketmon = cuketmons[currentIndex];
 
+  const type1Color = typeData[currentCuketmon.type1].color;
+  const type2Color = currentCuketmon.type2 ? typeData[currentCuketmon.type2].color : 'black';
+
   return (
     <div className="pickScreen">
       <h1 className="pickTitle">커켓몬 선택</h1>
@@ -140,9 +144,16 @@ const PickScreen = () => {
             alt={currentCuketmon.name}
             className="cuketmonImage"
           />
-          <p className="cuketmonName">{currentCuketmon.name} : {currentCuketmon.type1}|{currentCuketmon.type2}</p>
+          <p className="cuketmonName">
+            {currentCuketmon.name} :{' '}
+            <span style={{ color: type1Color }}>{currentCuketmon.type1}</span>
+            {currentCuketmon.type2 && (
+              <span> | <span style={{ color: type2Color }}>{currentCuketmon.type2}</span></span>
+            )}
+          </p>
           <p className="cuketmonStats">
-            HP: {currentCuketmon.hp} | 공격: {currentCuketmon.attack} | 방어: {currentCuketmon.defense} | 특수공격: {currentCuketmon.specialAttack} | 특수방어: {currentCuketmon.specialDefense} | 스피드: {currentCuketmon.speed}</p>
+            HP: {currentCuketmon.hp} | 공격: {currentCuketmon.attack} | 방어: {currentCuketmon.defense} | 특수공격: {currentCuketmon.specialAttack} | 특수방어: {currentCuketmon.specialDefense} | 스피드: {currentCuketmon.speed}
+          </p>
           <PokeStyleButton
             onClick={() => handleSelect(currentCuketmon)}
             className="selectButton"
