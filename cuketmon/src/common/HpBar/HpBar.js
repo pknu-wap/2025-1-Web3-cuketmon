@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./HpBar.css";
 
-const HpBar = ({ name, currentHp, maxHp }) => {
+const HpBar = ({ name, currentHp, maxHp, types = [] }) => {
   const [displayedHp, setDisplayedHp] = useState(Math.min(currentHp, maxHp));
 
   useEffect(() => {
@@ -33,7 +33,16 @@ const HpBar = ({ name, currentHp, maxHp }) => {
 
   return (
     <div className="hpBarContainer">
-      {name && <div className="hpName">{name}</div>}
+      {name && (
+        <div className="hpName">
+          {name}
+          {types.length > 0 && (
+            <span className="monsterType">
+              ({types.join(", ")})
+            </span>
+          )}
+        </div>
+      )}
       <div className="hpLabel">HP</div>
       <div className="hpBarOuter">
         <div
