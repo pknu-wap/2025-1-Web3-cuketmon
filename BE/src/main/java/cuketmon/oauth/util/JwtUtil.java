@@ -14,9 +14,9 @@ public class JwtUtil {
     private String secretKey; //토큰 키
 
     // 24시간
-    private final long accessTokenexpirationMs = 1000 * 60 * 60 * 24;
+    private final long accessTokenexpirationMs = 1000 * 60 * 60 * 1;
     //refreshToken 7일
-    private final long refreshTokenexpirationMs = 1000 * 60 * 60 * 24 * 7;
+    private final long refreshTokenexpirationMs = 1000 * 60 * 60 * 24 * 3;
 
     public String createAccessToken(String trainerName) {
         return generateToken(trainerName, accessTokenexpirationMs);
@@ -49,6 +49,16 @@ public class JwtUtil {
                 .setExpiration(expiry)
                 .signWith(SignatureAlgorithm.HS256, secretKey)
                 .compact();
+    }
+
+    //유효성
+    public boolean validateToken(String token) {
+        try {
+            Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
 
