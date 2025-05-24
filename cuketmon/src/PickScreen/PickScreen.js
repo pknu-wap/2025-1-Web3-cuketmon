@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../AuthContext';
 import './PickScreen.css';
 import PokeStyleButton from '../common/PokeStyleButton/PokeStyleButton.js';
-import typeData from '/src/Type.js';
+import typeData from '../Type.js';
 
 const PickScreen = () => {
   const [cuketmons, setCuketmons] = useState([]);
