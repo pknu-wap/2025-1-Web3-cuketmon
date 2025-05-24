@@ -60,9 +60,9 @@ const PickScreen = () => {
         image: data.image,
         hp: data.hp,
         attack: data.attack,
-        defense: data.defense,
+        defence: data.defence,
         specialAttack: data.specialAttack,
-        specialDefense: data.specialDefense,
+        specialDefence: data.specialDefence,
         speed: data.speed,
         type1: data.type1,
         type2: data.type2,
@@ -152,7 +152,7 @@ const PickScreen = () => {
             )}
           </p>
           <p className="cuketmonStats">
-            HP: {currentCuketmon.hp} | 공격: {currentCuketmon.attack} | 방어: {currentCuketmon.defense} | 특수공격: {currentCuketmon.specialAttack} | 특수방어: {currentCuketmon.specialDefense} | 스피드: {currentCuketmon.speed}
+            HP: {currentCuketmon.hp} | 공격: {currentCuketmon.attack} | 방어: {currentCuketmon.defence} | 특수공격: {currentCuketmon.specialAttack} | 특수방어: {currentCuketmon.specialDefence} | 스피드: {currentCuketmon.speed}
           </p>
           <PokeStyleButton
             onClick={() => handleSelect(currentCuketmon)}
