@@ -44,7 +44,7 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
         cookie.setHttpOnly(true);
         cookie.setSecure(true);
         cookie.setPath("/");
-        cookie.setMaxAge(60*60*24*7);
+        cookie.setMaxAge(60*60*24*3);
         response.addCookie(cookie);
 
         // JWT를 프론트에 리다이렉트하며 전달

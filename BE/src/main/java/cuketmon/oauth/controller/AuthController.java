@@ -1,4 +1,4 @@
-package cuketmon.oauth.Controller;
+package cuketmon.oauth.controller;
 
 import cuketmon.oauth.util.JwtUtil;
 import cuketmon.trainer.repository.TrainerRepository;
@@ -16,8 +16,7 @@ import java.util.Optional;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/token")
-public class RefreshTokenController {
-
+public class AuthController {
     private final JwtUtil jwtUtil;
     private final TrainerRepository trainerRepository;
 
