@@ -14,8 +14,9 @@ const BattleChatbox = ({ skills, onUse }) => {
             key={index}
             skill={skill}
             selected={selected === index}
-            onClick={() => setSelected(index)}
+            onSelect={() => setSelected(index)}
             onUse={() => onUse(index)}
+            disabled={skill.currentPp <= 0}
           />
         ))}
       </div>
