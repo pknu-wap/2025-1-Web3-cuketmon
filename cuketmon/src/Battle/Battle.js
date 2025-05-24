@@ -333,7 +333,7 @@ function Battle() {
             {redTeam?.trainerName && redTeam.monster?.image && (
               <>
                 <HpBar
-                  name={redTeam.trainerName}
+                  name={redTeam.monster.name}
                   currentHp={redCuketmonHP}
                   maxHp={redTeam.monster.hp}
                 />
@@ -352,7 +352,7 @@ function Battle() {
             {blueTeam?.trainerName && blueTeam.monster?.image && (
               <>
                 <HpBar
-                  name={blueTeam.trainerName}
+                  name={blueTeam.monster.name}
                   currentHp={blueCuketmonHP}
                   maxHp={blueTeam.monster.hp}
                 />
@@ -373,7 +373,7 @@ function Battle() {
             <BattleChatbox 
             skills={skills} 
             onUse={handleFight} 
-            selected={handleSelect}
+            onSelect={handleSelect}
             isTurnInProgress={isTurnInProgress} 
           />
           )}
