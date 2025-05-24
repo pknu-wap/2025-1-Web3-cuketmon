@@ -385,13 +385,13 @@ function Battle() {
                 alt="기술 애니메이션"
                 style={{
                   animation: 'spriteAnimation 1s steps(6) forwards',
-                  transform: isBlueHit ? 'scaleX(1)' : 'scaleX(-1)',
-                  '--startX': isBlueHit
-                    ? `${blueCuketmonRef.current?.offsetLeft}px`
-                    : `${redCuketmonRef.current?.offsetLeft}px`,
-                  '--endX': isBlueHit
-                    ? `${redCuketmonRef.current?.offsetLeft}px`
-                    : `${blueCuketmonRef.current?.offsetLeft}px`,
+                  transform: isRedFirst ? 'scaleX(1)' : 'scaleX(-1)',
+                  '--startX': isRedFirst
+                    ? `${blueCuketmonRef.current.offsetLeft}px`
+                    : `${redCuketmonRef.current.offsetLeft}px`,
+                  '--endX': isRedFirst
+                    ? `${redCuketmonRef.current.offsetLeft}px`
+                    : `${blueCuketmonRef.current.offsetLeft}px`,
                 }}
               />
               {battleMessage && <div className="battleMessage">{battleMessage}</div>}
