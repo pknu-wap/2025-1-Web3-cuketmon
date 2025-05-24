@@ -68,6 +68,10 @@ public class BattleMatchService {
     @Transactional
     public void endBattle(Integer battleId, EndBattleRequest request) {
         BattleDTO battle = activeBattles.get(battleId);
+        if (battle == null) {
+            log.info("종료된 배틀 battleId:    {}", battleId);
+            return;
+        }
 
         String winner = request.getWinnerName();
         String loser = battle.getRed().getTrainerName().equals(winner) ?
@@ -86,8 +90,9 @@ public class BattleMatchService {
     @Transactional
     public void cancelBattle(String trainerName) {
         // 1. 매칭 취소
-        log.info("큐 대기 취소: {}", trainerName);
         waitingQueue.remove(trainerName);
+        log.info("큐 대기 취소:      {}", trainerName);
+        log.info("현재 대기 큐 상태:  {}", waitingQueue.getState());
 
         // 2. 배틀 취소
         Integer battleId = activeBattles.getBattleIdByTrainer(trainerName);
