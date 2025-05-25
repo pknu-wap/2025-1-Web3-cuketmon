@@ -35,7 +35,7 @@ public class TrainerController {
     }
 
     // 랭킹 시스템
-    //개인 트레이너 개별 랭킹
+    // 개인 트레이너 개별 랭킹
     @GetMapping("/ranking")
     public ResponseEntity<?> getSingleRanking(@AuthenticationPrincipal String trainerName) {
         try {

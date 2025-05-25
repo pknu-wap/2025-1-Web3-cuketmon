@@ -2,28 +2,26 @@ package cuketmon.oauth.controller;
 
 import cuketmon.oauth.util.JwtUtil;
 import cuketmon.trainer.repository.TrainerRepository;
-
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.Cookie;
-
-import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
+import jakarta.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 import java.util.Optional;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/token")
+@RequestMapping("/api/auth")
 public class AuthController {
+
     private final JwtUtil jwtUtil;
     private final TrainerRepository trainerRepository;
 
     @PostMapping("/refresh")
-    public ResponseEntity<?> refreshAccessToken(HttpServletRequest request)
-    {
-
+    public ResponseEntity<?> refreshAccessToken(HttpServletRequest request) {
         String refreshToken = Arrays.stream(Optional.ofNullable(request.getCookies()).orElse(new Cookie[0]))
                 .filter(cookie -> cookie.getName().equals("refresh_token"))
                 .map(Cookie::getValue)

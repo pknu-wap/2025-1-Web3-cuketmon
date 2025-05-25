@@ -2,12 +2,11 @@ package cuketmon.oauth.service;
 
 import cuketmon.oauth.util.JwtUtil;
 import cuketmon.trainer.repository.TrainerRepository;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import jakarta.servlet.http.Cookie;
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
@@ -30,12 +29,11 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
         CustomOAuth2User oAuth2User = (CustomOAuth2User) authentication.getPrincipal();
         String trainerName = oAuth2User.getName();
 
-        // JWT 생성
+        // tokens 생성
         String accessToken = jwtUtil.createAccessToken(trainerName);
         String refreshToken = jwtUtil.createRefreshToken(trainerName);
 
-        // TODO: 이거 안됨 ;
-        // 로컬/배포 환경에 맞춰 redirect 가능
+        // 로컬/배포 환경에 맞춰 redirect
         String state = request.getParameter("state");
         trainerRepository.save(trainerName, refreshToken);
 
@@ -44,7 +42,7 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
         cookie.setHttpOnly(true);
         cookie.setSecure(true);
         cookie.setPath("/");
-        cookie.setMaxAge(60*60*24*3);
+        cookie.setMaxAge(60 * 60 * 24 * 3);
         response.addCookie(cookie);
 
         // JWT를 프론트에 리다이렉트하며 전달

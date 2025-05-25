@@ -63,12 +63,13 @@ public class Trainer {
     @Builder.Default
     private LocalDate lastGenerateDate = LocalDate.now(ZoneId.of("Asia/Seoul"));
 
+    @Column(name = "refresh_token")
+    private String refreshToken;
+
     @OneToMany(mappedBy = "trainer", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @Builder.Default
     private List<Monster> monsters = new ArrayList<>();
 
-    @Column(name = "refresh_token")
-    private String refreshToken;
 
     public void addWin() {
         this.win += 1;
