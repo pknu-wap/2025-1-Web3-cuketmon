@@ -9,6 +9,7 @@
     "@testing-library/react": "^16.2.0",
     "@testing-library/user-event": "^13.5.0",
     "cuketmon": "file:",
+    "jwt-decode": "^4.0.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-router-dom": "^7.3.0",
