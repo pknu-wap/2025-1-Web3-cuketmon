@@ -1,6 +1,6 @@
 /*로그인 상태 관련 */
 import React, { createContext, useRef,useContext, useState, useEffect } from 'react';
-import { jwtDecode } from 'jwt-decode';
+import jwtDecode from 'jwt-decode'; 
 
 const AuthContext = createContext();
 
