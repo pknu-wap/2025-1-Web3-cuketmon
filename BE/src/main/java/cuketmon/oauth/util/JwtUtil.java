@@ -13,6 +13,7 @@ public class JwtUtil {
     @Value("${jwt.secret.key}")
     private String secretKey; //토큰 키
 
+
     // 2분
     private final long accessTokenexpirationMs = 1000 * 60  * 2;
     //refreshToken 3시간
@@ -26,20 +27,7 @@ public class JwtUtil {
         return generateToken(trainerName, refreshTokenexpirationMs);
     }
 
-    //토큰 키 생성
-//    public String createAccessToken(String trainerName) {
-//        Date now = new Date();
-//        Date expiry = new Date(now.getTime() + accessTokenexpirationMs);
-//
-//        return Jwts.builder()
-//                .setSubject(trainerName)
-//                .setIssuedAt(now)
-//                .setExpiration(expiry)
-//                .signWith(SignatureAlgorithm.HS256, secretKey)
-//                .compact();
-//    }
-
-    private String generateToken(String trainerName, long expirationTime){
+    private String generateToken(String trainerName, long expirationTime) {
         Date now = new Date();
         Date expiry = new Date(now.getTime() + expirationTime);
 
@@ -51,7 +39,7 @@ public class JwtUtil {
                 .compact();
     }
 
-    //유효성
+    // 유효성
     public boolean validateToken(String token) {
         try {
             Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
@@ -60,7 +48,6 @@ public class JwtUtil {
             return false;
         }
     }
-
 
     public String getTrainerNameFromToken(String token) {
         return Jwts.parser()

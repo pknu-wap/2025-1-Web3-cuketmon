@@ -10,5 +10,6 @@ public class SkillRequest {
     private Integer skillId;
     private String trainerName;
     private String animationUrl;
+    private String skillName;
 
 }

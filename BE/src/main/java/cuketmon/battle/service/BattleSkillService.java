@@ -103,9 +103,11 @@ public class BattleSkillService {
         if (red.getTrainerName().equals(skillRequest.getTrainerName())) {
             requestedSkills.get(battleId)[SKILL_INDEX_RED] = skillRequest.getSkillId();
             red.changeSkillAnimation(skillRequest.getAnimationUrl());
+            red.changeSkillName(skillRequest.getSkillName());
         } else {
             requestedSkills.get(battleId)[SKILL_INDEX_BLUE] = skillRequest.getSkillId();
             blue.changeSkillAnimation(skillRequest.getAnimationUrl());
+            blue.changeSkillName(skillRequest.getSkillName());
         }
     }
 

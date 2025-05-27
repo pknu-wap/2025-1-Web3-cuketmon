@@ -1,6 +1,7 @@
 package cuketmon.trainer.service;
 
 import static cuketmon.constant.message.ErrorMessages.TRAINER_NOT_FOUND;
+import static cuketmon.util.Random.getRandomInRange;
 
 import cuketmon.monster.entity.Monster;
 import cuketmon.trainer.dto.TrainerDTO;
@@ -8,7 +9,6 @@ import cuketmon.trainer.entity.Trainer;
 import cuketmon.trainer.repository.TrainerRepository;
 import cuketmon.util.CustomLogger;
 import jakarta.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.List;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +40,7 @@ public class TrainerService {
         Trainer trainer = trainerRepository.findById(name)
                 .orElseThrow(() -> new IllegalArgumentException(TRAINER_NOT_FOUND));
 
-        log.info("먹이 조회 : {}", name);
+        log.info("먹이 조회  : {}", name);
         return trainer.getFeed().getCount();
     }
 
@@ -51,6 +51,8 @@ public class TrainerService {
 
         log.info("승리 추가: {}", name);
         trainer.addWin();
+        trainer.getFeed().increase(getRandomInRange(1, 3));
+        trainer.getToy().increase(getRandomInRange(1, 3));
     }
 
     @Transactional
@@ -63,19 +65,13 @@ public class TrainerService {
     }
 
     // 랭킹 시스템
-
-
     @Transactional
     public TrainerDTO getSingleRanking(String trainerName) {
-        // Optional 자체에서 null 또는 빈 값 처리 포함
-        Trainer trainer = trainerRepository.findByName(trainerName)
-                .filter(t -> !t.getName().isBlank())
-                .orElseThrow(() -> new IllegalArgumentException("트레이너를 찾을 수 없습니다: " + trainerName));
-
-        int rank = trainerRepository.countByWinGreaterThan(trainer.getWin()) + 1;
+        Trainer trainer = trainerRepository.findById(trainerName)
+                .orElseThrow(() -> new IllegalArgumentException(TRAINER_NOT_FOUND));
 
         return new TrainerDTO(
-                rank,
+                trainerRepository.countByWinGreaterThan(trainer.getWin()) + 1,
                 trainer.getName(),
                 trainer.getWin(),
                 trainer.getLose(),
@@ -83,8 +79,6 @@ public class TrainerService {
         );
     }
 
-
-    //
     public List<Integer> getMonsterIds(String trainerName) {
         Trainer trainer = trainerRepository.findById(trainerName)
                 .orElseThrow(() -> new IllegalArgumentException(TRAINER_NOT_FOUND));

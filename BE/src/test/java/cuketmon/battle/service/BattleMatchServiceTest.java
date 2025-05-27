@@ -72,8 +72,8 @@ class BattleMatchServiceTest {
         verify(messagingTemplate, times(1)).convertAndSend(startsWith("/topic/match/"), captor.capture());
 
         int battleId = captor.getValue().getBattleId();
-        battleSkillService.useSkill(battleId, new SkillRequest(1, TRAINER1, "url"));
-        battleSkillService.useSkill(battleId, new SkillRequest(1, TRAINER2, "url"));
+        battleSkillService.useSkill(battleId, new SkillRequest(1, TRAINER1, "url", "name"));
+        battleSkillService.useSkill(battleId, new SkillRequest(1, TRAINER2, "url", "name"));
 
         verify(messagingTemplate, times(1)).convertAndSend(startsWith("/topic/battle/"), any(MatchResponse.class));
     }
