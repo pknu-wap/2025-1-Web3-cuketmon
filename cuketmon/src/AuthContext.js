@@ -27,7 +27,7 @@ const AuthContext = createContext();
 
      try {
        const { exp } = jwtDecode(token);
-       const expiresAt = exp 
+       const expiresAt = exp > 1e12 ? exp : exp * 1000; 
        const now = Date.now();
        const refreshIn = expiresAt - now - 60 * 1000;
 
