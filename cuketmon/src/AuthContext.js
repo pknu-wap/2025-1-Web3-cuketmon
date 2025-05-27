@@ -59,29 +59,15 @@ const AuthContext = createContext();
      console.log('refresh 요청 상태:', res.status);
 
      if (!res.ok)throw new Error('refreshToken 에러');
-     const { accessToken: newToken } = await res.json();
+     const newToken = await res.text();
      setToken(newToken);
      return newToken;
    };
 
-   const apiFetch = async (url, options = {}) => {
-     const headers = {
-       'Content-Type': 'application/json',
-       ...(options.headers || {}),
-       ...(token ? { Authorization: `Bearer ${token}` } : {}),
-     };
-
-     const response = await fetch(url, {
-       ...options,
-       headers,
-       credentials: 'include',
-     });
- 
-     return response;
-   };
+   
 
   return (
-    <AuthContext.Provider value={{ token, setToken, apiFetch }}>
+    <AuthContext.Provider value={{ token, setToken}}>
       {children}
     </AuthContext.Provider>
   );
