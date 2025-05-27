@@ -35,7 +35,7 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
 
         // 로컬/배포 환경에 맞춰 redirect
         String state = request.getParameter("state");
-        trainerRepository.save(trainerName, refreshToken);
+        trainerRepository.updateRefreshToken(trainerName, refreshToken);
 
         //쿠키 생성과 전달
         Cookie cookie = new Cookie("refresh_token", refreshToken);

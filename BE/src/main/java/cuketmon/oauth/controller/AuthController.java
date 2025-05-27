@@ -34,7 +34,7 @@ public class AuthController {
 
         String trainerName = jwtUtil.getTrainerNameFromToken(refreshToken);
 
-        String savedToken = String.valueOf(trainerRepository.findrefreshTokenByTrainerName(trainerName));
+        String savedToken = String.valueOf(trainerRepository.findRefreshTokenByName(trainerName));
         if (!refreshToken.equals(savedToken)) {
             return ResponseEntity.status(401).body("Refresh token mismatch");
         }
