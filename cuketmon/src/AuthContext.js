@@ -1,6 +1,7 @@
 /*로그인 상태 관련 */
 import React, { createContext, useRef,useContext, useState, useEffect } from 'react';
- import { jwtDecode } from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';
+const API_URL = process.env.REACT_APP_API_URL;
 const AuthContext = createContext();
 
  export const AuthProvider = ({ children }) => {
@@ -51,10 +52,11 @@ const AuthContext = createContext();
 
    /* 리프레시 토큰 (엑세스토큰과 동일 API 사용) */
    const refreshAccessToken = async () => {
-     const res = await fetch('/oauth2/authorization/kakao', {
-       method: 'GET',
+     const res = await fetch(`${API_URL}/api/token/refresh`, {
+       method: 'POST',
        credentials: 'include',
      });
+     console.log('refresh 요청 상태:', res.status);
 
      if (!res.ok)throw new Error('refreshToken 에러');
      const { accessToken: newToken } = await res.json();
