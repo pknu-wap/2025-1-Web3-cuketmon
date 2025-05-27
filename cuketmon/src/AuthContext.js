@@ -27,9 +27,14 @@ const AuthContext = createContext();
 
      try {
        const { exp } = jwtDecode(token);
-       const expiresAt = exp * 1000; //일단은 1시간이라고 둠
+       const expiresAt = exp 
        const now = Date.now();
        const refreshIn = expiresAt - now - 60 * 1000;
+
+
+         console.log('토큰 만료 시각:', new Date(expiresAt));
+        console.log('현재 시각:', new Date(now));
+         console.log('refreshIn(ms):', refreshIn);
        if (refreshIn > 0) {
          refreshTimeoutRef.current = setTimeout(refreshAccessToken, refreshIn);
        } else {
