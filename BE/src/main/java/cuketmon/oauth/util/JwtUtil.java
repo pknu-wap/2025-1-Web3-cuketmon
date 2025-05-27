@@ -13,10 +13,10 @@ public class JwtUtil {
     @Value("${jwt.secret.key}")
     private String secretKey; //토큰 키
 
-    // 24시간
-    private final long accessTokenexpirationMs = 1000 * 60 * 60 * 1;
-    //refreshToken 7일
-    private final long refreshTokenexpirationMs = 1000 * 60 * 60 * 24 * 3;
+    // 2분
+    private final long accessTokenexpirationMs = 1000 * 60  * 2;
+    //refreshToken 3시간
+    private final long refreshTokenexpirationMs = 1000 * 60 * 60 * 3;
 
     public String createAccessToken(String trainerName) {
         return generateToken(trainerName, accessTokenexpirationMs);
