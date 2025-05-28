@@ -50,9 +50,9 @@ const AuthContext = createContext();
      };
   },  [token]);
 
-   /* 리프레시 토큰 (엑세스토큰과 동일 API 사용) */
+   /* 리프레시 토큰*/
    const refreshAccessToken = async () => {
-     const res = await fetch(`${API_URL}/api/token/refresh`, {
+     const res = await fetch(`${API_URL}/api/auth/refresh`, {
        method: 'POST',
        credentials: 'include',
      });
