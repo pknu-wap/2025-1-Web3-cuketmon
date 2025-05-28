@@ -1,8 +1,6 @@
 package cuketmon.oauth.service;
 
 import cuketmon.oauth.util.JwtUtil;
-import cuketmon.trainer.repository.TrainerRepository;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -19,7 +17,6 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
     @Value("${client.redirect-url}")
     private String CLIENT_URL;
     private final JwtUtil jwtUtil;
-    private final TrainerRepository trainerRepository;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request,
@@ -33,24 +30,13 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
         String accessToken = jwtUtil.createAccessToken(trainerName);
         String refreshToken = jwtUtil.createRefreshToken(trainerName);
 
-        // 로컬/배포 환경에 맞춰 redirect
-        String state = request.getParameter("state");
-        trainerRepository.updateRefreshToken(trainerName, refreshToken);
-
-        //쿠키 생성과 전달
-        Cookie cookie = new Cookie("refresh_token", refreshToken);
-        cookie.setHttpOnly(true);
-        cookie.setSecure(true);
-        cookie.setPath("/");
-        cookie.setMaxAge(60 * 60 * 24 * 3);
-        response.addCookie(cookie);
+        // 쿠키 생성과 전달
+        response.setHeader("Set-Cookie",
+                "refresh_token=" + refreshToken +
+                        "; HttpOnly; Secure; SameSite=None; Path=/; Max-Age=" + (60 * 60 * 24 * 3));
 
         // JWT를 프론트에 리다이렉트하며 전달
-        if ("local".equals(state)) {
-            response.sendRedirect("http://localhost:3000/make/?token=" + accessToken);
-        } else {
-            response.sendRedirect(CLIENT_URL + "/make/?token=" + accessToken);
-        }
+        response.sendRedirect(CLIENT_URL + "/make/?token=" + accessToken);
     }
 
 }
