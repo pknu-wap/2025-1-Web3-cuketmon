@@ -15,7 +15,8 @@ public interface TrainerRepository extends JpaRepository<Trainer, String> {
 
     Optional<Trainer> findByName(String name);
 
-    Optional<String> findRefreshTokenByName(String name);
+    @Query("SELECT t.refreshToken FROM Trainer t WHERE t.name = :name")
+    Optional<String> findRefreshTokenByName(@Param("name") String name);
 
     int countByWinGreaterThan(int win);
 

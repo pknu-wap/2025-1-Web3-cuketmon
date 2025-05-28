@@ -33,14 +33,14 @@ public class AuthController {
         }
 
         String trainerName = jwtUtil.getTrainerNameFromToken(refreshToken);
+        String savedToken = trainerRepository.findRefreshTokenByName(trainerName)
+                .orElse(null);
 
-        String savedToken = String.valueOf(trainerRepository.findRefreshTokenByName(trainerName));
         if (!refreshToken.equals(savedToken)) {
             return ResponseEntity.status(401).body("Refresh token mismatch");
         }
 
         String newAccessToken = jwtUtil.createAccessToken(trainerName);
-
         return ResponseEntity.ok().body(newAccessToken);
     }
 }
