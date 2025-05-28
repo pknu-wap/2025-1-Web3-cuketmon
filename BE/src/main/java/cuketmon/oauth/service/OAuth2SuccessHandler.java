@@ -1,6 +1,7 @@
 package cuketmon.oauth.service;
 
 import cuketmon.oauth.util.JwtUtil;
+import cuketmon.trainer.repository.TrainerRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -17,6 +18,7 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
     @Value("${client.redirect-url}")
     private String CLIENT_URL;
     private final JwtUtil jwtUtil;
+    private final TrainerRepository trainerRepository;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request,
@@ -34,6 +36,8 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
         response.setHeader("Set-Cookie",
                 "refresh_token=" + refreshToken +
                         "; HttpOnly; Secure; SameSite=None; Path=/; Max-Age=" + (60 * 60 * 24 * 3));
+
+        trainerRepository.updateRefreshToken(trainerName, refreshToken);
 
         // JWT를 프론트에 리다이렉트하며 전달
         response.sendRedirect(CLIENT_URL + "/make/?token=" + accessToken);
