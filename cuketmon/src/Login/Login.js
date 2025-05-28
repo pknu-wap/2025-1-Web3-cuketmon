@@ -21,9 +21,9 @@ function Login() {
     if (token) {
       localStorage.setItem('accessToken', token); 
       setToken(token); 
-      window.history.replaceState({}, document.title, "/make");
+      window.history.replaceState({}, document.title, "/loginSuccess");
       
-      navigate('/make', { replace: true });
+      navigate('/loginSuccess', { replace: true });
     } else {
       console.error('Token 값이 존재하지 않습니다.');
     }
