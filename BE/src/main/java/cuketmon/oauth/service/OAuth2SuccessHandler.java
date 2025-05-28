@@ -40,7 +40,7 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
         trainerRepository.updateRefreshToken(trainerName, refreshToken);
 
         // JWT를 프론트에 리다이렉트하며 전달
-        response.sendRedirect(CLIENT_URL + "/make/?token=" + accessToken);
+        response.sendRedirect(CLIENT_URL + "/loginSuccess/?token=" + accessToken);
     }
 
 }
