@@ -50,7 +50,7 @@ const AuthContext = createContext();
      };
   },  [token]);
 
-   /* 리프레시 토큰*/
+   /* refreshToken 으로 accessToken 갱신*/
    const refreshAccessToken = async () => {
      const res = await fetch(`${API_URL}/api/auth/refresh`, {
        method: 'POST',
