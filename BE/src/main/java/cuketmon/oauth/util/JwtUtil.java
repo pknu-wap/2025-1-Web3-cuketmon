@@ -11,20 +11,19 @@ public class JwtUtil {
 
     // 만약 실제로 release 한다면 보안 강도가 더 높은 키로 변경
     @Value("${jwt.secret.key}")
-    private String secretKey; //토큰 키
-
-
-    // 2분
-    private final long accessTokenexpirationMs = 1000 * 60  * 2;
-    //refreshToken 3시간
-    private final long refreshTokenexpirationMs = 1000 * 60 * 60 * 3;
+    private String secretKey;
+    
+    // 24시간
+    private final long accessTokenExpirationMs = 1000L * 60 * 60 * 24;
+    // 7일
+    private final long refreshTokenExpirationMs = 1000L * 60 * 60 * 24 * 7;
 
     public String createAccessToken(String trainerName) {
-        return generateToken(trainerName, accessTokenexpirationMs);
+        return generateToken(trainerName, accessTokenExpirationMs);
     }
 
     public String createRefreshToken(String trainerName) {
-        return generateToken(trainerName, refreshTokenexpirationMs);
+        return generateToken(trainerName, refreshTokenExpirationMs);
     }
 
     private String generateToken(String trainerName, long expirationTime) {
