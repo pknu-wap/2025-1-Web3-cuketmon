@@ -1,6 +1,6 @@
 # 🌟 나만의 포켓몬을 만들어 보아요, Cukemon! 🌟
 
-#💡#Intro
+##💡Intro
 
 커켓몬 월드에 오신 걸 환영합니다!
 카카오 로그인으로 간편하게 시작하고, 나만의 특별한 커스터마이징 포켓몬, 커켓몬을 만들어 보세요!
@@ -24,9 +24,7 @@ AI 디퓨전 모델을 활용해 여러분만의 독창적인 커켓몬을 생�
 
 ## ⚔️ 전투 시스템
 
-
 ## 🏆 랭킹 시스템
-
 
 ## 🏠 마이페이지
 
@@ -42,14 +40,15 @@ AI 디퓨전 모델을 활용해 여러분만의 독창적인 커켓몬을 생�
 ### Coop
 <img src="https://img.shields.io/badge/figma-E7157B?style=for-the-badge&logo=figma&logoColor=white"> <img src="https://img.shields.io/badge/github-000000?style=for-the-badge&logo=github&logoColor=white"> <img src="https://img.shields.io/badge/notion-000000?style=for-the-badge&logo=notion&logoColor=white"> 
 
-
+ 
 ---
 
 ## 👥 팀 구성
 
 | **PM,FE,DESIGNER**                      | **FE**                                  | **BE**                                  | **BE**                                  | **AI**                                  |
 | --------------------------------------- | --------------------------------------- | --------------------------------------- | --------------------------------------- | --------------------------------------- |
-| ![image1](cuketmon/public/profile1.png) | ![image2](cuketmon/public/profile2.png) | ![image3](cuketmon/public/profile3.png) | ![image4](cuketmon/public/profile4.png) | ![image5](cuketmon/public/profile5.png) |
+| ![image1](https://github.com/user-attachments/assets/311de4ec-b531-4345-9ff0-ebd5a6345e86) | ![image2](https://github.com/user-attachments/assets/7552aa1f-2e86-4844-af1c-18675ea011c1) | ![image3](https://github.com/user-attachments/assets/11bfd38f-bea2-44bc-8722-fc9538147d50) | ![image4](https://github.com/user-attachments/assets/7552aa1f-2e86-4844-af1c-18675ea011c1) | ![image5](https://github.com/user-attachments/assets/7bbbf059-fe9f-4b27-bdb7-72441cfe1ab5)
+ |
 | 이찬이                                  | 정승오                                  | 박현                                    | 조강래                                  | 박연수                                  |
 
 ---
