@@ -16,13 +16,14 @@ AI 디퓨전 모델을 활용해 여러분만의 독창적인 커켓몬을 생�
 카카오 로그인으로 간편하게 시작!
 지금 바로, 여러분만의 커켓몬 여정을 시작해보세요!
 
-[지금 당장 떠나기](https://cukemon.netlify.app/)
+🚲 [지금 당장 떠나기](https://cukemon.netlify.app/)
 
 ## 🔐간편한 로그인
 
-## 🎨 커스터마이징 포켓몬 생성
+## 🎨 나만의 커켓몬 생성
 
 ## ⚔️ 전투 시스템
+![Image](https://github.com/user-attachments/assets/93300c3e-ba9e-4379-976d-3e27a5b1ca17)
 
 ## 🏆 랭킹 시스템
 
