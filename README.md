@@ -47,7 +47,7 @@ AI 디퓨전 모델을 활용해 여러분만의 독창적인 커켓몬을 생�
 
 | **PM,FE,DESIGNER**                      | **FE**                                  | **BE**                                  | **BE**                                  | **AI**                                  |
 | --------------------------------------- | --------------------------------------- | --------------------------------------- | --------------------------------------- | --------------------------------------- |
-| ![image1](https://github.com/user-attachments/assets/311de4ec-b531-4345-9ff0-ebd5a6345e86) | ![image2](https://github.com/user-attachments/assets/7552aa1f-2e86-4844-af1c-18675ea011c1) | ![image3](https://github.com/user-attachments/assets/11bfd38f-bea2-44bc-8722-fc9538147d50) | ![image4](https://github.com/user-attachments/assets/677731c1-79a4-47bf-90f6-0072f325fa34) | ![image5](https://github.com/user-attachments/assets/7bbbf059-fe9f-4b27-bdb7-72441cfe1ab5)
+| ![image1](https://github.com/user-attachments/assets/311de4ec-b531-4345-9ff0-ebd5a6345e86) | ![image2](https://github.com/user-attachments/assets/7552aa1f-2e86-4844-af1c-18675ea011c1) | <img src="{https://github.com/user-attachments/assets/e1adcb30-0e5f-4922-8ef2-9710ed443b30}"  width="157" height="157"/> | ![image4](https://github.com/user-attachments/assets/677731c1-79a4-47bf-90f6-0072f325fa34) | ![image5](https://github.com/user-attachments/assets/7bbbf059-fe9f-4b27-bdb7-72441cfe1ab5)
  |
 | 이찬이                                  | 정승오                                  | 박현                                    | 조강래                                  | 박연수                                  |
 
