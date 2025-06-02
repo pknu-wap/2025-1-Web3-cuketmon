@@ -23,8 +23,7 @@ AI 디퓨전 모델을 활용해 여러분만의 독창적인 커켓몬을 생�
 ## 🎨 나만의 커켓몬 생성
 
 ## ⚔️ 전투 시스템[
-![image](https://github.com/user-attachments/assets/14adb3fa-44e8-40f7-b501-9133df83c7d9)
-
+![Image](https://github.com/user-attachments/assets/a1eb9887-7fc0-4d24-b6e5-a9ddd125de7a)
 ## 🏆 랭킹 시스템
 
 ## 🏠 마이페이지
