@@ -1,7 +1,7 @@
 # 🌟 나만의 포켓몬을 만들어 보아요, Cukemon! 🌟
 ![Image](https://github.com/user-attachments/assets/35f7d2a9-df3b-4974-abac-da1afc3051fb)
 
-##💡Intro
+## 💡Intro
 
 커켓몬 월드에 오신 걸 환영합니다!
 카카오 로그인으로 간편하게 시작하고, 나만의 특별한 커스터마이징 포켓몬, 커켓몬을 만들어 보세요!
@@ -22,14 +22,18 @@ AI 디퓨전 모델을 활용해 여러분만의 독창적인 커켓몬을 생�
 ## 🔐간편한 로그인
 ![Image](https://github.com/user-attachments/assets/721122c1-747d-4dc2-b11c-b2c1ab4a2695)
 
+
 ## 🎨 나만의 커켓몬 생성
 ![Image](https://github.com/user-attachments/assets/4adcde19-7f08-4dc3-bfed-0d513dca413a)
+
 
 ## ⚔️ 전투 시스템
 ![Image](https://github.com/user-attachments/assets/a1eb9887-7fc0-4d24-b6e5-a9ddd125de7a)
 
+
 ## 🏆 랭킹 시스템
 ![Image](https://github.com/user-attachments/assets/737d6268-93b3-4221-a626-af024ccb8c6a)
+
 
 ## 🏠 마이페이지
 ![Image](https://github.com/user-attachments/assets/682ce306-eaa6-4ec6-833e-9f515dd28396)
