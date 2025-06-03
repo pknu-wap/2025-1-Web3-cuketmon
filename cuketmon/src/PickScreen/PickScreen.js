@@ -13,7 +13,7 @@ const PickScreen = () => {
   const [monsterId, setMonsterId] = useState([]);
   const navigate = useNavigate();
   const { token: contextToken } = useAuth();
-  const token = contextToken || localStorage.getItem('jwt');
+  const token = contextToken || localStorage.getItem('accessToken');
   const API_URL = process.env.REACT_APP_API_URL;
 
   // 유저 소유 커켓몬 ID 목록 조회
