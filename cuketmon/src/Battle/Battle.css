@@ -76,7 +76,7 @@ body {
 }
 .skillAnimation {
   position: absolute;
-  top: -20%;
+  top: -40%;
   width: 360px;
   height: 37px;
   background-repeat: no-repeat;
@@ -317,6 +317,7 @@ body {
   
   .skillAnimation {
     position: absolute;
+    top: -30%;
     width: 30vw;
     height: auto;
     background-repeat: no-repeat;
