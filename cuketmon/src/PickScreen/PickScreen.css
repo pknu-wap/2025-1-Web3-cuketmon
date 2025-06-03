@@ -69,6 +69,8 @@
   
   .pokeStyleButton {
     margin-top: 8%;
+    position: absolute;
+    bottom: 10%;
   }
   
   .selectButton:hover {
