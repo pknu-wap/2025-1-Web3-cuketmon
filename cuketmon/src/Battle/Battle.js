@@ -34,6 +34,8 @@ function Battle() {
   const [animationQueue, setAnimationQueue] = useState([]);
   const [isTurnInProgress, setIsTurnInProgress] = useState(false);
   const [isConnected, setIsConnected] = useState(false);
+  const [showRotateMessage, setShowRotateMessage] = useState(false);
+  const [showFullscreenMessage, setShowFullscreenMessage] = useState(false);
   const nextAnimation = animationQueue[0];
 
   const stompClientRef = useRef(null);
@@ -45,7 +47,7 @@ function Battle() {
   useEffect(() => {
     const fetchTrainerName = async () => {
       try {
-        console.log('Fetching trainer name...'); // 요청 전 로그
+        console.log('Fetching trainer name...');
         const token = localStorage.getItem('accessToken');
         if (!token) throw new Error('인증 토큰이 없습니다.');
         const res = await fetch(`${API_URL}/api/trainer/myName`, {
@@ -54,10 +56,10 @@ function Battle() {
         if (!res.ok) throw new Error(`서버 응답 상태: ${res.status}`);
         const name = await res.text();
         if (!name) throw new Error('트레이너 이름이 비어 있습니다.');
-        console.log('Trainer name received:', name); // 응답 후 로그
+        console.log('Trainer name received:', name);
         setTrainerName(name);
       } catch (err) {
-        console.error('Error fetching trainer name:', err); // 에러 로그
+        console.error('Error fetching trainer name:', err);
         setError(`트레이너 정보를 불러오지 못했습니다: ${err.message}`);
         setLoading(false);
       }
@@ -72,12 +74,12 @@ function Battle() {
       webSocketFactory: () => socket,
       reconnectDelay: 5000,
       onConnect: () => {
-        console.log('WebSocket connected'); // WebSocket 연결 로그\
+        console.log('WebSocket connected');
         setIsConnected(true);
         stompClientRef.current = client;
       },
       onStompError: (frame) => {
-        console.error('WebSocket error:', frame); // WebSocket 에러 로그
+        console.error('WebSocket error:', frame);
         setError('WebSocket 연결에 실패했습니다.');
         setLoading(false);
       },
@@ -93,14 +95,14 @@ function Battle() {
       return;
     }
 
-    console.log('Subscribed to /topic/match/*'); // 구독 로그
+    console.log('Subscribed to /topic/match/*');
     const matchSubscription = stompClientRef.current.subscribe('/topic/match/*', (message) => {
       const matchResponse = JSON.parse(message.body || '{}');
       const { red, blue, battleId, isRedFirst } = matchResponse;
 
       if (red.trainerName !== trainerName && blue.trainerName !== trainerName) return;
 
-      console.log('Received match message:', message.body); // 응답 메시지 로그
+      console.log('Received match message:', message.body);
 
       setBattleId(battleId);
       setRedTeam(red);
@@ -122,7 +124,7 @@ function Battle() {
     });
 
     const requestData = { trainerName, monsterId };
-    console.log('Published to /app/findBattle:', requestData); // 요청 전 로그
+    console.log('Published to /app/findBattle:', requestData);
     stompClientRef.current.publish({
       destination: '/app/findBattle',
       body: JSON.stringify(requestData),
@@ -133,56 +135,53 @@ function Battle() {
 
   useEffect(() => {
     if (!stompClientRef.current || !battleId || !myTeam) return;
-  
-    console.log(`Subscribed to /topic/battle/${battleId}`); // 구독 로그
+
+    console.log(`Subscribed to /topic/battle/${battleId}`);
     const battleSubscription = stompClientRef.current.subscribe(`/topic/battle/${battleId}`, (skillMessage) => {
-      console.log('Received battle message:', skillMessage.body); // 응답 메시지 로그
+      console.log('Received battle message:', skillMessage.body);
       const matchResponse = JSON.parse(skillMessage.body);
       const { red, blue, isRedFirst } = matchResponse;
-  
-      const firstTeam = isRedFirst ? 'red' : 'blue'; // 선공 팀
-      const secondTeam = isRedFirst ? 'blue' : 'red'; // 후공 팀
-  
+
+      const firstTeam = isRedFirst ? 'red' : 'blue';
+      const secondTeam = isRedFirst ? 'blue' : 'red';
+
       const firstAnimationUrl = matchResponse[firstTeam].skillAnimation;
       const secondAnimationUrl = matchResponse[secondTeam].skillAnimation;
-  
-      if (firstAnimationUrl && secondAnimationUrl) { // null이 아닌지 확인
-        // 선공 애니메이션 정보
+
+      if (firstAnimationUrl && secondAnimationUrl) {
         const firstAnimation = {
           monster: matchResponse[firstTeam].monster,
           trainerName: matchResponse[firstTeam].trainerName,
           animationUrl: firstAnimationUrl,
-          isHit: secondTeam, // 피격 팀은 후공 팀
-          hp: matchResponse[secondTeam].monster.hp, // 피격 팀의 체력
-          skills: matchResponse[firstTeam].monster.skills, // 사용 팀의 스킬 정보
-          skillName: matchResponse[firstTeam].skillName // 사용한 스킬 이름
+          isHit: secondTeam,
+          hp: matchResponse[secondTeam].monster.hp,
+          skills: matchResponse[firstTeam].monster.skills,
+          skillName: matchResponse[firstTeam].skillName
         };
-  
-        // 후공 애니메이션 정보
+
         const secondAnimation = {
           monster: matchResponse[secondTeam].monster,
           trainerName: matchResponse[secondTeam].trainerName,
           animationUrl: secondAnimationUrl,
-          isHit: firstTeam, // 피격 팀은 선공 팀
-          hp: matchResponse[firstTeam].monster.hp, // 피격 팀의 체력
-          skills: matchResponse[secondTeam].monster.skills, // 사용 팀의 스킬 정보
-          skillName: matchResponse[secondTeam].skillName // 사용한 스킬 이름
+          isHit: firstTeam,
+          hp: matchResponse[firstTeam].monster.hp,
+          skills: matchResponse[secondTeam].monster.skills,
+          skillName: matchResponse[secondTeam].skillName
         };
-  
-        // 선공 -> 후공 순으로 큐에 추가
+
         setAnimationQueue([firstAnimation, secondAnimation]);
       }
     });
-  
-    console.log(`Subscribed to /topic/battleEnd/${battleId}/*`); // 구독 로그
+
+    console.log(`Subscribed to /topic/battleEnd/${battleId}/*`);
     const endSubscription = stompClientRef.current.subscribe(`/topic/battleEnd/${battleId}/*`, (endMessage) => {
-      console.log('Received battle end message:', endMessage.body); // 응답 메시지 로그
+      console.log('Received battle end message:', endMessage.body);
       const endBattleResponse = JSON.parse(endMessage.body);
       const { result } = endBattleResponse;
       setWinner(result);
       setIsBattleEnded(true);
     });
-  
+
     return () => {
       battleSubscription.unsubscribe();
       endSubscription.unsubscribe();
@@ -195,26 +194,33 @@ function Battle() {
       setBattleMessage(`${nextAnimation.monster.name} 이 ${nextAnimation.skillName} 을 사용했다!`);
       setIsFighting(true);
       const damage = nextAnimation.isHit === 'red' ? redCuketmonHP - nextAnimation.hp : blueCuketmonHP - nextAnimation.hp;
-  
+
       setTimeout(() => {
-        // 애니메이션이 끝난 후 피격 효과 설정
         if (nextAnimation.isHit === 'red') {
           setIsRedHit(true);
-          setBattleMessage(damage > 50 ? '효과는 매우 대단했다!' : '효과는 별로였다.');
+          setBattleMessage(
+            damage >= 70 ? '효과는 매우 대단했다!' : 
+            damage >= 50 ? '효과는 대단했다!' : 
+            damage <= 30 ? '효과는 별로였다.' : 
+            '효과가 있었다!'
+          );
         } else {
           setIsBlueHit(true);
-          setBattleMessage(damage > 50 ? '효과는 매우 대단했다!' : '효과는 별로였다.');
+          setBattleMessage(
+            damage >= 70 ? '효과는 매우 대단했다!' : 
+            damage >= 50 ? '효과는 대단했다!' : 
+            damage <= 30 ? '효과는 별로였다.' : 
+            '효과가 있었다!'
+          );
         }
-  
+
         setTimeout(() => {
-          // HP 업데이트
           if (nextAnimation.isHit === 'red') {
             setRedCuketmonHP(nextAnimation.hp);
           } else {
             setBlueCuketmonHP(nextAnimation.hp);
           }
-  
-          // 스킬 정보 업데이트
+
           if (myTeam === (isRedFirst ? 'red' : 'blue') && animationQueue.length === 2) {
             setSkills(nextAnimation.skills.map((skill, index) => ({
               id: index,
@@ -235,14 +241,13 @@ function Battle() {
             })));
           }
 
-          if (nextAnimation.hp <=0) {
+          if (nextAnimation.hp <= 0) {
             const winner = nextAnimation.isHit === 'red' ? blueTeam.trainerName : redTeam.trainerName;
             sendBattleResult(winner);
             setWinner(winner);
             setIsBattleEnded(true);
           }
-  
-          // 상태 정리
+
           setIsFighting(false);
           setCurrentAnimation(null);
           setIsRedHit(false);
@@ -254,7 +259,7 @@ function Battle() {
             }
             return newQueue;
           });
-        }, 500); // 피격 효과 지속 시간 (500ms)
+        }, 500);
       }, 1000);
     }
   }, [animationQueue, isFighting, myTeam, isRedFirst]);
@@ -269,7 +274,6 @@ function Battle() {
       body: JSON.stringify(resultData),
     });
   };
-
 
   const handleSelect = (index) => {
     if (!isTurnInProgress) {
@@ -287,17 +291,17 @@ function Battle() {
       !stompClientRef.current.connected ||
       !battleId
     ) {
-      console.log('Cannot use skill:', { skill, currentPp: skill.currentPp, isTurnInProgress, connected: stompClientRef.current.connected, battleId }); // 실패 조건 로그
+      console.log('Cannot use skill:', { skill, currentPp: skill.currentPp, isTurnInProgress, connected: stompClientRef.current.connected, battleId });
       return;
     }
-  
+
     const skillData = {
       skillId: index,
       trainerName: trainerName,
       skillName: skills[index].name,
       animationUrl: animationMap[skill.type?.toLowerCase()]?.[skill.power >= 50 ? 'high' : 'normal']?.[0]
     };
-    console.log('Sending skill data:', skillData); // 요청 전 로그
+    console.log('Sending skill data:', skillData);
     stompClientRef.current.publish({
       destination: `/app/skill/${battleId}`,
       body: JSON.stringify(skillData),
@@ -305,7 +309,70 @@ function Battle() {
     setIsTurnInProgress(true);
   };
 
-  if (loading) return <div className="loadingScreen"></div>;
+// Battle.jsx (관련 useEffect 부분만 수정)
+useEffect(() => {
+  const isMobileDevice = /Mobi|Android/i.test(navigator.userAgent);
+  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+
+  if (isMobileDevice) {
+    if (isIOS) {
+      setShowRotateMessage(true);
+    } else {
+      // ESLint no-restricted-globals 우회: window.screen 사용
+      setTimeout(() => {
+        if (window.screen.orientation.type.startsWith('portrait')) {
+          window.screen.orientation.lock('landscape').then(() => {
+            document.documentElement.requestFullscreen();
+          }).catch(err => {
+            console.error('화면 고정 실패:', err);
+            setShowRotateMessage(true);
+          });
+        } else {
+          document.documentElement.requestFullscreen();
+        }
+      }, 100); // 100ms 지연 추가
+    }
+  }
+
+  const orientationChangeHandler = () => {
+    if (window.screen.orientation.type.startsWith('portrait')) {
+      setShowRotateMessage(true);
+    } else {
+      setShowRotateMessage(false);
+    }
+  };
+
+  const fullscreenChangeHandler = () => {
+    if (!document.fullscreenElement) {
+      setShowFullscreenMessage(true);
+    } else {
+      setShowFullscreenMessage(false);
+    }
+  };
+
+  window.screen.orientation.addEventListener('change', orientationChangeHandler);
+  document.addEventListener('fullscreenchange', fullscreenChangeHandler);
+
+  return () => {
+    window.screen.orientation.removeEventListener('change', orientationChangeHandler);
+    document.removeEventListener('fullscreenchange', fullscreenChangeHandler);
+  };
+}, []);
+
+  const handleTapForFullscreen = () => {
+    document.documentElement.requestFullscreen();
+    setShowRotateMessage(false);
+  };
+
+  if (loading) return (
+    <div className="loadingScreen">
+      {showRotateMessage && (
+        <div className="overlay" onClick={handleTapForFullscreen}>
+          <p>기기를 가로로 회전하고 탭하여 전체 화면으로 전환하세요.</p>
+        </div>
+      )}
+    </div>
+  );
   if (error) return (
     <div className="errorScreen">
       {error}
@@ -329,7 +396,7 @@ function Battle() {
     <div className="Battle">
       <div className="content">
         <div className="battleContainer">
-        <div className="redTeamSection">
+          <div className="redTeamSection">
             {redTeam?.trainerName && redTeam.monster?.image && (
               <>
                 <HpBar
@@ -371,34 +438,42 @@ function Battle() {
         <div className="skillSection">
           {!isTurnInProgress && (
             <BattleChatbox 
-            skills={skills} 
-            onUse={handleFight} 
-            onSelect={handleSelect}
-            isTurnInProgress={isTurnInProgress} 
-          />
+              skills={skills} 
+              onUse={handleFight} 
+              onSelect={handleSelect}
+              isTurnInProgress={isTurnInProgress} 
+            />
           )}
           {isFighting && currentAnimation && (
             <div className="battleAnimationOverlay">
-            <img
-              src={currentAnimation}
-              className="skillAnimation"
-              alt="기술 애니메이션"
-              style={{
-                left: nextAnimation.isHit === 'blue'
-                  ? `${redCuketmonRef.current.offsetLeft}px`
-                  : `${blueCuketmonRef.current.offsetLeft}px`,
-                animation: 'spriteAnimation 1s steps(6) forwards',
-                transform: nextAnimation.isHit === 'blue' ? 'scaleX(1)' : 'scaleX(-1)',
-                '--endX': nextAnimation.isHit === 'blue'
-                  ? `${blueCuketmonRef.current.offsetLeft}px`
-                  : `${redCuketmonRef.current.offsetLeft}px`,
-              }}
-            />
+              <img
+                src={currentAnimation}
+                className="skillAnimation"
+                alt="기술 애니메이션"
+                style={{
+                  left: nextAnimation.isHit === 'blue'
+                    ? `${redCuketmonRef.current.offsetLeft}px`
+                    : `${blueCuketmonRef.current.offsetLeft}px`,
+                  animation: 'spriteAnimation 1s steps(6) forwards',
+                  transform: nextAnimation.isHit === 'blue' ? 'scaleX(1)' : 'scaleX(-1)',
+                  '--endX': nextAnimation.isHit === 'blue'
+                    ? `${blueCuketmonRef.current.offsetLeft}px`
+                    : `${redCuketmonRef.current.offsetLeft}px`,
+                }}
+              />
               {battleMessage && <div className="battleMessage">{battleMessage}</div>}
             </div>
           )}
         </div>
       </div>
+      {showRotateMessage && (
+        <div className="overlay" onClick={handleTapForFullscreen}>
+          <p>기기를 가로로 회전하고 탭하여 전체 화면으로 전환하세요.</p>
+        </div>
+      )}
+      {showFullscreenMessage && (
+        <div className="notification">최적의 경험을 위해 전체 화면 모드를 활성화하세요.</div>
+      )}
     </div>
   );
 }
