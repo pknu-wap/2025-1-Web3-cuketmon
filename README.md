@@ -20,18 +20,19 @@ AI 디퓨전 모델을 활용해 여러분만의 독창적인 커켓몬을 생�
 🚲 [지금 당장 떠나기](https://cukemon.netlify.app/)
 
 ## 🔐간편한 로그인
-<img src="{https://github.com/user-attachments/assets/1a7dd1e5-c744-4ce7-98e0-51cdad467170}" width="70%" height="70%">
+![Image](https://github.com/user-attachments/assets/721122c1-747d-4dc2-b11c-b2c1ab4a2695)
 
 ## 🎨 나만의 커켓몬 생성
-![Image](https://github.com/user-attachments/assets/605408bc-739d-4364-b561-3392730cde3f){: width="100%" height="100%"}
+![Image](https://github.com/user-attachments/assets/4adcde19-7f08-4dc3-bfed-0d513dca413a)
 
 ## ⚔️ 전투 시스템
 ![Image](https://github.com/user-attachments/assets/a1eb9887-7fc0-4d24-b6e5-a9ddd125de7a)
 
 ## 🏆 랭킹 시스템
+![Image](https://github.com/user-attachments/assets/737d6268-93b3-4221-a626-af024ccb8c6a)
 
 ## 🏠 마이페이지
-
+![Image](https://github.com/user-attachments/assets/682ce306-eaa6-4ec6-833e-9f515dd28396)
 
 
   ## ✨ Stack
