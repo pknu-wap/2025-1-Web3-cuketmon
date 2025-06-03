@@ -68,7 +68,7 @@ body {
 }
 .battleAnimationOverlay {
   position: absolute;
-  top: -40%;
+  top: 0;
   left: 0;
   width: 100%;
   height: 100%;
@@ -76,6 +76,7 @@ body {
 }
 .skillAnimation {
   position: absolute;
+  top: -20%;
   width: 360px;
   height: 37px;
   background-repeat: no-repeat;
@@ -230,7 +231,7 @@ body {
   height: auto;
 }
 
-.PokeStyleButton {
+.pokeStyleButton {
   position: absolute;
   bottom: 10%;
 }
