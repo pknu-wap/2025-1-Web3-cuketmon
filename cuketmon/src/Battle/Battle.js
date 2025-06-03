@@ -365,13 +365,7 @@ useEffect(() => {
   };
 
   if (loading) return (
-    <div className="loadingScreen">
-      {showRotateMessage && (
-        <div className="overlay" onClick={handleTapForFullscreen}>
-          <p>기기를 가로로 회전하고 탭하여 전체 화면으로 전환하세요.</p>
-        </div>
-      )}
-    </div>
+    <div className="loadingScreen"></div>
   );
   if (error) return (
     <div className="errorScreen">
