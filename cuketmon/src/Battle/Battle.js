@@ -309,7 +309,7 @@ function Battle() {
     setIsTurnInProgress(true);
   };
 
-// Battle.jsx (관련 useEffect 부분만 수정)
+
 useEffect(() => {
   const isMobileDevice = /Mobi|Android/i.test(navigator.userAgent);
   const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
@@ -336,8 +336,6 @@ useEffect(() => {
 
   const orientationChangeHandler = () => {
     if (window.screen.orientation.type.startsWith('portrait')) {
-      setShowRotateMessage(true);
-    } else {
       setShowRotateMessage(false);
     }
   };
