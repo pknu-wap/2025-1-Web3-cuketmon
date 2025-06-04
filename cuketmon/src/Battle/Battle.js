@@ -330,7 +330,7 @@ useEffect(() => {
         } else {
           document.documentElement.requestFullscreen();
         }
-      }, 100); // 100ms 지연 추가
+      }, 100); // 100ms 지연
     }
   }
 
@@ -380,7 +380,7 @@ useEffect(() => {
       <div className="resultScreen">
         <h1>{message}</h1>
         {myMonsterImage && <img src={myMonsterImage} alt="자기 몬스터" className="winnerCuketmonImage"/>}
-        <PokeStyleButton onClick={() => navigate('/mypage')}>배틀 종료</PokeStyleButton>
+        <div className="battleEndButton"><PokeStyleButton onClick={() => navigate('/mypage')}>배틀 종료</PokeStyleButton></div>
       </div>
     );
   }
