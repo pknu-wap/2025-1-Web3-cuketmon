@@ -154,6 +154,7 @@ const PickScreen = () => {
           <p className="cuketmonStats">
             HP: {currentCuketmon.hp} | 공격: {currentCuketmon.attack} | 방어: {currentCuketmon.defence} | 특수공격: {currentCuketmon.specialAttack} | 특수방어: {currentCuketmon.specialDefence} | 스피드: {currentCuketmon.speed}
           </p>
+          <div className="selectButton">
           <PokeStyleButton
             onClick={() => handleSelect(currentCuketmon)}
             className="selectButton"
@@ -161,6 +162,7 @@ const PickScreen = () => {
           >
             선택
           </PokeStyleButton>
+          </div>
         </div>
         <button onClick={handleNext} className="arrowButton arrowRight" disabled={cuketmons.length <= 1}>
           ▶
