@@ -33,8 +33,10 @@ function Login() {
     <div className="login">
       <img src="../LoginPage/logo.webp" id="webLogo" alt="웹 로고" />
       <div className='loginButton'>
-      <PokeStyleButton label={"카카오 로그인으로 시작"} onClick={handleLogin}/>
-      </div>
+     <button onClick={handleLogin}>
+      <div className='kakaoLoginText'>카카오 로그인으로 시작</div>
+      </button>
+     </div>
     </div>
   );
 }
