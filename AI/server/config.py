@@ -3,8 +3,8 @@ import json
 with open("private/config.json", "r") as f:
     config = json.load(f)
 
-SSH_KEY_PATH = "private/cukemon.pem"
-SSH_USER = "ubuntu"
+SSH_KEY_PATH = config["ssh_key_path"]
+SSH_USER = config["ssh_user"]
 SSH_HOST = config["ssh_host"]
 DB_HOST = config["db_host"]
 DB_USER = config["db_user"]
@@ -13,5 +13,6 @@ DB_NAME = config["db_name"]
 DB_PORT = config["db_port"]
 MODEL_PATH = config["model_path"]
 CHECKPOINT = config["checkpoint"]
-KEY_PATH = "private/adroit-goods-459105-u2-2be7b842c10f.json"
-INFERENCE_API_URL = "http://localhost:3000/txt2img"
+GCS_KEY_PATH = config["gcs_key_path"]
+GCS_PATH = config["gcs_path"]
+INFERENCE_API_URL = config["inference_api_url"]
