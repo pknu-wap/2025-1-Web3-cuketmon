@@ -36,9 +36,10 @@ public class BattleSkillService {
 
     @Transactional
     public void useSkill(Integer battleId, SkillRequest request) {
-        // 0. red, blue 스킬이 요청되었는지 검사
+        // 0. red 스킬 요청 + cpu 스킬 바로 등록
         requestedSkills.putIfAbsent(battleId, new Integer[2]);
         setSkill(battleId, request);
+        setSkill(battleId, new SkillRequest(1, "cpu", null, null));
 
         Integer[] skillIndexes = requestedSkills.get(battleId);
         if (skillIndexes[SKILL_INDEX_RED] == null || skillIndexes[SKILL_INDEX_BLUE] == null) {
@@ -68,10 +69,10 @@ public class BattleSkillService {
             redSkill.usePp(1);
 
             red.getMonster().applyDamage(blueDamage);
-            blueSkill.usePp(1);
+            // blueSkill.usePp(1); cpu의 pp는 제한적일 수 있음
         } else {
             red.getMonster().applyDamage(blueDamage);
-            blueSkill.usePp(1);
+            // blueSkill.usePp(1);
 
             blue.getMonster().applyDamage(redDamage);
             redSkill.usePp(1);
