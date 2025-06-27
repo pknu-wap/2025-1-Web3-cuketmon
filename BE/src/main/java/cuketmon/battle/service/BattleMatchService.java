@@ -45,16 +45,13 @@ public class BattleMatchService {
             return;
         }
 
-        // 1. 큐 대기
-        if (waitingQueue.isEmpty()) {
-            waitingQueue.add(teamMaker.makeTeam(request));
-            log.info("현재 대기 큐 상태  : {}", waitingQueue.getState());
-            return;
-        }
+        // 1. 클라이언트 큐 삽입
+        waitingQueue.add(teamMaker.makeTeam(request));
+        log.info("현재 대기 큐 상태  : {}", waitingQueue.getState());
 
-        // 2. 팀 생성
+        // 2. 팀 생성 (클라이언트 vs cpu)
         BattleDTO.Team red = waitingQueue.poll();
-        BattleDTO.Team blue = teamMaker.makeTeam(request);
+        BattleDTO.Team blue = teamMaker.makeTeam(new TrainerRequest("cpu", 1));
 
         // 3. 배틀 생성
         Integer battleId = generateBattleId();

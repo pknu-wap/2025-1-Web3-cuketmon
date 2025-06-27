@@ -64,7 +64,8 @@ public class MonsterService {
                 .orElseThrow(() -> new IllegalArgumentException(TRAINER_NOT_FOUND));
 
         // 최대 보유 커켓몬 제한확인
-        trainer.checkLimits();
+        // 테스트 서버에서는 하지 않음
+        // trainer.checkLimits();
 
         Type type1 = Type.fromString(requestBody.getType1());
         Type type2 = Type.fromString(requestBody.getType2()); // nullable 값
@@ -81,7 +82,7 @@ public class MonsterService {
         */
         Monster monster = Monster.builder()
                 .name("")
-                .image(null)
+                .image("https://storage.googleapis.com/cukemon/1460.png") // 테스트 서버에서는 ai 없음 -> 임의의 값 고정
                 .description(requestBody.getDescription().strip())
                 .affinity(new Affinity())
                 .hp(getRandomInRange(MIN_BASE, MAX_BASE))
