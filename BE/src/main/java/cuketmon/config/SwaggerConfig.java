@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class SwaggerConfig {
 
-    @Value("${cors.allowed-origin}")
+    @Value("${swagger.server-url}")
     private String SERVER_URL;
 
     @Bean
