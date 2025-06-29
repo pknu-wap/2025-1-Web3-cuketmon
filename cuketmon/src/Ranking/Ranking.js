@@ -97,33 +97,30 @@ function Ranking() {
        <img key={idx} src={url} alt="우리의 든든한 커켓몬 군단" className="cukemonImage" />
      ))}
       </div>
-        <table className="historyBoard">
-          <thead>
-            <tr>
-              <th>Standing</th>
-              <th>No. {rank}</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td className='mark1'>Trainer Name</td>
-              <td>{trainerName}</td>
-            </tr>
-            <tr>
-              <td className='mark1'>No. of Battles</td>
-              <td>{battleCount}</td>
-            </tr>
-            <tr>
-              <td className='mark2'>Wins</td>
-              <td>{winCount}</td>
-            </tr>
-            <tr>
-              <td className='mark3'>Losses</td>
-              <td>{loseCount}</td>
-            </tr>
-          </tbody>
-        </table>
+        <div className="historyBoard">
+         <div className="trainerName">{trainerName}님</div>
+
+         <div className="row1">
+         <div>Rank</div>
+         <div>{rank}</div>
+         </div>
+
+         <div className="row2">
+         <div>No. of Battles</div>
+         <div>{battleCount}</div>
+         </div>
+
+         <div className="row3">
+         <div>Wins</div>
+         <div>{winCount}</div>
+         </div>
+         
+         <div className="row4">
+         <div>Losses</div>
+         <div>{loseCount}</div>
+         </div>
       </div>      
+        </div>
       <MenuBar />
     </div>
   );
