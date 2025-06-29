@@ -67,7 +67,7 @@ public class SecurityConfig {
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowedOrigins(List.of(
                 "http://localhost:3000",
-                "http://localhost:8080",
+                "http://localhost:8000",
                 "https://cukemon.netlify.app",
                 SERVER_URL
         ));
