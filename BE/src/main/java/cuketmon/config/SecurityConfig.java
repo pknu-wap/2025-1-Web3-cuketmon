@@ -24,7 +24,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    @Value("${server.address}")
+    @Value("${cors.allowed-origin}")
     private String SERVER_URL;
 
     private final CustomOAuth2UserService customOAuth2UserService;
