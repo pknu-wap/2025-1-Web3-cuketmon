@@ -39,7 +39,7 @@ public class BattleSkillService {
         // 0. red 스킬 요청 + cpu 스킬 바로 등록
         requestedSkills.putIfAbsent(battleId, new Integer[2]);
         setSkill(battleId, request);
-        setSkill(battleId, new SkillRequest(1, "cpu", null, null));
+        setSkill(battleId, new SkillRequest(1, "cpu", "/BattlePage/Animation/Electric/normalDamage1.png", "테스트"));
 
         Integer[] skillIndexes = requestedSkills.get(battleId);
         if (skillIndexes[SKILL_INDEX_RED] == null || skillIndexes[SKILL_INDEX_BLUE] == null) {
