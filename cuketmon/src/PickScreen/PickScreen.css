@@ -1,86 +1,193 @@
+/* BACKGROUND */
 .pickScreen {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    width: 100vw;
-    background-color: #c6d4e1;
-  }
-  
-  .pickTitle {
-    font-size: 2rem;
-    font-weight: bold;
-    margin-bottom: 2rem;
-    color: #333;
-  }
-  
-  .pickContent {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 2rem;
-    width:  80vw;
-    height: 70vh;
-  }
-  
-  .arrowButton {
-    background-color: black;
-    color: white;
-    border: none;
-    padding: 0.5rem 1rem;
-    font-size: 1.5rem;
-    border-radius: 0.25rem;
-    cursor: pointer;
-    transition: background-color 0.2s;
-  }
-  
-  .arrowButton:hover {
-    background-color: gold;
-  }
-  
-  .cuketmonCard {
-    position: relative;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: #ffffff;
-    border: 2px solid #333;
-    border-radius: 0.5rem;
-    padding: 1rem;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    width:50%;
-    height: 100%;
-  }
-  
-  .cuketmonImage {
-    width: 50%;
-    height: auto;
-  }
-  
-  .cuketmonName {
-    font-size: 1.25rem;
-    font-weight: bold;
-    margin-bottom: 5%;
-  }
+  width: 100vw;
+  height: 100vh;
 
-  .cuketmonType {
-    font-size: 1rem;
-    color: #666;
-    margin-bottom: 0.5rem;
-  }
-  
-  .selectButton {
-    margin-top: 8%;
-    position: absolute;
-    bottom: 10%;
-  }
+  display: flex;
+  align-items: center;
+  justify-content: columns;
+  flex-direction: column;
+  background-color: black; /* 💡 남는 부분 검정색 */
 
-  .loading, .noData {
-    font-size: 1.5rem;
-    color: #666;
-  }
+  background: url("cuketmon/public/PickScreen/background.webp") no-repeat center center;
+  background-size: contain; /* 💡 이미지 비율 유지 */
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+/* TITLE */
+.pickTitle {
+  margin-top: 5%;
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 2rem;
+  color: #333;
+}
+
+/* POKETMON INFO */
+
+.pickContent {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  width:  80vw;
+  height: 70vh;
+}
+
+.cuketmonCard {
+  position: relative;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width:30%;
+  height: 100%;
+}
+
+.cuketmonImage {
+  width: 50%;
+  height: auto;
+}
+
+.cuketmonName {
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin-bottom: 5%;
+}
+
+.cuketmonType {
+  font-size: 1rem;
+  color: #666;
+  margin-bottom: 0.5rem;
+}
+
+.HPbarContainer {
+  position: relative;
+  width: 100%;        /* 원하는 너비 설정 */
+  max-width: 400px;   /* 필요하면 최대 너비 제한 */
+  margin: 0 auto;
+}
+
+.HPbarImage {
+  width: 100%;
+  height: auto;       /* 높이는 자동, 비율 유지 */
+  display: block;
+}
+
+.HPtext {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  /* text-shadow: 1px 1px 3px black; */
+  pointer-events: none; /* 클릭 방해 안함 */
+}
+
+.commonImageContainer {
+  position: relative;       /* 이미지 위에 텍스트 겹치기 위해 필수 */
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.commonImageContainer img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.overlayText {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: black;
+  font-weight: bold;
+  text-align: center;
+  padding: 0 10px;
+  white-space: nowrap;
+}
+
+.hpText {
+  font-size: 1rem;
+  top: 65%;  
+  left: 15%;
+}
+
+.nameText{
+  top: 25%;  
+  left: 80%;
+  font-size: 1.5rem;
+}
+
+.specText {
+  font-size: 1rem;
+  white-space: normal;
+  text-align: left;
+  line-height: 1.5;
+}
+
+.specRow {
+  display: flex;
+  justify-content: left; /* 중앙 정렬 */
+  gap: 10vw; /* 좌우 간격을 rem 단위로 넓힘 */
+  margin-top: 5%;
+  margin-bottom: 5%;
+  margin-left: 15%;
+  color: #1C5252;
+}
+
+
+
+/* BUTTONS */
+
+.arrowButton {
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  background: none;
+  border: none;
+}
+
+.arrowButton:hover {
+  transform: scale(1.2); 
+  
+}
+
+.arrowImage{
+  background-color: transparent;
+}
+
+.buttonContainer {
+  position: absolute;
+  bottom: 10%;
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  width: 100%;
+}
+
+.buttonSet {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.buttonSet:hover {
+  transform: scale(1.1);
+}
+
+/* ETC */
+
+.loading, .noData {
+  font-size: 1.5rem;
+  color: #666;
+}
 
   @media (max-width: 414px) {
     .pickScreen {
@@ -94,6 +201,7 @@
     }
     
     .pickTitle {
+      margin-top: 10%;
       font-size: 2rem;
       font-weight: bold;
       margin-bottom: 2rem;
@@ -109,28 +217,13 @@
       height: 50%;
     }
     
-    .arrowButton {
-      background-color: black;
-      color: white;
-      border: none;
-      padding: 0.5rem 1rem;
-      font-size: 1.5rem;
-      border-radius: 0.25rem;
-      cursor: pointer;
-      transition: background-color 0.2s;
-    }
-    
-    .arrowButton:hover {
-      background-color: gold;
-    }
-    
     .cuketmonCard {
       text-align: center;
-      background-color: #ffffff;
-      border: 2px solid #333;
-      border-radius: 0.5rem;
-      padding: 1rem;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      /* background-color: #ffffff; */
+      /* border: 2px solid #333; */
+      /* border-radius: 0.5rem; */
+      /* padding: 1rem; */
+      /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); */
       width:50%;
       height: 100%;
     }
