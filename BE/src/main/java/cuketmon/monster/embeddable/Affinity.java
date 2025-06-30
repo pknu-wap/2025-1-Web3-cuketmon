@@ -18,7 +18,7 @@ public class Affinity {
     public int increase(int amount) {
         this.count += amount;
         if (this.count >= BOUND) {
-            this.count %= BOUND;
+            this.count = BOUND;
             return 1;
         }
         return 0;
