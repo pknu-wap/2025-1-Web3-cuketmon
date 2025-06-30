@@ -13,7 +13,7 @@ body {
 }
 
 .Battle {
-  background-image: url('/public/BattlePage/background.png');
+  background-image: url('/public/BattlePage/background.webp');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -203,7 +203,7 @@ body {
 }
 
 .resultScreen {
-  background-image: url('/public/BattlePage/WinnerStage.png');
+  background-image: url('/public/BattlePage/WinnerStage.webp');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -252,7 +252,7 @@ body {
   }
   
   .Battle {
-    background-image: url('/public/BattlePage/background.png');
+    background-image: url('/public/BattlePage/background.webp');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -417,7 +417,7 @@ body {
   }
   
   .resultScreen {
-    background-image: url('/public/BattlePage/WinnerStage.png');
+    background-image: url('/public/BattlePage/WinnerStage.webp');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
