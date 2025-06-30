@@ -136,7 +136,7 @@ const PickScreen = () => {
       <h1 className="pickTitle">커켓몬 선택</h1>
       <div className="pickContent">
         <button onClick={handlePrev} className="arrowButton arrowLeft" disabled={cuketmons.length <= 1}>
-          ◀
+          <img src="/PickScreen/arrowLeft.webp" alt="이전" className="arrowImage" />
         </button>
         <div className="cuketmonCard">
           <img
@@ -144,28 +144,58 @@ const PickScreen = () => {
             alt={currentCuketmon.name}
             className="cuketmonImage"
           />
-          <p className="cuketmonName">
-            {currentCuketmon.name} :{' '}
-            <span style={{ color: type1Color }}>{currentCuketmon.type1}</span>
-            {currentCuketmon.type2 && (
-              <span> | <span style={{ color: type2Color }}>{currentCuketmon.type2}</span></span>
-            )}
-          </p>
-          <p className="cuketmonStats">
-            HP: {currentCuketmon.hp} | 공격: {currentCuketmon.attack} | 방어: {currentCuketmon.defence} | 특수공격: {currentCuketmon.specialAttack} | 특수방어: {currentCuketmon.specialDefence} | 스피드: {currentCuketmon.speed}
-          </p>
-          <div className="selectButton">
-          <PokeStyleButton
-            onClick={() => handleSelect(currentCuketmon)}
-            className="selectButton"
-            disabled={!currentCuketmon}
-          >
-            선택
-          </PokeStyleButton>
+          <div className="HPbarContainer commonImageContainer">
+            <img src="/PickScreen/HPBar.webp" alt="HP bar" className="HPbarImage" />
+            <div className="overlayText nameText">
+              <span>{currentCuketmon.name}</span>
+            </div>
+            <div className="overlayText hpText">
+              <span>{currentCuketmon.hp}/{currentCuketmon.hp}</span>
+            </div>
+              <span style={{ color: type1Color }}>{currentCuketmon.type1}</span>
+              {currentCuketmon.type2 && (
+                <span> | <span style={{ color: type2Color }}>{currentCuketmon.type2}</span></span>
+              )}
           </div>
+
+          <div className="specContainer commonImageContainer">
+            <img src="/PickScreen/spec.webp" alt="spec" className="specImage" />
+            <div className="overlayText specText">
+              <div className="specRow">
+                <span>{currentCuketmon.attack}</span>
+                <span>{currentCuketmon.specialAttack}</span>
+              </div>
+              <div className="specRow">
+                <span>{currentCuketmon.defence}</span>
+                <span>{currentCuketmon.specialDefence}</span>
+              </div>
+              <div className="specRow">
+                <span>{currentCuketmon.speed}</span>
+              </div>
+            </div>
+
+
+          </div>
+
+          <div className="buttonContainer">
+            <button
+              onClick={() => navigate('/mypage')}
+              className="buttonSet"
+            >
+              <img src="/PickScreen/backButton.webp" alt="뒤로" />
+            </button>
+            <button
+              onClick={() => handleSelect(currentCuketmon)}
+              className="buttonSet"
+              disabled={!currentCuketmon}
+            >
+              <img src="/PickScreen/selectButton.webp" alt="선택" />
+            </button>
+          </div>
+
         </div>
         <button onClick={handleNext} className="arrowButton arrowRight" disabled={cuketmons.length <= 1}>
-          ▶
+          <img src="/PickScreen/arrowRight.webp" alt="이전"  className="arrowImage" />
         </button>
       </div>
     </div>
