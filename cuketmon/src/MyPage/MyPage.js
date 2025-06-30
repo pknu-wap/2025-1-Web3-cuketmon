@@ -225,17 +225,17 @@ const releaseCukemon = async () => {
 
           <div className='feedCukemonButton' onClick={feedCukemon}>
             <img src='/MyPage/feed.webp' id='feed' alt="밥 아이콘" />
-            <span>{feedCount}112</span>
+            <span>{feedCount}</span>
           </div>
 
             <div className='playCukemonButton'onClick={playCukemon}>
             <img src='/MyPage/toy.webp' id='play'alt="장난감 아이콘" />
-            <span>{toyCount}20</span>
+            <span>{toyCount}</span>
             </div>
       </div>
    
       <div className='cukemonImg'>
-        <img src='/RankingPage/cukemonEx.png'/*{cukemonData?.img}*/ alt="Cukemon" id='cuketmonImage' />
+        <img src={cukemonData?.img} alt="Cukemon" id='cuketmonImage' />
       </div>
 
       <div className='cucketmonProfile'>
