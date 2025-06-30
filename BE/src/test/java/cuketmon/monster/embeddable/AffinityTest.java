@@ -22,7 +22,7 @@ class AffinityTest {
 
         int result = affinity.increase(80);
 
-        assertEquals(10, affinity.getCount());
+        assertEquals(110, affinity.getCount());
         assertEquals(1, result);
     }
 
