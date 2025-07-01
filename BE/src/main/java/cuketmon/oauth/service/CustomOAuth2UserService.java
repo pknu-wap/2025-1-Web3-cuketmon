@@ -32,7 +32,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         Map<String, Object> kakaoAccount = (Map<String, Object>) attributes.get("kakao_account");
 
         // 이메일의 '@' 앞부분을 Trainer 이름으로 사용
-        // 25.07.01) 이메일 앞부분 중복 문제로 이메일 전체를 모두 사용하는 것으로 변경
+        // 25.07.01) 이메일 앞부분 중복 문제로, 이메일 전체를 id로 사용하는 것으로 변경
         String email = (String) kakaoAccount.get("email");
         // String name = email.split("@")[0];
 

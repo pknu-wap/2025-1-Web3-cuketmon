@@ -13,12 +13,10 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 public interface TrainerRepository extends JpaRepository<Trainer, String> {
 
-    Optional<Trainer> findByName(String name);
+    int countByWinGreaterThan(int win);
 
     @Query("SELECT t.refreshToken FROM Trainer t WHERE t.name = :name")
     Optional<String> findRefreshTokenByName(@Param("name") String name);
-
-    int countByWinGreaterThan(int win);
 
     @Transactional
     @Modifying(clearAutomatically = true, flushAutomatically = true)
