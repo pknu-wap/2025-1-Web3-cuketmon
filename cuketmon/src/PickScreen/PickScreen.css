@@ -1,192 +1,147 @@
-/* BACKGROUND */
-.pickScreen {
+/* 화면 중앙 정렬 및 3:4 비율 유지 */
+.aspectWrapper {
   width: 100vw;
   height: 100vh;
-
+  background: black;
   display: flex;
+  justify-content: center;
   align-items: center;
-  justify-content: columns;
+}
+
+.pickScreen {
+  aspect-ratio: 4 / 3;
+  width: 100vw;
+  max-height: 100vh;
+  background: url("cuketmon/public/PickScreen/background.webp") center/contain no-repeat;
+  display: flex;
   flex-direction: column;
-  background-color: black; /* 💡 남는 부분 검정색 */
-
-  background: url("cuketmon/public/PickScreen/background.webp") no-repeat center center;
-  background-size: contain; /* 💡 이미지 비율 유지 */
-  background-repeat: no-repeat;
-  background-position: center center;
+  justify-content: space-between;
+  position: relative;
 }
 
-/* TITLE */
+
+/* 타이틀 */
 .pickTitle {
-  margin-top: 5%;
-  font-size: 2rem;
-  font-weight: bold;
-  margin-bottom: 2rem;
+  font-size: 2.5vw;
   color: #333;
+  text-align: center;
+  margin-top: 5%;
 }
 
-/* POKETMON INFO */
-
+/* 중앙 콘텐츠 */
 .pickContent {
   display: flex;
-  align-items: center;
   justify-content: center;
-  gap: 2rem;
-  width:  80vw;
-  height: 70vh;
+  align-items: center;
+  flex: 1;
 }
 
+.arrowButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.arrowButton:hover {
+  transform: scale(1.2);
+}
+
+/* 카드 */
 .cuketmonCard {
-  position: relative;
-  text-align: center;
+  width: 50%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  width:30%;
-  height: 100%;
 }
 
 .cuketmonImage {
-  width: 50%;
+  width: 30%;
   height: auto;
 }
 
-.cuketmonName {
-  font-size: 1.25rem;
-  font-weight: bold;
-  margin-bottom: 5%;
-}
-
-.cuketmonType {
-  font-size: 1rem;
-  color: #666;
-  margin-bottom: 0.5rem;
-}
-
-.HPbarContainer {
-  position: relative;
-  width: 100%;        /* 원하는 너비 설정 */
-  max-width: 400px;   /* 필요하면 최대 너비 제한 */
-  margin: 0 auto;
-}
-
-.HPbarImage {
-  width: 100%;
-  height: auto;       /* 높이는 자동, 비율 유지 */
-  display: block;
-}
-
-.HPtext {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: white;
-  font-weight: bold;
-  font-size: 18px;
-  /* text-shadow: 1px 1px 3px black; */
-  pointer-events: none; /* 클릭 방해 안함 */
-}
-
+/* HP바 + 이름 + 타입 */
 .commonImageContainer {
-  position: relative;       /* 이미지 위에 텍스트 겹치기 위해 필수 */
-  width: 100%;
-  max-width: 400px;
-  margin: 0 auto;
+  position: relative;
+  width: 20vw;
+  margin-top: 1vw;
 }
 
 .commonImageContainer img {
   width: 100%;
-  height: auto;
   display: block;
 }
 
 .overlayText {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: black;
   font-weight: bold;
-  text-align: center;
-  padding: 0 10px;
-  white-space: nowrap;
+  color: #222;
+  transform: translate(-50%, -50%);
+}
+
+.nameText {
+  top: 20%;
+  left: 80%;
+  font-size: 1vw;
 }
 
 .hpText {
-  font-size: 1rem;
-  top: 65%;  
+  top: 60%;
   left: 15%;
+  font-size: 1vw;
 }
 
-.nameText{
-  top: 25%;  
-  left: 80%;
-  font-size: 1.5rem;
+.typeText {
+  text-align: center;
+  margin-top: 0.5vh;
+  font-size: 1vw;
 }
 
+/* 스탯 */
 .specText {
-  font-size: 1rem;
-  white-space: normal;
-  text-align: left;
-  line-height: 1.5;
+  position: absolute;
+  top: 50%;
+  left: 60%;
+  transform: translate(-50%, -50%);
+  font-size: 1.6vw;
+  color: #1C5252;
+  width: 55%;
 }
 
 .specRow {
   display: flex;
-  justify-content: left; /* 중앙 정렬 */
-  gap: 10vw; /* 좌우 간격을 rem 단위로 넓힘 */
-  margin-top: 5%;
-  margin-bottom: 5%;
-  margin-left: 15%;
-  color: #1C5252;
+  justify-content: space-between;
+  margin: 0.5vh 0;
 }
 
-
-
-/* BUTTONS */
-
-.arrowButton {
-  cursor: pointer;
-  transition: transform 0.2s ease;
-  background: none;
-  border: none;
-}
-
-.arrowButton:hover {
-  transform: scale(1.2); 
-  
-}
-
-.arrowImage{
-  background-color: transparent;
-}
-
+/* 버튼 영역 */
 .buttonContainer {
-  position: absolute;
-  bottom: 10%;
   display: flex;
-  gap: 20px;
   justify-content: center;
-  width: 100%;
+  gap: 3vw;
+  margin-bottom: 5%;
 }
 
 .buttonSet {
   background: none;
   border: none;
-  padding: 0;
   cursor: pointer;
-  transition: transform 0.2s ease;
 }
 
-.buttonSet:hover {
-  transform: scale(1.1);
+.buttonSet img {
+  height: 5vw;
 }
 
-/* ETC */
-
-.loading, .noData {
-  font-size: 1.5rem;
-  color: #666;
+/* 로딩/에러 */
+.pickScreenLoading,
+.pickScreenNoData {
+  width: 100vw;
+  height: 100vh;
+  background: black;
+  color: white;
+  font-size: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
   @media (max-width: 414px) {
