@@ -68,22 +68,22 @@ const PickScreen = () => {
   return (
     <div className="aspectWrapper">
       <div className="pickScreen">
-        <h1 className="pickTitle">커켓몬 선택</h1>
+        <h1 className="pickTitle">Poketmon <br/>Selection</h1>
         <div className="pickContent">
-          <button onClick={() => setCurrentIndex((prev) => (prev === 0 ? cuketmons.length - 1 : prev - 1))} className="arrowButton" disabled={cuketmons.length <= 1}>
+          <button onClick={() => setCurrentIndex((prev) => (prev === 0 ? cuketmons.length - 1 : prev - 1))} className="arrowButton arrowButtonLeft" disabled={cuketmons.length <= 1}>
             <img src="/PickScreen/arrowLeft.webp" alt="←" />
           </button>
 
           <div className="cuketmonCard">
             <img src={current.image} alt={current.name} className="cuketmonImage" />
             <div className="HPbarContainer commonImageContainer">
-              <img src="/PickScreen/HPBar.webp" alt="HP Bar" />
-              <div className="overlayText nameText">{current.name}</div>
-              <div className="overlayText hpText">{current.hp}/{current.hp}</div>
-              <div className="typeText">
+            <div className="typeText">
                 <span style={{ color: type1Color }}>{current.type1}</span>
                 {current.type2 && <> | <span style={{ color: type2Color }}>{current.type2}</span></>}
               </div>
+              <img src="/PickScreen/HPBar.webp" alt="HP Bar" />
+              <div className="overlayText nameText">{current.name}</div>
+              <div className="overlayText hpText">{current.hp}/{current.hp}</div>
             </div>
 
             <div className="specContainer commonImageContainer">
@@ -96,7 +96,7 @@ const PickScreen = () => {
             </div>
           </div>
 
-          <button onClick={() => setCurrentIndex((prev) => (prev === cuketmons.length - 1 ? 0 : prev + 1))} className="arrowButton" disabled={cuketmons.length <= 1}>
+          <button onClick={() => setCurrentIndex((prev) => (prev === cuketmons.length - 1 ? 0 : prev + 1))} className="arrowButton arrowButtonRight" disabled={cuketmons.length <= 1}>
             <img src="/PickScreen/arrowRight.webp" alt="→" />
           </button>
         </div>

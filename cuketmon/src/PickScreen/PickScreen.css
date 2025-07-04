@@ -1,4 +1,11 @@
 /* 화면 중앙 정렬 및 3:4 비율 유지 */
+@font-face {
+  font-family: 'PFStardust';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/PFStardust.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
 .aspectWrapper {
   width: 100vw;
   height: 100vh;
@@ -15,6 +22,7 @@
   background: url("cuketmon/public/PickScreen/background.webp") center/contain no-repeat;
   display: flex;
   flex-direction: column;
+  align-items: center;
   justify-content: space-between;
   position: relative;
 }
@@ -22,10 +30,17 @@
 
 /* 타이틀 */
 .pickTitle {
-  font-size: 2.5vw;
-  color: #333;
-  text-align: center;
-  margin-top: 5%;
+  font-size: 3vw;
+  color: #fff;
+  text-align: left;
+  margin-top: 3vw;
+  text-shadow:
+    -1px -1px 0 black,
+     1px -1px 0 black,
+    -1px  1px 0 black,
+     1px  1px 0 black;
+  font-family: 'PFStardust';
+  line-height: 1;
 }
 
 /* 중앙 콘텐츠 */
@@ -33,7 +48,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  flex: 1;
+  height: 30vw;
 }
 
 .arrowButton {
@@ -41,6 +56,7 @@
   border: none;
   cursor: pointer;
   transition: transform 0.2s;
+  margin-bottom: 15vw;
 }
 .arrowButton:hover {
   transform: scale(1.2);
@@ -55,7 +71,7 @@
 }
 
 .cuketmonImage {
-  width: 30%;
+  width: 50%;
   height: auto;
 }
 
@@ -79,21 +95,20 @@
 }
 
 .nameText {
-  top: 20%;
-  left: 80%;
-  font-size: 1vw;
+  top: 40%;
+  left: 120%;
+  font-size: 1.5vw;
+  width: 100%;
 }
 
 .hpText {
-  top: 60%;
+  top: 80%;
   left: 15%;
-  font-size: 1vw;
+  font-size: 1.5vw;
 }
 
 .typeText {
-  text-align: center;
-  margin-top: 0.5vh;
-  font-size: 1vw;
+  font-size: 1.5vw;
 }
 
 /* 스탯 */
@@ -144,72 +159,93 @@
   align-items: center;
 }
 
-  @media (max-width: 414px) {
+  @media (max-width: 430px) {
     .pickScreen {
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
+      background: url("cuketmon/public/PickScreen/backgroundMobile.webp") center/contain no-repeat;
       height: 100vh;
       width: 100vw;
-      background-color: #c6d4e1;
+      background-color: #000;
     }
     
     .pickTitle {
       margin-top: 10%;
-      font-size: 2rem;
+      font-size: 5vh;
       font-weight: bold;
-      margin-bottom: 2rem;
-      color: #333;
+      margin-bottom: 2vh;
+      color: #fff;
     }
     
     .pickContent {
+      margin-top: 8vh;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 2rem;
-      width:  100%;
-      height: 50%;
+      width:  100vw;
+      height: 100vh;
     }
     
     .cuketmonCard {
-      text-align: center;
-      /* background-color: #ffffff; */
-      /* border: 2px solid #333; */
-      /* border-radius: 0.5rem; */
-      /* padding: 1rem; */
-      /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); */
-      width:50%;
+      width: 100%;
       height: 100%;
     }
     
     .cuketmonImage {
-      width: 50%;
-      height: auto;
+      width: 60%;
     }
-    
-    .cuketmonName {
-      font-size: 1rem;
-      font-weight: bold;
-      margin-bottom: 5%;
+
+    .arrowButton {
+      margin-bottom: 50vh;
     }
-  
-    .cuketmonType {
-      font-size: 1rem;
-      color: #666;
-      margin-bottom: 0.5rem;
+    .arrowButtonRight {
+      position: absolute;
+      right: 5vw;
     }
-    
-    .pokeStyleButton {
-      margin-top: 8%;
+    .arrowButtonLeft {
+      position: absolute;
+      left: 5vw
     }
-    
-    .selectButton:hover {
-      background-color: #16a34a;
-    }
-    
-    .loading, .noData {
-      font-size: 1.5rem;
-      color: #666;
-    }
+  /* HP바 + 이름 + 타입 */
+  .commonImageContainer {
+    position: relative;
+    width: 80vw;
+    margin-top: 3vh;
+  }
+
+  .nameText {
+    font-size: 5vw;
+  }
+
+  .hpText {
+    font-size: 5vw;
+  }
+
+  .typeText {
+    font-size: 5vw;
+  }
+
+  /* 스탯 */
+  .specText {
+    position: absolute;
+    top: 50%;
+    left: 60%;
+    font-size: 5vw;
+  }
+
+  /* 버튼 영역 */
+  .buttonContainer {
+    display: flex;
+    justify-content: center;
+    gap: 3vw;
+    margin-bottom: 5%;
+  }
+
+  .buttonSet img {
+    height: 6vh;
+    margin-top: 1vh;
+  }
+
   }
