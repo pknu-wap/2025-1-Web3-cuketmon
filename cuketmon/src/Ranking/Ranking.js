@@ -121,7 +121,7 @@ function Ranking() {
          </div>
       </div>      
         </div>
-      <MenuBar />
+      <MenuBar centered={true}/>
     </div>
   );
 }
