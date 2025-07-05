@@ -1,7 +1,11 @@
+html {
+  background-color: black;
+}
 .ranking {
   background-image: url("/public/RankingPage/background1.webp");
-  background-size: cover;
+  background-size: contain;
   background-repeat: no-repeat;
+  background-position: center;
   width: 100vw;
   height: 100vh;
   align-items: center;
@@ -17,7 +21,7 @@
 
 .cukemonImageContainer {
   position: relative;
-  margin-top: 5%;
+  margin-top: 3.6vh;
   transition: transform 0.2s;
 }
 
@@ -98,6 +102,7 @@
     height: 100%;
     background-image: url("/public/RankingPage/backgroundMobile.webp");
     flex-direction: column;
+    background-size: cover;
     justify-content: center;
     padding-top: 0%;
     height: 100%;
