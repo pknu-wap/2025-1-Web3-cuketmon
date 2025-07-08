@@ -11,7 +11,7 @@
   }
   
   .leftPanel {
-    width: 60%;
+    width: 70%;
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
@@ -36,7 +36,7 @@
   }
   
   .rightPanel {
-    width: 40%;
+    width: 30%;
     padding: 10px;
     background-color: #333;
     border-left: 2px solid #999;
@@ -44,11 +44,13 @@
   }
   
   .descTitle {
-    font-size: 1.2em;
-    margin-bottom: 5px;
+    font-size: 1.5vw;
     font-weight: bold;
   }
-  
+  .descTitle img{
+    width: 30%;
+    margin-left: 10%;
+  }
   .skillDetail div {
     margin-bottom: 4px;
   }

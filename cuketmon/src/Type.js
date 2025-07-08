@@ -15,8 +15,10 @@ const typeData = {
       ],
       no_damage_to: [
         'ghost'
-      ]
+      ],
+      image_url: "https://archives.bulbagarden.net/media/upload/2/28/NormalIC_BW.png"
     },
+
     fire: {
       korean: '불꽃',
       color: '#EF7374',
@@ -47,8 +49,10 @@ const typeData = {
         'dragon'
       ],
       no_damage_from: [],
-      no_damage_to: []
+      no_damage_to: [],
+      image_url:"https://archives.bulbagarden.net/media/upload/1/15/FireIC_BW.png"
     },
+
     water: {
       korean: '물',
       color: '#6794F7',
@@ -74,8 +78,10 @@ const typeData = {
         'dragon'
       ],
       no_damage_from: [],
-      no_damage_to: []
+      no_damage_to: [],
+      image_url:"https://archives.bulbagarden.net/media/upload/2/2b/WaterIC_BW.png"
     },
+
     electric: {
       korean: '전기',
       color: '#FCD659',
@@ -100,8 +106,10 @@ const typeData = {
       no_damage_from: [],
       no_damage_to: [
         'ground'
-      ]
+      ],
+      image_url:"https://archives.bulbagarden.net/media/upload/6/67/ElectricIC_BW.png"
     },
+
     grass: {
       korean: '풀',
       color: '#82C274',
@@ -134,8 +142,10 @@ const typeData = {
         'dragon'
       ],
       no_damage_from: [],
-      no_damage_to: []
+      no_damage_to: [],
+      image_url:"https://archives.bulbagarden.net/media/upload/2/23/GrassIC_BW.png"
     },
+
     ice: {
       korean: '얼음',
       color: '#81DF77',
@@ -162,8 +172,10 @@ const typeData = {
         'ice'
       ],
       no_damage_from: [],
-      no_damage_to: []
+      no_damage_to: [],
+      image_url:"https://archives.bulbagarden.net/media/upload/a/ad/IceIC_BW.png"
     },
+
     fighting: {
       korean: '격투',
       color: '#FFAC59',
@@ -195,8 +207,10 @@ const typeData = {
       no_damage_from: [],
       no_damage_to: [
         'ghost'
-      ]
+      ],
+      image_url:"https://archives.bulbagarden.net/media/upload/c/c8/FightingIC_BW.png"
     },
+
     poison: {
       korean: '독',
       color: '#B884DD',
@@ -225,8 +239,10 @@ const typeData = {
       no_damage_from: [],
       no_damage_to: [
         'steel'
-      ]
+      ],
+      image_url:"https://archives.bulbagarden.net/media/upload/b/ba/PoisonIC_BW.png"
     },
+    
     ground: {
       korean: '땅',
       color: '#B88E6F',
@@ -256,8 +272,10 @@ const typeData = {
       ],
       no_damage_to: [
         'flying'
-      ]
+      ],
+      image_url:"https://archives.bulbagarden.net/media/upload/f/f4/GroundIC_BW.png"
     },
+
     flying: {
       korean: '비행',
       color: '#ADD2F5',
@@ -285,8 +303,10 @@ const typeData = {
       no_damage_from: [
         'ground'
       ],
-      no_damage_to: []
+      no_damage_to: [],
+      image_url:"https://archives.bulbagarden.net/media/upload/8/8e/FlyingIC_BW.png"
     },
+
     psychic: {
       korean: '에스퍼',
       color: '#F584A8',
@@ -311,8 +331,10 @@ const typeData = {
       no_damage_from: [],
       no_damage_to: [
         'dark'
-      ]
+      ],
+      image_url:"https://archives.bulbagarden.net/media/upload/6/60/PsychicIC_BW.png"
     },
+    
     bug: {
       korean: '벌레',
       color: '#B8C26A',
@@ -342,8 +364,10 @@ const typeData = {
         'fairy'
       ],
       no_damage_from: [],
-      no_damage_to: []
+      no_damage_to: [],
+      image_url:"https://archives.bulbagarden.net/media/upload/2/2e/BugIC_BW.png"
     },
+
     rock: {
       korean: '바위',
       color: '#CBC7AD',
@@ -373,8 +397,10 @@ const typeData = {
         'steel'
       ],
       no_damage_from: [],
-      no_damage_to: []
+      no_damage_to: [],
+      image_url:"https://archives.bulbagarden.net/media/upload/8/85/RockIC_BW.png"
     },
+
     ghost: {
       korean: '고스트',
       color: '#A284A2',
@@ -400,8 +426,10 @@ const typeData = {
       ],
       no_damage_to: [
         'normal'
-      ]
+      ],
+      image_url:"https://archives.bulbagarden.net/media/upload/8/85/RockIC_BW.png"
     },
+
     dragon: {
       korean: '드래곤',
       color: '#8D98EC',
@@ -426,8 +454,10 @@ const typeData = {
       no_damage_from: [],
       no_damage_to: [
         'fairy'
-      ]
+      ],
+      image_url:"https://archives.bulbagarden.net/media/upload/a/ad/DragonIC_BW.png"
     },
+
     dark: {
       korean: '악',
       color: '#998B8C',
@@ -453,8 +483,11 @@ const typeData = {
       no_damage_from: [
         'psychic'
       ],
-      no_damage_to: []
+      no_damage_to: [],
+      image_url:"https://archives.bulbagarden.net/media/upload/3/35/DarkIC_BW.png"
+    
     },
+
     steel: {
       korean: '강철',
       color: '#98C2D1',
@@ -490,8 +523,10 @@ const typeData = {
       no_damage_from: [
         'poison'
       ],
-      no_damage_to: []
+      no_damage_to: [],
+      image_url:"https://archives.bulbagarden.net/media/upload/0/04/SteelIC_BW.png"
     },
+
     fairy: {
       korean: '페어리',
       color: '#F5A2F5',
@@ -518,7 +553,8 @@ const typeData = {
       no_damage_from: [
         'dragon'
       ],
-      no_damage_to: []
+      no_damage_to: [],
+      image_url:"https://archives.bulbagarden.net/media/upload/thumb/5/5d/FairyIC_Tera.png/140px-FairyIC_Tera.png"
     }
 }
   export default typeData;
