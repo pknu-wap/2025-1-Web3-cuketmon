@@ -5,14 +5,12 @@ span {
 .myPage {
   overflow: hidden;
   background-image: url("/public/MyPage/background.webp");
-  background-size: cover;
+  background-size: contain;
   background-repeat: no-repeat;
-  background-position: 3%;
-  position: absolute;
+  background-position: center;
   bottom: 0;
   width: 100vw;
   height: 100vh;
-  left: 0;
 }
 
 .cukemonImg img {
@@ -25,11 +23,11 @@ span {
 }
 
 .cucketmonProfile {
-  width: 320px;
-  height: 106px;
+  width: 317px;
+  height: 103px;
   text-align: center;
   position: relative;
-  top: 10vh;
+  top: 13vh;
   left: 39vw;
   margin-bottom: 1vh;
   padding-bottom: 0.5%;
@@ -94,6 +92,7 @@ span {
     background-image: url("/public/MyPage/backgroundMobile.webp");
     padding: 0%;
     height: 100vh;
+    background-size: cover;
   }
 
   .buttons {

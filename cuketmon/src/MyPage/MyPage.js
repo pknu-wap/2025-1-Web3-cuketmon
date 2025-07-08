@@ -249,7 +249,7 @@ const releaseCukemon = async () => {
 
 
       <img src='/MyPage/releaseButton.webp' id="releaseButton" onClick={releaseCukemon} />
-      <MenuBar />
+            <MenuBar centered={true}/>
     </div>
   );
 }
