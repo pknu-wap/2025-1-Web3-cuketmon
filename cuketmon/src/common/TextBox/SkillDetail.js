@@ -11,20 +11,20 @@ const SkillDetail = ({ skill }) => {
 
   return (
     <div className="skillDetail">
-    <div className="descTitle">
-      {skill.name}
-    </div>
-    {typeData[skill.type.toLowerCase()]?.image_url ? (
-        <img
-          src={typeData[skill.type.toLowerCase()]?.image_url}
-          alt={skill.type}
-        />
-      ) : (
-        ' 알 수 없음'
-      )}
-      <div>
-        power: {power}    PP: {pp}
+      <div className="descTitle">
+        {skill.name}
       </div>
+      {typeData[skill.type.toLowerCase()]?.image_url ? (
+          <img
+            src={typeData[skill.type.toLowerCase()]?.image_url}
+            alt={skill.type}
+          />
+        ) : (
+          ' 알 수 없음'
+        )}
+        <div>
+          power: {power}    PP: {pp}
+        </div>
     </div>
   );
 };

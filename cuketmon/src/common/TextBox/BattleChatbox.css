@@ -1,55 +1,56 @@
+/* 스킬 버튼 전체 설정 */  
 .battleChatbox {
     display: flex;
-    background-color: #222;
-    color: white;
-    border: 2px solid #888;
-    border-radius: 10px;
-    width: 100%;
+    width: 50vw;
     height: 100%;
-    font-family: 'Arial', sans-serif;
-    overflow: hidden;
   }
-  
+
+/* 스킬 버튼 관련 */  
   .leftPanel {
-    width: 70%;
-    display: flex;
     flex-wrap: wrap;
     flex-direction: row;
-    padding: 10px;
     box-sizing: border-box;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1vw;
+    width: 100%;
   }
-  
   .moveButton {
-    width: 50%;
-    padding: 8px;
-    margin: 2px 0;
-    background-color: #444;
-    border: 1px solid #999;
+    background: url("/public/BattlePage/moveButton.webp")no-repeat center center;
+    background-size: contain;
+    width: 20vw;
+    height: 100%;
+    padding: 1vw;
     border-radius: 5px;
     cursor: pointer;
     text-align: center;
   }
   
+  @keyframes blinkColor {
+    0% { color: black; }
+    50% { color: gray; }
+    100% { color: black; }
+  }
+  
   .moveButton.selected {
-    background-color: #666;
     font-weight: bold;
+    animation: blinkColor 1s infinite;
   }
-  
+/* 스킬 설명 관련 */  
   .rightPanel {
-    width: 30%;
-    padding: 10px;
-    background-color: #333;
-    border-left: 2px solid #999;
-    box-sizing: border-box;
+    position: relative; 
   }
-  
+  .skillDetail{
+    width: 17.8vw;
+    height: 10vw;  
+    background: url("/public/BattlePage/moveDetail.webp")no-repeat center center;
+    background-size: contain;
+    background-size: 100% 100%; 
+    margin-left: 1vw;
+  }
   .descTitle {
     font-size: 1.5vw;
     font-weight: bold;
-  }
-  .descTitle img{
-    width: 30%;
-    margin-left: 10%;
   }
   .skillDetail div {
     margin-bottom: 4px;

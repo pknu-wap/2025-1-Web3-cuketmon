@@ -24,7 +24,7 @@ const HpBar = ({ name, currentHp, maxHp, type1 = [] }) => {
   const clampedDisplayedHp = Math.min(displayedHp, maxHp);
   const hpPercent = (clampedDisplayedHp / maxHp) * 100;
 
-  let barColor = "#4CAF50";
+  let barColor = "#39E300";
   if (hpPercent <= 50 && hpPercent > 20) {
     barColor = "#FFD700";
   } else if (hpPercent <= 20) {
@@ -43,7 +43,6 @@ const HpBar = ({ name, currentHp, maxHp, type1 = [] }) => {
           )}
         </div>
       )}
-      <div className="hpLabel">HP</div>
       <div className="hpBarOuter">
         <div
           className="hpBarInner"
