@@ -11,9 +11,9 @@ const SkillDetail = ({ skill }) => {
 
   return (
     <div className="skillDetail">
-      <div className="descTitle">
+      <p className="descTitle">
         {skill.name}
-      </div>
+      </p>
       {typeData[skill.type.toLowerCase()]?.image_url ? (
           <img
             src={typeData[skill.type.toLowerCase()]?.image_url}
@@ -22,9 +22,9 @@ const SkillDetail = ({ skill }) => {
         ) : (
           ' 알 수 없음'
         )}
-        <div>
+        <p>
           power: {power}    PP: {pp}
-        </div>
+        </p>
     </div>
   );
 };

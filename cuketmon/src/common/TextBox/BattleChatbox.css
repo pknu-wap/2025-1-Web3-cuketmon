@@ -48,11 +48,12 @@
     background-size: 100% 100%; 
     margin-left: 1vw;
   }
-  .descTitle {
+  .skillDetail p {  
+    padding: 1vw;
     font-size: 1.5vw;
     font-weight: bold;
   }
-  .skillDetail div {
-    margin-bottom: 4px;
+
+  .skillDetail img{
+    padding-left: 1vw;
   }
-  

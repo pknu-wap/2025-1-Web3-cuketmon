@@ -100,37 +100,19 @@ body {
 }
 
 .skillSection {
-  width: 50%;
-  left:25%;
   height: auto;
   position: relative;
   padding: 2%;
-}
-
-
-.skillButton:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
-}
-
-.skillType {
-  position: absolute;
-  right:10%;
-  bottom: 20%;
-  font-size:2vw;
-  display: flex;
-  justify-content: center;
-  gap: 2%;
-  margin-top: 1%;
-  z-index: 1;
+  left: 15%;
 }
 
 .battleMessage {
+  background: url("/public/BattlePage/battleMessage.webp") no-repeat center center;
+  background-size: contain;
   position: absolute;
-  right: 20%;
   top: 25%;
-  width: 80%;
-  height: 10%;
+  width: 60vw;
+  height: 10vw;
   color: black;
   padding: 2%;
   text-align: center;
