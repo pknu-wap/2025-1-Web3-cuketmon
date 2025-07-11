@@ -11,6 +11,7 @@ const SkillDetail = ({ skill }) => {
 
   return (
     <div className="skillDetail">
+      <span>
       <p className="descTitle">
         {skill.name}
       </p>
@@ -22,9 +23,16 @@ const SkillDetail = ({ skill }) => {
         ) : (
           ' 알 수 없음'
         )}
-        <p>
-          power: {power}    PP: {pp}
-        </p>
+        <div className='skillInfo'>
+          <p>
+            power: {power} 
+          </p>
+          <p>
+            PP: {pp}
+          </p>
+        </div>
+      </span>
+
     </div>
   );
 };

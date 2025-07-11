@@ -1,59 +1,117 @@
 /* 스킬 버튼 전체 설정 */  
 .battleChatbox {
-    display: flex;
-    width: 50vw;
-    height: 100%;
-  }
+  display: flex;
+  width: 50vw;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+}
 
 /* 스킬 버튼 관련 */  
-  .leftPanel {
-    flex-wrap: wrap;
-    flex-direction: row;
-    box-sizing: border-box;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1vw;
-    width: 100%;
-  }
-  .moveButton {
-    background: url("/public/BattlePage/moveButton.webp")no-repeat center center;
-    background-size: contain;
-    width: 20vw;
-    height: 100%;
-    padding: 1vw;
-    border-radius: 5px;
-    cursor: pointer;
-    text-align: center;
-  }
+.leftPanel {
+  flex-wrap: wrap;
+  flex-direction: row;
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1vw;
+  width: 100%;
+}
+.moveButton {
+  background: url("/public/BattlePage/moveButton.webp")no-repeat center center;
+  background-size: contain;
+  width: 20vw;
+  height: 100%;
+  padding: 1vw;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center;
+}
   
-  @keyframes blinkColor {
-    0% { color: black; }
-    50% { color: gray; }
-    100% { color: black; }
-  }
+@keyframes blinkColor {
+  0% { color: black; }
+  50% { color: gray; }
+  100% { color: black; }
+}
   
-  .moveButton.selected {
-    font-weight: bold;
-    animation: blinkColor 1s infinite;
-  }
+.moveButton.selected {
+  font-weight: bold;
+  animation: blinkColor 1s infinite;
+}
 /* 스킬 설명 관련 */  
-  .rightPanel {
-    position: relative; 
+.rightPanel {
+  position: relative; 
+}
+.skillDetail{
+  width: 17.8vw;
+  height: 10vw;  
+  background: url("/public/BattlePage/moveDetail.webp")no-repeat center center;
+  background-size: contain;
+  background-size: 100% 100%; 
+  margin-left: 1vw;
+}
+
+.skillInfo{
+  display: flex;
+}
+
+.skillDetail p {  
+  padding: 1vw;
+  font-size: 1.5vw;
+  font-weight: bold;
+}
+
+.skillDetail img{
+  padding-left: 1vw;
+}
+
+
+
+@media (max-width: 430px) {
+  .battleChatbox{
+    display: flex;
+    width: fit-content;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column-reverse;
   }
-  .skillDetail{
-    width: 17.8vw;
-    height: 10vw;  
-    background: url("/public/BattlePage/moveDetail.webp")no-repeat center center;
-    background-size: contain;
-    background-size: 100% 100%; 
-    margin-left: 1vw;
-  }
-  .skillDetail p {  
-    padding: 1vw;
-    font-size: 1.5vw;
-    font-weight: bold;
+  .leftPanel{
+    width: fit-content;
   }
 
-  .skillDetail img{
-    padding-left: 1vw;
+  .rightPanel{
+    width: fit-content;
   }
+  .moveButton {
+    background: url("/public/BattlePage/moveButton.webp")no-repeat center;
+    background-size: 100% 100%;
+    width: 20vh;
+    height: 8vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 2vh;
+  }
+
+  .skillDetail{   
+    width: 40vw;
+    height: 30vw;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .skillInfo{
+    display: block;
+  }
+  
+  .skillDetail p {
+    font-size: 2vh;
+    padding: 0;
+  }
+  .skillDetail img{
+    width: 8vh;
+  }
+}

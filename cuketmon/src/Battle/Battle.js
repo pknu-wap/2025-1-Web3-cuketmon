@@ -60,8 +60,8 @@ function Battle() {
   const [animationQueue, setAnimationQueue] = useState([]);
   const [isTurnInProgress, setIsTurnInProgress] = useState(false);
   const [isConnected, setIsConnected] = useState(false);
-  const [showRotateMessage, setShowRotateMessage] = useState(false);
-  const [showFullscreenMessage, setShowFullscreenMessage] = useState(false);
+  // const [showRotateMessage, setShowRotateMessage] = useState(false);
+  // const [showFullscreenMessage, setShowFullscreenMessage] = useState(false);
   const nextAnimation = animationQueue[0];
 
   const stompClientRef = useRef(null);
@@ -340,57 +340,57 @@ function Battle() {
   };
 
 
-useEffect(() => {
-  const isMobileDevice = /Mobi|Android/i.test(navigator.userAgent);
-  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+// useEffect(() => {
+//   const isMobileDevice = /Mobi|Android/i.test(navigator.userAgent);
+//   const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
 
-  if (isMobileDevice) {
-    if (isIOS) {
-      setShowRotateMessage(true);
-    } else {
-      // ESLint no-restricted-globals 우회: window.screen 사용
-      setTimeout(() => {
-        if (window.screen.orientation.type.startsWith('portrait')) {
-          window.screen.orientation.lock('landscape').then(() => {
-            document.documentElement.requestFullscreen();
-          }).catch(err => {
-            console.error('화면 고정 실패:', err);
-            setShowRotateMessage(true);
-          });
-        } else {
-          document.documentElement.requestFullscreen();
-        }
-      }, 100); // 100ms 지연
-    }
-  }
+//   if (isMobileDevice) {
+//     if (isIOS) {
+//       setShowRotateMessage(true);
+//     } else {
+//       // ESLint no-restricted-globals 우회: window.screen 사용
+//       setTimeout(() => {
+//         if (window.screen.orientation.type.startsWith('portrait')) {
+//           window.screen.orientation.lock('landscape').then(() => {
+//             document.documentElement.requestFullscreen();
+//           }).catch(err => {
+//             console.error('화면 고정 실패:', err);
+//             setShowRotateMessage(true);
+//           });
+//         } else {
+//           document.documentElement.requestFullscreen();
+//         }
+//       }, 100); // 100ms 지연
+//     }
+//   }
 
-  const orientationChangeHandler = () => {
-    if (window.screen.orientation.type.startsWith('portrait')) {
-      setShowRotateMessage(false);
-    }
-  };
+//   const orientationChangeHandler = () => {
+//     if (window.screen.orientation.type.startsWith('portrait')) {
+//       setShowRotateMessage(false);
+//     }
+//   };
 
-  const fullscreenChangeHandler = () => {
-    if (!document.fullscreenElement) {
-      setShowFullscreenMessage(true);
-    } else {
-      setShowFullscreenMessage(false);
-    }
-  };
+//   const fullscreenChangeHandler = () => {
+//     if (!document.fullscreenElement) {
+//       setShowFullscreenMessage(true);
+//     } else {
+//       setShowFullscreenMessage(false);
+//     }
+//   };
 
-  window.screen.orientation.addEventListener('change', orientationChangeHandler);
-  document.addEventListener('fullscreenchange', fullscreenChangeHandler);
+//   window.screen.orientation.addEventListener('change', orientationChangeHandler);
+//   document.addEventListener('fullscreenchange', fullscreenChangeHandler);
 
-  return () => {
-    window.screen.orientation.removeEventListener('change', orientationChangeHandler);
-    document.removeEventListener('fullscreenchange', fullscreenChangeHandler);
-  };
-}, []);
+//   return () => {
+//     window.screen.orientation.removeEventListener('change', orientationChangeHandler);
+//     document.removeEventListener('fullscreenchange', fullscreenChangeHandler);
+//   };
+// }, []);
 
-  const handleTapForFullscreen = () => {
-    document.documentElement.requestFullscreen();
-    setShowRotateMessage(false);
-  };
+//   const handleTapForFullscreen = () => {
+//     document.documentElement.requestFullscreen();
+//     setShowRotateMessage(false);
+//   };
 
   if (loading) return (
     <div className="loadingScreen"></div>
@@ -415,6 +415,8 @@ useEffect(() => {
     );
   }
   return (
+    <div className='BattleWrapper'>
+
     <div className="Battle">
       <div className="content">
         <div className="battleContainer">
@@ -488,15 +490,17 @@ useEffect(() => {
           )}
         </div>
       </div>
-      {showRotateMessage && (
+      {/* {showRotateMessage && (
         <div className="overlay" onClick={handleTapForFullscreen}>
           <p>기기를 가로로 회전하고 탭하여 전체 화면으로 전환하세요.</p>
         </div>
       )}
       {showFullscreenMessage && (
         <div className="notification">최적의 경험을 위해 전체 화면 모드를 활성화하세요.</div>
-      )}
+      )} */}
     </div>
+    </div>
+
   );
 }
 
