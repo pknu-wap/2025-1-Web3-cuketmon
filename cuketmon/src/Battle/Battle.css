@@ -76,10 +76,10 @@ body {
   z-Index: 10;
 }
 .skillAnimation {
-  position: absolute;
-  top: -40%;
-  width: 360px;
-  height: 37px;
+  position: relative;
+  top: -15vw;
+  width: 30vw;
+  height: fit-content; 
   background-repeat: no-repeat;
 }
 
@@ -217,6 +217,21 @@ body {
 .battleEndButton {
   position: absolute;
   bottom: 10%;
+}
+.endBattleButton {
+  background-color: #e63946; /* 빨간색 배경 */
+  color: white;
+  font-size: 1.5rem;
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.endBattleButton:hover {
+  background-color: #c9303e; /* hover 시 좀 더 어두운 빨강 */
 }
 
 /* 반응형 14 pro max 기준*/

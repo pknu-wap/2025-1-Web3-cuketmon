@@ -17,6 +17,7 @@
   gap: 1vw;
   width: 100%;
 }
+
 .moveButton {
   background: url("/public/BattlePage/moveButton.webp")no-repeat center center;
   background-size: contain;
@@ -77,6 +78,7 @@
   }
   .leftPanel{
     width: fit-content;
+    margin-top: 5vw;
   }
 
   .rightPanel{

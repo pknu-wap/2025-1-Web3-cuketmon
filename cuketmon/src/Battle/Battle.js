@@ -215,84 +215,69 @@ function Battle() {
   }, [battleId, myTeam]);
 
   useEffect(() => {
-    if (animationQueue.length > 0 && !isFighting) {
-      setCurrentAnimation(nextAnimation.animationUrl);
-      setBattleMessage(`${nextAnimation.monster.name} 이 ${nextAnimation.skillName} 을 사용했다!`);
-      setIsFighting(true);
-      const damage = nextAnimation.isHit === 'red' ? redCuketmonHP - nextAnimation.hp : blueCuketmonHP - nextAnimation.hp;
-
+    if (isBattleEnded || animationQueue.length === 0 || isFighting) return;
+  
+    setCurrentAnimation(nextAnimation.animationUrl);
+    setBattleMessage(`${nextAnimation.monster.name} 이 ${nextAnimation.skillName} 을 사용했다!`);
+    setIsFighting(true);
+  
+    const damage = nextAnimation.isHit === 'red' ? redCuketmonHP - nextAnimation.hp : blueCuketmonHP - nextAnimation.hp;
+  
+    setTimeout(() => {
+      const isRedTarget = nextAnimation.isHit === 'red';
+      const target = isRedTarget ? redTeam : blueTeam;
+      const attacker = isRedTarget ? blueTeam : redTeam;
+      const usedSkillName = nextAnimation.skillName;
+      const usedSkill = attacker.monster.skills.find(skill => skill.name === usedSkillName);
+  
+      const attackType = usedSkill?.type.toLowerCase();
+      const defenderTypes = [
+        target.monster.type1?.toLowerCase(),
+        target.monster.type2?.toLowerCase(),
+      ].filter(Boolean);
+  
+      const message = getEffectivenessMessage(attackType, defenderTypes);
+      setBattleMessage(message);
+  
+      if (isRedTarget) {
+        setIsRedHit(true);
+      } else {
+        setIsBlueHit(true);
+      }
+  
       setTimeout(() => {
-        const isRedTarget = nextAnimation.isHit === 'red';
-        const target = isRedTarget ? redTeam : blueTeam;
-        const attacker = isRedTarget ? blueTeam : redTeam;
-        const usedSkillName = nextAnimation.skillName;
-        const usedSkill = attacker.monster.skills.find(skill => skill.name === usedSkillName);
-      
-        const attackType = usedSkill?.type.toLowerCase();
-        const defenderTypes = [
-          target.monster.type1?.toLowerCase(),
-          target.monster.type2?.toLowerCase(),
-        ].filter(Boolean); // null 제거
-      
-        const message = getEffectivenessMessage(attackType, defenderTypes);
-        setBattleMessage(message);
-      
-        if (isRedTarget) {
-          setIsRedHit(true);
+        if (nextAnimation.isHit === 'red') {
+          setRedCuketmonHP(nextAnimation.hp);
         } else {
-          setIsBlueHit(true);
+          setBlueCuketmonHP(nextAnimation.hp);
         }
-      
-
-        setTimeout(() => {
-          if (nextAnimation.isHit === 'red') {
-            setRedCuketmonHP(nextAnimation.hp);
-          } else {
-            setBlueCuketmonHP(nextAnimation.hp);
+  
+        // ✅ 여기에서 battleEnd 중복 방지를 위해 isBattleEnded 체크
+        if (nextAnimation.hp <= 0 && !isBattleEnded) {
+          const winner = nextAnimation.isHit === 'red'
+            ? blueTeam.trainerName
+            : redTeam.trainerName;
+          sendBattleResult(winner);
+          setWinner(winner);
+          setIsBattleEnded(true);
+        }
+  
+        // 그 외 상태 정리
+        setIsFighting(false);
+        setCurrentAnimation(null);
+        setIsRedHit(false);
+        setIsBlueHit(false);
+        setAnimationQueue(prev => {
+          const newQueue = prev.slice(1);
+          if (newQueue.length === 0) {
+            setIsTurnInProgress(false);
           }
-
-          if (myTeam === (isRedFirst ? 'red' : 'blue') && animationQueue.length === 2) {
-            setSkills(nextAnimation.skills.map((skill, index) => ({
-              id: index,
-              name: skill.name,
-              type: skill.type,
-              damage: skill.power,
-              currentPp: skill.pp,
-              animationUrl: skill.skillAnimation
-            })));
-          } else if (myTeam === (isRedFirst ? 'blue' : 'red') && animationQueue.length === 1) {
-            setSkills(nextAnimation.skills.map((skill, index) => ({
-              id: index,
-              name: skill.name,
-              type: skill.type,
-              damage: skill.power,
-              currentPp: skill.pp,
-              animationUrl: skill.skillAnimation
-            })));
-          }
-
-          if (nextAnimation.hp <= 0) {
-            const winner = nextAnimation.isHit === 'red' ? blueTeam.trainerName : redTeam.trainerName;
-            sendBattleResult(winner);
-            setWinner(winner);
-            setIsBattleEnded(true);
-          }
-
-          setIsFighting(false);
-          setCurrentAnimation(null);
-          setIsRedHit(false);
-          setIsBlueHit(false);
-          setAnimationQueue(prev => {
-            const newQueue = prev.slice(1);
-            if (newQueue.length === 0) {
-              setIsTurnInProgress(false);
-            }
-            return newQueue;
-          });
-        }, 500);
-      }, 1000);
-    }
-  }, [animationQueue, isFighting, myTeam, isRedFirst]);
+          return newQueue;
+        });
+      }, 500);
+    }, 1000);
+  }, [animationQueue, isFighting, myTeam, isRedFirst, isBattleEnded]);
+  
 
   const sendBattleResult = (winner) => {
     const resultData = {
@@ -339,59 +324,6 @@ function Battle() {
     setIsTurnInProgress(true);
   };
 
-
-// useEffect(() => {
-//   const isMobileDevice = /Mobi|Android/i.test(navigator.userAgent);
-//   const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-
-//   if (isMobileDevice) {
-//     if (isIOS) {
-//       setShowRotateMessage(true);
-//     } else {
-//       // ESLint no-restricted-globals 우회: window.screen 사용
-//       setTimeout(() => {
-//         if (window.screen.orientation.type.startsWith('portrait')) {
-//           window.screen.orientation.lock('landscape').then(() => {
-//             document.documentElement.requestFullscreen();
-//           }).catch(err => {
-//             console.error('화면 고정 실패:', err);
-//             setShowRotateMessage(true);
-//           });
-//         } else {
-//           document.documentElement.requestFullscreen();
-//         }
-//       }, 100); // 100ms 지연
-//     }
-//   }
-
-//   const orientationChangeHandler = () => {
-//     if (window.screen.orientation.type.startsWith('portrait')) {
-//       setShowRotateMessage(false);
-//     }
-//   };
-
-//   const fullscreenChangeHandler = () => {
-//     if (!document.fullscreenElement) {
-//       setShowFullscreenMessage(true);
-//     } else {
-//       setShowFullscreenMessage(false);
-//     }
-//   };
-
-//   window.screen.orientation.addEventListener('change', orientationChangeHandler);
-//   document.addEventListener('fullscreenchange', fullscreenChangeHandler);
-
-//   return () => {
-//     window.screen.orientation.removeEventListener('change', orientationChangeHandler);
-//     document.removeEventListener('fullscreenchange', fullscreenChangeHandler);
-//   };
-// }, []);
-
-//   const handleTapForFullscreen = () => {
-//     document.documentElement.requestFullscreen();
-//     setShowRotateMessage(false);
-//   };
-
   if (loading) return (
     <div className="loadingScreen"></div>
   );
@@ -402,19 +334,29 @@ function Battle() {
     </div>
   );
 
-  if (isBattleEnded) {
-    const myMonsterImage = myTeam === 'red' ? redTeam.monster.image : blueTeam.monster.image;
-    const message = winner === trainerName ? '승리!' : '패배...';
-    
+  if (isBattleEnded) {  
+    const isMobile = /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
+    const resultBackground = winner === trainerName ? 'win' : 'lose';
+    const imageFile = isMobile ? `${resultBackground}Mobile.webp` : `${resultBackground}.webp`;
+  
     return (
-      <div className="resultScreen">
-        <h1>{message}</h1>
-        {myMonsterImage && <img src={myMonsterImage} alt="자기 몬스터" className="winnerCuketmonImage"/>}
-        <div className="battleEndButton"><PokeStyleButton onClick={() => navigate('/mypage')}>배틀 종료</PokeStyleButton></div>
+      <div
+        className="resultScreen"
+        style={{
+          backgroundImage: `url(/BattlePage/${imageFile})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }}
+      >
+        <div className="battleEndButton">
+          <button className="endBattleButton" onClick={() => navigate('/mypage')}>
+            나가기
+          </button>
+        </div>
       </div>
     );
   }
-  return (
+    return (
     <div className='BattleWrapper'>
 
     <div className="Battle">

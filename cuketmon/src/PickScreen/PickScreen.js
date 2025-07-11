@@ -78,8 +78,21 @@ const PickScreen = () => {
             <img src={current.image} alt={current.name} className="cuketmonImage" />
             <div className="HPbarContainer commonImageContainer">
             <div className="typeText">
-                <span style={{ color: type1Color }}>{current.type1}</span>
-                {current.type2 && <> | <span style={{ color: type2Color }}>{current.type2}</span></>}
+              <img
+                src={typeData[current.type1?.toLowerCase()]?.image_url}
+                alt={current.type1}
+                style={{ height: '1.5rem', marginRight: '0.5rem' }}
+              />
+              {current.type2 && typeData[current.type2.toLowerCase()]?.image_url && (
+                <>
+                  <span style={{ margin: '0 0.3rem' }}>|</span>
+                  <img
+                    src={typeData[current.type2.toLowerCase()]?.image_url}
+                    alt={current.type2}
+                    style={{ height: '1.5rem' }}
+                  />
+                </>
+              )}
               </div>
               <img src="/PickScreen/HPBar.webp" alt="HP Bar" />
               <div className="overlayText nameText">{current.name}</div>
