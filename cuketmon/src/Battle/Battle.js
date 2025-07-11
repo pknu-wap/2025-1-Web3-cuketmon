@@ -7,6 +7,32 @@ import { animationMap } from './AnimationMap';
 import HpBar from '../common/HpBar/HpBar.js';
 import BattleChatbox from '../common/TextBox/BattleChatbox.js';
 import PokeStyleButton from '../common/PokeStyleButton/PokeStyleButton.js';
+import typeData from '../Type'; // 이미 잘 불러오고 계심
+
+function getEffectivenessMessage(attackType, defenderTypes) {
+  let multiplier = 1;
+
+  for (const defenderType of defenderTypes) {
+    const data = typeData[defenderType.toLowerCase()];
+    if (!data) continue;
+
+    if (data.double_damage_from.includes(attackType)) {
+      multiplier *= 2;
+    } else if (data.half_damage_from.includes(attackType)) {
+      multiplier *= 0.5;
+    } else if (data.no_damage_from.includes(attackType)) {
+      multiplier *= 0;
+    }
+  }
+
+  if (multiplier === 0) {
+    return '효과가 없는 것 같다 ...';
+  } else if (multiplier >= 2) {
+    return '효과는 굉장했다!';
+  } else if (multiplier <= 0.5) {
+    return '효과가 별로인 듯하다';
+  }
+}
 
 function Battle() {
   const redCuketmonRef = useRef(null);
@@ -196,23 +222,27 @@ function Battle() {
       const damage = nextAnimation.isHit === 'red' ? redCuketmonHP - nextAnimation.hp : blueCuketmonHP - nextAnimation.hp;
 
       setTimeout(() => {
-        if (nextAnimation.isHit === 'red') {
+        const isRedTarget = nextAnimation.isHit === 'red';
+        const target = isRedTarget ? redTeam : blueTeam;
+        const attacker = isRedTarget ? blueTeam : redTeam;
+        const usedSkillName = nextAnimation.skillName;
+        const usedSkill = attacker.monster.skills.find(skill => skill.name === usedSkillName);
+      
+        const attackType = usedSkill?.type.toLowerCase();
+        const defenderTypes = [
+          target.monster.type1?.toLowerCase(),
+          target.monster.type2?.toLowerCase(),
+        ].filter(Boolean); // null 제거
+      
+        const message = getEffectivenessMessage(attackType, defenderTypes);
+        setBattleMessage(message);
+      
+        if (isRedTarget) {
           setIsRedHit(true);
-          setBattleMessage(
-            damage >= 70 ? '효과는 매우 대단했다!' : 
-            damage >= 50 ? '효과는 대단했다!' : 
-            damage <= 30 ? '효과는 별로였다.' : 
-            '효과가 있었다!'
-          );
         } else {
           setIsBlueHit(true);
-          setBattleMessage(
-            damage >= 70 ? '효과는 매우 대단했다!' : 
-            damage >= 50 ? '효과는 대단했다!' : 
-            damage <= 30 ? '효과는 별로였다.' : 
-            '효과가 있었다!'
-          );
         }
+      
 
         setTimeout(() => {
           if (nextAnimation.isHit === 'red') {
