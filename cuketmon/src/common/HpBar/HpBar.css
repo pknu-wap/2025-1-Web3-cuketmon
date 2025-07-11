@@ -35,3 +35,40 @@
   text-align: right;
   font-weight: bold;
 }
+
+/* 반응형 14 pro max 기준*/
+@media (max-width: 430px) {
+  .hpBarContainer {
+    margin-top: 30vw;
+    width: 40vw;
+    height: fit-content;
+    background: url("../../../public/BattlePage/Blue_HPBar.webp") no-repeat cover;
+    background-size: 100% 100%;
+  }
+  
+  .hpName {
+    font-size: 5vw;
+  }
+  
+  .hpBarOuter {
+    width: 23vw;
+    height: 2vw;
+    background-color: #ddd;
+    border: 0.2vw solid #444;
+    border-radius: 2vw;
+    overflow: hidden;
+    margin-left: 15vw;
+  }
+  
+  .hpBarInner {
+    height: 100%;
+    transition: width 0.2s linear;
+  }
+  
+  .hpText {
+    margin-right: 3vw;
+    text-align: right;
+    font-weight: bold;
+  }
+  
+}

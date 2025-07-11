@@ -7,7 +7,7 @@ import { animationMap } from './AnimationMap';
 import HpBar from '../common/HpBar/HpBar.js';
 import BattleChatbox from '../common/TextBox/BattleChatbox.js';
 import PokeStyleButton from '../common/PokeStyleButton/PokeStyleButton.js';
-import typeData from '../Type'; // 이미 잘 불러오고 계심
+import typeData from '../Type';
 
 function getEffectivenessMessage(attackType, defenderTypes) {
   let multiplier = 1;

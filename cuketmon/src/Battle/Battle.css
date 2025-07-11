@@ -62,7 +62,7 @@ body {
 
 .myCuketmonImage, .enemyCuketmonImage {
   position: absolute;
-  bottom: 10%;
+  bottom: 30%;
   width: 20%;
   height: auto;
   z-index: 1;
@@ -247,19 +247,33 @@ body {
   
   .battleAnimationOverlay {
     position: absolute;
-    top: -20%;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    top: 35%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
     z-index: 10;
+    height: fit-content;
   }
   
   .skillAnimation {
-    position: absolute;
-    top: -30%;
-    width: 30vw;
-    height: auto;
+    position: relative;
+    width: 50vw;
     background-repeat: no-repeat;
+    margin-bottom: 20vw;
+  }
+
+  .battleMessage {
+    position: relative;
+    /* top: 45%; */
+    font-size: 4vw;
+    height: 10vw;
+    width: fit-content;
+    max-width: 100vw;
+    padding: 10vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   
   @keyframes spriteAnimation {
@@ -341,12 +355,7 @@ body {
     bottom: 10%;
   }
   
-  @media (max-width: 414px) {
-    .battleMessage {
-      font-size: 4vw;
-    }
-    .skillType {
-      font-size: 3vw;
-    }
+  .skillType {
+    font-size: 3vw;
   }
 }
