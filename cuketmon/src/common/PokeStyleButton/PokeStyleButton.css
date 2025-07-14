@@ -1,93 +1,172 @@
-.pokeStyleButton {
+.poke-button {
+  position: relative;
+  width: 230px;
+  height: 51.31px;
+  background: #AC0202;
+  border: 2.99px solid #610000;
+  border-radius: 8.7px;
+  cursor: pointer;
+  overflow: hidden;
+
   display: flex;
   align-items: center;
-  justify-content: center; /* 텍스트를 가로로 가운데 정렬 */
-  background-color: #6b4cb3;
-  color: white;
-  padding: 8px 16px;
-  border-radius: 9999px;
-  font-weight: bold;
-  border: 2px solid #000;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
+  justify-content: center;
 
-.pokeStyleButton:hover {
-  background-color: #5a3ba0;
-}
-
-/* 몬스터볼 전체 */
-.pokeball {
-  position: relative;
-  width: 32px;
-  height: 32px;
-  margin-right: 8px;
-}
-
-/* 상단 반구 + 중앙 버튼 묶기 */
-.topGroup {
-  position: absolute;
-  width: 100%;
-  height: 50%;
-  top: 0;
-  transition: transform 0.3s ease;
-  z-index: 3;
-}
-
-/* hover 시 그룹이 함께 위로 이동 */
-.pokeStyleButton:hover .topGroup {
-  transform: translateY(-50%);
-}
-
-/* 상단 반구 */
-.topHalf {
-  width: 100%;
-  height: 100%;
-  background-color: #d12d2d;
-  border-top-left-radius: 50% 100%;
-  border-top-right-radius: 50% 100%;
-  border: 2px solid black;
+  padding: 0;
   box-sizing: border-box;
 }
 
-/* 하단 반구 */
-.bottomHalf {
+/* 하단 어두운 라인 */
+.poke-button::after {
+  content: "";
   position: absolute;
-  bottom: 0;
-  width: 100%;
-  height: 50%;
-  background-color: white;
-  border-bottom-left-radius: 50% 100%;
-  border-bottom-right-radius: 50% 100%;
-  border: 2px solid black;
-  box-sizing: border-box;
+  bottom: 0px;
+  left: 0.5px;
+  width: 230px;
+  height: 4.24px;
+  background: #CE3636;
+  border: 2.24px solid #CE3636;
+  border-radius: 2px;
   z-index: 1;
 }
 
-/* 가운데 검은 선 */
-.centerLine {
+/* 하단 붉은 하이라이트 */
+.poke-button::before {
+  content: "";
   position: absolute;
-  top: 50%;
+  bottom: 0;
+  left: 0;
   width: 100%;
-  height: 4px;
-  background-color: black;
-  transform: translateY(-50%);
+  height: 50%;
+  background: linear-gradient(to top, rgba(255, 100, 100, 0.4), transparent);
+  border-radius: 0 0 8.7px 8.7px;
+  z-index: 0;
+}
+
+/* 텍스트 두 겹 */
+.text-front {
+  position: absolute;
+  font-family: "NeoDunggeunmo", sans-serif;
+  font-size: 19.5px;
+  font-weight: 800;
+  line-height: 20px;
+}
+
+.text-under{
+  position: absolute;
+  left: 12px;
+  bottom: 10.5px;
+  font-family: "NeoDunggeunmo", sans-serif;
+  font-size: 19.5px;
+  font-weight: 800;
+  line-height: 25px;
+}
+
+.text-right{
+  position: absolute;
+  left: 14px;
+  bottom: 10.5px;
+  font-family: "NeoDunggeunmo", sans-serif;
+  font-size: 19.5px;
+  font-weight: 800;
+  line-height: 25px;
+  
+}
+
+.text-left{
+  position: absolute;
+  left: 12px;
+  bottom: 14.5px;
+  font-family: "NeoDunggeunmo", sans-serif;
+  font-size: 19.5px;
+  font-weight: 800;
+  line-height: 25px
+  
+} 
+
+.text-up{
+  position: absolute;
+  left: 15px;
+  bottom: 14.5px;
+  font-family: "NeoDunggeunmo", sans-serif;
+  font-size: 19.5px;
+  font-weight: 800;
+  line-height: 25px;
+}
+.text1{
+  position: absolute;
+  font-family: "NeoDunggeunmo", sans-serif;
+  left: 12px;
+  bottom: 15px;
+  font-size: 19.5px;
+  font-weight: 800;
+  line-height: 20px;
+}
+
+.text2{
+  position: absolute;
+  font-family: "NeoDunggeunmo", sans-serif;
+  left: 12px;
+  bottom: 14.5px;
+  font-size: 19.5px;
+  font-weight: 800;
+  line-height: 20px;
+}
+
+.text3{
+  position: absolute;
+  font-family: "NeoDunggeunmo", sans-serif;
+  left: 15px;
+  bottom: 13px;
+  font-size: 19.5px;
+  font-weight: 800;
+  line-height: 20px;
+}
+
+.text4{
+  position: absolute;
+  font-family: "NeoDunggeunmo", sans-serif;
+  left: 15px;
+  bottom: 15px;
+  font-size: 19.5px;
+  font-weight: 800;
+  line-height: 20px;
+}
+.text5{
+  position: absolute;
+  font-family: "NeoDunggeunmo", sans-serif;
+  left: 14px;
+  bottom: 15px;
+  font-size: 19.5px;
+  font-weight: 800;
+  line-height: 20px;
+}
+
+.text6{
+  position: absolute;
+  font-family: "NeoDunggeunmo", sans-serif;
+  left: 15px;
+  bottom: 14px;
+  font-size: 19.5px;
+  font-weight: 800;
+  line-height: 20px;
+}
+
+.text-under,.text-right,
+.text-left,.text-up,
+.text1,.text2,
+.text3,.text4,
+.text5,.text6{
+  color: #610000;
+  transform: translate(1.5px, 1.5px);
+  z-index: 1;
+}
+
+.text-front {
+  color: white;
   z-index: 2;
 }
 
-/* 중앙 버튼 */
-.centerButton {
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  width: 10px;
-  height: 10px;
-  background-color: white;
-  border: 2px solid black;
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 4;
-}
 /*모바일 반응형*/
 @media (max-width: 767px) {
   .pokeStyleButton {

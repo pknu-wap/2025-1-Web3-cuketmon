@@ -1,11 +1,11 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import "./MakeResult.css";
-import TextBox from '../common/TextBox/TextBox.js';
+import ResultBox from './ResultBox.js';
 
 function MakeResult() {
   const [cukemonImage, setCukemonImage] = useState("/MakeResultPage/movingEgg.gif");
-  const [mentText, setMentText] = useState("어라...?");
+  const [mentText, setMentText] = useState("어라?");
   const eggRef = useRef(null);
   const navigate = useNavigate();
   const token = localStorage.getItem('accessToken');
@@ -58,8 +58,18 @@ function MakeResult() {
           if (data.image) {
             setCukemonImage(data.image);     
             localStorage.setItem("cukemonMakeResultImage", data.image);  // 이미지 표시 방법 변경(로컬스토리지에서 꺼내쓰게 함) (5/13수정)
-            setMentText("처음보는 포켓몬이 나타났다!");
-            navigate(`/NamePage`);
+          
+            setTimeout(() => {
+            setMentText("연구소에서 새로운 커켓몬이 태어났다");
+            setShowExtraImage(true);
+            setShowHpBar(true);
+            }, 1500);
+            setTimeout(() => {
+            setMentText("첫 만남을 기념하기 위해 이름을 지어줘!");
+            }, 3000);
+            setTimeout(() => {
+            navigate("/NamePage");
+            }, 4000);
           } else {
             throw new Error("이미지 없음");
           }
@@ -88,14 +98,15 @@ function MakeResult() {
       )}
  
  <div  className="chatBox">
-  <TextBox>
+  
+  <ResultBox>
   <textarea
     id="ment"
     readOnly
     value={mentText}
     onClick={mentText.includes("도망") ? () => navigate("/Make") : undefined}
   />
-</TextBox>
+</ResultBox>
 </div>
     </div>
   );

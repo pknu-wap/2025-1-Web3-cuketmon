@@ -1,8 +1,10 @@
 import React, { useRef,useState, useEffect } from "react";
 import { useNavigate} from "react-router-dom";
 import { useAuth } from "../AuthContext";
+import MenuBar from "../Menubar/Menubar.js";
 import "./NamePage.css";
-import PokeStyleButton from '../common/PokeStyleButton/PokeStyleButton.js'
+import NameStyleButton from '../common/PokeStyleButton/NameStyleButton.js'
+
 function NamePage() {
   const [name, setName] = useState("");
   const navigate = useNavigate();
@@ -19,7 +21,7 @@ useEffect(() => {
     if (event.type === "popstate") {
       if (backBlockRef.current) return;
       backBlockRef.current = true;
-      alert("커켓몬을 두고 떠나지마요 ㅠㅠㅠ");
+      alert("커켓몬을 두고 떠나지마요 ㅠㅠ");
       window.history.go(1);
       setTimeout(() => {
         backBlockRef.current = false;
@@ -69,37 +71,41 @@ useEffect(() => {
 
 
   return (
+    
     <div className="namePage">
+        <div className="choiceButtons">
+          <NameStyleButton label={"이름 확정하기"} onClick={handleGoTOMakePage}/>
+        </div>
+  
       <div className="nameInputBox">
-        <p>Your name?</p>
+        <div className="menubar">
+          <MenuBar centered={true}/>
+        </div>
+        <div className="yourName1"> 너의 이름은 </div>
+        <div className="yourName2"> 이야!</div>
         {cukemonResultImage && ( //이미지가 있는 경우에만 렌더링 하도록 함 (5/13 수정)
           <img
             src={cukemonResultImage}
             alt="커켓몬 이미지"
             className="cukemonImage"
           />
+          // <div className="cuketmonImage"></div>
         )}
 
         <div className="nameInput">
-          ▶
           <input
             type="text"
             value={name}
-            onChange={(e) => setName(e.target.value)}  //이름 지정시 불필요한 코드 삭제 (5/13 수정)
-            placeholder="커켓몬 이름 입력"
-            maxLength={12}
+            onChange={(e) => {
+              const newValue = e.target.value;
+            if (newValue.length > 6 ){
+              alert("이름은 최대 6자까지 입력할 수 있습니다.")
+              return;
+            }}}  //이름 지정시 불필요한 코드 삭제 (5/13 수정)
+            placeholder="- - - - - -"
+            maxLength={6}
           />
-          <div id="remainWord">{name.length}/12자</div>
-        </div>
-
-        <div className="choiceButtons">
-          <div className="remakeButton">
-          <PokeStyleButton  label={"재부화"} onClick={handleGoTOMakePage}/>
-          </div>
-
-          <div className="bringButton">
-          <PokeStyleButton  label={"데려가기"} onClick={handleGoToMypage} />
-          </div>
+          {/* <div id="remainWord">{name.length}</div> */}
         </div>
       </div>
     </div>

@@ -1,67 +1,120 @@
-.namePage {
-  background-image: url("/public/NamePage/background.webp");
-  width: 100%;
-  height: 100%;
-  background-repeat: none;
-  background-size: cover;
-  position: absolute;
-  top: 0;
-  left: 0;
+span {
+  font-family: "NeoDunggeunmo";
 }
 
-.nameInputBox {
-  position: relative;
-  background-image: url("/public/NamePage/nameBox.webp");
-  background-size: cover;
+.namePage {
+  overflow: hidden;
+  background-image: url("/public/MakePage/back1.webp");
+  background-size: contain;
   background-repeat: no-repeat;
-  width: 80vw;
-  max-width: 860px;
-  height: auto;
-  aspect-ratio: 3.4 / 1;
-  margin: 0 auto;
-  top: 25%;
+  background-position: center;
+  bottom: 0;
+  width: 100vw;
+  height: 100vh;
+}
+
+.yourName1,.yourName2{
+    color: white;
+    position: absolute;
+    font-family: "NeoDunggeunmo", sans-serif;
+    font-size: clamp(8px, 4vw, 25px);
+    font-weight: 800;
+    line-height: 50px;
+    top: 35%;
+    left: 30%;
+
+    text-shadow:
+   -3px -3px 0 rgba(28, 82, 82, 1), -3px -2px 0 rgba(28, 82, 82, 1), -3px -1px 0 rgba(28, 82, 82, 1),
+    -3px 0px 0 rgba(28, 82, 82, 1), -3px 1px 0 rgba(28, 82, 82, 1), -3px 2px 0 rgba(28, 82, 82, 1),
+    -3px 3px 0 rgba(28, 82, 82, 1), 3px -3px 0 rgba(28, 82, 82, 1), 3px -2px 0 rgba(28, 82, 82, 1),
+    3px -1px 0 rgba(28, 82, 82, 1), 3px 0px 0 rgba(28, 82, 82, 1), 3px 1px 0 rgba(28, 82, 82, 1), 3px 2px 0 rgba(28, 82, 82, 1),
+    3px 3px 0 rgba(28, 82, 82, 1), -2px -3px 0 rgba(28, 82, 82, 1), -1px -3px 0 rgba(28, 82, 82, 1),
+    0px -3px 0 rgba(28, 82, 82, 1), 1px -3px 0 rgba(28, 82, 82, 1), 2px -3px 0 rgba(28, 82, 82, 1),
+    -2px 3px 0 rgba(28, 82, 82, 1), -1px 3px 0 rgba(28, 82, 82, 1), 0px 3px 0 rgba(28, 82, 82, 1), 1px 3px 0 rgba(28, 82, 82, 1),
+    2px 3px 0 rgba(28, 82, 82, 1);
+
+}
+
+.yourName1 {
+  left: 35%;
+}
+
+.yourName2 {
+  left: 80%;
 }
 
 .namePage .cukemonImage {
   width: 30%;
   position: absolute;
   top: 0%;
-  left: 10%;
+  left: 5%;
+}
+.cukemonImage {
+  width: 30%;
+  position: absolute;
+  top: 0%;
+  left: 5%;
 }
 
-.nameInputBox p {
+/* 배경 */
+.nameInputBox {
   position: absolute;
-  font-size: clamp(20px, 3vw, 40px);
-  left: 55%;
-  top: 8%;
-  font-weight: bold;
+  background-image: 
+  url("/public/NamePage/Input.webp");
+  background-size: 90%;
+  background-position: center;
+  background-repeat: no-repeat;
+  top: 37vh; /*고정*/
+  left: 5%;
+  
+  height: 205px;
+  width: 90vw;
+  max-width: 1200px;
+  aspect-ratio: 3.4 / 1;  
+}
+
+/* 내부 글자 */
+.nameInput input::placeholder {
+  letter-spacing: 0.4em;
+  color: white;
   font-family: "NeoDunggeunmo";
+  font-size: clamp(8px, 4vw, 25px);
+  font-weight: 800px;
+  line-height: 50px;
+  top: 3%;
+  left: 15%;
+  text-shadow:
+   -3px -3px 0 rgba(28, 82, 82, 1), -3px -2px 0 rgba(28, 82, 82, 1), -3px -1px 0 rgba(28, 82, 82, 1),
+    -3px 0px 0 rgba(28, 82, 82, 1), -3px 1px 0 rgba(28, 82, 82, 1), -3px 2px 0 rgba(28, 82, 82, 1),
+    -3px 3px 0 rgba(28, 82, 82, 1), 3px -3px 0 rgba(28, 82, 82, 1), 3px -2px 0 rgba(28, 82, 82, 1),
+    3px -1px 0 rgba(28, 82, 82, 1), 3px 0px 0 rgba(28, 82, 82, 1), 3px 1px 0 rgba(28, 82, 82, 1), 3px 2px 0 rgba(28, 82, 82, 1),
+    3px 3px 0 rgba(28, 82, 82, 1), -2px -3px 0 rgba(28, 82, 82, 1), -1px -3px 0 rgba(28, 82, 82, 1),
+    0px -3px 0 rgba(28, 82, 82, 1), 1px -3px 0 rgba(28, 82, 82, 1), 2px -3px 0 rgba(28, 82, 82, 1),
+    -2px 3px 0 rgba(28, 82, 82, 1), -1px 3px 0 rgba(28, 82, 82, 1), 0px 3px 0 rgba(28, 82, 82, 1), 1px 3px 0 rgba(28, 82, 82, 1),
+    2px 3px 0 rgba(28, 82, 82, 1);
 }
 
 .nameInput {
   display: flex;
   position: absolute;
-  left: 44%;
-  top: 40%;
+  left: 54%;
+  top: 45%;
 }
 
 .nameInput input {
-  width: 18vw;
+  width: 20vw;
   outline: none;
   border: none;
   background: none;
   font-size: clamp(8px, 2vw, 25px);
   position: absolute;
   cursor: none;
-  margin-left: 42%;
-  border-bottom: 2px dotted black;
-  color: #525252;
+  color:white;
   font-family: "NeoDunggeunmo";
 }
 
 .nameInput {
-  font-size: clamp(8px, 1vw, 30px);
-  padding-left: 2.5%;
+  font-size: clamp(8px, 5vw, 30px);
 }
 
 .nameInput input {
@@ -69,55 +122,82 @@
   top: 0%;
 }
 
-#remainWord {
-  font-size: clamp(7px, 1vw, 12px);
-  position: relative;
-  left: 20vw;
-  top: 2vh;
-}
-
 .choiceButtons {
-  position: absolute;
+   font-size: 11px; /* 고정 */
+  position: fixed;
+  top: calc(70vh - 50px); /* 화면 세로 기준 70% - 절반 높이 보정 */
+  left: 50%;
+  transform: translateX(-50%);
+  position: fixed;
+  top: 78vh;
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
+  gap: 10px;
+  font-size: 14px; /* 고정 */
   color: white;
-  font-size: clamp(3px, 1.5vw, 15px);
-  top: 20vh;
-  left: 28vw;
-  gap: 0.8vw;
 }
 
 /*모바일 반응형*/
 @media (max-width: 767px) {
-  .nameInputBox {
-    top: 40%;
+  #root,
+  body {
+    height: 100%;
+    padding: 0;
+    left: 0;
+    top: 0;
   }
-  .nameInputBox p {
-    left: 42vw;
+
+.namePage {
+    background-image: url("/public/MakePage/back1.webp");
+    padding: 0%;
+    height: 100vh;
+    background-size: cover;
+    
+  }
+.nameInput input::placeholder {
+  letter-spacing: 0.1em;
+  color: white;
+  font-family: "NeoDunggeunmo";
+  font-size: clamp(5px, 3vw, 10px);
+  top: 10%;
+  left: 15%;
+ text-shadow:
+    -1px -1px 0 rgba(28, 82, 82, 1), -1px 0px 0 rgba(28, 82, 82, 1), -1px 1px 0 rgba(28, 82, 82, 1),
+     0px -1px 0 rgba(28, 82, 82, 1), 0px 1px 0 rgba(28, 82, 82, 1),
+     1px -1px 0 rgba(28, 82, 82, 1), 1px 0px 0 rgba(28, 82, 82, 1), 1px 1px 0 rgba(28, 82, 82, 1);
   }
 
   .namePage .cukemonImage {
     font-size: 10px;
     top: 0%;
   }
-
+  .cukemonImage {
+    font-size: 10px;
+    top: 0%;
+  }
   .nameInput {
-    top: 40%;
-    left: 43%;
-  }
+  display: flex;
+  position: absolute;
+  left: 55%;
+  top: 50%;
+}
 
-  .nameInput input {
-    width: 24.5vw;
-  }
-  #remainWord {
-    top: 0.9vh;
-    left: 28vw;
-  }
+.yourName1,.yourName2{
+  font-size: clamp(8px, 3vw, 20px);
+   text-shadow:
+    -1px -1px 0 rgba(28, 82, 82, 1), -1px 0px 0 rgba(28, 82, 82, 1), -1px 1px 0 rgba(28, 82, 82, 1),
+     0px -1px 0 rgba(28, 82, 82, 1), 0px 1px 0 rgba(28, 82, 82, 1),
+     1px -1px 0 rgba(28, 82, 82, 1), 1px 0px 0 rgba(28, 82, 82, 1), 1px 1px 0 rgba(28, 82, 82, 1);
+}
+.yourName1 {
+  left: 35%;
+  top: 38%;
+}
 
-  .choiceButtons {
-    top: 5.8vh;
-    left: 26.3vw;
-    transform: scale(0.4);
-    font-size: 4vw;
-    gap: 1.8vw;
-  }
+.yourName2 {
+  left: 75%;
+  top: 38%;
+}
+  
 }
