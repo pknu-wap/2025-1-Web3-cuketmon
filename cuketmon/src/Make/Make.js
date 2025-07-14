@@ -55,7 +55,7 @@ function Make() {
 
   return (
     <div className="makePage">
-      <div className="makeContent">
+      
         <div className="leftSection">
           <h2 className="sectionTitle">01 원하는 커켓몬 타입을 선택해 주세요</h2>
           <TypeButton type1={type1} type2={type2} setType1={setType1} setType2={setType2} />
@@ -77,9 +77,8 @@ function Make() {
         <div className="rightSection">
           <TypeTable type1={type1} type2={type2} />
         </div>
-        </div>
         <div className="menubar">
-        <MenuBar/></div>
+        <MenuBar style={{ position: "absolute", left: "50%", transform: "translateX(-50%)" }} /></div>
     </div>
   );
 }

@@ -18,6 +18,10 @@ html, body, #root {
 
 }
 
+.text{
+  background-image: url("/public/MakePage/textbox.webp");
+}
+
 .makeContent {
   position: relative;
   z-index: 2;
@@ -86,11 +90,12 @@ textarea {
   position: absolute;
   text-align: center;
   top: 65vh;
-  left: 8%;
+  left: 20%;
 }
+
 .menuBar {
   position: absolute;
-  bottom: 2vh;
+  bottom: 8vh; /* 기존 2vh에서 변경 */
   left: 50%;
   transform: translateX(-50%);
   display: flex;

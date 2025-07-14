@@ -1,8 +1,47 @@
-
-
-/* 반응형 스타일 */
-@media (max-width: 767px) {
-
-  
+.textbox {
 }
+
+.textboxContent {
+  flex: 1;
+  padding: 10px;
+  position: absolute;
+  height: 100%;
+}
+
+.text {
+  margin: 0;
+  white-space: pre-wrap;
+}
+
+.blinkIndicator {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  font-size: 12px;
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0%, 50%, 100% { opacity: 1; }
+  25%, 75% { opacity: 0; }
+}
+
+/* ✅ 반응형 스타일 */
+@media (max-width: 767px) {
+    .textbox {
+      max-width: 100%;
+      min-height: 60px;
+    }
+
+    .textboxContent {
+      padding: 8px;
+      font-size: 10px;
+    }
+  
+    .blinkIndicator {
+      bottom: 6px;
+      right: 6px;
+      font-size: 10px;
+    }
+  }
   

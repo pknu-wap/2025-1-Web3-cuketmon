@@ -29,17 +29,42 @@
   left: 36%;
 }
 
+.hpBar{
+  
+
+}
+.extraEffect {
+  background-image: url("public/MakeResultPage/eff.webp");
+  position: relative;
+  width: 20%;
+  padding-top: 23%;
+  left: 36%;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 25%;
+}
+
 .chatBox {
   width: 40vw;
   position: relative;
-  left: -4%;
+  left: -2.5%;
+  bottom: -12%;
   
 }
+
 .chatBox textarea {
-  padding-bottom: 10vh;
-  text-align: center;
-  top: 400%;
+  padding: 12px;
+  text-align: left;
+  font-size: 40px;
   background-color: white;
+  height: 60px;            
+  resize: none;
+  overflow: hidden;
+  border: none;
+  border-radius: 8px;
+  width: 150%;
+  box-sizing: border-box;
 }
 
 /*깜빡임 에니메이션*/
@@ -82,13 +107,21 @@
 .chatBox {
   width: 50vw;
   position: relative;
-  margin-left: 7%;
+  left: 5%;
   bottom: -25%;
 }
 .chatBox textarea {
-  padding-bottom: 0.1px;
-  text-align: center;
+  padding: 12px;
+  text-align: left;
+  font-size: 12px;
   background-color: white;
-}
+  height: 10px;            
+  resize: none;
+  overflow: hidden;
+  border: none;
+  border-radius: 8px;
+  width:100%;
+  box-sizing: border-box;
 
+  }
 }
