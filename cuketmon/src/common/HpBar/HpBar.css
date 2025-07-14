@@ -5,7 +5,7 @@
   background-size: contain; 
 }
 
-.hpName {
+.hpBarName {
   font-weight: bold;
   font-size: 1.5vw;
   margin-bottom: 4px;
@@ -30,14 +30,14 @@
   transition: width 0.2s linear;
 }
 
-.hpText {
+.hpBarText {
   margin-right: 3vw;
   text-align: right;
   font-weight: bold;
 }
 
 /* 반응형 14 pro max 기준*/
-@media (max-width: 430px) {
+@media (max-width: 767px) {
   .hpBarContainer {
     margin-top: 30vw;
     width: 40vw;
@@ -46,8 +46,8 @@
     background-size: 100% 100%;
   }
   
-  .hpName {
-    font-size: 5vw;
+  .hpBarName {
+    font-size: 3vw;
   }
   
   .hpBarOuter {
@@ -65,10 +65,12 @@
     transition: width 0.2s linear;
   }
   
-  .hpText {
+  .hpBarText {
     margin-right: 3vw;
     text-align: right;
     font-weight: bold;
+    font-size: 3vw;
+
   }
   
 }

@@ -34,7 +34,7 @@ const HpBar = ({ name, currentHp, maxHp, type1 = [] }) => {
   return (
     <div className="hpBarContainer">
       {name && (
-        <div className="hpName">
+        <div className="hpBarName">
           {name}
           {type1.length > 0 && (
             <span className="monsterType">
@@ -49,7 +49,7 @@ const HpBar = ({ name, currentHp, maxHp, type1 = [] }) => {
           style={{ width: `${hpPercent}%`, backgroundColor: barColor }}
         ></div>
       </div>
-      <div className="hpText">
+      <div className="hpBarText">
         {clampedDisplayedHp} / {maxHp}
       </div>
     </div>
