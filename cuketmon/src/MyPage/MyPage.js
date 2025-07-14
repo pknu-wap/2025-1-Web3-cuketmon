@@ -2,8 +2,7 @@ import React, {  useRef, useEffect, useState } from 'react';
 import MenuBar from "../Menubar/Menubar.js";
 import './MyPage.css';
 import { useAuth } from '../AuthContext';
-import TextBox from '../common/TextBox/TextBox.js';
-import PokeStyleButton from '../common/PokeStyleButton/PokeStyleButton.js'
+
 function MyPage() {
   const [toyCount, setToyCount] = useState();
   const [feedCount, setFeedCount] = useState();
@@ -222,46 +221,35 @@ const releaseCukemon = async () => {
 
   return (
     <div className='myPage'>
-      <div className='item'>
-        {loading ? (
-          <span>로딩 중...</span>
-        ) : (
-          <div>
+      <div className='buttons'>
+
+          <div className='feedCukemonButton' onClick={feedCukemon}>
             <img src='/MyPage/feed.webp' id='feed' alt="밥 아이콘" />
             <span>{feedCount}</span>
-            <img src='/MyPage/toy.webp' alt="장난감 아이콘" />
-            <span>{toyCount}</span>
           </div>
-        )}
-      </div>
 
+            <div className='playCukemonButton'onClick={playCukemon}>
+            <img src='/MyPage/toy.webp' id='play'alt="장난감 아이콘" />
+            <span>{toyCount}</span>
+            </div>
+      </div>
+   
       <div className='cukemonImg'>
         <img src={cukemonData?.img} alt="Cukemon" id='cuketmonImage' />
       </div>
 
       <div className='cucketmonProfile'>
-        <TextBox>
           {loading ? <p>로딩 중...</p> : <p>{cukemonData?.name || "이름 없음"}</p>}
           <div id='relevanceCount'>
             <img src='/MyPage/relevance.webp' alt="친밀도 아이콘" />
             <span>{cukemonData?.affinity ?? "로딩중.."}</span>
           </div>
-        </ TextBox>
       </div>
       
-      <div className="buttons">
-        <div id="feedButton">
-          <PokeStyleButton label={"먹이주기"} onClick={feedCukemon}/>
-        </div>
-        <div id="playButton">
-        <PokeStyleButton label={"놀아주기"} onClick={playCukemon}/>
-        </div>
-      </div>
-      <span id="buttonText1"></span>
-      <span id="buttonText2"></span>
+
 
       <img src='/MyPage/releaseButton.webp' id="releaseButton" onClick={releaseCukemon} />
-      <MenuBar />
+            <MenuBar centered={true}/>
     </div>
   );
 }

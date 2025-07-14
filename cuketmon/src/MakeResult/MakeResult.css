@@ -1,25 +1,38 @@
 .resultPage {
-  background-image: url("/public/MakePage/background.webp");
-  background-size: cover;
-  background-position: center;
+  background-image: 
+   url("/public/MakeResultPage/Ground.webp"),
+   url("/public/MakeResultPage/ResultBack.webp");
+
+  background-size: 30%, cover;
+  background-position: left 50% bottom 43%, center;
   background-repeat: no-repeat;
-  bottom: 0;
-  width: 100vw;
+  
+  display: flex;
+  justify-content: start;
+  padding-top: 7vh;
+  padding-left: 7vw;
+  box-sizing: border-box;
+  flex-direction: column;
+  position: relative;
+  width: 75vw;
   height: 100vh;
+  overflow: hidden;
   animation: blinkEffect 1s ease-in-out 2;
 }
 
 .resultPage #egg {
   position: relative;
-  width: 20%;
-  padding-top: 15%;
+  width: 10%;
+  padding-top: 25%;
   left: 40%;
 }
 
 .chatBox {
-  width: 80vw;
+  width: 10vw;
   position: relative;
-  margin-left: 10vw;
+  margin-left: 25%;
+  bottom: 1%;
+
 }
 .chatBox textarea {
   padding-bottom: 9vh;

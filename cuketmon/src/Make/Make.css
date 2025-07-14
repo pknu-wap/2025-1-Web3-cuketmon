@@ -1,145 +1,172 @@
-/* 공통 스타일 */
-.makeBackGround {
-  background-image: url("/public/MakePage/background.webp");
-  background-size: cover;
-  background-position: center;
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  background-color: black; /* 나머지 여백을 검정으로 */
+  overflow: hidden;
+}
+
+.makePage { 
+  background-image: 
+  url("/public/MakePage/MakeCukemon.webp"),
+  url("/public/MakePage/rec.webp"), 
+  url("/public/MakePage/Union.webp"),
+  url("/public/MakePage/back.webp"),
+  radial-gradient(49.69% 71.33% at 50% 55.09%, #29CCDD 0%, #314EDA 100%);
+
+  background-size: 
+  20% auto,
+  100% auto,
+  70%, 
+  cover, 
+  cover;
+
   background-repeat: no-repeat;
-  min-height: 100vh;
-  width: 100vw;
+  background-position: left 50% bottom 98%, top, center, center, center;
+
   display: flex;
   justify-content: start;
-  padding-top: 5vh;
-  padding-left: 20px;
+  padding-top: 7vh;
+  padding-left: 7vw;
   box-sizing: border-box;
-}
-
-.make {
-  width: 90%;
-  max-width: 800px;
-  display: flex;
   flex-direction: column;
-  align-items: start;
+  position: relative;
+  width: 75vw;
+  height: 100vh;
+  overflow: hidden;
+
 }
-.Q1,
-.Q2 {
+
+.makeContent {
+  position: relative;
+  z-index: 2;
+}
+
+.rightSection .typeTableContainer,
+.rightSection .typeCalculatorContainer {
+  background: white;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 2px 4px 8px rgba(0,0,0,0.1);
+  margin-bottom: 24px;
+}
+
+.makeContent {
+
+  gap: 1rem;
   display: flex;
-  align-items: center;
-  margin: 1rem 0;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  
 }
 
-.Q1 img,
-.Q2 img {
-  width: 40px;
-  height: 40px;
-  margin-right: 0.5rem;
+.leftSection {
+  flex: 1;
+  min-width: 300px;
+  margin-right: 2vw;
 }
 
-.Q1 h2,
-.Q2 h2 {
-  font-size: 1.2rem;
+.rightSection {
+  flex: 1;
+  min-width: 300px;
 }
 
-#S1,
-#S2 {
-  width: 10vw;
-  height: 5vh;
-  font-size: 1rem;
-  margin: 0.5rem 0;
-  font-family: "NeoDunggeunmo";
-  text-align: center;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  border: 1px solid #9f9f9f;
-}
-
-/* 특징 입력창 */
-.cukemonFeature {
-  width: 100%;
-  margin-top: 2rem;
+.sectionTitle {
+ font-size: 2rem;
+ color: white;
+ margin: 2rem 0;
+ position: absolute;
+ bottom: 10%;
+ text-shadow: 
+  -3px -3px 0 #041430, -3px -2px 0 #041430, -3px -1px 0 #041430,
+    -3px 0px 0 #041430, -3px 1px 0 #041430, -3px 2px 0 #041430,
+    -3px 3px 0 #041430, 3px -3px 0 #041430, 3px -2px 0 #041430,
+    3px -1px 0 #041430, 3px 0px 0 #041430, 3px 1px 0 #041430, 3px 2px 0 #041430,
+    3px 3px 0 #041430, -2px -3px 0 #041430, -1px -3px 0 #041430,
+    0px -3px 0 #041430, 1px -3px 0 #041430, 2px -3px 0 #041430,
+    -2px 3px 0 #041430, -1px 3px 0 #041430, 0px 3px 0 #041430, 1px 3px 0 #041430,
+    2px 3px 0 #041430;
+ font-style: normal;
 }
 
 textarea {
+  position: absolute;
   width: 100%;
-  font-family: "NeoDunggeunmo";
+  padding: 10px;
+  font-family: "NeoDunggeunmo", sans-serif;
   font-size: 1rem;
+  border-radius: 10px;
   border: none;
   resize: none;
   background-color: #f0f0f0;
-  height: 100%;
-}
-textarea:focus {
-  outline: none;
-  border-color: #9f9f9f;
-  box-shadow: none;
 }
 
-.cukemonFeature p {
-  text-align: center;
-  font-size: 0.9rem;
-  margin-top: 0.5rem;
-}
-
-/* 제출 버튼 */
 .submitButton {
   position: absolute;
   text-align: center;
-  top: 70vh;
-  left: 44vw;
+  top: 65vh;
+  left: 8%;
 }
 
-/* 모바일 반응형 */
+/* 반응형 모바일 */
 @media (max-width: 767px) {
-  .makeBackGround {
-    background-image: url("/public/MakePage/backgroundMobile.webp");
+  .makePage {
+    background-size: 
+      100% auto,    /* rec.webp */
+      80%,          /* Union.webp */
+      cover,        /* back.webp */
+      cover;        /* gradient */
+    background-position: 
+      top,
+      center,
+      center,
+      center;
+    padding: 5vh 5vw;
+    height: 100vh;
+    width: 100vw;
   }
 
-  .Q1,
-  .Q2 {
-    padding-top: 2vh;
-  }
-  .Q1 img,
-  .Q2 img {
-    width: 28px;
-    height: 28px;
+  .makeContent {
+    flex-direction: column;
+    align-items: center;
+    padding: 0;
   }
 
-  .Q1 h2,
-  .Q2 h2 {
-    font-size: 3.5vw;
-    white-space: nowrap;
+  .mainTitle {
+    font-size: 1.5rem;
+    top: 2vh;
   }
 
-  #S1,
-  #S2 {
-    width: 90%;
-    height: 40px;
-    font-size: 4vw;
+  .sectionTitle {
+    font-size: 1rem;
+    margin: 1rem 0 0.5rem;
+    text-align: center;
   }
 
-  .cukemonFeature {
-    margin-top: 1rem;
+  .leftSection, .rightSection {
+    width: 100%;
+    padding: 0 5vw;
+    box-sizing: border-box;
   }
 
   textarea {
-    font-size: 4vw;
-    height: 100%;
+    font-size: 0.9rem;
+    padding: 8px;
   }
 
   .submitButton {
-    left: 33vw;
+    position: relative;
+    top: auto;
+    left: auto;
+    margin: 2vh auto 3vh;
+    text-align: center;
   }
 
-  #submit {
-    background: none;
-    background-image: url("/public/button.png");
-    background-size: cover;
-    border: none;
-    width: 35vw;
-    height: 15vw;
-  }
-
-  .submitButton p {
-    font-size: 15px;
-    top: 6vw;
+  .rightSection .typeTableContainer,
+  .rightSection .typeCalculatorContainer {
+    padding: 12px;
+    font-size: 0.9rem;
+    box-shadow: none;
+    margin-bottom: 16px;
   }
 }
+

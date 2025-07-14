@@ -1,13 +1,57 @@
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
-.textbox {
-  display: flex;
-  align-items: stretch;
-  border: 2px solid #333;
-  background-color: #f0f0f0;
-  max-width: 100%;
-  min-height: auto;
+.textbox-outer {
   position: relative;
+  width: 400px;
+  height: 184.21px;
+  background: #FFFFFF;
+  border: 2.56px solid #4A4242;
+  border-radius: 5.11px;
+  box-sizing: border-box;
+  padding: 2px;
+}
+
+.textbox-middle {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: #6B9494;
+  border: 2.56px solid #6B9494;
+  border-radius: 2.56px;
+  padding: 2px;
+  box-sizing: border-box;
+}
+
+.textbox-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: #BDCECE;
+  border: 2.56px solid #FFFFFF;
+  border-radius: 2.56px;
+  padding: 6px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.textbox-content {
+  flex: 1;
+  background: #FFFFFF;
+  border-radius: 2.56px;
+  padding: 12px;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 14px;
+  color: #aaaaaa;
+}
+
+.textbox-bar {
+  height: 8.19px;
+  width: 100%;
+  background: #94BDBD;
+  border-radius: 0 0 2.56px 2.56px;
+  margin-top: 8px;
 }
 
 .sidePattern {
@@ -60,9 +104,25 @@
 
 /* ✅ 반응형 스타일 */
 @media (max-width: 767px) {
-    .textbox {
-      max-width: 100%;
-      min-height: 60px;
+  .textbox-outer {
+    width: 100%;
+    height: auto;
+    padding: 1px;
+    }
+
+  .textbox-middle,
+  .textbox-inner {
+    padding: 1px;
+    }
+
+  .textbox-content {
+    padding: 8px;
+    font-size: 12px;
+    }
+
+  .textbox-bar {
+    height: 6px;
+    margin-top: 6px;
     }
   
     .sidePattern {
