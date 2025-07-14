@@ -3,7 +3,7 @@ import { useNavigate} from "react-router-dom";
 import { useAuth } from "../AuthContext";
 import MenuBar from "../Menubar/Menubar.js";
 import "./NamePage.css";
-import PokeStyleButton from '../common/PokeStyleButton/PokeStyleButton.js'
+import NameStyleButton from '../common/PokeStyleButton/NameStyleButton.js'
 
 function NamePage() {
   const [name, setName] = useState("");
@@ -73,17 +73,24 @@ useEffect(() => {
   return (
     
     <div className="namePage">
+        <div className="choiceButtons">
+        <div className="remakeButton">
+          <NameStyleButton label={"이름 확정하기"} onClick={handleGoTOMakePage}/>
+        </div>
+        </div>
       <div className="nameInputBox">
         <div className="menubar">
-          <MenuBar/>
+          <MenuBar centered={true}/>
         </div>
-        <p>너의 이름은 이야!</p>
+        <div className="yourName1"> 너의 이름은 </div>
+        <div className="yourName2"> 이야!</div>
         {cukemonResultImage && ( //이미지가 있는 경우에만 렌더링 하도록 함 (5/13 수정)
-          <img
-            src={cukemonResultImage}
-            alt="커켓몬 이미지"
-            className="cukemonImage"
-          />
+          // <img
+          //   src={cukemonResultImage}
+          //   alt="커켓몬 이미지"
+          //   className="cukemonImage"
+          // />
+          <div className="cuketmonImage"></div>
         )}
 
         <div className="nameInput">
@@ -92,20 +99,14 @@ useEffect(() => {
             value={name}
             onChange={(e) => {
               const newValue = e.target.value;
-            if (newValue.length >12 ){
-              alert("이름은 최대 12자까지 입력할 수 있습니다.")
+            if (newValue.length > 6 ){
+              alert("이름은 최대 6자까지 입력할 수 있습니다.")
               return;
             }}}  //이름 지정시 불필요한 코드 삭제 (5/13 수정)
             placeholder="- - - - - -"
-            maxLength={12}
+            maxLength={6}
           />
-          <div id="remainWord">{name.length}</div>
-        </div>
-
-        <div className="choiceButtons">
-          <div className="remakeButton">
-          <PokeStyleButton  label={"이름 확정하기"} onClick={handleGoTOMakePage}/>
-          </div>
+          {/* <div id="remainWord">{name.length}</div> */}
         </div>
       </div>
     </div>

@@ -106,6 +106,16 @@ textarea {
   top: 65vh;
   left: 8%;
 }
+.menuBar {
+  position: absolute;
+  bottom: 2vh;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 2vw;
+  justify-content: center;
+  width: max-content;
+}
 
 /* 반응형 모바일 */
 @media (max-width: 767px) {
