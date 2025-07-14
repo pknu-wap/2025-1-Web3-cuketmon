@@ -142,7 +142,8 @@ function Battle() {
           name: skill.name,
           type: skill.type,
           damage: skill.power,
-          currentPp: skill.pp
+          currentPp: skill.pp,
+          damageClass: skill.damageClass
         })) || []
       );
       setIsRedFirst(isRedFirst);
