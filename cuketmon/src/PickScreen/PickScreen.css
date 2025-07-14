@@ -1,7 +1,8 @@
 /* 화면 중앙 정렬 및 3:4 비율 유지 */
 @font-face {
-  font-family: 'PFStardust';
-  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/PFStardust.woff') format('woff');
+  font-family: "PFStardust";
+  src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/PFStardust.woff")
+    format("woff");
   font-weight: normal;
   font-style: normal;
 }
@@ -19,7 +20,8 @@
   aspect-ratio: 4 / 3;
   width: 100vw;
   max-height: 100vh;
-  background: url("cuketmon/public/PickScreen/background.webp") center/contain no-repeat;
+  background: url("cuketmon/public/PickScreen/background.webp") center/contain
+    no-repeat;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -27,19 +29,15 @@
   position: relative;
 }
 
-
 /* 타이틀 */
 .pickTitle {
   font-size: 3vw;
   color: #fff;
   text-align: left;
   margin-top: 3vw;
-  text-shadow:
-    -1px -1px 0 black,
-     1px -1px 0 black,
-    -1px  1px 0 black,
-     1px  1px 0 black;
-  font-family: 'PFStardust';
+  text-shadow: -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black,
+    1px 1px 0 black;
+  font-family: "PFStardust";
   line-height: 1;
 }
 
@@ -110,9 +108,10 @@
 .typeText {
   font-size: 1.5vw;
 }
-.typeText img{
+.typeText img {
   width: fit-content;
 }
+
 /* 스탯 */
 .specText {
   position: absolute;
@@ -120,7 +119,7 @@
   left: 60%;
   transform: translate(-50%, -50%);
   font-size: 1.6vw;
-  color: #1C5252;
+  color: #1c5252;
   width: 55%;
 }
 
@@ -161,55 +160,58 @@
   align-items: center;
 }
 
-  @media (max-width: 430px) {
-    .pickScreen {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      background: url("cuketmon/public/PickScreen/backgroundMobile.webp") center/contain no-repeat;
-      height: 100vh;
-      width: 100vw;
-      background-color: #000;
-    }
-    
-    .pickTitle {
-      margin-top: 10%;
-      font-size: 5vh;
-      font-weight: bold;
-      margin-bottom: 2vh;
-      color: #fff;
-    }
-    
-    .pickContent {
-      margin-top: 8vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width:  100vw;
-      height: 100vh;
-    }
-    
-    .cuketmonCard {
-      width: 100%;
-      height: 100%;
-    }
-    
-    .cuketmonImage {
-      width: 60%;
-    }
+@media (max-width: 767px) {
+  .pickScreen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: url("cuketmon/public/PickScreen/backgroundMobile.webp")
+      center/contain no-repeat;
+    height: 100vh;
+    width: 100vw;
+    background-color: #000;
+  }
 
-    .arrowButton {
-      margin-bottom: 50vh;
-    }
-    .arrowButtonRight {
-      position: absolute;
-      right: 5vw;
-    }
-    .arrowButtonLeft {
-      position: absolute;
-      left: 5vw
-    }
+  .pickTitle {
+    margin-top: 10%;
+    font-size: 5vh;
+    font-weight: bold;
+    margin-bottom: 2vh;
+    color: #fff;
+  }
+
+  .pickContent {
+    margin-top: 8vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: 100vh;
+  }
+
+  .cuketmonCard {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 22vh;
+  }
+
+  .cuketmonImage {
+    width: 40vw;
+  }
+
+  .arrowButton {
+    margin-bottom: 50vh;
+  }
+  .arrowButtonRight {
+    position: absolute;
+    right: 5vw;
+  }
+  .arrowButtonLeft {
+    position: absolute;
+    left: 5vw;
+  }
   /* HP바 + 이름 + 타입 */
   .commonImageContainer {
     position: relative;
@@ -242,12 +244,11 @@
     display: flex;
     justify-content: center;
     gap: 3vw;
-    margin-bottom: 5%;
+    margin-bottom: 5.8vh;
   }
 
   .buttonSet img {
     height: 6vh;
     margin-top: 1vh;
   }
-
-  }
+}
