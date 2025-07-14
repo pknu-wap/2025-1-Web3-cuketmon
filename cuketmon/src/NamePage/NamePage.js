@@ -84,12 +84,12 @@ useEffect(() => {
         <div className="yourName1"> 너의 이름은 </div>
         <div className="yourName2"> 이야!</div>
         {cukemonResultImage && ( //이미지가 있는 경우에만 렌더링 하도록 함 (5/13 수정)
-          // <img
-          //   src={cukemonResultImage}
-          //   alt="커켓몬 이미지"
-          //   className="cukemonImage"
-          // />
-          <div className="cuketmonImage"></div>
+          <img
+            src={cukemonResultImage}
+            alt="커켓몬 이미지"
+            className="cukemonImage"
+          />
+          // <div className="cuketmonImage"></div>
         )}
 
         <div className="nameInput">

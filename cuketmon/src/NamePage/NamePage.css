@@ -42,6 +42,15 @@ span {
 .yourName2 {
   left: 80%;
 }
+.namePage .cukemonImage {
+  width: 30%;
+  position: absolute;
+  top: 0%;
+  left: 10%;
+}
+.cukemonImage {
+
+}
 
 .cuketmonImage {
   position: center;
