@@ -23,6 +23,17 @@ const SkillDetail = ({ skill }) => {
         ) : (
           ' 알 수 없음'
         )}
+        {skill.damageClass === "SPECIAL" ? (
+          <img
+            src='BattlePage/special.webp'
+            alt='special'
+          />
+        ) : skill.damageClass === "PHYSICAL" ? (
+          <img
+            src='BattlePage/physical.webp'
+            alt='physical'
+          />
+        ) : null}
         <div className='skillInfo'>
           <p>
             power: {power} 
