@@ -1,45 +1,16 @@
-html, body, #root {
-  height: 100%;
-  margin: 0;
-  background-color: black; /* 나머지 여백을 검정으로 */
-  overflow: hidden;
+span {
+  font-family: "NeoDunggeunmo";
 }
 
 .namePage {
-  background-image: 
-  url("/public/MakePage/MakeCukemon.webp"),
-  url("/public/MakePage/rec.webp"), 
-  url("/public/MakePage/Union.webp"),
-  url("/public/MakePage/back.webp"),
-  radial-gradient(49.69% 71.33% at 50% 55.09%, #29CCDD 0%, #314EDA 100%);
-
-  background-size: 
-  20% auto,
-  99.5% auto,
-  70% auto, 
-  contain, 
-  10% auto;
-
-  background-repeat: no-repeat;
-  background-position: left 50% bottom 98%, top, center, center, center;
-
-  
-  display: flex;
-  justify-content: start;
-  padding-top: 7vh;
-  padding-left: 7vw;
-  box-sizing: border-box;
-  flex-direction: column;
-  position: relative;
-  width: 75vw;
-  height: 100vh;
   overflow: hidden;
-}
-
-.menubar{
-  position: absolute;
-  left: 50%;
-
+  background-image: url("/public/MakePage/back1.webp");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  bottom: 0;
+  width: 100vw;
+  height: 100vh;
 }
 
 .yourName1,.yourName2{
@@ -63,46 +34,35 @@ html, body, #root {
     2px 3px 0 rgba(28, 82, 82, 1);
 
 }
+
 .yourName1 {
-  left: 25%;
+  left: 35%;
 }
 
 .yourName2 {
-  left: 62%;
+  left: 80%;
 }
 
-.cukemonImage {
-  position: absolute;
-  top: 20%;
-  left: 100%;
-  transform: translateX(-50%);
+.cuketmonImage {
+  position: center;
+  background-image: url("/public/NamePage/mon.webp");
+  top: 0%;
+  left: 0%;
+  /* transform: translateX(-20%); */
   width: 25vw;
   height: auto;
 }
 
-/* .cuketmonImage {
-  position: absolute;
-  top: 20%;
-  left: 100%;
-  transform: translateX(-50%);
-  width: 25vw;
-  height: auto;
-  background-image: url("/public/NamePage/1821.webp");
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-position: center;
-} */
-
+/* 배경 */
 .nameInputBox {
   position: absolute;
   background-image: 
-  url("/public/NamePage/tran.webp"),
-  url("/public/NamePage/nameBox.webp");
-  background-size: 2.5%, 75%;
-  background-position: right 33% bottom 34%, right 105% bottom 55%;
+  url("/public/NamePage/Input.webp");
+  background-size: 90%;
+  background-position: center;
   background-repeat: no-repeat;
   top: 37vh; /*고정*/
-  left: 9%;
+  left: 5%;
   
   height: 205px;
   width: 90vw;
@@ -110,6 +70,7 @@ html, body, #root {
   aspect-ratio: 3.4 / 1;  
 }
 
+/* 내부 글자 */
 .nameInput input::placeholder {
   letter-spacing: 0.4em;
   color: white;
@@ -118,7 +79,7 @@ html, body, #root {
   font-weight: 800px;
   line-height: 50px;
   top: 3%;
-  left: 10%;
+  left: 15%;
   text-shadow:
    -3px -3px 0 rgba(28, 82, 82, 1), -3px -2px 0 rgba(28, 82, 82, 1), -3px -1px 0 rgba(28, 82, 82, 1),
     -3px 0px 0 rgba(28, 82, 82, 1), -3px 1px 0 rgba(28, 82, 82, 1), -3px 2px 0 rgba(28, 82, 82, 1),
@@ -133,8 +94,8 @@ html, body, #root {
 .nameInput {
   display: flex;
   position: absolute;
-  left: 44%;
-  top: 40%;
+  left: 54%;
+  top: 45%;
 }
 
 .nameInput input {
@@ -158,56 +119,73 @@ html, body, #root {
   top: 0%;
 }
 
-#remainWord {
-  font-size: clamp(7px, 1vw, 12px);
-  position: relative;
-  left: 50vw;
-  top: 2vh;
-}
- 
 .choiceButtons {
-  position: absolute;
+   font-size: 11px; /* 고정 */
+  position: fixed;
+  top: calc(70vh - 50px); /* 화면 세로 기준 70% - 절반 높이 보정 */
+  left: 50%;
+  transform: translateX(-50%);
+  position: fixed;
+  top: 78vh;
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
+  gap: 10px;
+  font-size: 14px; /* 고정 */
   color: white;
-  font-size: clamp(3px, 1.5vw, 15px);
-  top: 70vh;
-  right: 29.5vw;
-  gap: 0.8vw;
 }
 
 /*모바일 반응형*/
 @media (max-width: 767px) {
-  
-  .nameInputBox {
-    top: 40%;
-  }
-  .nameInputBox p {
-    left: 42vw;
-  }
-
-  .namePage .cukemonImage {
-    font-size: 10px;
-    top: 0%;
+  #root,
+  body {
+    height: 100%;
+    padding: 0;
+    left: 0;
+    top: 0;
   }
 
+.namePage {
+    background-image: url("/public/MakePage/back1.webp");
+    padding: 0%;
+    height: 100vh;
+    background-size: cover;
+    
+  }
+.nameInput input::placeholder {
+  letter-spacing: 0.1em;
+  color: white;
+  font-family: "NeoDunggeunmo";
+  font-size: clamp(5px, 3vw, 10px);
+  top: 10%;
+  left: 15%;
+ text-shadow:
+    -1px -1px 0 rgba(28, 82, 82, 1), -1px 0px 0 rgba(28, 82, 82, 1), -1px 1px 0 rgba(28, 82, 82, 1),
+     0px -1px 0 rgba(28, 82, 82, 1), 0px 1px 0 rgba(28, 82, 82, 1),
+     1px -1px 0 rgba(28, 82, 82, 1), 1px 0px 0 rgba(28, 82, 82, 1), 1px 1px 0 rgba(28, 82, 82, 1);
+  }
   .nameInput {
-    top: 40%;
-    left: 43%;
-  }
+  display: flex;
+  position: absolute;
+  left: 55%;
+  top: 50%;
+}
 
-  .nameInput input {
-    width: 24.5vw;
-  }
-  #remainWord {
-    top: 0.9vh;
-    left: 28vw;
-  }
+.yourName1,.yourName2{
+  font-size: clamp(8px, 3vw, 20px);
+   text-shadow:
+    -1px -1px 0 rgba(28, 82, 82, 1), -1px 0px 0 rgba(28, 82, 82, 1), -1px 1px 0 rgba(28, 82, 82, 1),
+     0px -1px 0 rgba(28, 82, 82, 1), 0px 1px 0 rgba(28, 82, 82, 1),
+     1px -1px 0 rgba(28, 82, 82, 1), 1px 0px 0 rgba(28, 82, 82, 1), 1px 1px 0 rgba(28, 82, 82, 1);
+}
+.yourName1 {
+  left: 35%;
+  top: 38%;
+}
 
-  .choiceButtons {
-    top: 5.8vh;
-    left: 26.3vw;
-    transform: scale(0.4);
-    font-size: 4vw;
-    gap: 1.8vw;
-  }
+.yourName2 {
+  left: 75%;
+  top: 38%;
+}
+  
 }

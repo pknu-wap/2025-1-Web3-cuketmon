@@ -1,39 +1,16 @@
-html, body, #root {
-  height: 100%;
-  margin: 0;
-  background-color: black; /* 나머지 여백을 검정으로 */
-  overflow: hidden;
+span {
+  font-family: "NeoDunggeunmo";
 }
 
-.makePage { 
-  background-image: 
-  url("/public/MakePage/MakeCukemon.webp"),
-  url("/public/MakePage/rec.webp"), 
-  url("/public/MakePage/Union.webp"),
-  url("/public/MakePage/back.webp"),
-  radial-gradient(49.69% 71.33% at 50% 55.09%, #29CCDD 0%, #314EDA 100%);
-
-  background-size: 
-  20% auto,
-  100% auto,
-  70%, 
-  cover, 
-  cover;
-
-  background-repeat: no-repeat;
-  background-position: left 50% bottom 98%, top, center, center, center;
-
-  display: flex;
-  justify-content: start;
-  padding-top: 7vh;
-  padding-left: 7vw;
-  box-sizing: border-box;
-  flex-direction: column;
-  position: relative;
-  width: 75vw;
-  height: 100vh;
+.namePage {
   overflow: hidden;
-
+  background-image: url("/public/MakePage/back1.webp");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  bottom: 0;
+  width: 100vw;
+  height: 100vh;
 }
 
 .makeContent {
@@ -120,19 +97,7 @@ textarea {
 /* 반응형 모바일 */
 @media (max-width: 767px) {
   .makePage {
-    background-size: 
-      100% auto,    /* rec.webp */
-      80%,          /* Union.webp */
-      cover,        /* back.webp */
-      cover;        /* gradient */
-    background-position: 
-      top,
-      center,
-      center,
-      center;
-    padding: 5vh 5vw;
-    height: 100vh;
-    width: 100vw;
+
   }
 
   .makeContent {

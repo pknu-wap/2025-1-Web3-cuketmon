@@ -1,0 +1,84 @@
+ @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+.textbox {
+  flex: 1;
+  width: 100%;
+  max-width: 600px;
+  min-height: 120px;
+  border-radius: 2.56px;
+  padding: 12px;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 14px;
+  box-sizing: border-box;
+  resize: vertical;
+  overflow-y: auto;
+  color: #FFFFFF;
+}
+
+.textboxContent {
+  flex: 1;
+  padding: 12px;
+  position: relative;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 12px;
+  color: #000;
+  height: 100%;
+}
+
+.text {
+  margin: 0;
+  white-space: pre-wrap;
+}
+
+.blinkIndicator {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  font-size: 12px;
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0%, 50%, 100% { opacity: 1; }
+  25%, 75% { opacity: 0; }
+}
+
+
+@media (max-width: 767px) {
+  .textbox-outer {
+    width: 100%;
+    height: auto;
+    padding: 1px;
+    }
+
+  .textbox-middle,
+  .textbox-inner {
+    padding: 1px;
+    }
+
+  .textbox-content {
+    padding: 8px;
+    font-size: 12px;
+    }
+
+  .textbox-bar {
+    height: 6px;
+    margin-top: 6px;
+    }
+  
+    .sidePattern {
+      width: 12px;
+      background-size: 6px 6px;
+    }
+  
+    .textboxContent {
+      padding: 8px;
+      font-size: 10px;
+    }
+  
+    .blinkIndicator {
+      bottom: 6px;
+      right: 6px;
+      font-size: 10px;
+    }
+  }

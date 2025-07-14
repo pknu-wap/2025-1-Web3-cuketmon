@@ -74,10 +74,9 @@ useEffect(() => {
     
     <div className="namePage">
         <div className="choiceButtons">
-        <div className="remakeButton">
           <NameStyleButton label={"이름 확정하기"} onClick={handleGoTOMakePage}/>
         </div>
-        </div>
+  
       <div className="nameInputBox">
         <div className="menubar">
           <MenuBar centered={true}/>

@@ -1,10 +1,12 @@
 .resultPage {
   background-image: 
+   url("/public/MakeResultPage/Input.webp"),
    url("/public/MakeResultPage/Ground.webp"),
    url("/public/MakeResultPage/ResultBack.webp");
+   
 
-  background-size: 30%, cover;
-  background-position: left 50% bottom 43%, center;
+  background-size: 90%,30%, cover;
+  background-position: left 50% bottom 20%, left 50% bottom 43%, center;
   background-repeat: no-repeat;
   
   display: flex;
@@ -19,6 +21,16 @@
   overflow: hidden;
   animation: blinkEffect 1s ease-in-out 2;
 }
+/* .zeroImage{
+  background-image: ("/public/MakeResultPage/o.webp");
+} 
+
+.firstImage{
+  background-image: ("/public/MakeResultPage/o1.webp");
+}
+.secondImage{
+  background-image: url("/public/MakeResultPage/o2.webp");
+} */
 
 .resultPage #egg {
   position: relative;
@@ -56,9 +68,22 @@
 
 /* 반응형 */
 @media (max-width: 767px) {
+
+  .resultPage {
+    background-image: 
+    url("/public/MakeResultPage/Input.webp"),
+    url("/public/MakeResultPage/Ground.webp"),
+    url("/public/MakeResultPage/M_R.webp");
+
+    padding: 0%;
+    height: 100vh;
+    background-position: left 50% bottom 38%, left 50% bottom 57%, center;
+    background-size: 95%, 70%, cover;
+  }
+
   .resultPage #egg {
-    top: 37vh;
-    left: 27vw;
+    top: 10vh;
+    left: 19vw;
     width: 50%;
   }
 

@@ -1,7 +1,12 @@
 .poke-button {
-  position: relative;
-  width: 230px;
-  height: 51.31px;
+  position: center;
+  top: 50%;                               /* 세로 중앙 */
+  left: 50%;                              /* 가로 중앙 */
+  transform: translate(-50%, -50%);       /* 요소 중심으로 이동 */
+  
+  width: 230px;                           /* 고정 크기 */
+  height: 51.31px;                        /* 고정 크기 */
+
   background: #AC0202;
   border: 2.99px solid #610000;
   border-radius: 8.7px;
@@ -14,6 +19,9 @@
 
   padding: 0;
   box-sizing: border-box;
+
+  font-size: 14px;
+
 }
 
 /* 하단 어두운 라인 */
@@ -48,7 +56,7 @@
   position: absolute;
   font-family: "NeoDunggeunmo", sans-serif;
   font-size: 19.5px;
-  font-weight: 800;
+  font-weight: 800px;
   line-height: 20px;
   text-shadow:
    -3px -3px 0 #610000, -3px -2px 0 #610000, -3px -1px 0 #610000,
@@ -68,7 +76,7 @@
 }
 
 /*모바일 반응형*/
-@media (max-width: 767px) {
+@media (max-width: 767px) { 
   .NameStyleButton {
     padding: 1vw;
     white-space: nowrap;
