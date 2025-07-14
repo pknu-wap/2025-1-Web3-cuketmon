@@ -90,6 +90,56 @@ html {
   gap: 72%;
   margin-left: 5.9vw;
 }
+
+/* 숫자 위치 조정 */
+.historyBoard .row1 div:last-child,
+.historyBoard .row2 div:last-child,
+.historyBoard .row3 div:last-child,
+.historyBoard .row4 div:last-child {
+  padding-right: 10vw; /* ← 오른쪽 끝에서 띄움 */
+  text-align: left;
+  min-width: 4ch; /* 숫자 자리 고정 (1~3자리 대비) */
+  line-height: 1;
+}
+
+/* 중간 점선 효과 */
+.historyBoard .row1 div:first-child,
+.historyBoard .row2 div:first-child,
+.historyBoard .row3 div:first-child,
+.historyBoard .row4 div:first-child {
+  position: relative;
+  flex: 1;
+  padding-right: 1vw;
+}
+
+.historyBoard .row1 div:first-child::after,
+.historyBoard .row2 div:first-child::after,
+.historyBoard .row3 div:first-child::after,
+.historyBoard .row4 div:first-child::after {
+  content: "";
+  position: absolute;
+  left: 100%;
+  top: 50%;
+
+  height: 1px;
+  background-image: radial-gradient(currentColor 1.2px, transparent 0.4px);
+  background-size: 6px 1px;
+  background-repeat: repeat-x;
+  transform: translateY(-50%);
+  opacity: 0.85;
+}
+.historyBoard .row1 div:first-child::after {
+  width: 27vw;
+}
+.historyBoard .row2 div:first-child::after {
+  width: 20vw;
+}
+.historyBoard .row3 div:first-child::after {
+  width: 27vw;
+}
+.historyBoard .row4 div:first-child::after {
+  width: 25vw;
+}
 /*모바일 반응형*/
 @media (max-width: 767px) {
   #root,
@@ -150,5 +200,11 @@ html {
   }
   .historyBoard .row4 {
     gap: 70%;
+  }
+  .historyBoard .row1 div:first-child::after,
+  .historyBoard .row2 div:first-child::after,
+  .historyBoard .row3 div:first-child::after,
+  .historyBoard .row4 div:first-child::after {
+    display: none;
   }
 }
