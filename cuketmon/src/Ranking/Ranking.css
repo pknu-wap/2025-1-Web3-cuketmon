@@ -122,23 +122,28 @@ html {
   top: 50%;
 
   height: 1px;
-  background-image: radial-gradient(currentColor 1.2px, transparent 0.4px);
-  background-size: 6px 1px;
+  background-image: repeating-linear-gradient(
+    to right,
+    currentColor,
+    currentColor 1px,
+    transparent 2px,
+    transparent 6px
+  );
   background-repeat: repeat-x;
   transform: translateY(-50%);
   opacity: 0.85;
 }
 .historyBoard .row1 div:first-child::after {
-  width: 27vw;
+  width: 24vw;
 }
 .historyBoard .row2 div:first-child::after {
-  width: 20vw;
+  width: 18vw;
 }
 .historyBoard .row3 div:first-child::after {
-  width: 27vw;
+  width: 24.5vw;
 }
 .historyBoard .row4 div:first-child::after {
-  width: 25vw;
+  width: 22.5vw;
 }
 /*모바일 반응형*/
 @media (max-width: 767px) {
