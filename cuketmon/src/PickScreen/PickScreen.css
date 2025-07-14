@@ -110,7 +110,9 @@
 .typeText {
   font-size: 1.5vw;
 }
-
+.typeText img{
+  width: fit-content;
+}
 /* 스탯 */
 .specText {
   position: absolute;

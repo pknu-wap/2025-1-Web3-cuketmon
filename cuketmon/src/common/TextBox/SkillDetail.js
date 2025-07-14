@@ -1,5 +1,6 @@
 import React from 'react';
 import './BattleChatbox.css';
+import typeData from '../../Type'
 
 const SkillDetail = ({ skill }) => {
 
@@ -10,13 +11,28 @@ const SkillDetail = ({ skill }) => {
 
   return (
     <div className="skillDetail">
-      <div className="descTitle">{skill.name}</div>
-      <div>
-        Type: {skill.type}
-      </div>
-      <div>
-        Power: {power}    PP: {pp}
-      </div>
+      <span>
+      <p className="descTitle">
+        {skill.name}
+      </p>
+      {typeData[skill.type.toLowerCase()]?.image_url ? (
+          <img
+            src={typeData[skill.type.toLowerCase()]?.image_url}
+            alt={skill.type}
+          />
+        ) : (
+          ' 알 수 없음'
+        )}
+        <div className='skillInfo'>
+          <p>
+            power: {power} 
+          </p>
+          <p>
+            PP: {pp}
+          </p>
+        </div>
+      </span>
+
     </div>
   );
 };

@@ -1,55 +1,119 @@
+/* 스킬 버튼 전체 설정 */  
 .battleChatbox {
-    display: flex;
-    background-color: #222;
-    color: white;
-    border: 2px solid #888;
-    border-radius: 10px;
-    width: 100%;
-    height: 100%;
-    font-family: 'Arial', sans-serif;
-    overflow: hidden;
-  }
+  display: flex;
+  width: 50vw;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 스킬 버튼 관련 */  
+.leftPanel {
+  flex-wrap: wrap;
+  flex-direction: row;
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1vw;
+  width: 100%;
+}
+
+.moveButton {
+  background: url("/public/BattlePage/moveButton.webp")no-repeat center center;
+  background-size: contain;
+  width: 20vw;
+  height: 100%;
+  padding: 1vw;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center;
+}
   
-  .leftPanel {
-    width: 60%;
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-    padding: 10px;
-    box-sizing: border-box;
-  }
+@keyframes blinkColor {
+  0% { color: black; }
+  50% { color: gray; }
+  100% { color: black; }
+}
   
+.moveButton.selected {
+  font-weight: bold;
+  animation: blinkColor 1s infinite;
+}
+/* 스킬 설명 관련 */  
+.rightPanel {
+  position: relative; 
+}
+.skillDetail{
+  width: 17.8vw;
+  height: 10vw;  
+  background: url("/public/BattlePage/moveDetail.webp")no-repeat center center;
+  background-size: contain;
+  background-size: 100% 100%; 
+  margin-left: 1vw;
+}
+
+.skillInfo{
+  display: flex;
+}
+
+.skillDetail p {  
+  padding: 1vw;
+  font-size: 1.5vw;
+  font-weight: bold;
+}
+
+.skillDetail img{
+  padding-left: 1vw;
+}
+
+
+
+@media (max-width: 430px) {
+  .battleChatbox{
+    display: flex;
+    width: fit-content;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column-reverse;
+  }
+  .leftPanel{
+    width: fit-content;
+    margin-top: 5vw;
+  }
+
+  .rightPanel{
+    width: fit-content;
+  }
   .moveButton {
-    width: 50%;
-    padding: 8px;
-    margin: 2px 0;
-    background-color: #444;
-    border: 1px solid #999;
-    border-radius: 5px;
-    cursor: pointer;
+    background: url("/public/BattlePage/moveButton.webp")no-repeat center;
+    background-size: 100% 100%;
+    width: 20vh;
+    height: 8vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     text-align: center;
+    font-size: 2vh;
+  }
+
+  .skillDetail{   
+    width: 40vw;
+    height: 30vw;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .skillInfo{
+    display: block;
   }
   
-  .moveButton.selected {
-    background-color: #666;
-    font-weight: bold;
+  .skillDetail p {
+    font-size: 2vh;
+    padding: 0;
   }
-  
-  .rightPanel {
-    width: 40%;
-    padding: 10px;
-    background-color: #333;
-    border-left: 2px solid #999;
-    box-sizing: border-box;
+  .skillDetail img{
+    width: 8vh;
   }
-  
-  .descTitle {
-    font-size: 1.2em;
-    margin-bottom: 5px;
-    font-weight: bold;
-  }
-  
-  .skillDetail div {
-    margin-bottom: 4px;
-  }
-  
+}
