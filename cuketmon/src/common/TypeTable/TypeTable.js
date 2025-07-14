@@ -11,9 +11,16 @@ function TypeTable({ type1, type2 }) {
 
   if (!type1Data) {
     return (
-      <div className={"typeTable"}>
+      <div className={"typeTable1"}>
         <h1>타입 계산기</h1>
         <img src="/MakePage/type.webp" alt="type" className={"typeImage"} />
+      </div>
+    );
+  }
+  
+  if(!type1Data){
+     return(   
+     <div className={"typeTable2"}>
         <p>타입 1을 선택해주세요.</p>
       </div>
     );

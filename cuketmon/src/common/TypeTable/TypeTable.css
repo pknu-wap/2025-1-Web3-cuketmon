@@ -1,4 +1,4 @@
-.typeTable {
+.typeTable1 {
   position: fixed;
   top: 2.5vh;
   right: 5vw;
@@ -7,6 +7,15 @@
   border-radius: 2%;
   z-index: 1000; /* 다른 요소 위로 */
 }
+.typeTable2{
+  position: fixed;
+  top: 2.5vh;
+  right: 5vw;
+  padding: 10px;
+  background: white;
+  border-radius: 2%;
+  z-index: 1000;
+} */
 
 .typeTable h1 {
   font-size: 1.3vw;

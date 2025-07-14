@@ -61,8 +61,8 @@ function MakeResult() {
           
             setTimeout(() => {
             setMentText("연구소에서 새로운 커켓몬이 태어났다");
-            setShowExtraImage(true);
-            setShowHpBar(true);
+            // setShowExtraImage(true);
+            // setShowHpBar(true);
             }, 1500);
             setTimeout(() => {
             setMentText("첫 만남을 기념하기 위해 이름을 지어줘!");
