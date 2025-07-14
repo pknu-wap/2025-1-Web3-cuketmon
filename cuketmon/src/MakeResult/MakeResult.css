@@ -5,7 +5,7 @@
    url("/public/MakeResultPage/ResultBack.webp");
    
 
-  background-size: 90%,30%, cover;
+  background-size: 90%,40%, cover;
   background-position: left 50% bottom 20%, left 50% bottom 43%, center;
   background-repeat: no-repeat;
   
@@ -21,33 +21,25 @@
   overflow: hidden;
   animation: blinkEffect 1s ease-in-out 2;
 }
-/* .zeroImage{
-  background-image: ("/public/MakeResultPage/o.webp");
-} 
-
-.firstImage{
-  background-image: ("/public/MakeResultPage/o1.webp");
-}
-.secondImage{
-  background-image: url("/public/MakeResultPage/o2.webp");
-} */
 
 .resultPage #egg {
   position: relative;
-  width: 10%;
-  padding-top: 25%;
-  left: 40%;
+  width: 20%;
+  padding-top: 23%;
+  left: 36%;
 }
 
 .chatBox {
-  width: 10vw;
+  width: 40vw;
   position: relative;
-  margin-left: 25%;
-
+  left: -4%;
+  
 }
 .chatBox textarea {
-  padding-bottom: 9vh;
+  padding-bottom: 10vh;
   text-align: center;
+  top: 400%;
+  background-color: white;
 }
 
 /*깜빡임 에니메이션*/
@@ -82,14 +74,21 @@
   }
 
   .resultPage #egg {
-    top: 10vh;
-    left: 19vw;
+    top: 11vh;
+    left: 20vw;
     width: 50%;
   }
 
-  .chatBox {
-    width: 100vw;
-    margin-left: 0;
-    top: 38vh;
-  }
+.chatBox {
+  width: 50vw;
+  position: relative;
+  margin-left: 7%;
+  bottom: -25%;
+}
+.chatBox textarea {
+  padding-bottom: 0.1px;
+  text-align: center;
+  background-color: white;
+}
+
 }

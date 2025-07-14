@@ -1,16 +1,21 @@
-span {
-  font-family: "NeoDunggeunmo";
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  background-color: black; /* 나머지 여백을 검정으로 */
+  overflow: hidden;
 }
 
-.namePage {
-  overflow: hidden;
-  background-image: url("/public/MakePage/back1.webp");
+.makePage { 
+  background-image: 
+  url("/public/MakePage/back1.webp");
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
   bottom: 0;
   width: 100vw;
   height: 100vh;
+  overflow: hidden;
+
 }
 
 .makeContent {
@@ -97,18 +102,17 @@ textarea {
 /* 반응형 모바일 */
 @media (max-width: 767px) {
   .makePage {
-
+    background-image: 
+    url("/public/MakePage/back1.webp");
+    padding: 0%;
+    height: 100vh;
+    background-size: cover;
   }
 
   .makeContent {
     flex-direction: column;
     align-items: center;
     padding: 0;
-  }
-
-  .mainTitle {
-    font-size: 1.5rem;
-    top: 2vh;
   }
 
   .sectionTitle {
@@ -130,9 +134,9 @@ textarea {
 
   .submitButton {
     position: relative;
-    top: auto;
-    left: auto;
-    margin: 2vh auto 3vh;
+    bottom: 50%;
+    left: 0%;
+    margin: 0vh auto 3vh;
     text-align: center;
   }
 
