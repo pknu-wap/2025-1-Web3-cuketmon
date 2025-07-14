@@ -94,7 +94,8 @@
 
 .nameText {
   top: 40%;
-  left: 120%;
+  left: 45%;
+  text-align: right;
   font-size: 1.5vw;
   width: 100%;
 }
@@ -191,8 +192,6 @@
   }
 
   .cuketmonCard {
-    width: 100%;
-    height: 100%;
     position: absolute;
     top: 22vh;
   }
@@ -219,13 +218,33 @@
     margin-top: 3vh;
   }
 
+  .hpBarWrapper img {
+    display: block;
+    width: 100%;  /* 필요에 따라 크기 조절 */
+    height: auto;
+  }
+
+  .overlayText {
+    position: absolute;
+    font-weight: bold;
+    white-space: nowrap;
+  }
+
   .nameText {
+    left: -10%;
     font-size: 5vw;
+    text-align: right;
+    transform: translateY(-50%);
   }
 
   .hpText {
+    left: 10%;
+    transform: translateY(-50%);
+    text-align: left;
     font-size: 5vw;
   }
+
+
 
   .typeText {
     font-size: 5vw;

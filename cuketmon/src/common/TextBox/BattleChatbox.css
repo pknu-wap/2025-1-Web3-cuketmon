@@ -43,6 +43,7 @@
 .rightPanel {
   position: relative; 
 }
+
 .skillDetail{
   width: 17.8vw;
   height: 10vw;  
@@ -64,6 +65,7 @@
 
 .skillDetail img{
   padding-left: 1vw;
+  height: 2vw;
 }
 
 
@@ -114,6 +116,6 @@
     padding: 0;
   }
   .skillDetail img{
-    width: 8vh;
+    height: 5vw;
   }
 }

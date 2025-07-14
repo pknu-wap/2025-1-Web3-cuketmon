@@ -77,26 +77,26 @@ const PickScreen = () => {
           <div className="cuketmonCard">
             <img src={current.image} alt={current.name} className="cuketmonImage" />
             <div className="HPbarContainer commonImageContainer">
-            <div className="typeText">
+            <div className="typeText" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
               <img
                 src={typeData[current.type1?.toLowerCase()]?.image_url}
                 alt={current.type1}
-                style={{ height: '1.5rem', marginRight: '0.5rem' }}
+                style={{ height: '1.5rem'}}
               />
               {current.type2 && typeData[current.type2.toLowerCase()]?.image_url && (
-                <>
-                  <span style={{ margin: '0 0.3rem' }}>|</span>
                   <img
                     src={typeData[current.type2.toLowerCase()]?.image_url}
                     alt={current.type2}
                     style={{ height: '1.5rem' }}
                   />
-                </>
               )}
               </div>
-              <img src="/PickScreen/HPBar.webp" alt="HP Bar" />
-              <div className="overlayText nameText">{current.name}</div>
-              <div className="overlayText hpText">{current.hp}/{current.hp}</div>
+              <div className="hpBarWrapper">
+                <img src="/PickScreen/HPBar.webp" alt="HP Bar" />
+                <div className="overlayText nameText">{current.name}</div>
+                <div className="overlayText hpText">{current.hp}/{current.hp}</div>
+              </div>
+
             </div>
 
             <div className="specContainer commonImageContainer">
