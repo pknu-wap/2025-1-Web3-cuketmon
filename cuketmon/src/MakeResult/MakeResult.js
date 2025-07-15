@@ -1,21 +1,49 @@
 import React, { useEffect, useState, useRef } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./MakeResult.css";
+import TextBox from '../common/TextBox/TextBox.js';
 
 function MakeResult() {
   const [cukemonImage, setCukemonImage] = useState("/MakeResultPage/movingEgg.gif");
   const [mentText, setMentText] = useState("어라...?");
   const eggRef = useRef(null);
   const navigate = useNavigate();
-  const location = useLocation();
-  const { monsterId } = location.state || {};
+  const token = localStorage.getItem('accessToken');
+  const monsterId  = localStorage.getItem('makeResultMonsterId');
   const API_URL = process.env.REACT_APP_API_URL;
-  const token = localStorage.getItem("jwt");
+
+  /*뒤로가기 시 커켓몬 삭제(커켓몬 생성 취소할 마지막 기회... (5/23 수정)) */
+  useEffect(() => {
+    window.history.pushState(null, "", window.location.pathname);
+     const handlePopState = async () => {
+    try {
+      await fetch(
+        `${API_URL}/api/monster/${monsterId}/release`,
+        {
+          method: "DELETE",
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+    } catch (err) {
+      console.error(err);
+    }
+    window.history.back();
+    window.removeEventListener("popstate", handlePopState);
+  };
+
+  window.addEventListener("popstate", handlePopState);
+  return () => {
+    window.removeEventListener("popstate", handlePopState);
+  };
+}, [ monsterId, token]);
 
   useEffect(() => {
     const delayAndFetch = () => {
       setTimeout(async () => {
-        if (!monsterId || !token) return;
+        if (monsterId==null){
+          console.alert("잘못된 접근입니다.");
+          navigate(`/make`);
+        }
 
         try{
           const response = await fetch(`${API_URL}/api/monster/${monsterId}/info`, {
@@ -26,17 +54,12 @@ function MakeResult() {
           });
 
           const data = await response.json();
-          console.log(data.image);
 
           if (data.image) {
             setCukemonImage(data.image);     
+            localStorage.setItem("cukemonMakeResultImage", data.image);  // 이미지 표시 방법 변경(로컬스토리지에서 꺼내쓰게 함) (5/13수정)
             setMentText("처음보는 포켓몬이 나타났다!");
-            navigate(`/NamePage`, {
-              state: {
-                monsterId: monsterId,
-                image: data.image,
-              },
-            });
+            navigate(`/NamePage`);
           } else {
             throw new Error("이미지 없음");
           }
@@ -49,7 +72,7 @@ function MakeResult() {
     };
 
     delayAndFetch();
-  }, [monsterId, API_URL, token, navigate]);
+  }, [ token, navigate]);
 
 
   return (
@@ -63,15 +86,17 @@ function MakeResult() {
           className="blinkEffect"
         />
       )}
-      <div className="chatBox">
-        <p
-          id="ment"
-          onClick={mentText.includes("도망") ? () => navigate("/Make") : undefined}
-          style={{ cursor: mentText.includes("도망") ? "pointer" : "default" }}
-        >
-          {mentText}
-        </p>
-      </div>
+ 
+ <div  className="chatBox">
+  <TextBox>
+  <textarea
+    id="ment"
+    readOnly
+    value={mentText}
+    onClick={mentText.includes("도망") ? () => navigate("/Make") : undefined}
+  />
+</TextBox>
+</div>
     </div>
   );
 }

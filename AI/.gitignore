@@ -1,14 +1,9 @@
 temp.py
 datasets
 venv
-
 *.csv
-output.txt
-des*.txt
+*.txt
 *.png
 __pycache__
 *.jsonl
 private
-results
-*.out
-*.log

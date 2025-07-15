@@ -2,10 +2,6 @@ from sqlalchemy.orm import Session
 from .models import MonsterTable, PromptTable
 from .schemas import MonsterCreate
 from fastapi import HTTPException
-from pathlib import Path
-import base64
-from PIL import Image
-from io import BytesIO
 
 def get_all_data(db: Session):
     return db.query(PromptTable).all()

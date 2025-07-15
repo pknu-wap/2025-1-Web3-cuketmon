@@ -1,0 +1,50 @@
+.typeTable {
+  position: fixed;
+  top: 2.5vh;
+  right: 5vw;
+  padding: 10px;
+  background: white;
+  border-radius: 2%;
+  z-index: 1000; /* 다른 요소 위로 */
+}
+
+.typeTable h1 {
+  font-size: 1.3vw;
+  padding-bottom: 1vh;
+  text-align: center;
+}
+.typeImage {
+  height: 40vh;
+  margin-bottom: 2vh;
+}
+
+.defenseTitle {
+  margin-bottom: 10px;
+}
+
+.effectVeryStrong {
+  color: darkred;
+}
+
+.effectStrong {
+  color: red;
+}
+
+.effectWeak {
+  color: blue;
+}
+
+.effectNone {
+  color: black;
+}
+
+.attackTitle {
+  color: black !important ;
+}
+
+/*모바일 반응형*/
+@media (max-width: 767px) {
+  .typeTable {
+    display: none;
+  }
+}

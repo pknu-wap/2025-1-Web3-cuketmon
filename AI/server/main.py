@@ -27,7 +27,13 @@ def process_images():
             # DB에서 최대 8개 가져오기
             monsters = get_all_data(db)[:batch_size]
             if monsters:
-                prompts = [m.description for m in monsters]
+                prompts = []
+                for m in monsters:
+                    type_info = m.type1
+                    if m.type2 is not None:
+                        type_info += f", {m.type2}"
+                    prompt = f"{type_info}, {m.description}"
+                    prompts.append(prompt)
                 inference_results = model_inference(prompts)
 
                 for monster, (prompt, img_bytes) in zip(monsters, inference_results):
@@ -54,18 +60,12 @@ def start_background_task():
     thread.start()
 
 
-# ============== FOR TEST =============
+# # ============== FOR TEST =============
 
-@app.get("/get_all_data")
-def read_all_data(db: Session = Depends(database.get_db)):
-    return crud.get_all_data(db)
-
-@app.post("/add_monster")
-def create_monster(monster: schemas.MonsterCreate, db: Session = Depends(database.get_db)):
-    db_monster = crud.add_monster(monster, db)
-    return {"message": "✅ 몬스터 추가 완료", "monster_id": db_monster.id}
-
-@app.delete("/delete_monster/{monster_id}")
-def remove_monster(monster_id: int, db: Session = Depends(database.get_db)):
-    crud.delete_monster(monster_id, db)
-    return {"message": f"✅ id {monster_id} 포켓몬 삭제 완료"}
+# @app.get("/get_all_data")
+# def read_all_data(db: Session = Depends(database.get_db)):
+# 	@@ -67,9 +68,4 @@ def create_monster(monster: schemas.MonsterCreate, db: Session = Depends(databas
+# @app.delete("/delete_monster/{monster_id}")
+# def remove_monster(monster_id: int, db: Session = Depends(database.get_db)):
+#     crud.delete_monster(monster_id, db)
+#     return {"message": f"✅ id {monster_id} 포켓몬 삭제 완료"}
