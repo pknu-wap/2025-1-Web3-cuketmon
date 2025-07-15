@@ -17,10 +17,11 @@ def model_inference(prompts):
     return: List[(prompt, PIL.Image.Image)]
     """
     def _send(prompt):
-        resp = requests.post(INFERENCE_API_URL, json={"prompt": f"a pokemon, {prompt}, no background"}, stream=True)
+        resp = requests.post(INFERENCE_API_URL, json={"prompt": f"a pokemon, type is {prompt.lower()}, no background"}, stream=True)
         if resp.status_code == 200 and resp.headers.get("Content-Type") == "image/png":
             img_bytes = resp.content
             img = Image.open(io.BytesIO(img_bytes)).convert("RGB")
+            print(prompt.lower())
             return prompt, img
         else:
             return prompt, None

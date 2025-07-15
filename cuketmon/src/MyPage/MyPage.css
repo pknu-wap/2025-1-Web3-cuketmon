@@ -5,34 +5,12 @@ span {
 .myPage {
   overflow: hidden;
   background-image: url("/public/MyPage/background.webp");
-  background-size: cover;
-  background-position: center;
+  background-size: contain;
   background-repeat: no-repeat;
+  background-position: center;
   bottom: 0;
-  width: 100%;
-  height: 100%;
-  position: absolute;
-}
-
-.item img {
-  position: relative;
-  top: 0;
-  left: 0;
-  width: 25px;
-  height: 25px;
-  padding-right: 0;
-}
-
-.item span {
-  padding-right: 10px;
-}
-
-.item {
-  position: absolute;
-  color: #efc15c;
-  left: 1%;
-  top: 0%;
-  font-size: 20px;
+  width: 100vw;
+  height: 100vh;
 }
 
 .cukemonImg img {
@@ -40,23 +18,24 @@ span {
   transition: transform 1s ease-in-out;
   width: clamp(150px, 20%, 300px);
   left: 40vw;
-  top: 24vh;
+  top: 29vh;
+  pointer-events: none;
 }
 
 .cucketmonProfile {
-  background-image: url("/public/MyPage/cukemonProfile.webp");
-  background-size: 100% 110%;
-  border: 2px solid #bab8b8;
-  width: 22%;
+  width: 317px;
+  height: 103px;
   text-align: center;
   position: relative;
-  top: 37%;
-  left: 72%;
-  background-color: #d9d9d9;
-  margin-bottom: 3%;
+  top: 13vh;
+  left: 39vw;
+  margin-bottom: 1vh;
   padding-bottom: 0.5%;
   padding-top: 1%;
   font-family: "NeoDunggeunmo";
+  background-image: url("/public/MyPage/cukemonProfile.webp");
+  background-size: cover;
+  user-select: none;
 }
 
 .cucketmonProfile img {
@@ -65,98 +44,39 @@ span {
 }
 
 .buttons {
-  display: flex;
+  position: absolute;
+  color: white;
+  left: 76vw;
+  top: 37vh;
+  font-size: 1vw;
+  user-select: none;
 }
 
-#feedButton,
-#playButton {
-  background: none;
-  background-image: url("/public/button.png");
-  background-size: cover;
-  border: none;
-  cursor: pointer;
+#feed,
+#play {
+  width: 5.5vw;
+  height: 5.5vw;
+  margin-bottom: 2vh;
+}
+
+.feedCukemonButton span,
+.playCukemonButton span {
   position: relative;
-  left: 71vw;
-  top: 35vh;
-  display: inline-block;
-  width: 11vw;
-  height: 5vw;
-  margin-right: 1.5%;
-}
-
-#feedButton:hover,
-#playButton:hover {
-  background-image: url("/public/button-hover.png");
-  background-size: cover;
-}
-
-#buttonText1 {
-  position: absolute;
-  top: 55.3%;
-  left: 75.5vw;
-  font-size: 18px;
-  color: white;
-}
-
-#buttonText2 {
-  color: white;
-  position: absolute;
-  pointer-events: none;
-  font-size: 18px;
-  top: 55.3%;
-  left: 88vw;
+  left: -3.5vw;
+  top: -1.6vw;
 }
 
 #releaseButton {
   width: 4%;
-  margin-bottom: 1%;
-  margin-left: 1%;
-  position: relative;
-  top: 50vh;
+  position: absolute;
+  top: 45vh;
+  left: 19vw;
 }
 
+.feedCukemonButton:hover,
+.playCukemonButton:hover,
 #releaseButton:hover {
   filter: brightness(0.7);
-}
-
-/*밥주기 움직임*/
-.moveImage {
-  animation: moveUpDown 3s ease-in-out;
-}
-
-@keyframes moveUpDown {
-  0% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-20px);
-  }
-  100% {
-    transform: translateY(0);
-  }
-}
-
-/*놀아주기 움직임*/
-.shakeImage {
-  animation: shakeLeftRight 3s ease-in-out;
-}
-
-@keyframes shakeLeftRight {
-  0% {
-    transform: translateX(0) rotate(0deg);
-  }
-  25% {
-    transform: translateX(-10px) rotate(-10deg);
-  }
-  50% {
-    transform: translateX(10px) rotate(10deg);
-  }
-  75% {
-    transform: translateX(-10px) rotate(-10deg);
-  }
-  100% {
-    transform: translateX(0) rotate(0deg);
-  }
 }
 
 /*모바일 반응형*/
@@ -165,34 +85,42 @@ span {
   body {
     height: 100%;
     padding: 0;
+    left: 0;
+    top: 0;
   }
-
   .myPage {
     background-image: url("/public/MyPage/backgroundMobile.webp");
-    flex-direction: column;
-    justify-content: center;
-    padding-top: 0%;
-    height: 100%;
+    padding: 0%;
+    height: 100vh;
+    background-size: cover;
   }
 
-  .item {
-    padding-top: 3%;
-    margin-bottom: 145.5%;
+  .buttons {
+    top: 13vh;
+    white-space: nowrap;
+  }
+
+  #feed,
+  #play {
+    width: 17vw;
+    height: 17vw;
+    margin-bottom: 1vh;
   }
 
   #cuketmonImage {
     position: absolute;
-    top: 37%;
+    top: 53vh;
     width: 35%;
     left: 34%;
   }
 
   .cucketmonProfile {
     position: absolute;
-    top: 57.5%;
-    left: 34%;
+    top: 37vh;
+    left: 26vw;
     margin-left: 0;
-    width: 35%;
+    width: 200px;
+    height: 65px;
     margin-top: 5%;
   }
 
@@ -204,43 +132,21 @@ span {
   .cucketmonProfile span {
     width: 10px;
     height: 10px;
+    font-size: 10px;
   }
 
-  .buttons {
-    width: 100%;
-  }
-
-  /*먹이주기*/
-  #buttonText1 {
-    font-size: 12.5px;
-    top: 74.3vh;
-    left: 33vw;
-  }
-  #feedButton {
-    position: absolute;
-    top: 72vh;
-    left: 20vw;
-    height: 50px;
-    width: 120px;
-  }
-
-  /*놀아주기*/
-  #buttonText2 {
-    font-size: 12.5px;
-    top: 74.3vh;
-    left: 65vw;
-  }
-  #playButton {
-    position: absolute;
-    top: 72vh;
-    left: 52vw;
-    height: 50px;
-    width: 120px;
+  .feedCukemonButton span,
+  .playCukemonButton span {
+    font-size: 4vw;
+    left: -11.5vw;
+    top: -1.8vh;
+    font-size: 4vw;
   }
 
   #releaseButton {
     position: absolute;
-    top: 83%;
+    top: 14.5vh;
+    left: 4vw;
     width: 12%;
   }
 }

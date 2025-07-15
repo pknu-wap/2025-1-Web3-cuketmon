@@ -6,22 +6,18 @@ import { useAuth } from '../AuthContext';
 function MyPage() {
   const [toyCount, setToyCount] = useState();
   const [feedCount, setFeedCount] = useState();
-  const [isFed,setIsFed] = useState(false);
-  const [isPlayed, setIsPlayed] = useState(false);
   const [loading, setLoading] = useState(true);
   const [cukemonData, setCukemonData] = useState(null);
   const [monsterId, setMonsterId] = useState(null);
   const [monsters, setMonsters] = useState([]); 
   const API_URL = process.env.REACT_APP_API_URL;
   const { token: contextToken } = useAuth();
-  const token = contextToken || localStorage.getItem('jwt');
+  const token = contextToken || localStorage.getItem('accessToken');
   const isLoadingRef = useRef(false);
 
-  
 
   /*유저 소유 커켓몬 조회하기 */
   const loadCukemon = async () => {
-    if (!token) return;
     try {
       const res = await fetch(`${API_URL}/api/trainer/monsters`, {
         headers: { 'Authorization': `Bearer ${token}` },
@@ -29,7 +25,6 @@ function MyPage() {
       const data = await res.json();
       const monsterIds = Array.isArray(data) ? data : [];  
       setMonsters(monsterIds);     
-      console.log(monsterIds)
     } catch (error) {
       console.error("커켓몬 로딩에 실패했습니다.", error.message);
     }
@@ -43,6 +38,7 @@ function MyPage() {
       setMonsterId(0);
     }
   }, [monsters]);
+  
 
   /*먹이, 장난감 기저 상태 불러오기*/
   const loadTrainerData = async () => {
@@ -64,7 +60,6 @@ function MyPage() {
     if (monsterId == null  || monsters.length === 0) return;
     try {
       const currentMonsterId = monsters[monsterId]; 
-      console.log(currentMonsterId);
       await fetch(`${API_URL}/api/monster/${currentMonsterId}/feed`, {
         method: "POST",
         headers: { 'Authorization': `Bearer ${token}` },
@@ -86,7 +81,6 @@ function MyPage() {
     if (monsterId == null  || monsters.length === 0) return;
     try {
       const currentMonsterId = monsters[monsterId]; 
-      console.log(currentMonsterId);
       await fetch(`${API_URL}/api/monster/${currentMonsterId}/play`, {
         method: "POST",
         headers: { 'Authorization': `Bearer ${token}` },
@@ -125,32 +119,27 @@ function MyPage() {
   useEffect(() => {
       fetchData();
   }, [monsterId])
-  
 
-  /*먹이,놀아 주기 애니메이션*/
-  const handleActionClick = async (actionFn, setActionState) => {
-    setActionState(true);
-    await actionFn();
-    setTimeout(() => setActionState(false), 1000);
-  };
+/*방출*/
+const releaseCukemon = async () => {
+  if (monsterId == null || monsters.length === 0) return;
+  const confirmRelease = window.confirm("해당 커켓몬을 정말로 놓아주실건가요?");
+  if (!confirmRelease) return;
+  try {
+    const currentMonsterId = monsters[monsterId];
+    const res = await fetch(`${API_URL}/api/monster/${currentMonsterId}/release`, {
+      method: "DELETE",
+      headers: { 'Authorization': `Bearer ${token}` },
+    });
+    if (!res.ok) throw new Error(`삭제 실패: ${res.status}`);
+    alert("커켓몬이 원래 있던 곳으로 돌아갔습니다.");
+    loadCukemon();
+  } catch (err) {
+    alert("에러 발생: " + err.message);
+  }
+};
 
-  /*방출 */
-  const releaseCukemon = async () => {
-    if (monsterId == null  || monsters.length === 0) return;
-    try {
-      const currentMonsterId = monsters[monsterId]; 
-      const res = await fetch(`${API_URL}/api/monster/${currentMonsterId}/release`, {
-        method: "DELETE",
-        headers: { 'Authorization': `Bearer ${token}` },
-      });
-      if (!res.ok) throw new Error(`삭제 실패: ${res.status}`);
-      alert("커켓몬이 원래 있던곳으로 돌아갔습니다.");
-      loadCukemon();
-    } catch (err) {
-      alert("에러 발생: " + err.message);
-    }
-  };
-
+/*desktop-커켓몬 조회 */
   useEffect(() => {
     const handleKeyPress = (event) => {
       if (event.key === 'ArrowLeft') {
@@ -171,8 +160,6 @@ function MyPage() {
   /*커켓몬 정보 불러오기 */ 
   const loadCukemonData = async () => {
     const currentMonsterId = monsters[monsterId];
-    console.log("현재 monsterId:", currentMonsterId);
-    console.log("monsters 배열:", monsters);
     try {
       const res = await fetch(`${API_URL}/api/monster/${currentMonsterId}/info`, {
         headers: { 'Authorization': `Bearer ${token}` },
@@ -234,40 +221,35 @@ function MyPage() {
 
   return (
     <div className='myPage'>
-      <div className='item'>
-        {loading ? (
-          <span>로딩 중...</span>
-        ) : (
-          <div>
+      <div className='buttons'>
+
+          <div className='feedCukemonButton' onClick={feedCukemon}>
             <img src='/MyPage/feed.webp' id='feed' alt="밥 아이콘" />
             <span>{feedCount}</span>
-            <img src='/MyPage/toy.webp' alt="장난감 아이콘" />
-            <span>{toyCount}</span>
           </div>
-        )}
-      </div>
 
+            <div className='playCukemonButton'onClick={playCukemon}>
+            <img src='/MyPage/toy.webp' id='play'alt="장난감 아이콘" />
+            <span>{toyCount}</span>
+            </div>
+      </div>
+   
       <div className='cukemonImg'>
         <img src={cukemonData?.img} alt="Cukemon" id='cuketmonImage' />
       </div>
 
       <div className='cucketmonProfile'>
-        {loading ? <p>로딩 중...</p> : <p>{cukemonData?.name || "이름 없음"}</p>}
-        <div id='relevanceCount'>
-          <img src='/MyPage/relevance.webp' alt="친밀도 아이콘" />
-          <span>{cukemonData?.affinity ?? "로딩중.."}</span>
-        </div>
+          {loading ? <p>로딩 중...</p> : <p>{cukemonData?.name || "이름 없음"}</p>}
+          <div id='relevanceCount'>
+            <img src='/MyPage/relevance.webp' alt="친밀도 아이콘" />
+            <span>{cukemonData?.affinity ?? "로딩중.."}</span>
+          </div>
       </div>
+      
 
-      <div className="buttons">
-        <button id="feedButton" onClick={() => handleActionClick(feedCukemon, setIsFed)} />
-        <button id="playButton" onClick={() => handleActionClick(playCukemon, setIsPlayed)} />
-      </div>
-      <span id="buttonText1">먹이주기</span>
-      <span id="buttonText2">놀아주기</span>
 
       <img src='/MyPage/releaseButton.webp' id="releaseButton" onClick={releaseCukemon} />
-      <MenuBar />
+            <MenuBar centered={true}/>
     </div>
   );
 }

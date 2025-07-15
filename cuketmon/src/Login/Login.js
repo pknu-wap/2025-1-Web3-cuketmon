@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';  
 import './Login.css';
 import { useAuth } from '../AuthContext';
+import PokeStyleButton from '../common/PokeStyleButton/PokeStyleButton.js'
 
 function Login() {
   const navigate = useNavigate();
@@ -14,24 +15,28 @@ function Login() {
 
   useEffect(() => {
     const queryParams = new URLSearchParams(window.location.search);
+    console.log(queryParams);
     const token = queryParams.get('token'); 
-    console.log('카카오 로그인 후 받은 토큰:', token);
-
+    console.log(token)
     if (token) {
       localStorage.setItem('accessToken', token); 
       setToken(token); 
       window.history.replaceState({}, document.title, "/make");
+      
       navigate('/make', { replace: true });
     } else {
       console.error('Token 값이 존재하지 않습니다.');
     }
-  }, [navigate, API_URL, setToken]);
+  }, [navigate, API_URL,setToken]);
 
   return (
     <div className="login">
       <img src="../LoginPage/logo.webp" id="webLogo" alt="웹 로고" />
-      <button className="kakaoButton" onClick={handleLogin} />
-      <span id='loginStart'>카카오 로그인으로 시작</span> 
+      <div className='loginButton'>
+     <button onClick={handleLogin}>
+      <div className='kakaoLoginText'>카카오 로그인으로 시작</div>
+      </button>
+     </div>
     </div>
   );
 }

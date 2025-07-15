@@ -4,7 +4,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background: url("/public/LoginPage/background.webp") no-repeat center center
+  background: url("/public/LoginPage/background1.webp") no-repeat center center
     fixed;
   background-size: contain;
   background-color: black;
@@ -12,38 +12,34 @@
 
 #webLogo {
   position: absolute;
-  top: 5vh;
-  width: 30vw;
+  top: 7vh;
+  width: 45vw;
+  pointer-events: none;
 }
 
-.kakaoButton {
+.loginButton {
   position: relative;
-  width: 21vw;
-  height: 8vw;
-  margin: 5vh auto;
-  margin-top: 60vh;
-  background: none;
-  background-image: url("/public/button.png");
+  top: 27.2vh;
+  width: 100vw;
+  text-align: center;
+}
+
+.loginButton button {
+  height: 60px;
+  width: 330px;
+  background: url("/public/LoginPage/kakaobutton.webp");
   background-size: cover;
-  background-position: center;
+  outline: none;
   border: none;
-  cursor: pointer;
-  font-weight: bold;
-  color: white;
-  text-align: right;
-  transition: background-image 0.3s ease;
+  font-size: 15px;
 }
 
-#loginStart {
-  color: white;
-  position: absolute;
-  top: 76.5%;
-  left: 47.5%;
-  font-size: 1vw;
+.kakaoLoginText {
+  padding-left: 3vw;
 }
 
-.kakaoButton:hover {
-  background-image: url("/public/button-hover.png");
+.loginButton button:hover {
+  filter: brightness(90%);
 }
 
 /* 반응형 */
@@ -55,28 +51,20 @@
   }
 
   .login {
-    background-position: center;
+    background: url("/public/LoginPage/mobileBackground.webp") no-repeat center
+      center;
+    background-size: 100vw 100vh;
   }
 
   #webLogo {
-    width: 80%;
-    top: 10vh;
+    width: 87vw;
+    top: 31vh;
   }
-
-  .kakaoButton {
-    width: 50vw;
-    height: 20vw;
-    margin-top: 70vh;
-    font-size: 4vw;
+  .loginButton button {
+    width: 240px;
+    height: 44px;
   }
-
-  .kakaoButton:hover {
-    font-size: 5vw;
-  }
-
-  #loginStart {
-    font-size: 10px;
-    top: 82vh;
-    left: 44vw;
+  .kakaoLoginText {
+    padding-left: 6vw;
   }
 }

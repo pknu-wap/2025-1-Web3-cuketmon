@@ -1,0 +1,87 @@
+.typeTable {
+  position: fixed;
+  top: 2vh;
+  right: 5vw;
+  width: 320px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  z-index: 10;
+}
+
+.typeImageBox,
+.typeDescriptionBox,
+.typeSectionBox {
+  background: white;
+  border-radius: 10px;
+  padding: 12px;
+  width: 100%;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+.typeImage {
+  width: 90%;
+  max-width: 300px;
+  height: auto;
+  margin: 1rem 0;
+}
+
+.typeGuide {
+  font-size: 1rem;
+  color: #333;
+  margin-top: 0.5rem;
+}
+.typeGuide {
+  margin-top: 5px;
+  font-size: 0.9rem;
+  color: black;
+}
+
+.typeTable h1 {
+  font-size: 1.2rem;
+  padding-bottom: 1vh;
+  text-align: center;
+  font-weight: bold;
+}
+
+.typeImage {
+  height: 40vh;
+  margin-bottom: 2vh;
+  object-fit: contain;
+}
+
+.defenseTitle,
+.attackTitle {
+  margin-bottom: 10px;
+  color: black;
+  font-weight: bold;
+}
+
+.typeCalculatorPlaceholder {
+  background: white;
+  padding: 24px;
+  border-radius: 10px;
+  /* ❌ border 제거 */
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  width: 100%;
+  max-width: 400px;
+  margin-top: 5vh; /* ✅ 아래로 내리기 */
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* 효과 색상 클래스 */
+.effectVeryStrong { color: darkred; }
+.effectStrong     { color: red; }
+.effectWeak       { color: blue; }
+.effectNone       { color: black; }
+
+/* 모바일 반응형: 완전히 숨김 */
+@media (max-width: 767px) {
+  .typeTable {
+    display: none;
+  }
+}

@@ -1,41 +1,70 @@
 .resultPage {
-  background-image: url("/public/MakePage/background.webp");
-  background-size: cover;
-  background-position: center;
+  background-image: 
+  url("/public/MakeResultPage/ResultBack.webp");
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  justify-content: center;
+  background-size: contain;
   background-repeat: no-repeat;
+  background-position: center;
+
   bottom: 0;
   width: 100vw;
   height: 100vh;
-  animation: blinkEffect 1s ease-in-out 2;
+  overflow: hidden;
+
+  image-rendering: pixelated;
+
 }
 
 .resultPage #egg {
   position: relative;
-  width: 20%;
-  padding-top: 15%;
-  left: 40%;
+  width: 180px; /* 고정 크기 */
+  height: auto;
+  margin-bottom: 30px;
+  image-rendering: pixelated;
 }
 
-.chatBox {
-  background-image: url("/public/MakeResultPage/chatBox.webp");
-  width: 60%;
-  height: 25%;
-  margin-left: 20%;
-  background-size: contain;
-  background-position: center;
-  background-repeat: no-repeat;
+.showHpBar{
+
+}
+.showExtraImage {
+  background-image: url("/public/MakeResultPage/effe.webp");
   position: relative;
+  width: 20%;
+  padding-top: 23%;
+  left: 36%;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 25%;
 }
 
-.chatBox #ment {
-  color: white;
-  font-size: 20px;
-  font-weight: bold;
-  text-align: center;
-  position: absolute;
-  top: 20%;
-  left: 0%;
+.chatBox .whiteBox {
   width: 100%;
+}
+.chatBox {
+  width: 500px;  
+  max-width: 90vw;
+  position: relative;
+  right: 195px;
+  bottom: -12%; 
+  margin: 0 auto;
+  
+}
+
+.chatBox textarea {
+  padding: 12px;
+  text-align: left;
+  font-size: 40px;
+  background-color: white;
+  height: 60px;            
+  overflow: hidden;
+  border-radius: 8px;
+  width: 150%;
 }
 
 /*깜빡임 에니메이션*/
@@ -56,19 +85,44 @@
 
 /* 반응형 */
 @media (max-width: 767px) {
+ #root,
+  body {
+    height: 100%;
+    padding: 0;
+  }
+
+  .resultPage {
+    background-image: url("/public/MakeResultPage/M_R.webp");
+    flex-direction: column;
+    justify-content: center;
+    padding-top: 0%;
+    height: 100%;
+  }
+
   .resultPage #egg {
-    top: 37vh;
-    left: 25vw;
+    top: 11vh;
+    left: 20vw;
     width: 50%;
   }
 
-  .chatBox {
-    position: relative;
-    width: 100vw;
-    top: 30vh;
-    margin-left: 0;
-  }
-  .chatBox #ment {
-    top: 33%;
+.chatBox {
+  width: 50vw;
+  position: relative;
+  left: 5%;
+  bottom: -25%;
+}
+.chatBox textarea {
+  padding: 12px;
+  text-align: left;
+  font-size: 12px;
+  background-color: white;
+  height: 10px;            
+  resize: none;
+  overflow: hidden;
+  border: none;
+  border-radius: 8px;
+  width:100%;
+  box-sizing: border-box;
+
   }
 }
