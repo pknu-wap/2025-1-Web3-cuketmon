@@ -1,38 +1,63 @@
-# 🌟 나만의 포켓몬을 만들어보세요! 🌟
+# 🌟 나만의 포켓몬을 만들어 보아요, Cukemon! 🌟
+![Image](https://github.com/user-attachments/assets/35f7d2a9-df3b-4974-abac-da1afc3051fb)
 
-## 🎨 커스터마이징 포켓몬 생성
+## 💡Intro
 
-사용자 맞춤형 포켓몬을 AI diffusion 모델로 생성할 수 있습니다!  
-여러분만의 독특한 커스터마이징 포켓몬(커켓몬)을 만들어 보세요!
+커켓몬 월드에 오신 걸 환영합니다!
+카카오 로그인으로 간편하게 시작하고, 나만의 특별한 커스터마이징 포켓몬, 커켓몬을 만들어 보세요!
+AI 디퓨전 모델을 활용해 여러분만의 독창적인 커켓몬을 생성하고 
+다양한 트레이너들과의 배틀을 즐길 수 있습니다!
+
+전투에서 승리하며 랭킹 시스템을 통해 최고의 트레이너 자리에 도전해보세요.
+또한 마이페이지에서는 커켓몬에게 먹이를 주고 놀아주며 친화도를 높일 수 있어요.
+사랑과 관심을 쏟을수록 커켓몬은 더 행복해지고, 더욱 특별한 존재가 됩니다! 
+
+간단한 접근, 직관적인 인터페이스, 그리고 무한한 커스터마이징의 재미!
+커켓몬은 누구나 쉽게 즐길 수 있는 새로운 경험입니다.
+
+카카오 로그인으로 간편하게 시작!
+지금 바로, 여러분만의 커켓몬 여정을 시작해보세요!
+
+🚲 [지금 당장 떠나기](https://cukemon.netlify.app/)
+
+## 🔐간편한 로그인
+![Image](https://github.com/user-attachments/assets/721122c1-747d-4dc2-b11c-b2c1ab4a2695)
+
+
+## 🎨 나만의 커켓몬 생성
+![Image](https://github.com/user-attachments/assets/4adcde19-7f08-4dc3-bfed-0d513dca413a)
+
 
 ## ⚔️ 전투 시스템
+![Image](https://github.com/user-attachments/assets/a1eb9887-7fc0-4d24-b6e5-a9ddd125de7a)
 
-나만의 커켓몬을 이끌고 다른 트레이너와 배틀을 즐겨보세요!  
-커켓몬을 더욱 강하게 키워 전략적인 대결을 펼쳐 보세요.
 
 ## 🏆 랭킹 시스템
+![Image](https://github.com/user-attachments/assets/737d6268-93b3-4221-a626-af024ccb8c6a)
 
-배틀에서 승리한 트레이너만이 오를 수 있는 순위 시스템!  
-누가 가장 강력한 커켓몬 트레이너인지 확인해보세요!
 
 ## 🏠 마이페이지
+![Image](https://github.com/user-attachments/assets/682ce306-eaa6-4ec6-833e-9f515dd28396)
 
-나만의 특별한 커켓몬을 키우며 즐길 수 있습니다.  
-먹이를 주고 놀아주면서 친화도를 올려보세요!  
-사랑과 관심을 쏟을수록 커켓몬이 더욱 행복해집니다! 😊💕
 
-## 🔗 프로젝트 링크
+  ## ✨ Stack
+### Front End
+<img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=white">
 
-- **디자인 시안:** [Figma 링크](#)
-  지금 바로 커켓몬과 함께 특별한 추억을 만들어 보세요! 🚀
+### Back End
+<img src="https://img.shields.io/badge/Spring-6DB33F?style=for-the-badge&logo=Spring&logoColor=white"/>  <img src="https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white"> <
 
+### Coop
+<img src="https://img.shields.io/badge/figma-E7157B?style=for-the-badge&logo=figma&logoColor=white"> <img src="https://img.shields.io/badge/github-000000?style=for-the-badge&logo=github&logoColor=white"> <img src="https://img.shields.io/badge/notion-000000?style=for-the-badge&logo=notion&logoColor=white"> 
+
+ 
 ---
 
 ## 👥 팀 구성
 
 | **PM,FE,DESIGNER**                      | **FE**                                  | **BE**                                  | **BE**                                  | **AI**                                  |
 | --------------------------------------- | --------------------------------------- | --------------------------------------- | --------------------------------------- | --------------------------------------- |
-| ![image1](cuketmon/public/profile1.png) | ![image2](cuketmon/public/profile2.png) | ![image3](cuketmon/public/profile3.png) | ![image4](cuketmon/public/profile4.png) | ![image5](cuketmon/public/profile5.png) |
+| ![image1](https://github.com/user-attachments/assets/311de4ec-b531-4345-9ff0-ebd5a6345e86) | ![image2](https://github.com/user-attachments/assets/7552aa1f-2e86-4844-af1c-18675ea011c1) | <img src="{(https://github.com/user-attachments/assets/e1adcb30-0e5f-4922-8ef2-9710ed443b30)}"  width="157" height="157"/> | ![image4](https://github.com/user-attachments/assets/677731c1-79a4-47bf-90f6-0072f325fa34) | ![image5](https://github.com/user-attachments/assets/7bbbf059-fe9f-4b27-bdb7-72441cfe1ab5) |
 | 이찬이                                  | 정승오                                  | 박현                                    | 조강래                                  | 박연수                                  |
 
 ---
