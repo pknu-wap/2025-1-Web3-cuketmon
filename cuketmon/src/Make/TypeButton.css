@@ -1,0 +1,35 @@
+
+.typeButtonGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.typeBtn {
+  padding: 10px 18px;
+  border: 2px solid;
+  border-radius: 10px;
+  background-color: white;
+  font-family: "NeoDunggeunmo", sans-serif;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.typeBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+@media (max-width: 768px) {
+  .typeBtn {
+    font-size: 0.9rem;
+    padding: 8px 14px;
+  }
+  .typeButtonGrid {
+    gap: 8px;
+  }
+}

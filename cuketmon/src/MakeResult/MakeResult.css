@@ -1,29 +1,55 @@
 .resultPage {
-  background-image: url("/public/MakePage/background.webp");
-  background-size: cover;
-  background-position: center;
+  background-image: 
+  url("/public/MakeResultPage/ResultBack.webp");
+  background-size: contain;
   background-repeat: no-repeat;
+  background-position: center;
   bottom: 0;
   width: 100vw;
   height: 100vh;
-  animation: blinkEffect 1s ease-in-out 2;
+  overflow: hidden;
+
 }
 
 .resultPage #egg {
   position: relative;
+  width: 180px;
+  padding-top: 269px;
+  left: 685px;
+}
+
+.showHpBar{
+
+}
+.showExtraImage {
+  background-image: url("/public/MakeResultPage/effe.webp");
+  position: relative;
   width: 20%;
-  padding-top: 15%;
-  left: 40%;
+  padding-top: 23%;
+  left: 36%;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 25%;
 }
 
 .chatBox {
-  width: 80vw;
+  width: 500px;
   position: relative;
-  margin-left: 10vw;
+  right: -325px;
+  bottom: -15.4%;
+  
 }
+
 .chatBox textarea {
-  padding-bottom: 9vh;
-  text-align: center;
+  padding: 12px;
+  text-align: left;
+  font-size: 40px;
+  background-color: white;
+  height: 60px;            
+  overflow: hidden;
+  border-radius: 8px;
+  width: 150%;
 }
 
 /*깜빡임 에니메이션*/
@@ -44,15 +70,44 @@
 
 /* 반응형 */
 @media (max-width: 767px) {
+ #root,
+  body {
+    height: 100%;
+    padding: 0;
+  }
+
+  .resultPage {
+    background-image: url("/public/MakeResultPage/M_R.webp");
+    flex-direction: column;
+    justify-content: center;
+    padding-top: 0%;
+    height: 100%;
+  }
+
   .resultPage #egg {
-    top: 37vh;
-    left: 27vw;
+    top: 11vh;
+    left: 20vw;
     width: 50%;
   }
 
-  .chatBox {
-    width: 100vw;
-    margin-left: 0;
-    top: 38vh;
+.chatBox {
+  width: 50vw;
+  position: relative;
+  left: 5%;
+  bottom: -25%;
+}
+.chatBox textarea {
+  padding: 12px;
+  text-align: left;
+  font-size: 12px;
+  background-color: white;
+  height: 10px;            
+  resize: none;
+  overflow: hidden;
+  border: none;
+  border-radius: 8px;
+  width:100%;
+  box-sizing: border-box;
+
   }
 }
