@@ -1,132 +1,67 @@
-span {
-  font-family: "NeoDunggeunmo";
-}
-
-html, body {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  width: 100%;
-  position: relative; 
-}
-
 .namePage {
+  background-image: url("/public/NamePage/background.webp");
+  width: 100%;
+  height: 100%;
+  background-repeat: none;
+  background-size: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
 
-  background-image: url("/public/MakePage/back1.webp");
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden;
-
+.nameInputBox {
   position: relative;
-  z-index: 0; 
-}
-
-.yourName1,.yourName2{
-    color: white;
-    position: absolute;
-    font-family: "NeoDunggeunmo", sans-serif;
-    font-size: clamp(8px, 4vw, 25px);
-    font-weight: 800;
-    line-height: 50px;
-    top: 35%;
-    left: 30%;
-
-    text-shadow:
-   -3px -3px 0 rgba(28, 82, 82, 1), -3px -2px 0 rgba(28, 82, 82, 1), -3px -1px 0 rgba(28, 82, 82, 1),
-    -3px 0px 0 rgba(28, 82, 82, 1), -3px 1px 0 rgba(28, 82, 82, 1), -3px 2px 0 rgba(28, 82, 82, 1),
-    -3px 3px 0 rgba(28, 82, 82, 1), 3px -3px 0 rgba(28, 82, 82, 1), 3px -2px 0 rgba(28, 82, 82, 1),
-    3px -1px 0 rgba(28, 82, 82, 1), 3px 0px 0 rgba(28, 82, 82, 1), 3px 1px 0 rgba(28, 82, 82, 1), 3px 2px 0 rgba(28, 82, 82, 1),
-    3px 3px 0 rgba(28, 82, 82, 1), -2px -3px 0 rgba(28, 82, 82, 1), -1px -3px 0 rgba(28, 82, 82, 1),
-    0px -3px 0 rgba(28, 82, 82, 1), 1px -3px 0 rgba(28, 82, 82, 1), 2px -3px 0 rgba(28, 82, 82, 1),
-    -2px 3px 0 rgba(28, 82, 82, 1), -1px 3px 0 rgba(28, 82, 82, 1), 0px 3px 0 rgba(28, 82, 82, 1), 1px 3px 0 rgba(28, 82, 82, 1),
-    2px 3px 0 rgba(28, 82, 82, 1);
-
-}
-
-
-.yourName1 {
-  left: 35%;
-}
-
-.yourName2 {
-  left: 80%;
+  background-image: url("/public/NamePage/nameBox.webp");
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: 80vw;
+  max-width: 860px;
+  height: auto;
+  aspect-ratio: 3.4 / 1;
+  margin: 0 auto;
+  top: 25%;
 }
 
 .namePage .cukemonImage {
   width: 30%;
   position: absolute;
   top: 0%;
-  left: 5%;
+  left: 10%;
 }
-.cukemonImage {
-  width: 30%;
+
+.nameInputBox p {
   position: absolute;
-  top: 0%;
-  left: 5%;
-}
-
-/* 배경 */
-.nameInputBox {
-  position: fixed;             
-  top: 268px;                  
-  left: 50%;                 
-  transform: translateX(-50%);  
-  width: 1090px;                 
-  height: 205px;            
-
-  background-image: url("/public/NamePage/Input.webp");
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: contain;
-  z-index: 5;          
-
-}
-
-/* 내부 글자 */
-.nameInput input::placeholder {
-  letter-spacing: 0.4em;
-  color: white;
+  font-size: clamp(20px, 3vw, 40px);
+  left: 55%;
+  top: 8%;
+  font-weight: bold;
   font-family: "NeoDunggeunmo";
-  font-size: clamp(8px, 4vw, 25px);
-  font-weight: 800px;
-  line-height: 50px;
-  top: 3%;
-  left: 15%;
-  text-shadow:
-   -3px -3px 0 rgba(28, 82, 82, 1), -3px -2px 0 rgba(28, 82, 82, 1), -3px -1px 0 rgba(28, 82, 82, 1),
-    -3px 0px 0 rgba(28, 82, 82, 1), -3px 1px 0 rgba(28, 82, 82, 1), -3px 2px 0 rgba(28, 82, 82, 1),
-    -3px 3px 0 rgba(28, 82, 82, 1), 3px -3px 0 rgba(28, 82, 82, 1), 3px -2px 0 rgba(28, 82, 82, 1),
-    3px -1px 0 rgba(28, 82, 82, 1), 3px 0px 0 rgba(28, 82, 82, 1), 3px 1px 0 rgba(28, 82, 82, 1), 3px 2px 0 rgba(28, 82, 82, 1),
-    3px 3px 0 rgba(28, 82, 82, 1), -2px -3px 0 rgba(28, 82, 82, 1), -1px -3px 0 rgba(28, 82, 82, 1),
-    0px -3px 0 rgba(28, 82, 82, 1), 1px -3px 0 rgba(28, 82, 82, 1), 2px -3px 0 rgba(28, 82, 82, 1),
-    -2px 3px 0 rgba(28, 82, 82, 1), -1px 3px 0 rgba(28, 82, 82, 1), 0px 3px 0 rgba(28, 82, 82, 1), 1px 3px 0 rgba(28, 82, 82, 1),
-    2px 3px 0 rgba(28, 82, 82, 1);
 }
 
 .nameInput {
   display: flex;
   position: absolute;
-  left: 54%;
-  top: 45%;
+  left: 44%;
+  top: 40%;
 }
 
 .nameInput input {
-  width: 20vw;
+  width: 18vw;
   outline: none;
   border: none;
   background: none;
   font-size: clamp(8px, 2vw, 25px);
   position: absolute;
   cursor: none;
-  color:white;
+  margin-left: 42%;
+  border-bottom: 2px dotted black;
+  color: #525252;
   font-family: "NeoDunggeunmo";
 }
 
 .nameInput {
-  font-size: clamp(8px, 5vw, 30px);
+  font-size: clamp(8px, 1vw, 30px);
+  padding-left: 2.5%;
 }
 
 .nameInput input {
@@ -134,76 +69,74 @@ html, body {
   top: 0%;
 }
 
+#remainWord {
+  font-size: clamp(7px, 1vw, 12px);
+  position: relative;
+  left: 20vw;
+  top: 2vh;
+}
+
 .choiceButtons {
   position: absolute;
-  top: 70vh;     /* 고정된 비율 위치 */
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  gap: 10px;
-  z-index: 10;
+  color: white;
+  font-size: clamp(3px, 1.5vw, 15px);
+  top: 60%;
+  left: 48%;
+}
+
+#remake,
+#bringToMypage {
+  width: 33%;
+  margin-right: 3%;
+}
+
+.choiceButtons #buttonText1 {
+  position: absolute;
+  left: 14%;
+  top: 38%;
+}
+
+.choiceButtons #buttonText2 {
+  position: absolute;
+  left: 49%;
+  top: 38%;
+}
+
+#remake:hover,
+#bringToMypage:hover {
+  content: url("/public/button-hover.png");
 }
 
 /*모바일 반응형*/
 @media (max-width: 767px) {
-  #root,
-  body {
-    height: 100%;
-    padding: 0;
-    left: 0;
-    top: 0;
+  .nameInputBox {
+    top: 40%;
   }
-
-.namePage {
-    background-image: url("/public/MakePage/back1.webp");
-    padding: 0%;
-    height: 100vh;
-    background-size: cover;
-    
-  }
-.nameInput input::placeholder {
-  letter-spacing: 0.1em;
-  color: white;
-  font-family: "NeoDunggeunmo";
-  font-size: clamp(5px, 3vw, 10px);
-  top: 10%;
-  left: 15%;
- text-shadow:
-    -1px -1px 0 rgba(28, 82, 82, 1), -1px 0px 0 rgba(28, 82, 82, 1), -1px 1px 0 rgba(28, 82, 82, 1),
-     0px -1px 0 rgba(28, 82, 82, 1), 0px 1px 0 rgba(28, 82, 82, 1),
-     1px -1px 0 rgba(28, 82, 82, 1), 1px 0px 0 rgba(28, 82, 82, 1), 1px 1px 0 rgba(28, 82, 82, 1);
+  .nameInputBox p {
+    left: 42vw;
   }
 
   .namePage .cukemonImage {
     font-size: 10px;
     top: 0%;
   }
-  .cukemonImage {
-    font-size: 10px;
-    top: 0%;
-  }
+
   .nameInput {
-  display: flex;
-  position: absolute;
-  left: 55%;
-  top: 50%;
-}
+    top: 40%;
+    left: 43%;
+  }
 
-.yourName1,.yourName2{
-  font-size: clamp(8px, 3vw, 20px);
-   text-shadow:
-    -1px -1px 0 rgba(28, 82, 82, 1), -1px 0px 0 rgba(28, 82, 82, 1), -1px 1px 0 rgba(28, 82, 82, 1),
-     0px -1px 0 rgba(28, 82, 82, 1), 0px 1px 0 rgba(28, 82, 82, 1),
-     1px -1px 0 rgba(28, 82, 82, 1), 1px 0px 0 rgba(28, 82, 82, 1), 1px 1px 0 rgba(28, 82, 82, 1);
-}
-.yourName1 {
-  left: 35%;
-  top: 38%;
-}
+  .choiceButtons #buttonText1,
+  .choiceButtons #buttonText2 {
+    font-size: 7px;
+  }
 
-.yourName2 {
-  left: 75%;
-  top: 38%;
-}
-  
+  .nameInput input {
+    width: 24.5vw;
+  }
+
+  #remainWord {
+    top: 0.5vh;
+    left: 28vw;
+  }
 }

@@ -1,50 +1,50 @@
-html, body, #root {
+html,
+body {
   height: 100%;
   margin: 0;
-  background-color: black; /* 나머지 여백을 검정으로 */
-  overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 .menubarItems {
-  position: fixed;
-  bottom: 7vh;
-  left: 50%;
-  transform: translateX(-50%);
+  font-family: 'NeoDunggeunmo';
   display: flex;
-  gap: 0.8vw;
-  z-index: 2;
-}
-/*메뉴바 아이콘 배경화면 설정*/
-.menubarItems button {
-  width: 5vw;
-  height: 5vw;
-  background-size: cover;
-  background-repeat: no-repeat;
+  width: 100%;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding-bottom: 0px;
+  flex-shrink: 0;
   border: none;
-  background-color: transparent;
-}
-.makePageLink {
-  background-image: url("/public/Menubar/makeicon.webp");
-}
-
-.battleLink {
-  background-image: url("/public/Menubar/battleicon.webp");
+  position: fixed;
+  bottom: 0;
+  left: 0;
 }
 
-.rankingLink {
-  background-image: url("/public/Menubar/rankingicon.webp");
-}
-
-.myPageLink {
-  background-image: url("/public/Menubar/mypageicon2.webp");
+.menubarItems button {
+  font-family: 'NeoDunggeunmo';
+  margin: 0;
+  background-color: #efefef;
+  border-radius: 0;
+  width: 100%;
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: none;
+  border-left: 2px solid #908f8f;
+  color: #5f5f5f;
 }
 
 .menubarItems button img {
-  width: 5vw;
-  height: 5vw;
+  width: 40px;
+  height: 40px;
   margin-bottom: 10px;
   padding-left: 0%;
   margin-top: 2%;
+}
+
+.menubarItems button a {
+  text-decoration: none;
 }
 
 .menubarItems .makePageLink,
@@ -54,32 +54,37 @@ html, body, #root {
   display: flex;
   flex-direction: column;
   align-items: center;
+  border-left: 2px solid #908f8f;
 }
 
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
 .menubarItems button:hover {
-  filter: brightness(1.2);
-}
-
-/*메뉴바 중앙정렬(option에 따라)*/
-.menubarItems.centered {
-  left: 50%;
-  transform: translateX(-50%);
+  background-color: #ddd;
 }
 
 @media (max-width: 767px) {
+  html,
+  body {
+    height: 80%;
+  }
   .menubarItems {
     align-items: center;
+
     border: none;
-    position: fixed;
-    bottom: 3vh;
-    left: 50%;
-    transform: translateX(-50%);
+    position: fixed; /* 메뉴바를 고정 */
+    bottom: 0; /* 화면 하단에 고정 */
+    left: 0;
   }
 
   .menubarItems button {
-    width: 17vw;
-    height: 17vw;
-    padding: 0;
+    width: 100%;
+    font-size: 10px;
+    height: 100%;
+    padding-bottom: 1%;
   }
   .menubarItems {
     justify-content: flex-start;

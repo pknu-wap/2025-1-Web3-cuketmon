@@ -1,1 +1,0 @@
-bentoml serve 2> output.txt

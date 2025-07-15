@@ -1,195 +1,253 @@
-html, body, #root {
-  height: 100%;
-  margin: 0;
-  background-color: black;
-  overflow: hidden;
-}
-
-.makePage {
-  background-image: url("/public/MakePage/back1.webp");
-  background-size: contain;
-  background-repeat: no-repeat;
+.makeBackGround {
+  background-image: url("/public/MakePage/background.webp");
+  background-size: cover;
   background-position: center;
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  position: relative;
-  overflow: hidden;
-}
-
-.text {
-  background-image: url("/public/MakePage/textbox.webp");
-}
-
-.makeContent {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 1rem;
-  position: relative;
-  z-index: 2;
-}
-
-.leftSection {
-  flex: 1;
-  min-width: 1050px;
-  width: 50%;
-  height: 100vh;
-  padding: 2vh 2vw;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  margin-right: 5vw;
-}
-
-.rightSection {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;     /* 👉 상단 정렬 */
-  padding: 6vh 3vw;                /* 👉 위 여백 증가 */
-  width: 50%;
-  min-width: 400px;
-  box-sizing: border-box;
-  overflow-x: hidden;              /* 👉 잘림 방지 */
-}
-
-
-.rightSection .typeTableContainer,
-.rightSection .typeCalculatorContainer {
-  background: white;
-  border-radius: 8px;
-  padding: 16px;
-  box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.1);
-  margin-bottom: 24px;
-}
-
-.typeTable {
+  background-repeat: no-repeat;
+  top: 0;
   width: 100%;
-  max-width: 400px;
+  height: 100%;
+  position: absolute;
+}
+
+.Q1 {
   display: flex;
-  flex-direction: column;
-  gap: 1rem;
+  position: absolute;
+  top: 0.7px;
 }
 
-.typeTable h1 {
-  font-size: 1.2rem;
-  color: black;
+.Q1 img {
+  width: 10%;
+  height: 10%;
+  margin-top: 2.5%;
+  padding-right: 0.5%;
+}
+
+.Q1 h2 {
+  font-size: 20px;
+  margin-top: 2.5vh;
+}
+
+#typeicon {
+  position: absolute;
+  width: 15vw;
+  top: 8vh;
+  left: 75%;
+}
+
+#S1,
+#S2 {
+  margin-left: 3%;
+  background-image: url("/public/MakePage/selectBackground.webp");
+  width: 17vw;
+  height: 50px;
+  font-size: 17px;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+#S1 {
+  position: absolute;
+  top: 10vh;
+}
+#S2 {
+  position: absolute;
+  top: 20vh;
+}
+
+#S1 option,
+#S2 option {
+  font-family: "NeoDunggeunmo";
   text-align: center;
-  margin-bottom: 0.5rem;
+  padding: 40%;
 }
 
-.topContent {
+/*Q2*/
+.Q2 {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1.2rem;
+  position: absolute;
+  top: 42%;
 }
 
-.sectionTitle {
-  font-size: 1.1rem;
-  color: white;
-  text-align: center;
-  margin-bottom: 0.5rem;
-  position: static;
-  text-shadow:
-    -3px -3px 0 #041430, -3px -2px 0 #041430, -3px -1px 0 #041430,
-    -3px 0px 0 #041430, -3px 1px 0 #041430, -3px 2px 0 #041430,
-    -3px 3px 0 #041430, 3px -3px 0 #041430, 3px -2px 0 #041430,
-    3px -1px 0 #041430, 3px 0px 0 #041430, 3px 1px 0 #041430, 3px 2px 0 #041430,
-    3px 3px 0 #041430, -2px -3px 0 #041430, -1px -3px 0 #041430,
-    0px -3px 0 #041430, 1px -3px 0 #041430, 2px -3px 0 #041430,
-    -2px 3px 0 #041430, -1px 3px 0 #041430, 0px 3px 0 #041430, 1px 3px 0 #041430,
-    2px 3px 0 #041430;
+.Q2 img {
+  width: 10%;
+  height: 10%;
+  padding-right: 0.5%;
+}
+
+.Q2 h2 {
+  font-size: 20px;
+  margin-top: 1.5vh;
+}
+
+.make .cukemonFeature {
+  display: flex;
+  position: absolute;
+  margin-left: 3%;
+  top: 50vh;
+  height: 50vh;
 }
 
 textarea {
-  position: absolute;
-  width: 100%;
-  padding: 10px;
-  font-family: "NeoDunggeunmo", sans-serif;
-  font-size: 1rem;
-  border-radius: 10px;
+  font-family: "NeoDunggeunmo";
+}
+
+.make .cukemonFeature .textBack {
   border: none;
+  height: 12vh;
+  width: 34vw;
+  background-repeat: no-repeat;
+  background-size: cover;
+  overflow: hidden;
+  background-image: url("/public/MakePage/textareaBackground.webp");
+}
+
+.make .cukemonFeature textarea {
+  margin-left: 5%;
+  margin-top: 3%;
+  width: 30vw;
+  height: 70vh;
+  border: none;
+  outline: none;
+  background: none;
   resize: none;
-  background-color: #f0f0f0;
+  font-size: 18px;
 }
 
-.menuBar {
-  position: absolute;
-  bottom: 8vh;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  gap: 2vw;
-  justify-content: center;
-  width: max-content;
-  z-index: 1000;
+.make .cukemonFeature p {
+  padding-top: 5%;
+  width: 20%;
 }
 
-.leftInnerWrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2rem;
-  width: 100%;
-  max-width: 500px;
-}
-
+/* 제출 버튼 */
 .submitButton {
-  margin-top: 2vh;
-  text-align: right;
-  justify-content: flex-end;
-  display: flex;
+  position: absolute;
+  text-align: center;
+  top: 70vh;
+  left: 44vw;
 }
 
-/* 📱 반응형 모바일 대응 */
+#submit {
+  background: none;
+  background-image: url("/public/button.png");
+  background-size: cover;
+  border: none;
+  width: 12vw;
+  height: 5vw;
+}
+
+#submit:hover {
+  background-image: url("/public/button-hover.png");
+  top: 80vh;
+  left: 30vw;
+}
+
+.submitButton p {
+  position: absolute;
+  top: 40%;
+  left: 44%;
+  color: white;
+  pointer-events: none;
+  font-size: 19px;
+}
+
+.submitButton #submitButton {
+  width: 43vw;
+}
+
+/*모바일 반응형*/
 @media (max-width: 767px) {
-  .makePage {
-    background-size: cover;
-    padding: 0;
-    height: 100vh;
-  }
-
-  .makeContent {
-    flex-direction: column;
-    align-items: center;
+  #root,
+  body {
+    height: 100%;
     padding: 0;
   }
-
-  .sectionTitle {
-    font-size: 1rem;
-    margin: 1rem 0 0.5rem;
-  }
-
-  .leftSection,
-  .rightSection {
+  .makeBackGround {
     width: 100%;
-    padding: 0 5vw;
-    box-sizing: border-box;
+    height: 100%;
+    padding: 0;
+    background-image: url("/public/MakePage/backgroundMobile.webp");
   }
 
-  textarea {
-    font-size: 0.9rem;
-    padding: 8px;
+  #typeicon {
+    width: 38%;
+    left: 50%;
+    top: 18%;
   }
 
+  .Q1 {
+    top: 10%;
+  }
+
+  .Q2 {
+    top: 45%;
+  }
+
+  .Q1 h2,
+  .Q2 h2 {
+    font-size: 16px;
+  }
+
+  #S1 {
+    top: 18%;
+  }
+
+  #S2 {
+    top: 25%;
+  }
+  #S1,
+  #S2 {
+    width: 40%;
+    height: 5%;
+    font-size: 15px;
+  }
+
+  .make .cukemonFeature {
+    padding: 0;
+    margin: 0;
+    width: 83vw;
+    height: 45vw;
+    font-size: 8px;
+    flex-direction: column;
+    margin-left: 2%;
+    margin-top: 3%;
+  }
+
+  .make .cukemonFeature .textBack {
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-image: url("/public/MakePage/selectBackground.webp");
+    padding: 0;
+    height: 40%;
+    width: 95vw;
+  }
+
+  .cukemonFeature textarea {
+    margin-right: 0;
+    width: 300px;
+    height: 40px;
+    font-size: 12px !important;
+  }
+
+  .make .cukemonFeature p {
+    padding: 0;
+  }
+
+  /* 제출 버튼 */
   .submitButton {
-    position: relative;
-    left: 0;
-    margin: 0 auto 3vh;
-    text-align: center;
+    left: 35vw;
   }
 
-  .rightSection .typeTableContainer,
-  .rightSection .typeCalculatorContainer {
-    padding: 12px;
-    font-size: 0.9rem;
-    box-shadow: none;
-    margin-bottom: 16px;
+  #submit {
+    background: none;
+    background-image: url("/public/button.png");
+    background-size: cover;
+    border: none;
+    width: 35vw;
+    height: 15vw;
+  }
+
+  .submitButton p {
+    font-size: 15px;
+    top: 6vw;
   }
 }
