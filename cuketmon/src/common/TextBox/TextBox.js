@@ -3,13 +3,11 @@ import './TextBox.css';
 
 export default function Textbox({ children }) {
   return (
-    <div className="textbox">
-      <div className="sidePattern left" />
-      <div className="textboxContent">
+    <div className="TextBoxContainer">
+      <div className="whiteBox">
         {children}
-        <div className="blinkIndicator">▼</div>
+       
       </div>
-      <div className="sidePattern right" />
     </div>
   );
 }

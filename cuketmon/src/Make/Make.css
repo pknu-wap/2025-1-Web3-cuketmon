@@ -1,69 +1,103 @@
 html, body, #root {
   height: 100%;
   margin: 0;
-  background-color: black; /* 나머지 여백을 검정으로 */
+  background-color: black;
   overflow: hidden;
 }
 
-.makePage { 
-  background-image: 
-  url("/public/MakePage/back1.webp");
+.makePage {
+  background-image: url("/public/MakePage/back1.webp");
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
-  bottom: 0;
   width: 100vw;
   height: 100vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  position: relative;
   overflow: hidden;
-
 }
 
-.text{
+.text {
   background-image: url("/public/MakePage/textbox.webp");
 }
 
 .makeContent {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
   position: relative;
   z-index: 2;
 }
+
+.leftSection {
+  flex: 1;
+  min-width: 1050px;
+  width: 50%;
+  height: 100vh;
+  padding: 2vh 2vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  margin-right: 5vw;
+}
+
+.rightSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;     /* 👉 상단 정렬 */
+  padding: 6vh 3vw;                /* 👉 위 여백 증가 */
+  width: 50%;
+  min-width: 400px;
+  box-sizing: border-box;
+  overflow-x: hidden;              /* 👉 잘림 방지 */
+}
+
 
 .rightSection .typeTableContainer,
 .rightSection .typeCalculatorContainer {
   background: white;
   border-radius: 8px;
   padding: 16px;
-  box-shadow: 2px 4px 8px rgba(0,0,0,0.1);
+  box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.1);
   margin-bottom: 24px;
 }
 
-.makeContent {
-
-  gap: 1rem;
+.typeTable {
+  width: 100%;
+  max-width: 400px;
   display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  
+  flex-direction: column;
+  gap: 1rem;
 }
 
-.leftSection {
-  flex: 1;
-  min-width: 300px;
-  margin-right: 2vw;
+.typeTable h1 {
+  font-size: 1.2rem;
+  color: black;
+  text-align: center;
+  margin-bottom: 0.5rem;
 }
 
-.rightSection {
-  flex: 1;
-  min-width: 300px;
+.topContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.2rem;
 }
 
 .sectionTitle {
- font-size: 2rem;
- color: white;
- margin: 2rem 0;
- position: absolute;
- bottom: 10%;
- text-shadow: 
-  -3px -3px 0 #041430, -3px -2px 0 #041430, -3px -1px 0 #041430,
+  font-size: 1.1rem;
+  color: white;
+  text-align: center;
+  margin-bottom: 0.5rem;
+  position: static;
+  text-shadow:
+    -3px -3px 0 #041430, -3px -2px 0 #041430, -3px -1px 0 #041430,
     -3px 0px 0 #041430, -3px 1px 0 #041430, -3px 2px 0 #041430,
     -3px 3px 0 #041430, 3px -3px 0 #041430, 3px -2px 0 #041430,
     3px -1px 0 #041430, 3px 0px 0 #041430, 3px 1px 0 #041430, 3px 2px 0 #041430,
@@ -71,7 +105,6 @@ html, body, #root {
     0px -3px 0 #041430, 1px -3px 0 #041430, 2px -3px 0 #041430,
     -2px 3px 0 #041430, -1px 3px 0 #041430, 0px 3px 0 #041430, 1px 3px 0 #041430,
     2px 3px 0 #041430;
- font-style: normal;
 }
 
 textarea {
@@ -86,32 +119,40 @@ textarea {
   background-color: #f0f0f0;
 }
 
-.submitButton {
-  position: absolute;
-  text-align: center;
-  top: 65vh;
-  left: 20%;
-}
-
 .menuBar {
   position: absolute;
-  bottom: 8vh; /* 기존 2vh에서 변경 */
+  bottom: 8vh;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
   gap: 2vw;
   justify-content: center;
   width: max-content;
+  z-index: 1000;
 }
 
-/* 반응형 모바일 */
+.leftInnerWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  width: 100%;
+  max-width: 500px;
+}
+
+.submitButton {
+  margin-top: 2vh;
+  text-align: right;
+  justify-content: flex-end;
+  display: flex;
+}
+
+/* 📱 반응형 모바일 대응 */
 @media (max-width: 767px) {
   .makePage {
-    background-image: 
-    url("/public/MakePage/back1.webp");
-    padding: 0%;
-    height: 100vh;
     background-size: cover;
+    padding: 0;
+    height: 100vh;
   }
 
   .makeContent {
@@ -123,10 +164,10 @@ textarea {
   .sectionTitle {
     font-size: 1rem;
     margin: 1rem 0 0.5rem;
-    text-align: center;
   }
 
-  .leftSection, .rightSection {
+  .leftSection,
+  .rightSection {
     width: 100%;
     padding: 0 5vw;
     box-sizing: border-box;
@@ -139,9 +180,8 @@ textarea {
 
   .submitButton {
     position: relative;
-    bottom: 50%;
-    left: 0%;
-    margin: 0vh auto 3vh;
+    left: 0;
+    margin: 0 auto 3vh;
     text-align: center;
   }
 
@@ -153,4 +193,3 @@ textarea {
     margin-bottom: 16px;
   }
 }
-

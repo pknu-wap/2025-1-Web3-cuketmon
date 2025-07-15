@@ -1,10 +1,8 @@
-
-.typeButtonGrid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  justify-content: center;
-  max-width: 800px;
+.typeButtonContainer {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4개씩 1줄 */
+  gap: 12px 18px; /* 행, 열 간격 */
+  width: 300px;
   margin: 0 auto;
 }
 

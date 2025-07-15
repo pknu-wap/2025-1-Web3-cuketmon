@@ -88,14 +88,21 @@ function TypeTable({ type1, type2 }) {
       )}
     </>
   );
+  
 
   return (
-    <div className={"typeTable"}>
-        <h1>타입 계산기</h1>
-
-      <img src="/MakePage/type.webp" alt="type" className={"typeImage"} />
-
-      <h3 className={"defenseTitle"}>
+    <div className="typeTable">
+    if (!type1Data) {
+        <div className="typeCalculatorPlaceholder">
+      <h1 className="typeTitle">타입 계산기</h1>
+      <img src="/MakePage/type.webp" alt="type" className="typeImage" />
+      <p className="typeGuide">타입 1을 선택해주세요.</p>
+    </div>
+      }
+  {/* 하단 상성 설명 */}
+  {type1 && (
+    <div className="typeDescriptionBox">
+      <h3 className="defenseTitle">
         <span style={{ color: type1Data.color }}>{type1Data.korean}</span>
         {type2Data && (
           <>
@@ -106,32 +113,26 @@ function TypeTable({ type1, type2 }) {
         {' '}방어 상성
       </h3>
 
+      {/* 효과 분기 설명 */}
       {veryEffective.length > 0 && (
-        <p className={"effectVeryStrong"}>
-          효과가 매우 굉장함 : {getColorText(veryEffective)}
-        </p>
+        <p className="effectVeryStrong">효과가 매우 굉장함 : {getColorText(veryEffective)}</p>
       )}
       {effective.length > 0 && (
-        <p className={"effectStrong"}>
-          효과가 굉장함 : {getColorText(effective)}
-        </p>
+        <p className="effectStrong">효과가 굉장함 : {getColorText(effective)}</p>
       )}
       {notEffective.length > 0 && (
-        <p className={"effectWeak"}>
-          효과가 별로 : {getColorText(notEffective)}
-        </p>
+        <p className="effectWeak">효과가 별로 : {getColorText(notEffective)}</p>
       )}
       {noEffect.length > 0 && (
-        <p className={"effectNone"}>
-          효과가 없음 : {getColorText(noEffect)}
-        </p>
+        <p className="effectNone">효과가 없음 : {getColorText(noEffect)}</p>
       )}
 
       <br />
       {renderAttack(type1Data)}
-      <br />
       {type2Data && renderAttack(type2Data)}
     </div>
+  )}
+</div>
   );
 }
 
