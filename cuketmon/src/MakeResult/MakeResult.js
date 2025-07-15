@@ -5,8 +5,8 @@ import ResultBox from './ResultBox.js';
 
 function MakeResult() {
   const [cukemonImage, setCukemonImage] = useState("/MakeResultPage/movingEgg.gif");
-  const [showExtraImage, setShowExtraImage] = useState(true);
-  const [showHpBar, setShowHpBar] = useState(true);
+  const [showExtraImage, setShowExtraImage] = useState(false);
+  const [showHpBar, setShowHpBar] = useState(false);
   const [mentText, setMentText] = useState("어라?");
   const eggRef = useRef(null);
   const navigate = useNavigate();
@@ -87,29 +87,35 @@ function MakeResult() {
   }, [ token, navigate]);
 
   return (
-    <div className="resultPage">
-      {cukemonImage && (
-        <img
-          id="egg"
-          ref={eggRef}
-          src={cukemonImage}
-          alt="cukemonImage"
-          className="blinkEffect"
-        />
-      )}
- 
- <div  className="chatBox">
-  
-  <ResultBox>
-  <textarea
-    id="ment"
-    readOnly
-    value={mentText}
-    onClick={mentText.includes("도망") ? () => navigate("/Make") : undefined}
-  />
-</ResultBox>
+<div className="resultPage">
+  {cukemonImage && (
+    <img
+      id="egg"
+      ref={eggRef}
+      src={cukemonImage}
+      alt="cukemonImage"
+      className="blinkEffect"
+    />
+  )}
+
+  {showExtraImage && (
+    <div className="showExtraImage" />
+  )}
+  {showHpBar && (
+    <div className="showHpBar" />
+  )}
+
+  <div className="chatBox">
+    <ResultBox>
+      <textarea
+        id="ment"
+        readOnly
+        value={mentText}
+        onClick={mentText.includes("도망") ? () => navigate("/Make") : undefined}
+      />
+    </ResultBox>
+  </div>
 </div>
-    </div>
   );
 }
 

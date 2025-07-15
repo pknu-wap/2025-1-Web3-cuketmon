@@ -1,42 +1,42 @@
-.textbox {
-  margin: 0;
-  white-space: pre-wrap;
+.resultBoxContainer {
+  background-color: #BDCECE;
+  border: 2.5px solid white;
+  border-radius: 8px;
+  padding: 6px;
+  position: relative;
+  width: 700px;
+  margin: 0 auto;
+  box-sizing: border-box;
 }
 
-.text {
-  
+/* 안쪽 흰색 박스 */
+.whiteBox {
+  background-color: white;
+  border-radius: 6px;
+  padding: 20px;
+  position: relative;
+  min-height: 80px;
+  font-family: 'NeoDunggeunmo', sans-serif;
+  font-size: 32px;
+  color: #0D4C4C;
+  box-sizing: border-box;
+  overflow-wrap: break-word;
 }
 
-.blinkIndicator {
-  background-image: url("/public/MakeResultPage/Polygon.webp");
+/* 오른쪽 아래 Polygon 아이콘 깜빡임 */
+.polygonIndicator {
   position: absolute;
-  bottom: 8px;
-  right: 8px;
-  font-size: 12px;
+  bottom: 10px;
+  right: 16px;
+  width: 20px;
+  height: 20px;
+  background-image: url("/public//MakeResultPage/Polygon.webp");
+  background-size: contain;
+  background-repeat: no-repeat;
   animation: blink 1s infinite;
 }
 
 @keyframes blink {
-  0%, 50%, 100% { opacity: 1; }
-  25%, 75% { opacity: 0; }
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
 }
-
-/* ✅ 반응형 스타일 */
-@media (max-width: 767px) {
-    .textbox {
-      max-width: 100%;
-      min-height: 60px;
-    }
-
-    .textboxContent {
-      padding: 8px;
-      font-size: 10px;
-    }
-  
-    .blinkIndicator {
-      bottom: 6px;
-      right: 6px;
-      font-size: 10px;
-    }
-  }
-  

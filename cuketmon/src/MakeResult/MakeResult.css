@@ -1,21 +1,31 @@
 .resultPage {
   background-image: 
   url("/public/MakeResultPage/ResultBack.webp");
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  justify-content: center;
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
+
   bottom: 0;
   width: 100vw;
   height: 100vh;
   overflow: hidden;
 
+  image-rendering: pixelated;
+
 }
 
 .resultPage #egg {
   position: relative;
-  width: 180px;
-  padding-top: 269px;
-  left: 685px;
+  width: 180px; /* 고정 크기 */
+  height: auto;
+  margin-bottom: 30px;
+  image-rendering: pixelated;
 }
 
 .showHpBar{
@@ -33,11 +43,16 @@
   width: 25%;
 }
 
+.chatBox .whiteBox {
+  width: 100%;
+}
 .chatBox {
-  width: 500px;
+  width: 500px;  
+  max-width: 90vw;
   position: relative;
-  right: -325px;
-  bottom: -15.4%;
+  right: 195px;
+  bottom: -12%; 
+  margin: 0 auto;
   
 }
 
