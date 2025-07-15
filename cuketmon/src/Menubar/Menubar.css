@@ -1,21 +1,19 @@
-html,
-body {
+html, body, #root {
   height: 100%;
   margin: 0;
-  display: flex;
-  flex-direction: column;
+  background-color: black; /* 나머지 여백을 검정으로 */
+  overflow: hidden;
 }
 
 .menubarItems {
-  font-family: "NeoDunggeunmo";
-  display: flex;
-  border: none;
   position: fixed;
-  bottom: 8vh;
-  left: 0;
+  bottom: 7vh;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
   gap: 0.8vw;
+  z-index: 2;
 }
-
 /*메뉴바 아이콘 배경화면 설정*/
 .menubarItems button {
   width: 5vw;

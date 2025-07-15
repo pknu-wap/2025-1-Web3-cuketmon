@@ -1,11 +1,7 @@
-.poke-button {
-  position: center;
-  top: 50%;                               /* 세로 중앙 */
-  left: 50%;                              /* 가로 중앙 */
-  transform: translate(-50%, -50%);       /* 요소 중심으로 이동 */
-  
-  width: 230px;                           /* 고정 크기 */
-  height: 51.31px;                        /* 고정 크기 */
+.name-button {
+  position: relative;
+  width: 230px;
+  height: 51.31px;
 
   background: #AC0202;
   border: 2.99px solid #610000;
@@ -17,15 +13,11 @@
   align-items: center;
   justify-content: center;
 
-  padding: 0;
   box-sizing: border-box;
-
-  font-size: 14px;
-
 }
 
 /* 하단 어두운 라인 */
-.poke-button::after {
+.name-button::after {
   content: "";
   position: absolute;
   bottom: 0px;
@@ -39,7 +31,7 @@
 }
 
 /* 하단 붉은 하이라이트 */
-.poke-button::before {
+.name-button::before {
   content: "";
   position: absolute;
   bottom: 0;
@@ -51,34 +43,30 @@
   z-index: 0;
 }
 
-/* 텍스트 두 겹 */
+/* 텍스트 */
 .text-front {
-  position: absolute;
+  position: relative;
   font-family: "NeoDunggeunmo", sans-serif;
   font-size: 19.5px;
-  font-weight: 800px;
+  font-weight: 800;
   line-height: 20px;
-  text-shadow:
-   -3px -3px 0 #610000, -3px -2px 0 #610000, -3px -1px 0 #610000,
-    -3px 0px 0 #610000, -3px 1px 0 #610000, -3px 2px 0 #610000,
-    -3px 3px 0 #610000, 3px -3px 0 #610000, 3px -2px 0 #610000,
-    3px -1px 0 #610000, 3px 0px 0 #610000, 3px 1px 0 #610000, 3px 2px 0 #610000,
-    3px 3px 0 #610000, -2px -3px 0 #610000, -1px -3px 0 #610000,
-    0px -3px 0 #610000, 1px -3px 0 #610000, 2px -3px 0 #610000,
-    -2px 3px 0 #610000, -1px 3px 0 #610000, 0px 3px 0 #610000, 1px 3px 0 #610000,
-    2px 3px 0 #610000;
-
-}
-
-.text-front {
   color: white;
   z-index: 2;
+  text-shadow:
+   -1px -1px 0 #610000, 1px -1px 0 #610000,
+   -1px  1px 0 #610000, 1px  1px 0 #610000,
+    0px  1px 0 #610000, 1px  0px 0 #610000,
+    0px -1px 0 #610000, -1px  0px 0 #610000;
 }
 
-/*모바일 반응형*/
-@media (max-width: 767px) { 
-  .NameStyleButton {
-    padding: 1vw;
-    white-space: nowrap;
+/* 모바일 반응형 */
+@media (max-width: 767px) {
+  .poke-button {
+    width: 180px;
+    height: 44px;
+  }
+
+  .text-front {
+    font-size: 16px;
   }
 }

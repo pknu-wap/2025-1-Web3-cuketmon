@@ -2,15 +2,26 @@ span {
   font-family: "NeoDunggeunmo";
 }
 
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  position: relative; 
+}
+
 .namePage {
-  overflow: hidden;
+
   background-image: url("/public/MakePage/back1.webp");
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
-  bottom: 0;
   width: 100vw;
   height: 100vh;
+  overflow: hidden;
+
+  position: relative;
+  z-index: 0; 
 }
 
 .yourName1,.yourName2{
@@ -35,6 +46,7 @@ span {
 
 }
 
+
 .yourName1 {
   left: 35%;
 }
@@ -58,19 +70,19 @@ span {
 
 /* 배경 */
 .nameInputBox {
-  position: absolute;
-  background-image: 
-  url("/public/NamePage/Input.webp");
-  background-size: 90%;
-  background-position: center;
+  position: fixed;             
+  top: 268px;                  
+  left: 50%;                 
+  transform: translateX(-50%);  
+  width: 1090px;                 
+  height: 205px;            
+
+  background-image: url("/public/NamePage/Input.webp");
   background-repeat: no-repeat;
-  top: 37vh; /*고정*/
-  left: 160px;
-  
-  height: 205px;
-  width: 90vw;
-  max-width: 1200px;
-  aspect-ratio: 3.4 / 1;  
+  background-position: center;
+  background-size: contain;
+  z-index: 5;          
+
 }
 
 /* 내부 글자 */
@@ -123,19 +135,13 @@ span {
 }
 
 .choiceButtons {
-   font-size: 11px; /* 고정 */
-  position: fixed;
-  top: calc(70vh - 50px); /* 화면 세로 기준 70% - 절반 높이 보정 */
-  left: 50%;
-  transform: translateX(-50%);
-  position: fixed;
-  top: 78vh;
+  position: absolute;
+  top: 70vh;     /* 고정된 비율 위치 */
   left: 50%;
   transform: translateX(-50%);
   display: flex;
   gap: 10px;
-  font-size: 14px; /* 고정 */
-  color: white;
+  z-index: 10;
 }
 
 /*모바일 반응형*/

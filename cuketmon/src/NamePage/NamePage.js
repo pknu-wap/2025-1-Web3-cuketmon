@@ -78,9 +78,6 @@ useEffect(() => {
         </div>
   
       <div className="nameInputBox">
-        <div className="menubar">
-          <MenuBar centered={true}/>
-        </div>
         <div className="yourName1"> 너의 이름은 </div>
         <div className="yourName2"> 이야!</div>
         {cukemonResultImage && ( //이미지가 있는 경우에만 렌더링 하도록 함 (5/13 수정)
@@ -105,9 +102,10 @@ useEffect(() => {
             placeholder="- - - - - -"
             maxLength={6}
           />
-          {/* <div id="remainWord">{name.length}</div> */}
         </div>
       </div>
+      <div className="menubar">
+        <MenuBar style={{ position: "absolute", left: "50%", transform: "translateX(-50%)" }} /></div>
     </div>
   );
 }
