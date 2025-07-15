@@ -1,44 +1,53 @@
-import React, { useRef,useState, useEffect } from "react";
-import { useNavigate} from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../AuthContext";
 import "./NamePage.css";
-import PokeStyleButton from '../common/PokeStyleButton/PokeStyleButton.js'
+
 function NamePage() {
   const [name, setName] = useState("");
+  const [cukemonImage, setCukemonImage] = useState("/Menubar/egg.png");
   const navigate = useNavigate();
   const { token: contextToken } = useAuth();
-  const token = contextToken || localStorage.getItem('accessToken');
+  const token = contextToken || localStorage.getItem('jwt');
+  const location = useLocation(); 
+  const maxLength = 12;
   const API_URL = process.env.REACT_APP_API_URL;
-  const cukemonResultImage = localStorage.getItem('cukemonMakeResultImage')
-  const monsterId = localStorage.getItem("makeResultMonsterId");
+  const monsterId = location.state?.monsterId; 
+  console.log(monsterId);
+  const cukemonResultImage = location.state?.image; 
 
-//뒤로가기 막기 
- const backBlockRef = useRef(false); 
-useEffect(() => {
-  const preventGoBack = (event) => {
-    if (event.type === "popstate") {
-      if (backBlockRef.current) return;
-      backBlockRef.current = true;
-      alert("커켓몬을 두고 떠나지마요 ㅠㅠㅠ");
-      window.history.go(1);
-      setTimeout(() => {
-        backBlockRef.current = false;
-      }, 500);
-    }
+//뒤로가기 막기 (5/9)
+ useEffect(() => {
+  const preventGoBack = () => {
+    window.history.go(1); 
+    alert("커켓몬을 두고 떠나지마요 ㅠㅠㅠ");
   };
   window.history.pushState(null, "", window.location.href);
   window.addEventListener("popstate", preventGoBack);
+
   return () => {
     window.removeEventListener("popstate", preventGoBack);
   };
 }, []);
 
-  /*데려가기*/
+  useEffect(() => {
+    if (cukemonResultImage) {
+      setCukemonImage(cukemonResultImage);
+    }
+  }, [cukemonResultImage]);
+
+  const namingCukemon = (e) => {
+    if (e.target.value.length <= maxLength) {
+      setName(e.target.value);
+    }
+  };
+
   const handleGoToMypage = async () => {
     if (!name.trim()) {
       alert("이름을 입력해주세요.");
       return;
     }
+
     try {
       const response = await fetch(`${API_URL}/api/monster/${monsterId}/name`, {
         method: "PATCH",
@@ -48,7 +57,9 @@ useEffect(() => {
         },
         body: JSON.stringify({ name }),
       });
+
       if (!response.ok) throw new Error("이름 저장 실패");
+
       alert("커켓몬이 생성되었습니다.");
       navigate(`/mypage`);
     } catch (err) {
@@ -57,7 +68,7 @@ useEffect(() => {
     }
   };
 
-   /*재부화*/
+
   const handleGoTOMakePage = async()=>{
         const res = await fetch(`${API_URL}/api/monster/${monsterId}/release`, {
           method: "DELETE",
@@ -66,15 +77,15 @@ useEffect(() => {
         if (!res.ok) throw new Error(`오류발생`);
         navigate(`/make`)
     }
-
+  
 
   return (
     <div className="namePage">
       <div className="nameInputBox">
         <p>Your name?</p>
-        {cukemonResultImage && ( //이미지가 있는 경우에만 렌더링 하도록 함 (5/13 수정)
+        {cukemonImage && (
           <img
-            src={cukemonResultImage}
+            src={cukemonImage}
             alt="커켓몬 이미지"
             className="cukemonImage"
           />
@@ -85,21 +96,18 @@ useEffect(() => {
           <input
             type="text"
             value={name}
-            onChange={(e) => setName(e.target.value)}  //이름 지정시 불필요한 코드 삭제 (5/13 수정)
+            onChange={namingCukemon}
             placeholder="커켓몬 이름 입력"
-            maxLength={12}
+            maxLength={maxLength}
           />
-          <div id="remainWord">{name.length}/12자</div>
+          <div id="remainWord">{name.length}/{maxLength}자</div>
         </div>
 
         <div className="choiceButtons">
-          <div className="remakeButton">
-          <PokeStyleButton  label={"재부화"} onClick={handleGoTOMakePage}/>
-          </div>
-
-          <div className="bringButton">
-          <PokeStyleButton  label={"데려가기"} onClick={handleGoToMypage} />
-          </div>
+          <img src="/button.png" id="remake"  onClick={handleGoTOMakePage}/>
+          <img src="/button.png" id="bringToMypage" onClick={handleGoToMypage} />
+          <span id="buttonText1">재부화</span>
+          <span id="buttonText2">데려가기</span>
         </div>
       </div>
     </div>

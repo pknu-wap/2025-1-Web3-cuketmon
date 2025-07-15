@@ -3,7 +3,6 @@ import MenuBar from "../Menubar/Menubar.js";
 import './Ranking.css';
 import { useAuth } from '../AuthContext';
 
-
 function Ranking() {
   const [rank, setRank] = useState(0); 
   const [trainerName, setTrainerName] = useState(''); 
@@ -14,18 +13,19 @@ function Ranking() {
   const [monsterImages, setMonsterImages] = useState([]);
   const API_URL = process.env.REACT_APP_API_URL;
   const { token: contextToken } = useAuth();
-  const token = contextToken || localStorage.getItem('accessToken');
+  const token = contextToken || localStorage.getItem('jwt');
 
   /*유저 소유 커켓몬 id 배열로 받기 */
   const loadCukemon = async () => {
-    
+    if (!token) return;
     try {
       const res = await fetch(`${API_URL}/api/trainer/monsters`, {
         headers: { 'Authorization': `Bearer ${token}` },
       });
       const data = await res.json();
       const monsterIds = Array.isArray(data) ? data : [];  
-      setMonsters(monsterIds);            
+      setMonsters(monsterIds);     
+      console.log(monsterIds)            
     } catch (error) {
       console.error("커켓몬 로딩에 실패했습니다.", error.message);
     }
@@ -47,7 +47,7 @@ function Ranking() {
     }
   }, [monsters]);
 
-  /*커켓몬 이미지 */
+  /*커켓몬몬 이미지 */
   const loadCukemonImages = async (monsterIds) => {
     try {
       const imagePromises = monsterIds.map(async (monsterId) => {
@@ -57,13 +57,16 @@ function Ranking() {
         const data = await res.json();
         return data?.image ? data.image : ''; 
       });
+      
       const images = await Promise.all(imagePromises); 
       setMonsterImages(images); 
     } catch (error) {
       console.error("커켓몬 이미지 로딩에 실패했습니다.", error.message);
     }
   };
-  
+
+
+
   /*랭킹 */
   useEffect(() => {
     const fetchRankingData = async () => {
@@ -75,6 +78,7 @@ function Ranking() {
           }
         });
         const data = await response.json();
+        console.log(data)
         setRank(parseInt(data.rank));
         setTrainerName(data.trainerName);
         setWinCount(parseInt(data.win));
@@ -85,7 +89,7 @@ function Ranking() {
       }
     };
     fetchRankingData();
-  }, [token]);
+  }, [API_URL, token]);
 
 
 
@@ -97,31 +101,34 @@ function Ranking() {
        <img key={idx} src={url} alt="우리의 든든한 커켓몬 군단" className="cukemonImage" />
      ))}
       </div>
-        <div className="historyBoard">
-         <div className="trainerName">{trainerName}님</div>
-
-         <div className="row1">
-         <div>Rank</div>
-         <div>{rank}</div>
-         </div>
-
-         <div className="row2">
-         <div>No. of Battles</div>
-         <div>{battleCount}</div>
-         </div>
-
-         <div className="row3">
-         <div>Wins</div>
-         <div>{winCount}</div>
-         </div>
-         
-         <div className="row4">
-         <div>Losses</div>
-         <div>{loseCount}</div>
-         </div>
+        <table className="historyBoard">
+          <thead>
+            <tr>
+              <th>Standing</th>
+              <th>No. {rank}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td className='mark1'>Trainer Name</td>
+              <td>{trainerName}</td>
+            </tr>
+            <tr>
+              <td className='mark1'>No. of Battles</td>
+              <td>{battleCount}</td>
+            </tr>
+            <tr>
+              <td className='mark2'>Wins</td>
+              <td>{winCount}</td>
+            </tr>
+            <tr>
+              <td className='mark3'>Losses</td>
+              <td>{loseCount}</td>
+            </tr>
+          </tbody>
+        </table>
       </div>      
-        </div>
-      <MenuBar centered={true}/>
+      <MenuBar />
     </div>
   );
 }

@@ -1,82 +1,121 @@
-/* 공통 스타일 */
 .makeBackGround {
   background-image: url("/public/MakePage/background.webp");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  min-height: 100vh;
-  width: 100vw;
-  display: flex;
-  justify-content: start;
-  padding-top: 5vh;
-  padding-left: 20px;
-  box-sizing: border-box;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  position: absolute;
 }
 
-.make {
-  width: 90%;
-  max-width: 800px;
+.Q1 {
   display: flex;
-  flex-direction: column;
-  align-items: start;
-}
-.Q1,
-.Q2 {
-  display: flex;
-  align-items: center;
-  margin: 1rem 0;
+  position: absolute;
+  top: 0.7px;
 }
 
-.Q1 img,
-.Q2 img {
-  width: 40px;
-  height: 40px;
-  margin-right: 0.5rem;
+.Q1 img {
+  width: 10%;
+  height: 10%;
+  margin-top: 2.5%;
+  padding-right: 0.5%;
 }
 
-.Q1 h2,
-.Q2 h2 {
-  font-size: 1.2rem;
+.Q1 h2 {
+  font-size: 20px;
+  margin-top: 2.5vh;
+}
+
+#typeicon {
+  position: absolute;
+  width: 15vw;
+  top: 8vh;
+  left: 75%;
 }
 
 #S1,
 #S2 {
-  width: 10vw;
-  height: 5vh;
-  font-size: 1rem;
-  margin: 0.5rem 0;
-  font-family: "NeoDunggeunmo";
-  text-align: center;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  border: 1px solid #9f9f9f;
+  margin-left: 3%;
+  background-image: url("/public/MakePage/selectBackground.webp");
+  width: 17vw;
+  height: 50px;
+  font-size: 17px;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
-/* 특징 입력창 */
-.cukemonFeature {
-  width: 100%;
-  margin-top: 2rem;
+#S1 {
+  position: absolute;
+  top: 10vh;
+}
+#S2 {
+  position: absolute;
+  top: 20vh;
+}
+
+#S1 option,
+#S2 option {
+  font-family: "NeoDunggeunmo";
+  text-align: center;
+  padding: 40%;
+}
+
+/*Q2*/
+.Q2 {
+  display: flex;
+  position: absolute;
+  top: 42%;
+}
+
+.Q2 img {
+  width: 10%;
+  height: 10%;
+  padding-right: 0.5%;
+}
+
+.Q2 h2 {
+  font-size: 20px;
+  margin-top: 1.5vh;
+}
+
+.make .cukemonFeature {
+  display: flex;
+  position: absolute;
+  margin-left: 3%;
+  top: 50vh;
+  height: 50vh;
 }
 
 textarea {
-  width: 100%;
   font-family: "NeoDunggeunmo";
-  font-size: 1rem;
-  border: none;
-  resize: none;
-  background-color: #f0f0f0;
-  height: 100%;
-}
-textarea:focus {
-  outline: none;
-  border-color: #9f9f9f;
-  box-shadow: none;
 }
 
-.cukemonFeature p {
-  text-align: center;
-  font-size: 0.9rem;
-  margin-top: 0.5rem;
+.make .cukemonFeature .textBack {
+  border: none;
+  height: 12vh;
+  width: 34vw;
+  background-repeat: no-repeat;
+  background-size: cover;
+  overflow: hidden;
+  background-image: url("/public/MakePage/textareaBackground.webp");
+}
+
+.make .cukemonFeature textarea {
+  margin-left: 5%;
+  margin-top: 3%;
+  width: 30vw;
+  height: 70vh;
+  border: none;
+  outline: none;
+  background: none;
+  resize: none;
+  font-size: 18px;
+}
+
+.make .cukemonFeature p {
+  padding-top: 5%;
+  width: 20%;
 }
 
 /* 제출 버튼 */
@@ -87,46 +126,115 @@ textarea:focus {
   left: 44vw;
 }
 
-/* 모바일 반응형 */
+#submit {
+  background: none;
+  background-image: url("/public/button.png");
+  background-size: cover;
+  border: none;
+  width: 12vw;
+  height: 5vw;
+}
+
+#submit:hover {
+  background-image: url("/public/button-hover.png");
+  top: 80vh;
+  left: 30vw;
+}
+
+.submitButton p {
+  position: absolute;
+  top: 40%;
+  left: 44%;
+  color: white;
+  pointer-events: none;
+  font-size: 19px;
+}
+
+.submitButton #submitButton {
+  width: 43vw;
+}
+
+/*모바일 반응형*/
 @media (max-width: 767px) {
+  #root,
+  body {
+    height: 100%;
+    padding: 0;
+  }
   .makeBackGround {
+    width: 100%;
+    height: 100%;
+    padding: 0;
     background-image: url("/public/MakePage/backgroundMobile.webp");
   }
 
-  .Q1,
-  .Q2 {
-    padding-top: 2vh;
+  #typeicon {
+    width: 38%;
+    left: 50%;
+    top: 18%;
   }
-  .Q1 img,
-  .Q2 img {
-    width: 28px;
-    height: 28px;
+
+  .Q1 {
+    top: 10%;
+  }
+
+  .Q2 {
+    top: 45%;
   }
 
   .Q1 h2,
   .Q2 h2 {
-    font-size: 3.5vw;
-    white-space: nowrap;
+    font-size: 16px;
   }
 
+  #S1 {
+    top: 18%;
+  }
+
+  #S2 {
+    top: 25%;
+  }
   #S1,
   #S2 {
-    width: 90%;
+    width: 40%;
+    height: 5%;
+    font-size: 15px;
+  }
+
+  .make .cukemonFeature {
+    padding: 0;
+    margin: 0;
+    width: 83vw;
+    height: 45vw;
+    font-size: 8px;
+    flex-direction: column;
+    margin-left: 2%;
+    margin-top: 3%;
+  }
+
+  .make .cukemonFeature .textBack {
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-image: url("/public/MakePage/selectBackground.webp");
+    padding: 0;
+    height: 40%;
+    width: 95vw;
+  }
+
+  .cukemonFeature textarea {
+    margin-right: 0;
+    width: 300px;
     height: 40px;
-    font-size: 4vw;
+    font-size: 12px !important;
   }
 
-  .cukemonFeature {
-    margin-top: 1rem;
+  .make .cukemonFeature p {
+    padding: 0;
   }
 
-  textarea {
-    font-size: 4vw;
-    height: 100%;
-  }
-
+  /* 제출 버튼 */
   .submitButton {
-    left: 33vw;
+    left: 35vw;
   }
 
   #submit {
