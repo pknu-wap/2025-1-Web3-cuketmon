@@ -4,7 +4,6 @@ import "./Make.css";
 import MenuBar from "../Menubar/Menubar.js";
 import { useAuth } from "../AuthContext";
 import typeData from './../Type';
-import TextBox from '../common/TextBox/TextBox.js';
 import PokeStyleButton from '../common/PokeStyleButton/PokeStyleButton.js';
 import TypeTable from '../common/TypeTable/TypeTable.js'
 
@@ -61,7 +60,7 @@ function Make() {
   
 
   return (
-    <div className="makeBackGround">
+    <div className="makePage">
       <div className="make">
         <div className="leftMake">
           <div className="Q1">
@@ -69,7 +68,7 @@ function Make() {
             <h2>원하는 포켓몬의 타입을 선택해 주세요.</h2>
           </div>
 
-          <select id="S1" value={type1} onChange={(e) => setType1(e.target.value)} style={{ color: type1 ? typeData[Object.keys(typeData).find(key => typeData[key].korean === type1)]?.color : 'black' }}>
+          <select className="inputBackground" id="S1" value={type1} onChange={(e) => setType1(e.target.value)} style={{ color: type1 ? typeData[Object.keys(typeData).find(key => typeData[key].korean === type1)]?.color : 'black' }}>
             <option value=""></option>
               {Object.values(typeData).map((type) => (
               <option key={type.korean} value={type.korean}  style={{ color: type.color }} >
@@ -79,7 +78,7 @@ function Make() {
           </select>
           <br />
 
-          <select id="S2" value={type2} onChange={(e) => setType2(e.target.value)}style={{ color: type2 ? typeData[Object.keys(typeData).find(key => typeData[key].korean === type2)]?.color : 'black' }}>
+          <select className="inputBackground" id="S2" value={type2} onChange={(e) => setType2(e.target.value)}style={{ color: type2 ? typeData[Object.keys(typeData).find(key => typeData[key].korean === type2)]?.color : 'black' }}>
             <option value=""></option>
               {Object.values(typeData).map((type) => (
               <option key={type.korean} value={type.korean}style={{ color: type.color }} >
@@ -94,26 +93,24 @@ function Make() {
         </div>
 
         <div className="cukemonFeature">
-        <TextBox>
-            <textarea
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              maxLength={44}
-              rows={3}
-              cols={30}
-              placeholder="영어로 기입해주세요. 예시) beige, normal/flying, sharp-beaked bird"
-            />
-          <p>{description.length} / 44 자</p>
-          </TextBox>
+          <textarea
+            className="featureTextarea"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            maxLength={44}
+            rows={3}
+            cols={30}
+            placeholder={"영어로 기입해주세요.\n\n예시) beige, normal/flying, sharp-beaked bird"}
+          />
+          <span className="featureCounter">{description.length} / 44자</span>
         </div>
         <div className="submitButton">
-          <PokeStyleButton label={"제출하기"} onClick={handleSubmit}/>
+          <button className="imgSubmitButton" onClick={handleSubmit}>
+          </button>
         </div>
       </div>
-        <div className="rightMake">
-          <TypeTable type1={type1} type2={type2}/>
-        </div>
-        <MenuBar />
+        {/* 오른쪽 타입 표 및 관련 요소 완전히 제거 */}
+        <MenuBar centered={true} />
     </div>
   );
 }
