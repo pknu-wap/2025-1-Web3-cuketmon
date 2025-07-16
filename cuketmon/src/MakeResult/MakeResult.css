@@ -1,58 +1,86 @@
 .resultPage {
-  background-image: url("/public/MakePage/background.webp");
+  width: 100vw;
+  height: 100vh;
+  background: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.resultContent {
+  width: 100vw;
+  height: 100vh;
+  background-image: url('/public/MakeResultPage/background.webp');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  bottom: 0;
-  width: 100vw;
-  height: 100vh;
-  animation: blinkEffect 1s ease-in-out 2;
-}
-
-.resultPage #egg {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
   position: relative;
-  width: 20%;
-  padding-top: 15%;
-  left: 40%;
 }
 
 .chatBox {
-  width: 80vw;
-  position: relative;
-  margin-left: 10vw;
+  width: 90vw;
+  max-width: 800px;
+  height: 90px;
+  background-image: url('/public/MakeResultPage/chatBox.webp');
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin: 0 auto 32px auto;
+  padding-left: 32px;
+  box-sizing: border-box;
 }
+
 .chatBox textarea {
-  padding-bottom: 9vh;
-  text-align: center;
+  width: 90%;
+  height: 80%;
+  background: transparent;
+  border: none;
+  resize: none;
+  font-family: "NeoDunggeunmo";
+  font-size: 1.1rem;
+  color: #333;
+  padding: 10px;
+  box-sizing: border-box;
+  outline: none;
 }
 
-/*깜빡임 에니메이션*/
-@keyframes blinkEffect {
-  0% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-.blinkEffect {
-  animation: blinkEffect 2s ease-in-out 4;
+.mentText {
+  font-family: "NeoDunggeunmo";
+  font-size: 1.3rem;
+  color: #21707a;
+  text-align: left;
+  width: 100%;
+  word-break: keep-all;
+  line-height: 1.5;
 }
 
-/* 반응형 */
 @media (max-width: 767px) {
-  .resultPage #egg {
-    top: 37vh;
-    left: 27vw;
-    width: 50%;
-  }
-
-  .chatBox {
+  .resultContent {
     width: 100vw;
-    margin-left: 0;
-    top: 38vh;
+    height: 100vh;
+    background-size: cover;
+  }
+  .chatBox {
+    width: 98vw;
+    max-width: 98vw;
+    height: 60px;
+    padding-left: 12px;
+    margin-bottom: 12px;
+  }
+  .chatBox textarea {
+    font-size: 4vw;
+    padding: 8px;
+  }
+  .mentText {
+    font-size: 1.1rem;
+    padding: 0;
   }
 }
