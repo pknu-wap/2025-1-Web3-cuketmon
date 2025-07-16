@@ -255,3 +255,55 @@ textarea.inputBackground {
     bottom: 18px;
   }
 }
+
+.resultPage {
+  width: 100vw;
+  height: 100vh;
+  background: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.resultContent {
+  width: 100vw;
+  height: 56.25vw; /* 16:9 */
+  max-width: 100vw;
+  max-height: 100vh;
+  min-height: 0;
+  min-width: 0;
+  background-image: url('/public/MakePage/background.webp');
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.chatBox {
+  width: 400px;
+  height: 185px;
+  background-image: url('/public/MakePage/selectBackground.webp');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+}
+.chatBox textarea {
+  width: 90%;
+  height: 80%;
+  background: transparent;
+  border: none;
+  resize: none;
+  font-family: "NeoDunggeunmo";
+  font-size: 1.1rem;
+  color: #333;
+  padding: 10px;
+  box-sizing: border-box;
+  outline: none;
+}

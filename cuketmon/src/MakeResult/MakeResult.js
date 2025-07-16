@@ -5,7 +5,7 @@ import TextBox from '../common/TextBox/TextBox.js';
 
 function MakeResult() {
   const [cukemonImage, setCukemonImage] = useState("/MakeResultPage/movingEgg.gif");
-  const [mentText, setMentText] = useState("어라...?");
+  const [mentText, setMentText] = useState("");
   const eggRef = useRef(null);
   const navigate = useNavigate();
   const token = localStorage.getItem('accessToken');
@@ -77,26 +77,27 @@ function MakeResult() {
 
   return (
     <div className="resultPage">
-      {cukemonImage && (
+      <div className="resultContent">
+        {cukemonImage && (
+          <img
+            id="egg"
+            ref={eggRef}
+            src={cukemonImage}
+            alt="cukemonImage"
+            className="blinkEffect"
+            style={{ marginBottom: '0', marginTop: '5vh', display: 'block' }}
+          />
+        )}
         <img
-          id="egg"
-          ref={eggRef}
-          src={cukemonImage}
-          alt="cukemonImage"
-          className="blinkEffect"
+          src="/MakeResultPage/grass.webp"
+          alt="grass"
+          className="grassImage"
+          style={{ marginBottom: '16px', marginTop: '-32px', display: 'block' }}
         />
-      )}
- 
- <div  className="chatBox">
-  <TextBox>
-  <textarea
-    id="ment"
-    readOnly
-    value={mentText}
-    onClick={mentText.includes("도망") ? () => navigate("/Make") : undefined}
-  />
-</TextBox>
-</div>
+        <div className="chatBox">
+          <p className="mentText">{mentText}</p>
+        </div>
+      </div>
     </div>
   );
 }
