@@ -20,6 +20,7 @@ def save_image(image: Image.Image, monster_id: int):
     resized.save(resized_path)
 
     output = remove_bg(resized, device="cuda")
+    output = output.resize((512, 512))
     output_path = save_dir / f"{monster_id}.png"
     output.save(output_path)
 
