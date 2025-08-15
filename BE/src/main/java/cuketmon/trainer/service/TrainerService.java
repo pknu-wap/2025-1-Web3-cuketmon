@@ -10,21 +10,17 @@ import cuketmon.trainer.repository.TrainerRepository;
 import cuketmon.util.CustomLogger;
 import jakarta.transaction.Transactional;
 import java.util.List;
+import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class TrainerService {
 
     private static final Logger log = CustomLogger.getLogger(TrainerService.class);
 
     private final TrainerRepository trainerRepository;
-
-    @Autowired
-    public TrainerService(TrainerRepository trainerRepository) {
-        this.trainerRepository = trainerRepository;
-    }
 
     @Transactional
     public Integer getRemainingToys(String name) {

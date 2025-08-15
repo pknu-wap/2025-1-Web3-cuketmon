@@ -28,12 +28,13 @@ import cuketmon.trainer.entity.Trainer;
 import cuketmon.trainer.repository.TrainerRepository;
 import cuketmon.util.CustomLogger;
 import java.util.List;
+import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@RequiredArgsConstructor
 public class MonsterService {
 
     private static final Logger log = CustomLogger.getLogger(MonsterService.class);
@@ -42,15 +43,6 @@ public class MonsterService {
     private final MonsterRepository monsterRepository;
     private final SkillService skillService;
     private final PromptService promptService;
-
-    @Autowired
-    public MonsterService(TrainerRepository trainerRepository, MonsterRepository monsterRepository,
-                          SkillService skillService, PromptService promptService) {
-        this.trainerRepository = trainerRepository;
-        this.monsterRepository = monsterRepository;
-        this.skillService = skillService;
-        this.promptService = promptService;
-    }
 
     @Transactional
     public Integer getETA() {

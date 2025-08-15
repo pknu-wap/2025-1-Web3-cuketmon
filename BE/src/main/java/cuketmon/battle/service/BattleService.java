@@ -5,21 +5,16 @@ import cuketmon.battle.entity.Battle;
 import cuketmon.battle.repository.BattleRepository;
 import cuketmon.trainer.entity.Trainer;
 import cuketmon.trainer.repository.TrainerRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@RequiredArgsConstructor
 public class BattleService {
 
     private final BattleRepository battleRepository;
     private final TrainerRepository trainerRepository;
-
-    @Autowired
-    public BattleService(BattleRepository battleRepository, TrainerRepository trainerRepository) {
-        this.battleRepository = battleRepository;
-        this.trainerRepository = trainerRepository;
-    }
 
     @Transactional
     public Integer startBattle(String trainer1Name, String trainer2Name) {

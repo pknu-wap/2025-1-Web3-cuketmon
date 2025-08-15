@@ -13,13 +13,14 @@ import cuketmon.util.CustomLogger;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@RequiredArgsConstructor
 public class BattleSkillService {
 
     private static final Logger log = CustomLogger.getLogger(BattleMatchService.class);
@@ -27,12 +28,6 @@ public class BattleSkillService {
     private final SimpMessagingTemplate messagingTemplate;
     private final ActiveBattles activeBattles;
     private final Map<Integer, Integer[]> requestedSkills = new HashMap<>();
-
-    @Autowired
-    public BattleSkillService(SimpMessagingTemplate messagingTemplate, ActiveBattles activeBattles) {
-        this.messagingTemplate = messagingTemplate;
-        this.activeBattles = activeBattles;
-    }
 
     @Transactional
     public void useSkill(Integer battleId, SkillRequest request) {
