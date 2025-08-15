@@ -14,25 +14,20 @@ import cuketmon.util.CustomLogger;
 import cuketmon.util.Random;
 import java.util.Collections;
 import java.util.List;
+import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.reactive.function.client.WebClient;
 
 @Service
+@RequiredArgsConstructor
 public class SkillService {
 
     private static final Logger log = CustomLogger.getLogger(SkillService.class);
 
     private final SkillRepository skillRepository;
     private final WebClient skillWebClient;
-
-    @Autowired
-    public SkillService(SkillRepository skillRepository, WebClient skillWebClient) {
-        this.skillRepository = skillRepository;
-        this.skillWebClient = skillWebClient;
-    }
 
     // TODO: 앞서 분배한 스킬과 겹치는 스킬을 주는 오류도 있을듯
     //  스킬을 List로 만들어서 중복검사 하면 깔끔 할 듯

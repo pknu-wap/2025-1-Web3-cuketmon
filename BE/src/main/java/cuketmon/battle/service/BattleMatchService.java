@@ -11,13 +11,14 @@ import cuketmon.battle.util.TeamMaker;
 import cuketmon.trainer.service.TrainerService;
 import cuketmon.util.CustomLogger;
 import java.util.UUID;
+import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@RequiredArgsConstructor
 public class BattleMatchService {
 
     private static final Logger log = CustomLogger.getLogger(BattleMatchService.class);
@@ -27,16 +28,6 @@ public class BattleMatchService {
     private final WaitingQueue waitingQueue;
     private final ActiveBattles activeBattles;
     private final TrainerService trainerService;
-
-    @Autowired
-    public BattleMatchService(SimpMessagingTemplate messagingTemplate, TeamMaker teamMaker,
-                              WaitingQueue waitingQueue, ActiveBattles activeBattles, TrainerService trainerService) {
-        this.messagingTemplate = messagingTemplate;
-        this.teamMaker = teamMaker;
-        this.waitingQueue = waitingQueue;
-        this.activeBattles = activeBattles;
-        this.trainerService = trainerService;
-    }
 
     @Transactional
     public void findBattle(TrainerRequest request) {

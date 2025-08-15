@@ -4,21 +4,17 @@ import cuketmon.constant.type.Type;
 import cuketmon.prompt.entity.Prompt;
 import cuketmon.prompt.repository.PromptRepository;
 import cuketmon.util.CustomLogger;
+import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class PromptService {
 
     private static final Logger log = CustomLogger.getLogger(PromptService.class);
 
     private final PromptRepository promptRepository;
-
-    @Autowired
-    public PromptService(PromptRepository promptRepository) {
-        this.promptRepository = promptRepository;
-    }
 
     public void save(Integer id, Type type1, Type type2, String description) {
         Prompt prompt = Prompt.builder()
