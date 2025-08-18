@@ -8,8 +8,12 @@ import static cuketmon.constant.message.InfoMessages.RELEASE_SUCCESS;
 import cuketmon.monster.dto.GenerateApiRequestBody;
 import cuketmon.monster.dto.NamingDTO;
 import cuketmon.monster.service.MonsterService;
+import cuketmon.util.SseEmitters;
+import java.io.IOException;
 import java.util.Map;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
@@ -21,18 +25,17 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
+@Slf4j
 @Validated
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/monster")
 public class MonsterController {
 
     private final MonsterService monsterService;
-
-    @Autowired
-    public MonsterController(MonsterService monsterService) {
-        this.monsterService = monsterService;
-    }
+    private final SseEmitters sseEmitters;
 
     @GetMapping("/eta")
     public Integer getETA() {
@@ -50,6 +53,27 @@ public class MonsterController {
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(Map.of("message", e.getMessage()));
         }
+    }
+
+    // SSE 엔드포인트
+    @GetMapping(value = "/generate/status/{monsterId}", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    public SseEmitter monsterGenerationStatus(@PathVariable Integer monsterId) {
+        log.info("SSE connection requested for monsterId: {}", monsterId);
+
+        SseEmitter emitter = new SseEmitter(60 * 1000L); // 60초 타임아웃
+        sseEmitters.add(monsterId, emitter);
+
+        try {
+            // 연결 확인용 초기 이벤트 전송
+            emitter.send(SseEmitter.event()
+                    .name("connected")
+                    .data(Map.of("monsterId", monsterId, "message", "Connected to monster generation status")));
+        } catch (IOException e) {
+            log.error("Failed to send initial SSE event for monsterId: {}", monsterId, e);
+            emitter.completeWithError(e);
+        }
+
+        return emitter;
     }
 
     // 커켓몬 이름 지정
