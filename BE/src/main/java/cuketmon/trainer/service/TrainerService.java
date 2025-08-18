@@ -7,18 +7,16 @@ import cuketmon.monster.entity.Monster;
 import cuketmon.trainer.dto.TrainerDTO;
 import cuketmon.trainer.entity.Trainer;
 import cuketmon.trainer.repository.TrainerRepository;
-import cuketmon.util.CustomLogger;
 import jakarta.transaction.Transactional;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.apache.logging.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class TrainerService {
-
-    private static final Logger log = CustomLogger.getLogger(TrainerService.class);
 
     private final TrainerRepository trainerRepository;
 

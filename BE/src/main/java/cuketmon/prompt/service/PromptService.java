@@ -3,16 +3,14 @@ package cuketmon.prompt.service;
 import cuketmon.constant.type.Type;
 import cuketmon.prompt.entity.Prompt;
 import cuketmon.prompt.repository.PromptRepository;
-import cuketmon.util.CustomLogger;
 import lombok.RequiredArgsConstructor;
-import org.apache.logging.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class PromptService {
-
-    private static final Logger log = CustomLogger.getLogger(PromptService.class);
 
     private final PromptRepository promptRepository;
 

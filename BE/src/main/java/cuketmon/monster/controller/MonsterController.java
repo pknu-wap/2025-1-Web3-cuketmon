@@ -67,7 +67,11 @@ public class MonsterController {
             // 연결 확인용 초기 이벤트 전송
             emitter.send(SseEmitter.event()
                     .name("connected")
-                    .data(Map.of("monsterId", monsterId, "message", "Connected to monster generation status")));
+                    .data(Map.of(
+                            "monsterId", monsterId,
+                            "message",
+                            "Connected to monster generation status"))
+            );
         } catch (IOException e) {
             log.error("Failed to send initial SSE event for monsterId: {}", monsterId, e);
             emitter.completeWithError(e);

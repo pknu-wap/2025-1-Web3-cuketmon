@@ -9,19 +9,17 @@ import cuketmon.battle.repository.ActiveBattles;
 import cuketmon.battle.repository.WaitingQueue;
 import cuketmon.battle.util.TeamMaker;
 import cuketmon.trainer.service.TrainerService;
-import cuketmon.util.CustomLogger;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
-import org.apache.logging.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class BattleMatchService {
-
-    private static final Logger log = CustomLogger.getLogger(BattleMatchService.class);
 
     private final SimpMessagingTemplate messagingTemplate;
     private final TeamMaker teamMaker;
