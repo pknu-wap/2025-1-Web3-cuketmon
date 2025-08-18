@@ -4,7 +4,7 @@ import cuketmon.trainer.dto.TrainerDTO;
 import cuketmon.trainer.service.TrainerService;
 import java.util.List;
 import java.util.Map;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,15 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/trainer")
 public class TrainerController {
 
     private final TrainerService trainerService;
-
-    @Autowired
-    public TrainerController(TrainerService trainerService) {
-        this.trainerService = trainerService;
-    }
 
     // 남은 장난감의 개수를 확인
     @GetMapping("/toys")
