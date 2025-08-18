@@ -10,21 +10,19 @@ import cuketmon.monster.dto.MonsterDTO;
 import cuketmon.skill.dto.SkillResponse;
 import cuketmon.skill.entity.Skill;
 import cuketmon.skill.repository.SkillRepository;
-import cuketmon.util.CustomLogger;
 import cuketmon.util.Random;
 import java.util.Collections;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.apache.logging.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.reactive.function.client.WebClient;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class SkillService {
-
-    private static final Logger log = CustomLogger.getLogger(SkillService.class);
 
     private final SkillRepository skillRepository;
     private final WebClient skillWebClient;

@@ -26,18 +26,16 @@ import cuketmon.prompt.service.PromptService;
 import cuketmon.skill.service.SkillService;
 import cuketmon.trainer.entity.Trainer;
 import cuketmon.trainer.repository.TrainerRepository;
-import cuketmon.util.CustomLogger;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.apache.logging.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class MonsterService {
-
-    private static final Logger log = CustomLogger.getLogger(MonsterService.class);
 
     private final TrainerRepository trainerRepository;
     private final MonsterRepository monsterRepository;
