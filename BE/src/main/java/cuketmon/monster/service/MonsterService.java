@@ -39,8 +39,9 @@ public class MonsterService {
 
     private final TrainerRepository trainerRepository;
     private final MonsterRepository monsterRepository;
-    private final SkillService skillService;
     private final PromptService promptService;
+    private final SkillService skillService;
+    private final ImageService imageService;
 
     @Transactional
     public Integer generate(String trainerName, MonsterGenerateRequest request) {
@@ -58,21 +59,16 @@ public class MonsterService {
         DamageClass damageClass = (attack >= specialAttack) ? DamageClass.PHYSICAL : DamageClass.SPECIAL;
         DamageClass altClass = damageClass.getOppositeClass();
 
-        String monsterImageUrl = makeImage(request.getDescription());
+        String monsterImageUrl = imageService.makeImage(request.getDescription());
 
         Monster monster = Monster.builder()
-                .name("")
-                .image(monsterImageUrl)
-                .description(request.getDescription().strip())
+                .name(null).image(monsterImageUrl).description(request.getDescription().strip())
                 .affinity(new Affinity())
                 .hp(getRandomInRange(MIN_BASE, MAX_BASE))
                 .speed(getRandomInRange(MIN_BASE, MAX_BASE))
-                .attack(attack)
-                .defence(getRandomInRange(MIN_BASE, MAX_BASE))
-                .specialAttack(specialAttack)
-                .specialDefence(getRandomInRange(MIN_BASE, MAX_BASE))
-                .type1(type1)
-                .type2(type2)
+                .attack(attack).defence(getRandomInRange(MIN_BASE, MAX_BASE))
+                .specialAttack(specialAttack).specialDefence(getRandomInRange(MIN_BASE, MAX_BASE))
+                .type1(type1).type2(type2)
                 .skillId1(skillService.getSkillId(type1, damageClass, MIN_DAMAGE, MID_DAMAGE)) // 평타
                 .skillId2(skillService.getSkillId(type1, damageClass, MID_DAMAGE, MAX_DAMAGE)) // 필살기
                 .skillId3(skillService.getSkillId(type2, damageClass, MIN_DAMAGE, MID_DAMAGE))
@@ -192,10 +188,6 @@ public class MonsterService {
                         skillService.convertSkill(monster.getSkillId3()),
                         skillService.convertSkill(monster.getSkillId4()))
         );
-    }
-
-    private String makeImage(String description) {
-        return "image";
     }
 
     private boolean isYourMonster(Trainer trainer, Monster monster) {
