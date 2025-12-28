@@ -59,10 +59,11 @@ public class MonsterService {
         DamageClass damageClass = (attack >= specialAttack) ? DamageClass.PHYSICAL : DamageClass.SPECIAL;
         DamageClass altClass = damageClass.getOppositeClass();
 
-        String monsterImageUrl = imageService.makeImage(request.getDescription());
+        String description = request.getDescription().strip();
+        String monsterImageUrl = imageService.makeImage(description);
 
         Monster monster = Monster.builder()
-                .name(null).image(monsterImageUrl).description(request.getDescription().strip())
+                .name(null).image(monsterImageUrl).description(description)
                 .affinity(new Affinity())
                 .hp(getRandomInRange(MIN_BASE, MAX_BASE))
                 .speed(getRandomInRange(MIN_BASE, MAX_BASE))
@@ -78,7 +79,7 @@ public class MonsterService {
 
         trainer.addMonster(monster);
         monsterRepository.save(monster);
-        promptService.save(monster.getId(), type1, type2, request.getDescription().strip());
+        promptService.save(monster.getId(), type1, type2, description);
 
         return monster.getId();
     }
