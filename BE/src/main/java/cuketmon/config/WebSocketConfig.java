@@ -12,8 +12,8 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 
 @Configuration
 @EnableWebSocket
-@EnableWebSocketMessageBroker
 @RequiredArgsConstructor
+@EnableWebSocketMessageBroker
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
     @Value("${client.redirect-url}")
