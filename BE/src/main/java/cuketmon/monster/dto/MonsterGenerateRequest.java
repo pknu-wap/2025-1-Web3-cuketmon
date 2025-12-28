@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class GenerateApiRequestBody {
+public class MonsterGenerateRequest {
 
     @NotBlank(message = "type1은 필수 입력값입니다.")
     private String type1;

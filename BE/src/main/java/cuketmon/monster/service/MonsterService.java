@@ -15,10 +15,10 @@ import static cuketmon.util.Random.getRandomInRange;
 
 import cuketmon.constant.damageclass.DamageClass;
 import cuketmon.constant.type.Type;
-import cuketmon.monster.dto.GenerateApiRequestBody;
 import cuketmon.monster.dto.MonsterDTO;
 import cuketmon.monster.dto.MonsterDTO.MonsterBattleInfo;
 import cuketmon.monster.dto.MonsterDTO.MonsterInfo;
+import cuketmon.monster.dto.MonsterGenerateRequest;
 import cuketmon.monster.embeddable.Affinity;
 import cuketmon.monster.entity.Monster;
 import cuketmon.monster.repository.MonsterRepository;
@@ -43,36 +43,27 @@ public class MonsterService {
     private final PromptService promptService;
 
     @Transactional
-    public Integer getETA() {
-        return promptService.makeEta();
-    }
-
-    // 커켓몬 생성 함수
-    @Transactional
-    public Integer generate(String trainerName, GenerateApiRequestBody requestBody) {
+    public Integer generate(String trainerName, MonsterGenerateRequest request) {
         Trainer trainer = trainerRepository.findById(trainerName)
                 .orElseThrow(() -> new IllegalArgumentException(TRAINER_NOT_FOUND));
 
         // 최대 보유 커켓몬 제한확인
         trainer.checkLimits();
 
-        Type type1 = Type.fromString(requestBody.getType1());
-        Type type2 = Type.fromString(requestBody.getType2()); // nullable 값
+        Type type1 = Type.fromString(request.getType1());
+        Type type2 = Type.fromString(request.getType2()); // nullable 값
 
         int attack = getRandomInRange(MIN_BASE, MAX_BASE);
         int specialAttack = getRandomInRange(MIN_BASE, MAX_BASE);
         DamageClass damageClass = (attack >= specialAttack) ? DamageClass.PHYSICAL : DamageClass.SPECIAL;
         DamageClass altClass = damageClass.getOppositeClass();
 
-        /*
-            1. BE서버에서는 image를 null처리하여 임시 저장
-            2. 이미지 생성에 필요한 정보 DB 생성 (id, type1, type2, description)
-            3. AI서버에서 2번 DB를 읽고 이미지 생성, DB 저장 + GDS 저장
-        */
+        String monsterImageUrl = makeImage(request.getDescription());
+
         Monster monster = Monster.builder()
                 .name("")
-                .image(null)
-                .description(requestBody.getDescription().strip())
+                .image(monsterImageUrl)
+                .description(request.getDescription().strip())
                 .affinity(new Affinity())
                 .hp(getRandomInRange(MIN_BASE, MAX_BASE))
                 .speed(getRandomInRange(MIN_BASE, MAX_BASE))
@@ -91,7 +82,7 @@ public class MonsterService {
 
         trainer.addMonster(monster);
         monsterRepository.save(monster);
-        promptService.save(monster.getId(), type1, type2, requestBody.getDescription().strip());
+        promptService.save(monster.getId(), type1, type2, request.getDescription().strip());
 
         return monster.getId();
     }
@@ -201,6 +192,10 @@ public class MonsterService {
                         skillService.convertSkill(monster.getSkillId3()),
                         skillService.convertSkill(monster.getSkillId4()))
         );
+    }
+
+    private String makeImage(String description) {
+        return "image";
     }
 
     private boolean isYourMonster(Trainer trainer, Monster monster) {

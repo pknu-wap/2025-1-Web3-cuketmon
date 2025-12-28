@@ -5,10 +5,9 @@ import static cuketmon.constant.message.InfoMessages.NAME_CHANGE_SUCCESS;
 import static cuketmon.constant.message.InfoMessages.PLAY_SUCCESS;
 import static cuketmon.constant.message.InfoMessages.RELEASE_SUCCESS;
 
-import cuketmon.monster.dto.GenerateApiRequestBody;
+import cuketmon.monster.dto.MonsterGenerateRequest;
 import cuketmon.monster.dto.NamingDTO;
 import cuketmon.monster.service.MonsterService;
-import cuketmon.util.SseEmitters;
 import java.io.IOException;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
@@ -35,20 +34,14 @@ import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 public class MonsterController {
 
     private final MonsterService monsterService;
-    private final SseEmitters sseEmitters;
-
-    @GetMapping("/eta")
-    public Integer getETA() {
-        return monsterService.getETA();
-    }
 
     // TODO: response 이상함 고치기 우선순위는 낮음
     // 몬스터 생성
     @PostMapping("/generate")
     public ResponseEntity<Map<String, Object>> generateMonster(@AuthenticationPrincipal String trainerName,
-                                                               @Validated @RequestBody GenerateApiRequestBody requestBody) {
+                                                               @Validated @RequestBody MonsterGenerateRequest request) {
         try {
-            Integer monsterId = monsterService.generate(trainerName, requestBody);
+            Integer monsterId = monsterService.generate(trainerName, request);
             return ResponseEntity.ok(Map.of("monsterId", monsterId));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(Map.of("message", e.getMessage()));
