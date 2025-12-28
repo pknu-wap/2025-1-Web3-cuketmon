@@ -1,0 +1,14 @@
+temp.py
+datasets
+venv
+
+*.csv
+output.txt
+des*.txt
+*.png
+__pycache__
+*.jsonl
+private
+results
+*.out
+*.log

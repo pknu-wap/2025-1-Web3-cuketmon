@@ -1,0 +1,273 @@
+/* 화면 중앙 정렬 및 3:4 비율 유지 */
+@font-face {
+  font-family: "PFStardust";
+  src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/PFStardust.woff")
+    format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+.aspectWrapper {
+  width: 100vw;
+  height: 100vh;
+  background: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.pickScreen {
+  aspect-ratio: 4 / 3;
+  width: 100vw;
+  max-height: 100vh;
+  background: url("cuketmon/public/PickScreen/background.webp") center/contain
+    no-repeat;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+}
+
+/* 타이틀 */
+.pickTitle {
+  font-size: 3vw;
+  color: #fff;
+  text-align: left;
+  margin-top: 3vw;
+  text-shadow: -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black,
+    1px 1px 0 black;
+  font-family: "PFStardust";
+  line-height: 1;
+}
+
+/* 중앙 콘텐츠 */
+.pickContent {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 30vw;
+}
+
+.arrowButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s;
+  margin-bottom: 15vw;
+}
+.arrowButton:hover {
+  transform: scale(1.2);
+}
+
+/* 카드 */
+.cuketmonCard {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.cuketmonImage {
+  width: 50%;
+  height: auto;
+}
+
+/* HP바 + 이름 + 타입 */
+.commonImageContainer {
+  position: relative;
+  width: 20vw;
+  margin-top: 1vw;
+}
+
+.commonImageContainer img {
+  width: 100%;
+  display: block;
+}
+
+.overlayText {
+  position: absolute;
+  font-weight: bold;
+  color: #222;
+  transform: translate(-50%, -50%);
+}
+
+.nameText {
+  top: 40%;
+  left: 45%;
+  text-align: right;
+  font-size: 1.5vw;
+  width: 100%;
+}
+
+.hpText {
+  top: 80%;
+  left: 15%;
+  font-size: 1.5vw;
+}
+
+.typeText {
+  font-size: 1.5vw;
+}
+.typeText img {
+  width: fit-content;
+}
+
+/* 스탯 */
+.specText {
+  position: absolute;
+  top: 50%;
+  left: 60%;
+  transform: translate(-50%, -50%);
+  font-size: 1.6vw;
+  color: #1c5252;
+  width: 55%;
+}
+
+.specRow {
+  display: flex;
+  justify-content: space-between;
+  margin: 0.5vh 0;
+}
+
+/* 버튼 영역 */
+.buttonContainer {
+  display: flex;
+  justify-content: center;
+  gap: 3vw;
+  margin-bottom: 5%;
+}
+
+.buttonSet {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.buttonSet img {
+  height: 5vw;
+}
+
+/* 로딩/에러 */
+.pickScreenLoading,
+.pickScreenNoData {
+  width: 100vw;
+  height: 100vh;
+  background: black;
+  color: white;
+  font-size: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@media (max-width: 767px) {
+  .pickScreen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: url("cuketmon/public/PickScreen/backgroundMobile.webp")
+      center/contain no-repeat;
+    height: 100vh;
+    width: 100vw;
+    background-color: #000;
+  }
+
+  .pickTitle {
+    margin-top: 10%;
+    font-size: 5vh;
+    font-weight: bold;
+    margin-bottom: 2vh;
+    color: #fff;
+  }
+
+  .pickContent {
+    margin-top: 8vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: 100vh;
+  }
+
+  .cuketmonCard {
+    position: absolute;
+    top: 22vh;
+  }
+
+  .cuketmonImage {
+    width: 40vw;
+  }
+
+  .arrowButton {
+    margin-bottom: 50vh;
+  }
+  .arrowButtonRight {
+    position: absolute;
+    right: 5vw;
+  }
+  .arrowButtonLeft {
+    position: absolute;
+    left: 5vw;
+  }
+  /* HP바 + 이름 + 타입 */
+  .commonImageContainer {
+    position: relative;
+    width: 80vw;
+    margin-top: 3vh;
+  }
+
+  .hpBarWrapper img {
+    display: block;
+    width: 100%;  /* 필요에 따라 크기 조절 */
+    height: auto;
+  }
+
+  .overlayText {
+    position: absolute;
+    font-weight: bold;
+    white-space: nowrap;
+  }
+
+  .nameText {
+    left: -10%;
+    font-size: 5vw;
+    text-align: right;
+    transform: translateY(-50%);
+  }
+
+  .hpText {
+    left: 10%;
+    transform: translateY(-50%);
+    text-align: left;
+    font-size: 5vw;
+  }
+
+
+
+  .typeText {
+    font-size: 5vw;
+  }
+
+  /* 스탯 */
+  .specText {
+    position: absolute;
+    top: 50%;
+    left: 60%;
+    font-size: 5vw;
+  }
+
+  /* 버튼 영역 */
+  .buttonContainer {
+    display: flex;
+    justify-content: center;
+    gap: 3vw;
+    margin-bottom: 5.8vh;
+  }
+
+  .buttonSet img {
+    height: 6vh;
+    margin-top: 1vh;
+  }
+}

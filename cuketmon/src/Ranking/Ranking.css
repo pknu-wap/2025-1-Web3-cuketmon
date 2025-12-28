@@ -1,0 +1,215 @@
+html {
+  background-color: black;
+}
+.ranking {
+  background-image: url("/public/RankingPage/background1.webp");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 100vw;
+  height: 100vh;
+  align-items: center;
+}
+
+.rankingBoard {
+  position: absolute;
+  text-align: center;
+  font-size: 17px;
+  width: 100vw;
+  top: 10vh;
+}
+
+.cukemonImageContainer {
+  position: relative;
+  margin-top: 3.6vh;
+  transition: transform 0.2s;
+}
+
+.cukemonImageContainer img {
+  width: 7vw;
+  height: 7vw;
+}
+
+.cukemonImage:hover {
+  transform: scale(1.05);
+}
+
+.historyBoard {
+  position: relative;
+  width: 605px;
+  height: 340px;
+  border-collapse: collapse;
+  background-image: url("/public/RankingPage/rankingboard.webp");
+  background-size: cover;
+  background-repeat: no-repeat;
+  left: 30vw;
+  color: white;
+}
+
+.historyBoard .trainerName {
+  padding-top: 8vh;
+  font-size: 1.5vw;
+  text-shadow: -3px -3px 0 #041430, -3px -2px 0 #041430, -3px -1px 0 #041430,
+    -3px 0px 0 #041430, -3px 1px 0 #041430, -3px 2px 0 #041430,
+    -3px 3px 0 #041430, 3px -3px 0 #041430, 3px -2px 0 #041430,
+    3px -1px 0 #041430, 3px 0px 0 #041430, 3px 1px 0 #041430, 3px 2px 0 #041430,
+    3px 3px 0 #041430, -2px -3px 0 #041430, -1px -3px 0 #041430,
+    0px -3px 0 #041430, 1px -3px 0 #041430, 2px -3px 0 #041430,
+    -2px 3px 0 #041430, -1px 3px 0 #041430, 0px 3px 0 #041430, 1px 3px 0 #041430,
+    2px 3px 0 #041430;
+  padding-bottom: 1.3vw;
+}
+.historyBoard .row1,
+.historyBoard .row2,
+.historyBoard .row3,
+.historyBoard .row4 {
+  display: flex;
+  margin-top: 3.4vh;
+  white-space: nowrap;
+}
+
+.historyBoard .row1 {
+  position: relative;
+  gap: 76%;
+  margin-left: 5vw;
+}
+
+.historyBoard .row2 {
+  gap: 58%;
+  margin-top: 5%;
+  margin-left: 16%;
+}
+
+.historyBoard .row3 {
+  margin-top: 5%;
+  gap: 75%;
+  margin-left: 5.5vw;
+}
+.historyBoard .row4 {
+  margin-top: 5%;
+  gap: 72%;
+  margin-left: 5.9vw;
+}
+
+/* 숫자 위치 조정 */
+.historyBoard .row1 div:last-child,
+.historyBoard .row2 div:last-child,
+.historyBoard .row3 div:last-child,
+.historyBoard .row4 div:last-child {
+  padding-right: 10vw; /* ← 오른쪽 끝에서 띄움 */
+  text-align: left;
+  min-width: 4ch; /* 숫자 자리 고정 (1~3자리 대비) */
+  line-height: 1;
+}
+
+/* 중간 점선 효과 */
+.historyBoard .row1 div:first-child,
+.historyBoard .row2 div:first-child,
+.historyBoard .row3 div:first-child,
+.historyBoard .row4 div:first-child {
+  position: relative;
+  flex: 1;
+  padding-right: 1vw;
+}
+
+.historyBoard .row1 div:first-child::after,
+.historyBoard .row2 div:first-child::after,
+.historyBoard .row3 div:first-child::after,
+.historyBoard .row4 div:first-child::after {
+  content: "";
+  position: absolute;
+  left: 100%;
+  top: 50%;
+
+  height: 1px;
+  background-image: repeating-linear-gradient(
+    to right,
+    currentColor,
+    currentColor 1px,
+    transparent 2px,
+    transparent 6px
+  );
+  background-repeat: repeat-x;
+  transform: translateY(-50%);
+  opacity: 0.85;
+}
+.historyBoard .row1 div:first-child::after {
+  width: 24vw;
+}
+.historyBoard .row2 div:first-child::after {
+  width: 18vw;
+}
+.historyBoard .row3 div:first-child::after {
+  width: 24.5vw;
+}
+.historyBoard .row4 div:first-child::after {
+  width: 22.5vw;
+}
+/*모바일 반응형*/
+@media (max-width: 767px) {
+  #root,
+  body {
+    height: 100%;
+    padding: 0;
+  }
+
+  .ranking {
+    height: 100%;
+    background-image: url("/public/RankingPage/backgroundMobile.webp");
+    flex-direction: column;
+    background-size: cover;
+    justify-content: center;
+    padding-top: 0%;
+    height: 100%;
+  }
+
+  .rankingBoard {
+    font-size: 17px;
+    top: 20%;
+    padding-bottom: 0;
+  }
+
+  .cukemonImageContainer {
+    white-space: nowrap;
+    width: 100vw;
+    left: 0vw;
+  }
+  .cukemonImageContainer img {
+    width: 14vw;
+    height: 14vw;
+  }
+
+  .historyBoard {
+    background-image: url("/public/RankingPage/rankingboardMobile.webp");
+    background-size: contain;
+    left: 10vw;
+    width: 80vw;
+  }
+
+  .historyBoard .trainerName {
+    font-size: 20px;
+    padding-top: 3.2vh;
+    margin-bottom: 10vw;
+  }
+  .historyBoard .row1,
+  .historyBoard .row2,
+  .historyBoard .row3,
+  .historyBoard .row4 {
+    margin-top: 0;
+    margin-bottom: 2.9vh;
+    font-size: 3.5vw;
+  }
+  .historyBoard .row2 {
+    gap: 50%;
+    margin-left: 7vw;
+  }
+  .historyBoard .row4 {
+    gap: 70%;
+  }
+  .historyBoard .row1 div:first-child::after,
+  .historyBoard .row2 div:first-child::after,
+  .historyBoard .row3 div:first-child::after,
+  .historyBoard .row4 div:first-child::after {
+    display: none;
+  }
+}

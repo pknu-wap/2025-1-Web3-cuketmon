@@ -1,0 +1,152 @@
+span {
+  font-family: "NeoDunggeunmo";
+}
+
+.myPage {
+  overflow: hidden;
+  background-image: url("/public/MyPage/background.webp");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  bottom: 0;
+  width: 100vw;
+  height: 100vh;
+}
+
+.cukemonImg img {
+  position: absolute;
+  transition: transform 1s ease-in-out;
+  width: clamp(150px, 20%, 300px);
+  left: 40vw;
+  top: 29vh;
+  pointer-events: none;
+}
+
+.cucketmonProfile {
+  width: 317px;
+  height: 103px;
+  text-align: center;
+  position: relative;
+  top: 13vh;
+  left: 39vw;
+  margin-bottom: 1vh;
+  padding-bottom: 0.5%;
+  padding-top: 1%;
+  font-family: "NeoDunggeunmo";
+  background-image: url("/public/MyPage/cukemonProfile.webp");
+  background-size: cover;
+  user-select: none;
+}
+
+.cucketmonProfile img {
+  width: 25px;
+  height: 25px;
+}
+
+.buttons {
+  position: absolute;
+  color: white;
+  left: 76vw;
+  top: 37vh;
+  font-size: 1vw;
+  user-select: none;
+}
+
+#feed,
+#play {
+  width: 5.5vw;
+  height: 5.5vw;
+  margin-bottom: 2vh;
+}
+
+.feedCukemonButton span,
+.playCukemonButton span {
+  position: relative;
+  left: -3.5vw;
+  top: -1.6vw;
+}
+
+#releaseButton {
+  width: 4%;
+  position: absolute;
+  top: 45vh;
+  left: 19vw;
+}
+
+.feedCukemonButton:hover,
+.playCukemonButton:hover,
+#releaseButton:hover {
+  filter: brightness(0.7);
+}
+
+/*모바일 반응형*/
+@media (max-width: 767px) {
+  #root,
+  body {
+    height: 100%;
+    padding: 0;
+    left: 0;
+    top: 0;
+  }
+  .myPage {
+    background-image: url("/public/MyPage/backgroundMobile.webp");
+    padding: 0%;
+    height: 100vh;
+    background-size: cover;
+  }
+
+  .buttons {
+    top: 13vh;
+    white-space: nowrap;
+  }
+
+  #feed,
+  #play {
+    width: 17vw;
+    height: 17vw;
+    margin-bottom: 1vh;
+  }
+
+  #cuketmonImage {
+    position: absolute;
+    top: 53vh;
+    width: 35%;
+    left: 34%;
+  }
+
+  .cucketmonProfile {
+    position: absolute;
+    top: 37vh;
+    left: 26vw;
+    margin-left: 0;
+    width: 200px;
+    height: 65px;
+    margin-top: 5%;
+  }
+
+  .cucketmonProfile p {
+    font-size: 20px;
+  }
+
+  .cucketmonProfile img,
+  .cucketmonProfile span {
+    width: 10px;
+    height: 10px;
+    font-size: 10px;
+  }
+
+  .feedCukemonButton span,
+  .playCukemonButton span {
+    font-size: 4vw;
+    left: -11.5vw;
+    top: -1.8vh;
+    font-size: 4vw;
+  }
+
+  #releaseButton {
+    position: absolute;
+    top: 14.5vh;
+    left: 4vw;
+    width: 12%;
+  }
+}

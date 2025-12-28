@@ -1,0 +1,87 @@
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  background-color: black; /* 나머지 여백을 검정으로 */
+  overflow: hidden;
+}
+
+.menubarItems {
+  position: fixed;
+  bottom: 7vh;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 0.8vw;
+  z-index: 2;
+}
+/*메뉴바 아이콘 배경화면 설정*/
+.menubarItems button {
+  width: 5vw;
+  height: 5vw;
+  background-size: cover;
+  background-repeat: no-repeat;
+  border: none;
+  background-color: transparent;
+}
+.makePageLink {
+  background-image: url("/public/Menubar/makeicon.webp");
+}
+
+.battleLink {
+  background-image: url("/public/Menubar/battleicon.webp");
+}
+
+.rankingLink {
+  background-image: url("/public/Menubar/rankingicon.webp");
+}
+
+.myPageLink {
+  background-image: url("/public/Menubar/mypageicon2.webp");
+}
+
+.menubarItems button img {
+  width: 5vw;
+  height: 5vw;
+  margin-bottom: 10px;
+  padding-left: 0%;
+  margin-top: 2%;
+}
+
+.menubarItems .makePageLink,
+.menubarItems .battleLink,
+.menubarItems .rankingLink,
+.menubarItems .myPageLink {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.menubarItems button:hover {
+  filter: brightness(1.2);
+}
+
+/*메뉴바 중앙정렬(option에 따라)*/
+.menubarItems.centered {
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+@media (max-width: 767px) {
+  .menubarItems {
+    align-items: center;
+    border: none;
+    position: fixed;
+    bottom: 3vh;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .menubarItems button {
+    width: 17vw;
+    height: 17vw;
+    padding: 0;
+  }
+  .menubarItems {
+    justify-content: flex-start;
+  }
+}

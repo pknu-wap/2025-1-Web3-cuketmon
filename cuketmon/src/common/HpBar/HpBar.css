@@ -1,0 +1,76 @@
+.hpBarContainer {
+  width: 18vw;
+  height: 8vw;
+  background: url("../../../public/BattlePage/Blue_HPBar.webp") no-repeat;
+  background-size: contain; 
+}
+
+.hpBarName {
+  font-weight: bold;
+  font-size: 1.5vw;
+  margin-bottom: 4px;
+  color: #222;
+  margin-left: 1vw;
+  margin-top: 0.9vw;
+
+}
+
+.hpBarOuter {
+  width: 10.3vw;
+  height: 0.8vw;
+  background-color: #ddd;
+  border: 2px solid #444;
+  border-radius: 6px;
+  overflow: hidden;
+  margin-left: 6.5vw;
+}
+
+.hpBarInner {
+  height: 100%;
+  transition: width 0.2s linear;
+}
+
+.hpBarText {
+  margin-right: 3vw;
+  text-align: right;
+  font-weight: bold;
+}
+
+/* 반응형 14 pro max 기준*/
+@media (max-width: 767px) {
+  .hpBarContainer {
+    margin-top: 30vw;
+    width: 40vw;
+    height: fit-content;
+    background: url("../../../public/BattlePage/Blue_HPBar.webp") no-repeat cover;
+    background-size: 100% 100%;
+  }
+  
+  .hpBarName {
+    font-size: 3vw;
+  }
+  
+  .hpBarOuter {
+    width: 23vw;
+    height: 2vw;
+    background-color: #ddd;
+    border: 0.2vw solid #444;
+    border-radius: 2vw;
+    overflow: hidden;
+    margin-left: 15vw;
+  }
+  
+  .hpBarInner {
+    height: 100%;
+    transition: width 0.2s linear;
+  }
+  
+  .hpBarText {
+    margin-right: 3vw;
+    text-align: right;
+    font-weight: bold;
+    font-size: 3vw;
+
+  }
+  
+}

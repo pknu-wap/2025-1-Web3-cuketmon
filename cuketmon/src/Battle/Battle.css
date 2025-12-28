@@ -1,0 +1,375 @@
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.Battle {
+  aspect-ratio: 4 / 3;  /* 가로 3 : 세로 4 비율 유지 */
+  width: 100vw;
+  max-height: 100vh;
+  background-image: url('/public/BattlePage/background.webp');
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+}
+
+
+.content {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.battleContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 60%;
+  padding: 2vw;
+  position: relative;
+}
+
+.blueTeamSection, .redTeamSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 45vw;
+  height: 100%;
+  position: relative;
+}
+
+.cuketmon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 40%;
+  height: 100%;
+}
+
+.myCuketmonImage, .enemyCuketmonImage {
+  position: absolute;
+  bottom: 30%;
+  width: 20%;
+  height: auto;
+  z-index: 1;
+}
+.battleAnimationOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-Index: 10;
+}
+.skillAnimation {
+  position: relative;
+  top: -15vw;
+  width: 30vw;
+  height: fit-content; 
+  background-repeat: no-repeat;
+}
+
+@keyframes spriteAnimation {
+  to {
+    left: var(--endX);
+  }
+}
+
+.hitEffect {
+  animation: hitAnimation 0.5s ease forwards;
+}
+
+@keyframes hitAnimation {
+  100% {
+    transform: translateY(-50px);
+    filter: brightness(0.5) sepia(1) hue-rotate(-60deg) saturate(5);
+  }
+}
+
+.skillSection {
+  height: auto;
+  position: relative;
+  padding: 2%;
+  left: 15%;
+}
+
+.battleMessage {
+  background: url("/public/BattlePage/battleMessage.webp") no-repeat center center;
+  background-size: contain;
+  position: absolute;
+  top: 25%;
+  width: 60vw;
+  height: 10vw;
+  color: black;
+  padding: 2%;
+  text-align: center;
+  font-size: 2rem;
+  z-index: 2;
+}
+
+.loadingScreen {
+  position: relative;
+  height: 200px;
+  width: 200px;
+  background: linear-gradient(to bottom, rgb(254, 0, 1) 50%, white 50% );
+  border-radius: 50%;
+  border: 8px solid black;
+  animation: spin 1s linear infinite;
+  
+}
+
+/* .overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+ */
+.notification {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: white;
+  padding: 10px;
+  border-radius: 5px;
+  z-index: 1000;
+}
+.loadingScreen::before {
+  content: '';
+  position: absolute;
+  height: 8px;
+  width: 192px;
+  background: black;
+  top: 92px;
+  transform: translatey(-50%);
+}
+
+.loadingScreen::after {
+  content: '';
+  position: absolute;
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  background: white;
+  top: 90px;
+  left: 90px;
+  transform: translate(-50%, -50%);
+  box-shadow: inset 0 0 0 8px black, inset 0 0 0 10px white, inset 0 0 0 12px black;
+
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.resultScreen {
+  background-image: url('/public/BattlePage/WinnerStage.webp');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  width:100vw;
+  height:100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 2vw;
+}
+
+.resultScreen > h1 {
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  top: 0;
+}
+
+.winnerCuketmonImage {
+  position: absolute;
+  bottom: 30%;
+  width: 10%;
+  height: auto;
+}
+
+.battleEndButton {
+  position: absolute;
+  bottom: 10%;
+}
+.endBattleButton {
+  background-color: #e63946; /* 빨간색 배경 */
+  color: white;
+  font-size: 1.5rem;
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.endBattleButton:hover {
+  background-color: #c9303e; /* hover 시 좀 더 어두운 빨강 */
+}
+
+/* 반응형 14 pro max 기준*/
+@media (max-width: 430px) {
+  .Battle {
+    aspect-ratio: 3 / 7;
+    background-image: url('/public/BattlePage/backgroundMobile.webp');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    max-height: 100vh;
+    width: 100vw;
+    padding: 2%;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .cuketmon {
+    width: 100%;
+    height: 100%;
+  }
+  
+  .myCuketmonImage, .enemyCuketmonImage {
+    width: 50%;
+  }
+  
+  .battleAnimationOverlay {
+    position: absolute;
+    top: 35%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    z-index: 10;
+    height: fit-content;
+  }
+  
+  .skillAnimation {
+    position: relative;
+    width: 50vw;
+    background-repeat: no-repeat;
+    margin-bottom: 20vw;
+  }
+
+  .battleMessage {
+    position: relative;
+    /* top: 45%; */
+    font-size: 4vw;
+    height: 10vw;
+    width: fit-content;
+    max-width: 100vw;
+    padding: 10vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  @keyframes spriteAnimation {
+    to {
+      left: var(--endX);
+    }
+  }
+  
+  .hitEffect {
+    animation: hitAnimation 0.5s ease forwards;
+  }
+  
+  @keyframes hitAnimation {
+    100% {
+      transform: translateY(-5vw);
+      filter: brightness(0.5) sepia(1) hue-rotate(-60deg) saturate(5);
+    }
+  }
+  
+  .skillSection {
+    position:unset;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .skillButton:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
+  .skillType {
+    position: absolute;
+    right: 10%;
+    bottom: 20%;
+    font-size: 2vw;
+    display: flex;
+    justify-content: center;
+    gap: 2%;
+    margin-top: 1%;
+    z-index: 1;
+  }
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+  .resultScreen {
+    background-image: url('/public/BattlePage/WinnerStage.webp');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 2vw;
+  }
+  
+  .resultScreen > h1 {
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    top: 0;
+  }
+  
+  .winnerCuketmonImage {
+    position: absolute;
+    bottom: 30%;
+    width: 10%;
+    height: auto;
+  }
+
+  .PokeStyleButton {
+    position: absolute;
+    bottom: 10%;
+  }
+  
+  .skillType {
+    font-size: 3vw;
+  }
+}

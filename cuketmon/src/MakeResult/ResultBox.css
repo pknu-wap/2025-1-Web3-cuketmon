@@ -1,0 +1,42 @@
+.resultBoxContainer {
+  background-color: #BDCECE;
+  border: 2.5px solid white;
+  border-radius: 8px;
+  padding: 6px;
+  position: relative;
+  width: 700px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+/* 안쪽 흰색 박스 */
+.whiteBox {
+  background-color: white;
+  border-radius: 6px;
+  padding: 20px;
+  position: relative;
+  min-height: 80px;
+  font-family: 'NeoDunggeunmo', sans-serif;
+  font-size: 32px;
+  color: #0D4C4C;
+  box-sizing: border-box;
+  overflow-wrap: break-word;
+}
+
+/* 오른쪽 아래 Polygon 아이콘 깜빡임 */
+.polygonIndicator {
+  position: absolute;
+  bottom: 10px;
+  right: 16px;
+  width: 20px;
+  height: 20px;
+  background-image: url("/public//MakeResultPage/Polygon.webp");
+  background-size: contain;
+  background-repeat: no-repeat;
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
