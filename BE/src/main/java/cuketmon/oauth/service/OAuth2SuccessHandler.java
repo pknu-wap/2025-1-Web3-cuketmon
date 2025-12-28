@@ -35,7 +35,7 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
         // 쿠키 생성과 전달
         response.setHeader("Set-Cookie",
                 "refresh_token=" + refreshToken +
-                        "; HttpOnly; Secure; SameSite=None; Path=/; Max-Age=" + (60 * 60 * 24 * 3));
+                        "; HttpOnly; Secure; SameSite=None; Path=/; Max-Age=" + (60 * 60 * 24 * 7));
 
         trainerRepository.updateRefreshToken(trainerName, refreshToken);
 
