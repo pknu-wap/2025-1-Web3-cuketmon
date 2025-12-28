@@ -43,4 +43,5 @@ public class AuthController {
         String newAccessToken = jwtUtil.createAccessToken(trainerName);
         return ResponseEntity.ok().body(newAccessToken);
     }
+
 }

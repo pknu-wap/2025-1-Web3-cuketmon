@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import cuketmon.config.TestDummyDataConfig;
 import cuketmon.config.TestSkillDataConfig;
-import cuketmon.monster.dto.GenerateApiRequestBody;
+import cuketmon.monster.dto.MonsterGenerateRequest;
 import cuketmon.monster.entity.Monster;
 import cuketmon.monster.repository.MonsterRepository;
 import cuketmon.trainer.entity.Trainer;
@@ -66,7 +66,7 @@ class MonsterServiceTest {
         monsterService.play(TRAINER1, 1);
 
         Monster updatedMonster = monsterRepository.findById(1).get();
-        
+
         int diff = updatedMonster.getAffinity().getCount() - prevAffinity;
         assertTrue(diff >= 3 && diff <= 5, "친밀도는 3~5 사이 증가해야 합니다. 증가량: " + diff);
     }
@@ -80,7 +80,7 @@ class MonsterServiceTest {
 
     @Test
     void 커켓몬을_다섯마리_이상_보유할_시_오류를_발생시킨다() {
-        GenerateApiRequestBody body = new GenerateApiRequestBody("FIRE", "ELECTRIC", "temp");
+        MonsterGenerateRequest body = new MonsterGenerateRequest("FIRE", "ELECTRIC", "temp");
 
         monsterService.generate(TRAINER1, body);
         monsterService.generate(TRAINER1, body);
@@ -95,7 +95,7 @@ class MonsterServiceTest {
     @Test
     @Transactional
     void 한_유저가_하루에_10번이상_커켓몬을_생성할_시_오류를_발생시킨다() {
-        GenerateApiRequestBody body = new GenerateApiRequestBody("FIRE", "ELECTRIC", "temp");
+        MonsterGenerateRequest body = new MonsterGenerateRequest("FIRE", "ELECTRIC", "temp");
         Trainer trainer = trainerRepository.findById(TRAINER1).get();
 
 //        while (trainerRepository.findById(TRAINER1).get().getGenerateCount() < MAX_GENERATE_LIMIT) {

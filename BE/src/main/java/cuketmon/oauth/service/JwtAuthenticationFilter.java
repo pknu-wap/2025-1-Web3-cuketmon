@@ -10,12 +10,14 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
@@ -35,13 +37,20 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             String token = authHeader.substring(7); // "Bearer " 이후 토큰만 추출
 
             try {
-                // 2. 토큰에서 사용자 이름 추출
+                // 2. 토큰 유효성 검증
+                if (!jwtUtil.validateToken(token)) {
+                    log.debug("[DEBUG] JWT validation failed");
+                    filterChain.doFilter(request, response);
+                    return;
+                }
+
+                // 3. 토큰에서 사용자 이름 추출
                 String trainerName = jwtUtil.getTrainerNameFromToken(token);
 
-                // 3. 사용자 정보 조회
+                // 4. 사용자 정보 조회
                 Trainer trainer = trainerRepository.findById(trainerName).orElse(null);
                 if (trainer != null) {
-                    // 4. 인증 객체 생성
+                    // 5. 인증 객체 생성
                     UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
                             trainer.getName(),  // 로그인한 사용자 Id (이후 @AuthenticationPrincipal 등에서 사용)
                             null,               // 비밀번호 정보(우리는 JWT 로그인이라 생략)
@@ -51,7 +60,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 }
             } catch (Exception e) {
                 // 유효하지 않은 토큰이면 무시하고 다음 필터로 넘어감
-                System.out.println(e.getMessage());
+                log.warn("[WARN ] JWT processing failed", e);
             }
         }
 

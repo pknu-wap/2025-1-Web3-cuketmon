@@ -6,7 +6,7 @@ import cuketmon.oauth.service.CustomOAuth2UserService;
 import cuketmon.oauth.service.JwtAuthenticationFilter;
 import cuketmon.oauth.service.OAuth2SuccessHandler;
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -21,20 +21,12 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class SecurityConfig {
 
     private final CustomOAuth2UserService customOAuth2UserService;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final OAuth2SuccessHandler oAuth2SuccessHandler;
-
-    @Autowired
-    public SecurityConfig(CustomOAuth2UserService customOAuth2UserService,
-                          JwtAuthenticationFilter jwtAuthenticationFilter,
-                          OAuth2SuccessHandler oAuth2SuccessHandler) {
-        this.customOAuth2UserService = customOAuth2UserService;
-        this.jwtAuthenticationFilter = jwtAuthenticationFilter;
-        this.oAuth2SuccessHandler = oAuth2SuccessHandler;
-    }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -42,10 +34,9 @@ public class SecurityConfig {
                 .cors(withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers("/swagger-ui/**", "/swagger-ui.html", "/v3/api-docs/**",
                                 "/swagger-resources/**", "/swagger-resources", "/webjars/**").permitAll()
-                        .requestMatchers("/login", "/oauth/**", "/", "/api/**", "/ws/**").permitAll()
+                        .requestMatchers("/", "/oauth/**", "/api/auth/refresh").permitAll()
                         .anyRequest().authenticated()
                 )
                 .oauth2Login(oauth2 -> {

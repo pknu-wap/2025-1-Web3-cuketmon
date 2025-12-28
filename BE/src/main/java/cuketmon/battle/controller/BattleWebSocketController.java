@@ -5,22 +5,17 @@ import cuketmon.battle.dto.SkillRequest;
 import cuketmon.battle.dto.TrainerRequest;
 import cuketmon.battle.service.BattleMatchService;
 import cuketmon.battle.service.BattleSkillService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.stereotype.Controller;
 
 @Controller
+@RequiredArgsConstructor
 public class BattleWebSocketController {
 
     private final BattleMatchService battleMatchService;
     private final BattleSkillService battleSkillService;
-
-    @Autowired
-    public BattleWebSocketController(BattleMatchService battleMatchService, BattleSkillService battleSkillService) {
-        this.battleMatchService = battleMatchService;
-        this.battleSkillService = battleSkillService;
-    }
 
     // 배틀 찾기 (대기열 등록)
     @MessageMapping("/findBattle")

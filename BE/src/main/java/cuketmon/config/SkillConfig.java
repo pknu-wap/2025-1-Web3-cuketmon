@@ -2,18 +2,14 @@ package cuketmon.config;
 
 import cuketmon.skill.service.SkillService;
 import jakarta.annotation.PostConstruct;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
+@RequiredArgsConstructor
 public class SkillConfig {
 
     private final SkillService skillService;
-
-    @Autowired
-    public SkillConfig(SkillService skillService) {
-        this.skillService = skillService;
-    }
 
     // 모든 스킬을 DB에 저장
     @PostConstruct
