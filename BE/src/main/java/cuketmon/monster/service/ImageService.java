@@ -18,7 +18,7 @@ public class ImageService {
     private final WebClient webClient;
     private final S3Client s3Client;
     private final String bucket;
-    private final String publicBaseUrl; // 선택: 리전별 URL 정교화 하고 싶으면
+    private final String publicBaseUrl;
 
     public ImageService(S3Client s3Client,
                         @Value("${stability.api-key}") String apiKey,
