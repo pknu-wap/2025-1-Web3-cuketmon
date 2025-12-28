@@ -44,6 +44,11 @@ public class SkillService {
         return skills.get(Random.getRandomInRange(0, skills.size() - 1)).getId();
     }
 
+    public Integer getSkillId(Type type, Type fallbackType, DamageClass damageClass, int minDamage, int maxDamage) {
+        Type resolvedType = (type != null) ? type : fallbackType;
+        return getSkillId(resolvedType, damageClass, minDamage, maxDamage);
+    }
+
     public MonsterDTO.MonsterBattleInfo.Skill convertSkill(Integer skillId) {
         Skill skill = skillRepository.findById(skillId)
                 .orElseThrow(() -> new IllegalArgumentException(SKILL_NOT_FOUND));

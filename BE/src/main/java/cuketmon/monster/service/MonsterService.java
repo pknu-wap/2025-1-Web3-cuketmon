@@ -71,8 +71,8 @@ public class MonsterService {
                 .type1(type1).type2(type2)
                 .skillId1(skillService.getSkillId(type1, damageClass, MIN_DAMAGE, MID_DAMAGE)) // 평타
                 .skillId2(skillService.getSkillId(type1, damageClass, MID_DAMAGE, MAX_DAMAGE)) // 필살기
-                .skillId3(skillService.getSkillId(type2, damageClass, MIN_DAMAGE, MID_DAMAGE))
-                .skillId4(skillService.getSkillId(type2, altClass, MIN_DAMAGE, MID_DAMAGE))
+                .skillId3(skillService.getSkillId(type2, type1, damageClass, MIN_DAMAGE, MID_DAMAGE))
+                .skillId4(skillService.getSkillId(type2, type1, altClass, MIN_DAMAGE, MID_DAMAGE))
                 .build();
         log.info("커켓몬 생성: id={}, description={}", monster.getId(), monster.getDescription());
 
